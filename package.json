@@ -2,6 +2,7 @@
   "name": "pg-query-native",
   "version": "0.0.1",
   "description": "The real PostgreSQL query parser",
+  "homepage": "http://github.com/zhm/pg-query-native",
   "main": "index.js",
   "scripts": {
     "configure": "./node_modules/node-gyp/bin/node-gyp.js configure",
@@ -11,6 +12,10 @@
   },
   "author": "Zac McCormick <zac.mccormick@gmail.com> (http://github.com/zhm)",
   "license": "BSD",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zhm/pg-query-native.git"
+  },
   "devDependencies": {
     "mocha": "^2.3.3"
   },
@@ -18,5 +23,13 @@
     "bindings": "^1.2.1",
     "nan": "^2.1.0",
     "node-gyp": "^3.1.0"
-  }
+  },
+  "keywords": [
+    "sql",
+    "postgres",
+    "postgresql",
+    "pg",
+    "query",
+    "database"
+  ]
 }
