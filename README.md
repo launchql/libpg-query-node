@@ -6,6 +6,32 @@ This is based on the output of [libpg_query](https://github.com/lfittl/libpg_que
 
 All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
 
+## Installation
+
+```sh
+npm install pg-query-native
+```
+
+### `query.parse(query)`
+
+Parses the query and returns the parse tree.
+
+### Parameters
+
+| parameter            | type               | description                                               |
+| -------------------- | ------------------ | --------------------------------------------------------- |
+| `query`              | String             | SQL query                                                 |
+
+Returns an object in the format:
+
+```
+{ query: <query|Object>,
+  error: { message: <message|String>,
+           fileName: <fileName|String>,
+           lineNumber: <line|Number>,
+           cursorPosition: <cursor|Number> }
+```
+
 ## Example
 
 ```js
