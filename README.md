@@ -12,6 +12,8 @@ All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl
 npm install pg-query-native
 ```
 
+### Documentation
+
 ### `query.parse(query)`
 
 Parses the query and returns the parse tree.
