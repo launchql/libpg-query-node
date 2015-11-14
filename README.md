@@ -1,4 +1,4 @@
-# pg-query-native [![Build Status](https://travis-ci.org/zhm/pg-query-native.svg?branch=master)](https://travis-ci.org/zhm/pg-query-native)
+# pg-query-native [![Build Status](https://travis-ci.org/zhm/node-pg-query-native.svg?branch=master)](https://travis-ci.org/zhm/node-pg-query-native)
 
 The real PostgreSQL parser for nodejs.
 
