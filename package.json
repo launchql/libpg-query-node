@@ -10,7 +10,7 @@
     "test": "mocha"
   },
   "author": "Zac McCormick <zac.mccormick@gmail.com> (http://github.com/zhm)",
-  "license": "ISC",
+  "license": "BSD",
   "devDependencies": {
     "mocha": "^2.3.3"
   },
