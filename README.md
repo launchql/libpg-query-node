@@ -37,7 +37,7 @@ Returns an object in the format:
 ## Example
 
 ```js
-var parse = require('pg-query').parse;
+var parse = require('pg-query-native').parse;
 
 console.log(parse('select 1').query);
 ```
