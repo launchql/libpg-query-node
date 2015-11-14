@@ -21,17 +21,17 @@ NAN_METHOD(parse) {
     return Nan::ThrowError("query parameter must be a string");
   }
 
-  auto result = pg_query_parse(*query);
+  PgQueryParseResult result = pg_query_parse(*query);
 
   v8::Local<v8::Object> hash = Nan::New<v8::Object>();
 
   if (result.error) {
     v8::Local<v8::Object> error = Nan::New<v8::Object>();
 
-    auto message = Nan::New(result.error->message).ToLocalChecked();
-    auto fileName = Nan::New(result.error->filename).ToLocalChecked();
-    auto lineNumber = Nan::New(result.error->lineno);
-    auto cursorPosition = Nan::New(result.error->cursorpos);
+    v8::Local<v8::String> message = Nan::New(result.error->message).ToLocalChecked();
+    v8::Local<v8::String> fileName = Nan::New(result.error->filename).ToLocalChecked();
+    v8::Local<v8::Number> lineNumber = Nan::New(result.error->lineno);
+    v8::Local<v8::Number> cursorPosition = Nan::New(result.error->cursorpos);
 
     Nan::Set(error, Nan::New("message").ToLocalChecked(), message);
     Nan::Set(error, Nan::New("fileName").ToLocalChecked(), fileName);
