@@ -51,7 +51,7 @@ NAN_METHOD(parse) {
                    Nan::New(result.stderr_buffer).ToLocalChecked());
   }
 
-  pg_query_parse_free(result);
+  pg_query_free_parse_result(result);
 
   info.GetReturnValue().Set(hash);
 }
