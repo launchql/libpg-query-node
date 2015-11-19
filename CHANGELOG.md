@@ -1,5 +1,5 @@
 ## 0.0.5 (November 19, 2015)
-* Update libpg_queury to include latest A_CONST fixes
+* Update libpg_query to include latest A_CONST fixes
 
 ## 0.0.4 (November 16, 2015)
 * Update libpg_query to include fix for empty string constants
