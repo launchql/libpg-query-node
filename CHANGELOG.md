@@ -1,3 +1,6 @@
+## 0.0.5 (November 19, 2015)
+* Update libpg_queury to include latest A_CONST fixes
+
 ## 0.0.4 (November 16, 2015)
 * Update libpg_query to include fix for empty string constants
 * Warning fixed in 0.0.3 is back for now until libpg_query has support for custom CFLAGS
