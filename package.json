@@ -1,6 +1,6 @@
 {
   "name": "pg-query-native",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "http://github.com/zhm/node-pg-query-native",
   "main": "index.js",
