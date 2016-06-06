@@ -50,9 +50,14 @@ NAN_METHOD(parse) {
     Nan::Set(hash, Nan::New("error").ToLocalChecked(), error);
   }
 
-  if (result.parse_tree) {
+  //~ if (result.parse_tree) {
+    //~ Nan::Set(hash, Nan::New("query").ToLocalChecked(),
+                   //~ Nan::New(result.parse_tree).ToLocalChecked());
+  //~ }
+  
+  if (result.parse_tree) {  
     Nan::Set(hash, Nan::New("query").ToLocalChecked(),
-                   Nan::New(result.parse_tree).ToLocalChecked());
+                   v8::JSON::Parse(Nan::New<v8::String>(result.parse_tree).ToLocalChecked()));
   }
 
   if (result.stderr_buffer) {
