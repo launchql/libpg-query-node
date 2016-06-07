@@ -9,7 +9,7 @@
     "build": "node-gyp configure build",
     "rebuild": "node-gyp configure rebuild",
     "test": "node_modules/.bin/mocha",
-    "postinstall": "script/buildAddon.sh"
+    "preinstall": "script/buildAddon.sh"
   },
   "author": "Zac McCormick <zac.mccormick@gmail.com> (http://github.com/zhm)",
   "license": "BSD",
