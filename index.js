@@ -1,4 +1,4 @@
-var PgQuery = require('./libs/pg-query');
+var PgQuery = require('./build/Release/pg-query');
 
 module.exports = {
   parse: function(query) {

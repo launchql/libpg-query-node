@@ -25,6 +25,8 @@ fi
 
 cp $(pwd)/libpg_query.a $rDIR/libpg_query/linux/
 
+rm -rf $rDIR/$tmpDir
+
 
 
 
