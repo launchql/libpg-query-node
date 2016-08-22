@@ -14,6 +14,8 @@ module.exports = {
       err.fileName = result.error.fileName;
       err.lineNumber = result.error.lineNumber;
       err.cursorPosition = result.error.cursorPosition;
+      err.functionName = result.error.functionName;
+      err.context = result.error.context;
 
       result.error = err;
     }
