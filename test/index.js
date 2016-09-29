@@ -1,5 +1,6 @@
 var query = require('../');
 var assert = require('assert');
+var expect = require('chai').expect;
 
 describe('pg-query sync', function() {
   it('should parse a query', function() {
@@ -21,38 +22,43 @@ describe('pg-query sync', function() {
 
 
 describe('pg-query async', function() {
-  it('should parse a query', function() {
-    assert.equal(typeof query.parseQueryAsync('select 1'), 'object');
+  it('should parse a query', function(done) {
+    expect(query.parseQueryAsync('select 1')).to.be.a('object');
+    done();
   });
 
-  it('should parse a null', function() {
+  it('should parse a null', function(done) {
     return query.parseQueryAsync("select null")
     .then(result => {
-      assert(result.query[0].SelectStmt.targetList[0].ResTarget.val.A_Const.val.Null);
+      expect(result.query[0].SelectStmt.targetList[0].ResTarget.val.A_Const.val.Null).to.eql({});
+      done();
     })
     .catch(err => {
-      assert.equal(err, null);
+      done(err);
     });
   });
 
-  it('should parse an empty string', function() {
+  it('should parse an empty string', function(done) {
     return query.parseQueryAsync("select ''")
     .then(result => {
-      assert(result.query[0].SelectStmt.targetList[0].ResTarget.val.A_Const.val.String.str === '');
+      expect(result.query[0].SelectStmt.targetList[0].ResTarget.val.A_Const.val.String.str).to.equal('');
+      done();
     })
     .catch(err => {
       assert.equal(err, null);
+      done(err);
     });
 
   });
 
-  it('should not parse a bogus query', function() {
-    return query.parseQueryAsync("select null")
+  it('should not parse a bogus query', function(done) {
+    return query.parseQueryAsync("NOT A QUERY")
     .then(result => {
-      assert(result, null);
+      done(new Error('result should be null'));
     })
     .catch(err => {
-      assert.ok(err instanceof Error);
+      expect(err).to.be.an('error');
+      done();
     });
   });
 });

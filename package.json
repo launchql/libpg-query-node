@@ -19,6 +19,7 @@
     "url": "git://github.com/zhm/node-pg-query-native.git"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.5.3"
   },
   "dependencies": {
