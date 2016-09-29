@@ -22,7 +22,9 @@
     "mocha": "^2.5.3"
   },
   "dependencies": {
-    "nan": "^2.3.5"
+    "bluebird": "^3.4.6",
+    "nan": "^2.3.5",
+    "node-gyp": "^3.3.1"
   },
   "keywords": [
     "sql",
