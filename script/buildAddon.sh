@@ -1,6 +1,6 @@
 #!/bin/bash
 
-commit=e72427dad4a61691df0b749333f939b64362db62
+commit=3c2972dd343c53f584cdaf18dfa29d470822bbb7
 
 rDIR=$(pwd)
 tmpDir=tmp_pg
@@ -12,9 +12,14 @@ git clone -b 9.5-latest --single-branch https://github.com/lfittl/libpg_query
 cd libpg_query
 
 echo "git checkout to $commit"
-git checkout $commit .
+git checkout $commit
 
 make
+
+if [ $? -ne 0 ]; then
+	echo "ERROR: 'make' command failed";
+	exit 1;
+fi
 
 wDIR=$(pwd)
 
