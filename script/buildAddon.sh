@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 commit=3c2972dd343c53f584cdaf18dfa29d470822bbb7
 
@@ -45,10 +45,6 @@ if [ "$(uname)" == "Darwin" ]; then
     cp $(pwd)/libpg_query.a $rDIR/libpg_query/osx/      
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     cp $(pwd)/libpg_query.a $rDIR/libpg_query/linux/
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-    # Do something under 32 bits Windows NT platform
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
-    # Do something under 64 bits Windows NT platform
 fi
 
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
