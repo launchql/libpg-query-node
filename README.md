@@ -9,7 +9,7 @@ All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl
 ## Installation
 
 ```sh
-npm install pg-query-native
+npm install pg-query-native-latest
 ```
 
 ### Documentation
