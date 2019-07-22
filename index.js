@@ -1,51 +1,44 @@
 const Promise = require('bluebird');
-
 const PgQuery = require('./build/Release/queryparser');
+const logicError = new Error(
+  "Expected a successful parse or a returned error; got neither."
+);
 
 module.exports = {
-  parseQuery: function(query) {
+  parseQuerySync(query) {
     const result = PgQuery.parseQuery(query);
+    if(!result.query && !result.error) {
+      throw logicError;
+    }
 
     if (result.query) {
-      result.query = JSON.parse(result.query);
+      return JSON.parse(result.query);
+    } else {
+      throw jsifyParseError(result.error);
     }
-
-    if (result.error) {
-      const err = new Error(result.error.message);
-
-      err.fileName = result.error.fileName;
-      err.lineNumber = result.error.lineNumber;
-      err.cursorPosition = result.error.cursorPosition;
-      err.functionName = result.error.functionName;
-      err.context = result.error.context;
-
-      result.error = err;
-    }
-
-    return result;
   },
 
-  parseQueryAsync: function(query) {
+  parseQuery(query) {
     return new Promise((resolve, reject) => {
-      return PgQuery.parseQueryAsync(query, function(err, result){
+      return PgQuery.parseQueryAsync(query, function(err, result) {
         if (err) {
-          const error = new Error(err.message);
-
-          error.fileName = err.fileName;
-          error.lineNumber = err.lineNumber;
-          error.cursorPosition = err.cursorPosition;
-          error.functionName = err.functionName;
-          error.context = err.context;
-
-          return reject(error);
+          reject(jsifyParseError(err));
+        } else if(result.query) {
+          resolve(JSON.parse(result.query));
+        } else {
+          reject(logicError);
         }
-
-        if (result.query) {
-          result.query = JSON.parse(result.query);
-        }
-
-        return resolve(result);
       });
     });
   },
 };
+
+function jsifyParseError(err) {
+  const error = new Error(err.message);
+  error.fileName = err.fileName;
+  error.lineNumber = err.lineNumber;
+  error.cursorPosition = err.cursorPosition;
+  error.functionName = err.functionName;
+  error.context = err.context;
+  return error;
+}

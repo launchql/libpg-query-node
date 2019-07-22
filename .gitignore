@@ -2,3 +2,4 @@ node_modules/
 build/
 libs/
 npm-debug.log
+libpg_query/
