@@ -11,11 +11,11 @@ module.exports = {
       throw logicError;
     }
 
-    if (result.query) {
-      return JSON.parse(result.query);
-    } else {
+    if(result.error) {
       throw jsifyParseError(result.error);
     }
+
+    return JSON.parse(result.query);
   },
 
   parseQuery(query) {
