@@ -1,10 +1,18 @@
-# pg-query-native [![Build Status](https://travis-ci.org/zhm/node-pg-query-native.svg?branch=master)](https://travis-ci.org/zhm/node-pg-query-native)
+# pg-query-native [![Build Status](https://travis-ci.org/matus123/node-pg-query-native.svg?branch=master)](https://travis-ci.org/matus123/node-pg-query-native)
 
 The real PostgreSQL parser for nodejs.
 
 This is based on the output of [libpg_query](https://github.com/lfittl/libpg_query). This wraps the static library output and links it into a node module for use in js.
 
 All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
+
+## Requirements
+
+Instal node-gyp globally
+
+```sh
+npm install node-gyp -g
+```
 
 ## Installation
 

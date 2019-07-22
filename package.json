@@ -5,10 +5,12 @@
   "homepage": "http://github.com/zhm/node-pg-query-native",
   "main": "index.js",
   "scripts": {
-    "configure": "./node_modules/node-gyp/bin/node-gyp.js configure",
-    "build": "./node_modules/node-gyp/bin/node-gyp.js configure build",
-    "rebuild": "./node_modules/node-gyp/bin/node-gyp.js configure rebuild",
-    "test": "mocha"
+    "configure": "node-gyp configure",
+    "build": "node-gyp configure build",
+    "rebuild": "node-gyp configure rebuild",
+    "test": "node_modules/.bin/mocha",
+    "preinstall": "script/buildAddon.sh",
+    "postinstall": "node-gyp rebuild"
   },
   "author": "Zac McCormick <zac.mccormick@gmail.com> (http://github.com/zhm)",
   "license": "BSD",
@@ -17,10 +19,11 @@
     "url": "git://github.com/zhm/node-pg-query-native.git"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.5.3"
   },
   "dependencies": {
-    "bindings": "^1.2.1",
+    "bluebird": "^3.4.6",
     "nan": "^2.3.5",
     "node-gyp": "^3.3.1"
   },

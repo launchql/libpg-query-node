@@ -1,15 +1,17 @@
-var PgQuery = require('bindings')('pg-query');
+const Promise = require('bluebird');
+
+const PgQuery = require('./build/Release/queryparser');
 
 module.exports = {
-  parse: function(query) {
-    var result = PgQuery.parse(query);
+  parseQuery: function(query) {
+    const result = PgQuery.parseQuery(query);
 
     if (result.query) {
       result.query = JSON.parse(result.query);
     }
 
     if (result.error) {
-      var err = new Error(result.error.message);
+      const err = new Error(result.error.message);
 
       err.fileName = result.error.fileName;
       err.lineNumber = result.error.lineNumber;
@@ -21,5 +23,29 @@ module.exports = {
     }
 
     return result;
-  }
+  },
+
+  parseQueryAsync: function(query) {
+    return new Promise((resolve, reject) => {
+      return PgQuery.parseQueryAsync(query, function(err, result){
+        if (err) {
+          const error = new Error(err.message);
+
+          error.fileName = err.fileName;
+          error.lineNumber = err.lineNumber;
+          error.cursorPosition = err.cursorPosition;
+          error.functionName = err.functionName;
+          error.context = err.context;
+
+          return reject(error);
+        }
+
+        if (result.query) {
+          result.query = JSON.parse(result.query);
+        }
+
+        return resolve(result);
+      });
+    });
+  },
 };

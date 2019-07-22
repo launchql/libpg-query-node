@@ -1,20 +1,64 @@
 var query = require('../');
 var assert = require('assert');
+var expect = require('chai').expect;
 
-describe('pg-query', function() {
+describe('pg-query sync', function() {
   it('should parse a query', function() {
-    assert.equal(typeof query.parse('select 1').query[0].RawStmt.stmt.SelectStmt, 'object');
+    assert.equal(typeof query.parseQuery('select 1').query[0].RawStmt.stmt.SelectStmt, 'object');
   });
 
   it('should parse a null', function() {
-    assert(query.parse("select null").query[0].RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.val.Null);
+    assert(query.parseQuery("select null").query[0].RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.val.Null);
   });
 
   it('should parse an empty string', function() {
-    assert(query.parse("select ''").query[0].RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.val.String.str === '');
+    assert(query.parseQuery("select ''").query[0].RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.val.String.str === '');
   });
 
   it('should not parse a bogus query', function() {
-    assert.ok(query.parse('NOT A QUERY').error instanceof Error);
+    assert.ok(query.parseQuery('NOT A QUERY').error instanceof Error);
+  });
+});
+
+
+describe('pg-query async', function() {
+  it('should parse a query', function(done) {
+    expect(query.parseQueryAsync('select 1')).to.be.a('object');
+    done();
+  });
+
+  it('should parse a null', function(done) {
+    return query.parseQueryAsync("select null")
+    .then(result => {
+      expect(result.query[0].RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.val.Null).to.eql({});
+      done();
+    })
+    .catch(err => {
+      done(err);
+    });
+  });
+
+  it('should parse an empty string', function(done) {
+    return query.parseQueryAsync("select ''")
+    .then(result => {
+      expect(result.query[0].RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.val.String.str).to.equal('');
+      done();
+    })
+    .catch(err => {
+      assert.equal(err, null);
+      done(err);
+    });
+
+  });
+
+  it('should not parse a bogus query', function(done) {
+    return query.parseQueryAsync("NOT A QUERY")
+    .then(result => {
+      done(new Error('result should be null'));
+    })
+    .catch(err => {
+      expect(err).to.be.an('error');
+      done();
+    });
   });
 });
