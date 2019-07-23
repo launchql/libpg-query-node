@@ -17,7 +17,7 @@ npm install node-gyp -g
 ## Installation
 
 ```sh
-npm install pg-query-native
+npm install pg-query-native-latest
 ```
 
 ### Documentation
