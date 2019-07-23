@@ -1,4 +1,4 @@
-# pg-query-native [![Build Status](https://travis-ci.org/matus123/node-pg-query-native.svg?branch=master)](https://travis-ci.org/matus123/node-pg-query-native)
+# pg-plgpsql-query-native
 
 The real PostgreSQL parser for nodejs.
 
@@ -17,37 +17,26 @@ npm install node-gyp -g
 ## Installation
 
 ```sh
-npm install pg-query-native-latest
+npm install pg-plpgsql-query-native
 ```
 
 ### Documentation
 
-### `query.parse(query)`
+### `query.parseQuery(query)`/`parseQuerySync`
 
-Parses the query and returns the parse tree.
+Parses the query and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
-### Parameters
+The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as Postgres expects).
 
-| parameter            | type               | description                                               |
-| -------------------- | ------------------ | --------------------------------------------------------- |
-| `query`              | String             | SQL query                                                 |
+### `query.parsePlPgSQL(func)`/`query.parsePlPgSQLSync(func)`
 
-Returns an object in the format:
-
-```
-{ query: <query|Object>,
-  error: { message: <message|String>,
-           fileName: <fileName|String>,
-           lineNumber: <line|Number>,
-           cursorPosition: <cursor|Number> }
-```
+Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration, and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
 ## Example
 
 ```js
-var parse = require('pg-query-native').parse;
-
-console.log(parse('select 1').query);
+var parse = require('pg-query-native').parseQuery;
+parse('select 1').then(console.log);
 ```
 
 ## Related
