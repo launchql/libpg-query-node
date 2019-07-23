@@ -1,10 +1,54 @@
-const Promise = require('bluebird');
 const PgQuery = require('./build/Release/queryparser');
 const logicError = new Error(
   "Expected a successful parse or a returned error; got neither."
 );
 
 module.exports = {
+  parseQuery(query) {
+    return new Promise((resolve, reject) => {
+      PgQuery.parseQueryAsync(query, function(result) {
+        console.log(result);
+        resolve(result);
+      });
+    });
+
+     /*
+    return new Promise((resolve, reject) => {
+      PgQuery.parseQueryAsync(query, function(result) {
+        console.log("HHERE IN RESULT")
+        if(!result.query && !result.error) {
+          throw logicError;
+        }
+
+        if(result.error) {
+          reject(jsifyParseError(result.error));
+          return;
+        }
+        console.log("HERE resolve", result);
+        resolve(result.query);
+      });
+    }).then(it => {
+      console.log("IN THEN!!");
+    });*/
+  },
+
+  parsePlPgSQL(query) {
+    return new Promise((resolve, reject) => {
+      return PgQuery.parsePlPgSQLAsync(query, function(result) {
+        if(!result.functions && !result.error) {
+          throw logicError;
+        }
+
+        if(result.error) {
+          reject(jsifyParseError(result.error));
+          return;
+        }
+
+        resolve(result.functions);
+      });
+    });
+  },
+
   parseQuerySync(query) {
     const result = PgQuery.parseQuery(query);
     if(!result.query && !result.error) {
@@ -15,22 +59,22 @@ module.exports = {
       throw jsifyParseError(result.error);
     }
 
-    return JSON.parse(result.query);
+    return result.query;
   },
 
-  parseQuery(query) {
-    return new Promise((resolve, reject) => {
-      return PgQuery.parseQueryAsync(query, function(err, result) {
-        if (err) {
-          reject(jsifyParseError(err));
-        } else if(result.query) {
-          resolve(JSON.parse(result.query));
-        } else {
-          reject(logicError);
-        }
-      });
-    });
+  parsePlPgSQLSync(query) {
+    const result = PgQuery.parsePlPgSQL(query);
+    if(!result.functions && !result.error) {
+      throw logicError;
+    }
+
+    if(result.error) {
+      throw jsifyParseError(result.error);
+    }
+
+    return result.functions;
   },
+
 };
 
 function jsifyParseError(err) {

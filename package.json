@@ -8,7 +8,7 @@
     "configure": "node-gyp configure",
     "build": "node-gyp configure build",
     "rebuild": "node-gyp configure rebuild",
-    "test": "node_modules/.bin/mocha",
+    "test": "mocha --timeout 5000",
     "preinstall": "script/buildAddon.sh",
     "postinstall": "node-gyp rebuild"
   },
@@ -20,11 +20,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.5.3"
+    "mocha": "^5.2.0"
   },
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "nan": "^2.3.5",
+    "nan": "^2.14.0",
     "node-gyp": "^3.3.1"
   },
   "keywords": [
