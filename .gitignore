@@ -2,4 +2,5 @@ node_modules/
 build/
 libs/
 npm-debug.log
-libpg_query/
+libpg_query/**/*.a
+libpg_query/**/*.h

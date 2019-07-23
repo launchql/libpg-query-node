@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commit=d710cb0f3edf4a0f98dde5b4411ea103fd4b1807
+commit=2eab0008556a7e46289a9907d03e9b2534376c56
 
 rDIR=$(pwd)
 tmpDir=tmp_pg
@@ -8,13 +8,13 @@ tmpDir=tmp_pg
 mkdir -p $tmpDir
 cd $tmpDir
 
-git clone -b 10-latest --single-branch https://github.com/lfittl/libpg_query
+git clone -b 10-latest --single-branch https://github.com/ethanresnick/libpg_query
 cd libpg_query
 
 # echo "git checkout to $commit"
 git checkout $commit
 
-make
+make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7'
 
 if [ $? -ne 0 ]; then
 	echo "ERROR: 'make' command failed";

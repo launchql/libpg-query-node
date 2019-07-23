@@ -1,4 +1,7 @@
-# 0.0.5 (Republish, 07/23/19)
+# 1.1.2 (07/23/19)
+* Fix build script
+
+# 1.1.0 (Republish, 07/23/19)
 * Rewrite to use Node-Addons-API (C++ wrapper for the stable N-API)
 * Support PL/PGSql Parsing
 * Support async parsing
