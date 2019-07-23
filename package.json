@@ -1,8 +1,8 @@
 {
-  "name": "pg-query-native",
+  "name": "pg-plpgsql-query-native",
   "version": "1.1.0",
   "description": "The real PostgreSQL query parser",
-  "homepage": "http://github.com/zhm/node-pg-query-native",
+  "homepage": "http://github.com/ethanresnick/node-pg-query-native",
   "main": "index.js",
   "scripts": {
     "configure": "node-gyp configure",
@@ -12,11 +12,11 @@
     "preinstall": "script/buildAddon.sh",
     "postinstall": "node-gyp rebuild"
   },
-  "author": "Zac McCormick <zac.mccormick@gmail.com> (http://github.com/zhm)",
+  "author": "Ethan Resnick <ethan.resnick@gmail.com> (http://github.com/ethanresnick)",
   "license": "BSD",
   "repository": {
     "type": "git",
-    "url": "git://github.com/zhm/node-pg-query-native.git"
+    "url": "git://github.com/ethanresnick/node-pg-query-native.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -33,6 +33,7 @@
     "postgresql",
     "pg",
     "query",
+    "plpgsql",
     "database"
   ]
 }
