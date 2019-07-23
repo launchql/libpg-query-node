@@ -20,10 +20,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "lodash": "^4.17.15",
     "mocha": "^5.2.0"
   },
   "dependencies": {
-    "nan": "^2.14.0",
+    "node-addon-api": "^1.6.3",
     "node-gyp": "^3.3.1"
   },
   "keywords": [

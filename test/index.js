@@ -1,9 +1,10 @@
-var query = require('../');
-var expect = require('chai').expect;
+const query = require('../');
+const { expect } = require('chai');
+const { omit, cloneDeepWith } = require("lodash");
 
 describe('Queries', () => {
   describe("Sync Parsing", () => {
-    it.only("should return a single-item parse result for common queries", () => {
+    it("should return a single-item parse result for common queries", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];
       const results = queries.map(query.parseQuerySync);
 
@@ -24,9 +25,17 @@ describe('Queries', () => {
 
     it("should support parsing multiple queries", () => {
       const res = query.parseQuerySync("select 1; select null;");
-      expect(res).to.deep.eq([
-        ...query.parseQuerySync("select 1;"),
-        ...query.parseQuerySync("select null;")
+      const removeChangedProps = (it) => omit(it, changedProps);
+      const changedProps = [
+        "RawStmt.stmt_len",
+        "RawStmt.stmt_location",
+        "RawStmt.stmt.SelectStmt.targetList[0].ResTarget.location",
+        "RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.location"
+      ];
+
+      expect(res.map(removeChangedProps)).to.deep.eq([
+        ...(query.parseQuerySync("select 1;").map(removeChangedProps)),
+        ...(query.parseQuerySync("select null;").map(removeChangedProps))
       ]);
     });
 
@@ -36,20 +45,21 @@ describe('Queries', () => {
   });
 
   describe("Async parsing", () => {
-    it.only("should return a promise resolving to same result", async () => {
+    it("should return a promise resolving to same result", async () => {
       const testQuery = 'select * from john;';
       const resPromise = query.parseQuery(testQuery);
       const res = await resPromise;
 
-      //expect(resPromise).to.be.instanceof(Promise);
-      //expect(res).to.deep.eq(query.parseQuerySync(testQuery));
+      expect(resPromise).to.be.instanceof(Promise);
+      expect(res).to.deep.eq(query.parseQuerySync(testQuery));
     });
 
     it('should reject on bogus queries', async () => {
       return query.parseQuery("NOT A QUERY").then(() => {
         throw new Error("should have rejected");
       }, (e) => {
-        // swallow error.
+        expect(e).instanceof(Error);
+        expect(e.message).to.match(/NOT/);
       });
     });
   })
@@ -77,9 +87,8 @@ describe('PlPgSQL (async)', () => {
 
     const resPromise = query.parsePlPgSQL(testFunction);
     const res = await resPromise;
-    console.log(resPromise);
 
     expect(resPromise).to.be.instanceof(Promise);
-    expect(res).to.deep.eq([]);
+    expect(res).to.deep.have.property("0.PLpgSQL_function");
   });
 });
