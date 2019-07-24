@@ -1,3 +1,6 @@
+# 1.2.0
+* Add TS typings
+
 # 1.1.2 (07/23/19)
 * Fix build script
 

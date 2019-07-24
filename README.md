@@ -22,13 +22,13 @@ npm install pg-plpgsql-query-native
 
 ### Documentation
 
-### `query.parseQuery(query)`/`parseQuerySync`
+### `query.parseQuery(sql)`/`parseQuerySync`
 
-Parses the query and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
+Parses the sql and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
 The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as Postgres expects).
 
-### `query.parsePlPgSQL(func)`/`query.parsePlPgSQLSync(func)`
+### `query.parsePlPgSQL(funcsSql)`/`query.parsePlPgSQLSync(funcsSql)`
 
 Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration, and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
