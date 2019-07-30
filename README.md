@@ -1,6 +1,6 @@
-# pg-plgpsql-query-native
+# @sqlutils/parse
 
-The real PostgreSQL parser for nodejs.
+The real PostgreSQL parser, exposed for nodejs.
 
 This is based on the output of [libpg_query](https://github.com/lfittl/libpg_query). This wraps the static library output and links it into a node module for use in js.
 
@@ -8,7 +8,7 @@ All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl
 
 ## Requirements
 
-Instal node-gyp globally
+Install node-gyp globally
 
 ```sh
 npm install node-gyp -g
@@ -17,7 +17,7 @@ npm install node-gyp -g
 ## Installation
 
 ```sh
-npm install pg-plpgsql-query-native
+npm install @sqlutils/parse
 ```
 
 ### Documentation
@@ -35,8 +35,8 @@ Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration
 ## Example
 
 ```js
-var parse = require('pg-query-native').parseQuery;
-parse('select 1').then(console.log);
+const parser = require('@sqlutils/parse');
+parser.parseQuery('select 1').then(console.log);
 ```
 
 ## Related
