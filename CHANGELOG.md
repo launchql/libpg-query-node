@@ -1,3 +1,6 @@
+# 1.2.1
+* Rename package
+
 # 1.2.0
 * Add TS typings
 
