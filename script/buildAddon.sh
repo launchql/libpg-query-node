@@ -3,8 +3,7 @@
 commit=2eab0008556a7e46289a9907d03e9b2534376c56
 
 rDIR=$(pwd)
-tmpFile=$(mktemp)
-tmpDir=`dirname $tmpFile`
+tmpDir=/tmp
 
 cd $tmpDir
 
@@ -53,3 +52,5 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
+
+cd $rDIR && rm -rf $wDIR
