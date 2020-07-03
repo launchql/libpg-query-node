@@ -6,6 +6,16 @@ This is based on the output of [libpg_query](https://github.com/lfittl/libpg_que
 
 All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
 
+## How to re-buid 
+
+``sh
+git clone -b 10-latest git://github.com/lfittl/libpg_query
+cd libpg_query
+make
+```
+
+Then get the `.a` file and drop it in the folder in this repo.
+
 ## Installation
 
 ```sh
