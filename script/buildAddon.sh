@@ -3,9 +3,9 @@
 commit=2eab0008556a7e46289a9907d03e9b2534376c56
 
 rDIR=$(pwd)
-tmpDir=tmp_pg
+tmpFile=$(mktemp)
+tmpDir=`dirname $tmpFile`
 
-mkdir -p $tmpDir
 cd $tmpDir
 
 git clone -b 10-latest --single-branch https://github.com/ethanresnick/libpg_query
@@ -53,5 +53,3 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
-
-rm -rf $rDIR/$tmpDir
