@@ -14,7 +14,12 @@ cd libpg_query
 # echo "git checkout to $commit"
 git checkout $commit
 
-make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7'
+
+if [ "$(uname)" == "Darwin" ]; then
+	make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7'
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+	make CFLAGS='' PG_CFLAGS=''
+fi
 
 if [ $? -ne 0 ]; then
 	echo "ERROR: 'make' command failed";

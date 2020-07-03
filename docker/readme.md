@@ -1,10 +1,12 @@
-# 1
+# 0 build on mac first
+
+build the binary on mac 
+
+# 1 build the docker image
 
 run `docker-compose build`
 
-# 2
-
-start the server
+# 2 start the server
 
 ```sh
 docker run -d \
@@ -14,7 +16,7 @@ docker run -d \
   pyramation/libpg_query
 ```
 
-# 3
+# 3 jump inside
 
 `ssh` into the box
 
@@ -22,7 +24,28 @@ docker run -d \
 docker exec -it build_pg_query /bin/bash
 ```
 
-build it!
+# publishing from inside 
+
+```sh
+mkdir git
+cd git
+git clone https://github.com/pyramation/pg-plpgsql-query-native
+cd pg-plpgsql-query-native/
+vi script/buildAddon.sh
+yarn
+
+# get the OSX version you build before...
+cp /pg_query/osx/libpg_query.a ./libpg_query/osx/
+
+# add your creds real quick... (look in your ~/.npmrc)
+vi .npmrc
+vi package.json
+npm publish
+```
+
+# building libpg_query
+
+not necessary, but for fun:
 
 ```sh
 mkdir git
