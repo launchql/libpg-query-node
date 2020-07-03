@@ -31,7 +31,6 @@ mkdir git
 cd git
 git clone https://github.com/pyramation/pg-plpgsql-query-native
 cd pg-plpgsql-query-native/
-vi script/buildAddon.sh
 yarn
 
 # get the OSX version you build before...
