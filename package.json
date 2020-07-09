@@ -1,6 +1,6 @@
 {
-  "name": "@pgql/parse",
-  "version": "1.2.6",
+  "name": "@sqlutils/parse",
+  "version": "1.2.1",
   "description": "The real PostgreSQL query parser",
   "homepage": "http://github.com/ethanresnick/node-pg-query-native",
   "main": "index.js",
