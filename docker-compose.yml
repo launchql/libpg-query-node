@@ -1,0 +1,7 @@
+version: '2'
+services:
+    pg_query:
+        build: ./docker
+        image: pyramation/libpg_query
+        volumes:
+          - ./libpg_query:/pg_query

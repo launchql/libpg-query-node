@@ -1,27 +1,35 @@
 {
-  "name": "pg-query-native",
-  "version": "1.1.0",
+  "name": "libpg-query",
+  "version": "13.0.1",
   "description": "The real PostgreSQL query parser",
-  "homepage": "http://github.com/zhm/node-pg-query-native",
+  "homepage": "https://github.com/pyramation/libpg-query-node",
   "main": "index.js",
-  "scripts": {
-    "configure": "./node_modules/node-gyp/bin/node-gyp.js configure",
-    "build": "./node_modules/node-gyp/bin/node-gyp.js configure build",
-    "rebuild": "./node_modules/node-gyp/bin/node-gyp.js configure rebuild",
-    "test": "mocha"
+  "typings": "index.d.ts",
+  "publishConfig": {
+    "access": "public"
   },
-  "author": "Zac McCormick <zac.mccormick@gmail.com> (http://github.com/zhm)",
-  "license": "BSD",
+
+  "scripts": {
+    "configure": "node-gyp configure",
+    "build": "node-gyp configure build",
+    "rebuild": "node-gyp configure rebuild",
+    "test": "mocha --timeout 5000",
+    "preinstall": "script/buildAddon.sh",
+    "postinstall": "node-gyp rebuild"
+  },
+  "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
+  "license": "LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "git://github.com/zhm/node-pg-query-native.git"
+    "url": "git://github.com/pyramation/libpg-query-node.git"
   },
   "devDependencies": {
-    "mocha": "^2.5.3"
+    "chai": "^3.5.0",
+    "lodash": "^4.17.15",
+    "mocha": "^5.2.0"
   },
   "dependencies": {
-    "bindings": "^1.2.1",
-    "nan": "^2.3.5",
+    "node-addon-api": "^1.6.3",
     "node-gyp": "^3.3.1"
   },
   "keywords": [
@@ -30,6 +38,7 @@
     "postgresql",
     "pg",
     "query",
+    "plpgsql",
     "database"
   ]
 }

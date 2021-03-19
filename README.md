@@ -1,10 +1,16 @@
-# pg-query-native [![Build Status](https://travis-ci.org/zhm/node-pg-query-native.svg?branch=master)](https://travis-ci.org/zhm/node-pg-query-native)
+# libpg-query
 
-The real PostgreSQL parser for nodejs.
+The real PostgreSQL parser, exposed for nodejs.
 
-This is based on the output of [libpg_query](https://github.com/lfittl/libpg_query). This wraps the static library output and links it into a node module for use in js.
+Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser)
 
-All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
+## Requirements
+
+Install node-gyp globally
+
+```sh
+npm install node-gyp -g
+```
 
 ## How to re-buid 
 
@@ -19,41 +25,41 @@ Then get the `.a` file and drop it in the folder in this repo.
 ## Installation
 
 ```sh
-npm install pg-query-native-latest
+npm install libpg-query
 ```
 
 ### Documentation
 
-### `query.parse(query)`
+### `query.parseQuery(sql)`/`parseQuerySync`
 
-Parses the query and returns the parse tree.
+Parses the sql and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
-### Parameters
+The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as Postgres expects).
 
-| parameter            | type               | description                                               |
-| -------------------- | ------------------ | --------------------------------------------------------- |
-| `query`              | String             | SQL query                                                 |
+### `query.parsePlPgSQL(funcsSql)`/`query.parsePlPgSQLSync(funcsSql)`
 
-Returns an object in the format:
-
-```
-{ query: <query|Object>,
-  error: { message: <message|String>,
-           fileName: <fileName|String>,
-           lineNumber: <line|Number>,
-           cursorPosition: <cursor|Number> }
-```
+Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration, and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
 ## Example
 
 ```js
-var parse = require('pg-query-native').parse;
-
-console.log(parse('select 1').query);
+const parser = require('libpg-query');
+parser.parseQuery('select 1').then(console.log);
 ```
 
 ## Related
 
-* [libpg_query](https://github.com/lfittl/libpg_query)
+* [libpg_query](https://github.com/pganalyze/libpg_query)
+* [pgsql-parser](https://github.com/pyramation/pgsql-parser)
 * [pg_query](https://github.com/lfittl/pg_query)
 * [pg_query.go](https://github.com/lfittl/pg_query.go)
+
+## Credit
+
+This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_query). This wraps the static library output and links it into a node module for use in js.
+
+All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
+
+Additional thanks for node binding [Ethan Resnick](github.com/ethanresnick).
+
+Original [Code](https://github.com/zhm/node-pg-query-native) and [License](https://github.com/zhm/node-pg-query-native/blob/master/LICENSE.md)

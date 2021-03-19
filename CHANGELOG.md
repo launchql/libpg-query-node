@@ -1,3 +1,17 @@
+# 1.2.1
+* Rename package
+
+# 1.2.0
+* Add TS typings
+
+# 1.1.2 (07/23/19)
+* Fix build script
+
+# 1.1.0 (Republish, 07/23/19)
+* Rewrite to use Node-Addons-API (C++ wrapper for the stable N-API)
+* Support PL/PGSql Parsing
+* Support async parsing
+
 ## 0.0.5 (November 19, 2015)
 * Update libpg_query to include latest A_CONST fixes
 

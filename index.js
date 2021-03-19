@@ -1,25 +1,27 @@
-var PgQuery = require('bindings')('pg-query');
+const PgQuery = require('./build/Release/queryparser');
 
 module.exports = {
-  parse: function(query) {
-    var result = PgQuery.parse(query);
+  parseQuery(query) {
+    return new Promise((resolve, reject) => {
+      PgQuery.parseQueryAsync(query, (err, result) => {
+        err ? reject(err) : resolve(JSON.parse(result));
+      });
+    });
+  },
 
-    if (result.query) {
-      result.query = JSON.parse(result.query);
-    }
+  parsePlPgSQL(query) {
+    return new Promise((resolve, reject) => {
+      PgQuery.parsePlPgSQLAsync(query, (err, result) => {
+        err ? reject(err) : resolve(JSON.parse(result));
+      });
+    });
+  },
 
-    if (result.error) {
-      var err = new Error(result.error.message);
+  parseQuerySync(query) {
+    return JSON.parse(PgQuery.parseQuerySync(query));
+  },
 
-      err.fileName = result.error.fileName;
-      err.lineNumber = result.error.lineNumber;
-      err.cursorPosition = result.error.cursorPosition;
-      err.functionName = result.error.functionName;
-      err.context = result.error.context;
-
-      result.error = err;
-    }
-
-    return result;
+  parsePlPgSQLSync(query) {
+    return JSON.parse(PgQuery.parsePlPgSQLSync(query));
   }
 };

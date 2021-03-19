@@ -1,21 +1,40 @@
 {
   "targets": [
     {
-      "target_name": "pg-query",
-      "sources": [ "pg-query.cc", "functions.cc" ],
-      "include_dirs" : [
- 	 			"<!(node -e \"require('nan')\")",
-        "libpg_query/include"
-			],
+      "target_name": "queryparser",
+      "sources": [
+        "src/addon.cc",
+        "src/helpers.cc",
+        "src/sync.cc",
+        "src/async.cc"
+      ],
+      'cflags!': [ '-fno-exceptions' ],
+      'cflags_cc!': [ '-fno-exceptions' ],
+      'include_dirs': [
+        "libpg_query/include",
+        "<!@(node -p \"require('node-addon-api').include\")"
+      ],
+      'dependencies': ["<!(node -p \"require('node-addon-api').gyp\")"],
       'conditions': [
         ['OS=="linux"', {
-            "libraries": [ "-L<!(pwd)/libpg_query/linux", "-lpg_query" ]
-        } ],
+          "libraries": [ "-L<!(pwd)/libpg_query/linux", "-lpg_query" ]
+        }],
         ['OS=="mac"', {
-          "libraries": [ "-L<!(pwd)/libpg_query/osx", "-lpg_query" ]
-        } ],
-        ['OS=="win"', { }]
+          "libraries": [ "-L<!(pwd)/libpg_query/osx", "-lpg_query" ],
+          "xcode_settings": {
+            "CLANG_CXX_LIBRARY": "libc++",
+            'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
+            'MACOSX_DEPLOYMENT_TARGET': '10.7'
+          }
+        }],
+        ['OS=="win"', {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "ExceptionHandling": 1
+            }
+          }
+        }]
       ]
     }
-  ],
+  ]
 }
