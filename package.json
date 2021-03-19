@@ -2,7 +2,7 @@
   "name": "@pgql/parse",
   "version": "13.0.0",
   "description": "The real PostgreSQL query parser",
-  "homepage": "https://github.com/pyramation/pg-plpgsql-query-native",
+  "homepage": "https://github.com/pyramation/libpg-query-node",
   "main": "index.js",
   "typings": "index.d.ts",
   "publishConfig": {
@@ -18,10 +18,10 @@
     "postinstall": "node-gyp rebuild"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
-  "license": "BSD",
+  "license": "LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pyramation/pg-plpgsql-query-native.git"
+    "url": "git://github.com/pyramation/libpg-query-node.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",

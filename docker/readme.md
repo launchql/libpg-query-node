@@ -29,8 +29,8 @@ docker exec -it build_pg_query /bin/bash
 ```sh
 mkdir git
 cd git
-git clone https://github.com/pyramation/pg-plpgsql-query-native
-cd pg-plpgsql-query-native/
+git clone https://github.com/pyramation/libpg-query-node
+cd libpg-query-node/
 yarn
 
 # get the OSX version you build before...
@@ -49,9 +49,9 @@ not necessary, but for fun:
 ```sh
 mkdir git
 cd git/
-git clone git clone git@github.com:lfittl/libpg_query.git
-git clone git@github.com:lfittl/libpg_query.git
-git clone https://github.com/lfittl/libpg_query.git
+git clone git clone git@github.com:pganalyze/libpg_query.git
+git clone git@github.com:pganalyze/libpg_query.git
+git clone https://github.com/pganalyze/libpg_query.git
 cd libpg_query/
 make
 cp libpg_query.a /pg_query/linux/

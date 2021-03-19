@@ -2,12 +2,6 @@
 
 The real PostgreSQL parser, exposed for nodejs.
 
-This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_query). This wraps the static library output and links it into a node module for use in js.
-
-All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
-
-Additional thanks for node binding [Ethan Resnick](github.com/ethanresnick).
-
 ## Requirements
 
 Install node-gyp globally
@@ -44,5 +38,16 @@ parser.parseQuery('select 1').then(console.log);
 ## Related
 
 * [libpg_query](https://github.com/pganalyze/libpg_query)
+* [pgsql-parser](https://github.com/pyramation/pgsql-parser)
 * [pg_query](https://github.com/lfittl/pg_query)
 * [pg_query.go](https://github.com/lfittl/pg_query.go)
+
+## Credit
+
+This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_query). This wraps the static library output and links it into a node module for use in js.
+
+All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
+
+Additional thanks for node binding [Ethan Resnick](github.com/ethanresnick).
+
+Original [Code](https://github.com/zhm/node-pg-query-native) and [License](https://github.com/zhm/node-pg-query-native/blob/master/LICENSE.md)
