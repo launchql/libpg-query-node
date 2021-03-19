@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-commit=2eab0008556a7e46289a9907d03e9b2534376c56
+commit=6517eedf6c3c6c53a14ecd8f01410bb8fc3c8ec1
 
 rDIR=$(pwd)
-tmpDir=/tmp
+rnd=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 13 ; echo)
+tmpDir=/tmp/$rnd
+
+mkdir -p $tmpDir
 
 cd $tmpDir
 
-git clone -b 10-latest --single-branch https://github.com/ethanresnick/libpg_query
+git clone -b 13-latest --single-branch https://github.com/pganalyze/libpg_query.git
 cd libpg_query
 
 # echo "git checkout to $commit"

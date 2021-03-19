@@ -1,8 +1,8 @@
 {
-  "name": "@pgql/parse",
-  "version": "1.2.6",
+  "name": "libpg-query",
+  "version": "13.0.1",
   "description": "The real PostgreSQL query parser",
-  "homepage": "http://github.com/ethanresnick/node-pg-query-native",
+  "homepage": "https://github.com/pyramation/libpg-query-node",
   "main": "index.js",
   "typings": "index.d.ts",
   "publishConfig": {
@@ -17,11 +17,11 @@
     "preinstall": "script/buildAddon.sh",
     "postinstall": "node-gyp rebuild"
   },
-  "author": "Ethan Resnick <ethan.resnick@gmail.com> (http://github.com/ethanresnick)",
-  "license": "BSD",
+  "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
+  "license": "LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ethanresnick/node-pg-query-native.git"
+    "url": "git://github.com/pyramation/libpg-query-node.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",
