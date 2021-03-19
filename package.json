@@ -1,5 +1,5 @@
 {
-  "name": "@pgql/parse",
+  "name": "libpg-query",
   "version": "13.0.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/pyramation/libpg-query-node",

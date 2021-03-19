@@ -1,6 +1,8 @@
-# @pgql/parse
+# libpg-query
 
 The real PostgreSQL parser, exposed for nodejs.
+
+Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser)
 
 ## Requirements
 
@@ -13,7 +15,7 @@ npm install node-gyp -g
 ## Installation
 
 ```sh
-npm install @pgql/parse
+npm install libpg-query
 ```
 
 ### Documentation
@@ -31,7 +33,7 @@ Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration
 ## Example
 
 ```js
-const parser = require('@pgql/parse');
+const parser = require('libpg-query');
 parser.parseQuery('select 1').then(console.log);
 ```
 
