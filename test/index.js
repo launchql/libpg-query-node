@@ -7,15 +7,14 @@ describe('Queries', () => {
     it("should return a single-item parse result for common queries", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];
       const results = queries.map(query.parseQuerySync);
-
       results.forEach(res => {
-        expect(res).to.have.lengthOf(1);
+        expect(res.stmts).to.have.lengthOf(1);
       });
 
       // Do some rough asserting on the shape of the result.
       // These tests aren't really meant to test the parsing functionality
       // itself, but doing a bit for sanity doesn't hurt.
-      const selectedDatas = results.map(it => it[0].RawStmt.stmt.SelectStmt.targetList);
+      const selectedDatas = results.map(it => it.stmts[0].stmt.SelectStmt.targetList);
 
       expect(selectedDatas[0][0].ResTarget.val.A_Const.val.Integer.ival).to.eq(1);
       expect(selectedDatas[1][0].ResTarget.val.A_Const.val).to.have.property("Null");
@@ -25,17 +24,16 @@ describe('Queries', () => {
 
     it("should support parsing multiple queries", () => {
       const res = query.parseQuerySync("select 1; select null;");
-      const removeChangedProps = (it) => omit(it, changedProps);
       const changedProps = [
-        "RawStmt.stmt_len",
-        "RawStmt.stmt_location",
-        "RawStmt.stmt.SelectStmt.targetList[0].ResTarget.location",
-        "RawStmt.stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.location"
+        "stmt_len",
+        "stmt_location",
+        "stmt.SelectStmt.targetList[0].ResTarget.location",
+        "stmt.SelectStmt.targetList[0].ResTarget.val.A_Const.location"
       ];
-
-      expect(res.map(removeChangedProps)).to.deep.eq([
-        ...(query.parseQuerySync("select 1;").map(removeChangedProps)),
-        ...(query.parseQuerySync("select null;").map(removeChangedProps))
+      const removeChangedProps = (stmt) => omit(stmt, changedProps);
+      expect(res.stmts.map(removeChangedProps)).to.deep.eq([
+        ...(query.parseQuerySync("select 1;").stmts.map(removeChangedProps)),
+        ...(query.parseQuerySync("select null;").stmts.map(removeChangedProps))
       ]);
     });
 
