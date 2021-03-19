@@ -1,8 +1,8 @@
 {
-  "name": "@sqlutils/parse",
+  "name": "@pgql/parse",
   "version": "1.2.1",
   "description": "The real PostgreSQL query parser",
-  "homepage": "http://github.com/ethanresnick/node-pg-query-native",
+  "homepage": "https://github.com/pyramation/pg-plpgsql-query-native",
   "main": "index.js",
   "typings": "index.d.ts",
   "publishConfig": {
@@ -17,11 +17,11 @@
     "preinstall": "script/buildAddon.sh",
     "postinstall": "node-gyp rebuild"
   },
-  "author": "Ethan Resnick <ethan.resnick@gmail.com> (http://github.com/ethanresnick)",
+  "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "BSD",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ethanresnick/node-pg-query-native.git"
+    "url": "git://github.com/pyramation/pg-plpgsql-query-native.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",
