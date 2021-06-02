@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commit=6517eedf6c3c6c53a14ecd8f01410bb8fc3c8ec1
+commit=55668e9003dfb148bc74b9c5d4a41facc5bad5c7
 
 rDIR=$(pwd)
 rnd=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 13 ; echo)
