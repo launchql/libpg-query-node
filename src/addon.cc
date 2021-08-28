@@ -24,6 +24,16 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
     Napi::Function::New(env, ParsePlPgSQLAsync)
   );
 
+  exports.Set(
+      Napi::String::New(env, "fingerprintSync"),
+      Napi::Function::New(env, FingerprintSync)
+  );
+
+  exports.Set(
+      Napi::String::New(env, "fingerprintAsync"),
+      Napi::Function::New(env, FingerprintAsync)
+  );
+
   return exports;
 }
 

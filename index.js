@@ -23,5 +23,17 @@ module.exports = {
 
   parsePlPgSQLSync(query) {
     return JSON.parse(PgQuery.parsePlPgSQLSync(query));
+  },
+
+  fingerprint(query) {
+    return new Promise((resolve, reject) =>{
+      PgQuery.fingerprintAsync(query, (err, result) => {
+        err ? reject(err) : resolve(result);
+      })
+    });
+  },
+
+  fingerprintSync(query) {
+    return PgQuery.fingerprintSync(query);
   }
 };

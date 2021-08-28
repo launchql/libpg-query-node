@@ -17,3 +17,9 @@ Napi::String ParsePlPgSQLSync(const Napi::CallbackInfo& info) {
   return PlPgSQLParseResult(info.Env(), result);
 }
 
+Napi::String FingerprintSync(const Napi::CallbackInfo& info) {
+  std::string query = info[0].As<Napi::String>();
+  PgQueryFingerprintResult result = pg_query_fingerprint(query.c_str());
+
+  return FingerprintResult(info.Env(), result);
+}
