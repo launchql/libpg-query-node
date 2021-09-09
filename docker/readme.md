@@ -2,6 +2,10 @@
 
 build the binary on mac 
 
+```sh
+yarn
+```
+
 # 1 build the docker image
 
 run `docker-compose build`
