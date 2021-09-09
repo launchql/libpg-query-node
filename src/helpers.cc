@@ -39,3 +39,17 @@ Napi::String PlPgSQLParseResult(Napi::Env env, const PgQueryPlpgsqlParseResult& 
     pg_query_free_plpgsql_parse_result(result);
     return returnVal;
 }
+
+
+Napi::String FingerprintResult(Napi::Env env, const PgQueryFingerprintResult & result)
+{
+  if (result.error) {
+    auto throwVal = CreateError(env, *result.error);
+    pg_query_free_fingerprint_result(result);
+    throw throwVal;
+  }
+
+  auto returnVal = Napi::String::New(env, result.fingerprint_str);
+  pg_query_free_fingerprint_result(result);
+  return returnVal;
+}
