@@ -9,12 +9,10 @@
     "access": "public"
   },
   "scripts": {
-    "configure": "node-gyp configure",
-    "build": "node-gyp configure build",
-    "rebuild": "node-gyp configure rebuild",
-    "test": "mocha --timeout 5000",
-    "preinstall": "script/buildAddon.sh",
-    "postinstall": "node-gyp rebuild"
+    "configure": "node-pre-gyp configure",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "rebuild": "node-pre-gyp configure rebuild",
+    "test": "mocha --timeout 5000"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
@@ -28,6 +26,8 @@
     "mocha": "^5.2.0"
   },
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.8",
+    "aws-sdk": "^2.1076.0",
     "node-addon-api": "^1.6.3",
     "node-gyp": "^8.0.0"
   },
@@ -39,5 +39,11 @@
     "query",
     "plpgsql",
     "database"
-  ]
+  ],
+  "binary": {
+    "module_name": "queryparser",
+    "module_path": "./build/Release/",
+    "host": "https://supabase-public-artifacts-bucket.s3.amazonaws.com",
+    "remote_path": "./libpg-query-node/"
+  }
 }
