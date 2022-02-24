@@ -5,6 +5,7 @@ commit=55668e9003dfb148bc74b9c5d4a41facc5bad5c7
 rDIR=$(pwd)
 rnd=$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 13 ; echo)
 tmpDir=/tmp/$rnd
+makeTarget=build
 
 mkdir -p $tmpDir
 
@@ -18,9 +19,9 @@ git checkout $commit
 
 
 if [ "$(uname)" == "Darwin" ]; then
-	make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7'
+	make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7' $makeTarget
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	make CFLAGS='' PG_CFLAGS=''
+	make CFLAGS='' PG_CFLAGS='' $makeTarget
 fi
 
 if [ $? -ne 0 ]; then
