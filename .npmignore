@@ -3,7 +3,6 @@ test
 .gitignore
 .travis.yml
 package.json
-libpg_query
 build
 docker
 
