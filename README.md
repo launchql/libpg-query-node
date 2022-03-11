@@ -10,6 +10,13 @@ Primarily used for the node.js parser and deparser [pgsql-parser](https://github
 - `npx node-pre-gyp rebuild package`
 - With appropriate AWS credentials configured, `npx node-pre-gyp publish`
 
+Or you can run the scripts
+
+```
+npm run binary:build
+npm run binary:publish
+```
+
 ## Installation
 
 ```sh
