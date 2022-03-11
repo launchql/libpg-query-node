@@ -4,23 +4,11 @@ The real PostgreSQL parser, exposed for nodejs.
 
 Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser)
 
-## Requirements
+## Building a binary distribution
 
-Install node-gyp globally
-
-```sh
-npm install node-gyp -g
-```
-
-## How to re-buid 
-
-```sh
-git clone -b 10-latest git://github.com/lfittl/libpg_query
-cd libpg_query
-make
-```
-
-Then get the `.a` file and drop it in the folder in this repo.
+- Install requirements (`npm i`)
+- `npx node-pre-gyp rebuild package`
+- With appropriate AWS credentials configured, `npx node-pre-gyp publish`
 
 ## Installation
 

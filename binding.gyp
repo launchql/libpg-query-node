@@ -8,6 +8,14 @@
         "src/sync.cc",
         "src/async.cc"
       ],
+      "actions": [
+        {
+          "outputs": ['libpg_query/include/pg_query.h'],
+          "inputs": [],
+          "action": ['script/buildAddon.sh'],
+          "action_name": 'prebuild_dependencies'
+        }
+      ],
       'cflags!': [ '-fno-exceptions' ],
       'cflags_cc!': [ '-fno-exceptions' ],
       'include_dirs': [
