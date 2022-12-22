@@ -1,8 +1,8 @@
 {
   "name": "libpg-query",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "description": "The real PostgreSQL query parser",
-  "homepage": "https://github.com/pyramation/git-node",
+  "homepage": "https://github.com/pyramation/libpg-query-node",
   "main": "index.js",
   "typings": "index.d.ts",
   "publishConfig": {

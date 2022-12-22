@@ -42,6 +42,19 @@ const parser = require('libpg-query');
 parser.parseQuery('select 1').then(console.log);
 ```
 
+## Versions
+
+Our latest is built with `15-latest` branch from libpg_query
+
+| PostgreSQL Major Version | libpg_query | Status              | npm 
+|--------------------------|-------------|---------------------|---------|
+| 15                       | 15-latest   | Supported           | [`libpg-query@15.0.0`](https://www.npmjs.com/package/libpg-query/v/15.0.0)
+| 14                       | 14-latest   | Supported           | [`libpg-query@14.0.0`](https://www.npmjs.com/package/libpg-query/v/14.0.0)
+| 13                       | 13-latest   | Supported           | [`libpg-query@13.3.1`](https://www.npmjs.com/package/libpg-query/v/13.3.1)
+| 12                       | (n/a)       | Not supported       |
+| 11                       | (n/a)       | Not supported       |
+| 10                       | 10-latest   | Not supported       | `@1.3.1` ([tree](https://github.com/pyramation/pgsql-parser/tree/39b7b1adc8914253226e286a48105785219a81ca))      | 
+
 ## Related
 
 * [libpg_query](https://github.com/pganalyze/libpg_query)
