@@ -48,7 +48,7 @@ Our latest is built with `15-latest` branch from libpg_query
 
 | PostgreSQL Major Version | libpg_query | Status              | npm 
 |--------------------------|-------------|---------------------|---------|
-| 15                       | 15-latest   | Supported           | [`libpg-query@15.0.0`](https://www.npmjs.com/package/libpg-query/v/15.0.0)
+| 15                       | 15-latest   | Supported           | [`latest`](https://www.npmjs.com/package/libpg-query/v/latest)
 | 14                       | 14-latest   | Supported           | [`libpg-query@14.0.0`](https://www.npmjs.com/package/libpg-query/v/14.0.0)
 | 13                       | 13-latest   | Supported           | [`libpg-query@13.3.1`](https://www.npmjs.com/package/libpg-query/v/13.3.1)
 | 12                       | (n/a)       | Not supported       |
