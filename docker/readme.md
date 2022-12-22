@@ -32,7 +32,7 @@ docker exec -it build_pg_query /bin/bash
 # publishing from inside 
 
 ```sh
-rm -rf git && mkdir git && cd git && git clone -b v15-single-branch https://github.com/pyramation/libpg-query-node && cd libpg-query-node/ && yarn
+rm -rf git && mkdir git && cd git && git clone -b v15 --single-branch https://github.com/pyramation/libpg-query-node && cd libpg-query-node/ && yarn
 
 # get the OSX version you build before...
 cp /pg_query/osx/libpg_query.a ./libpg_query/osx/
