@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commit=1097b2c33e54a37c0d2c0f2d498c7d1cf967eae9
+commit=95c1f0b43b71123b35956c4a19806c2f70d31e0e
 
 rDIR=$(pwd)
 tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmpdir.XXXX')
