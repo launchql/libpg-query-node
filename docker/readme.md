@@ -32,7 +32,7 @@ docker exec -it build_pg_query /bin/bash
 # publishing from inside 
 
 ```sh
-mkdir git && cd git && git clone https://github.com/pyramation/libpg-query-node
+mkdir git && cd git && git clone -b v13 --single-branch https://github.com/pyramation/libpg-query-node
 cd libpg-query-node/
 yarn
 
