@@ -123,10 +123,6 @@ void Method(const FunctionCallbackInfo<Value>& args) {
 
 void MethodDeparse(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
-    JSON::Parse(
-            isolate,
-            String::NewFromUtf8(isolate, result.plpgsql_funcs)
-        ).ToLocal(&parseResult);
     String::Utf8Value parse_tree(args[0]->ToString());
     PgQueryDeparseResult result = pg_query_deparse_protobuf(*parse_tree);
     args.GetReturnValue().Set(QueryDeparseResponse(isolate, result));
