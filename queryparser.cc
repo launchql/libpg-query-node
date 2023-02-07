@@ -60,6 +60,33 @@ Local<Object> QueryParseResponse(Isolate* isolate, const PgQueryParseResult& res
     return handleScope.Escape(obj);
 }
 
+Local<Object> QueryDeparseResponse(Isolate* isolate, const PgQueryDeparseResult& result)
+{
+    v8::EscapableHandleScope handleScope(isolate);
+    Local<Object> obj = Object::New(isolate);
+
+    if (result.error) {
+        obj->Set(
+            String::NewFromUtf8(isolate, "error"),
+            CreateError(isolate, *result.error)
+        );
+    }
+
+    if (result.query) {
+        Local<Value> parseResult;
+        bool parseSucceeded = JSON::Parse(
+            isolate,
+            String::NewFromUtf8(isolate, result.query)
+        ).ToLocal(&parseResult);
+
+        if(parseSucceeded == true)
+            obj->Set(String::NewFromUtf8(isolate, "query"),parseResult);
+    }
+
+    pg_query_free_deparse_result(result);
+    return handleScope.Escape(obj);
+}
+
 Local<Object> PlPgSQLParseResponse(Isolate* isolate, const PgQueryPlpgsqlParseResult& result)
 {
     v8::EscapableHandleScope handleScope(isolate);
@@ -92,6 +119,17 @@ void Method(const FunctionCallbackInfo<Value>& args) {
     String::Utf8Value query(args[0]->ToString());
     PgQueryParseResult result = pg_query_parse(*query);
     args.GetReturnValue().Set(QueryParseResponse(isolate, result));
+}
+
+void MethodDeparse(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = args.GetIsolate();
+    JSON::Parse(
+            isolate,
+            String::NewFromUtf8(isolate, result.plpgsql_funcs)
+        ).ToLocal(&parseResult);
+    String::Utf8Value parse_tree(args[0]->ToString());
+    PgQueryDeparseResult result = pg_query_deparse_protobuf(*parse_tree);
+    args.GetReturnValue().Set(QueryDeparseResponse(isolate, result));
 }
 
 void MethodPlPgSQL(const FunctionCallbackInfo<Value>& args) {

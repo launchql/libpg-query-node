@@ -5,6 +5,11 @@
 // Expose synchronous and asynchronous access to our parsing functions
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports.Set(
+    Napi::String::New(env, "deparseQuerySync"),
+    Napi::Function::New(env, DeparseQuerySync)
+  );
+
+  exports.Set(
     Napi::String::New(env, "parseQuerySync"),
     Napi::Function::New(env, ParseQuerySync)
   );

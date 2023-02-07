@@ -14,6 +14,19 @@ Napi::Error CreateError(Napi::Env env, const PgQueryError& err)
     return error;
 }
 
+Napi::String QueryDeparseResult(Napi::Env env, const PgQueryDeparseResult& result)
+{
+    if (result.error) {
+        auto throwVal = CreateError(env, *result.error);
+        pg_query_free_deparse_result(result);
+        throw throwVal;
+    }
+
+    auto returnVal = Napi::String::New(env, result.query);
+    pg_query_free_deparse_result(result);
+    return returnVal;
+}
+
 Napi::String QueryParseResult(Napi::Env env, const PgQueryParseResult& result)
 {
     if (result.error) {
