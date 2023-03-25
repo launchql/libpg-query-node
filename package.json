@@ -11,6 +11,7 @@
   "scripts": {
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build",
+    "proto": "node_modules/protobufjs-cli/bin/pbjs --keep-case -t static-module -o proto.js libpg_query/protobuf/pg_query.proto",
     "rebuild": "node-pre-gyp configure rebuild",
     "test": "mocha --timeout 5000",
     "binary:build": "node-pre-gyp rebuild package",
@@ -25,12 +26,14 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "lodash": "^4.17.15",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "protobufjs-cli": "https://gitpkg.now.sh/michaelbgreen/protobuf.js/cli?6254efb1bd9263978e9a90da3b05c4ccbcd6564a"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.8",
     "node-addon-api": "^1.6.3",
-    "node-gyp": "^8.0.0"
+    "node-gyp": "^8.0.0",
+    "protobufjs": "git+https://github.com/michaelbgreen/protobuf.js.git#c0b68ac5c8fbb1ded261c0924bbce0538370333e"
   },
   "keywords": [
     "sql",

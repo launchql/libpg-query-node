@@ -53,6 +53,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
+cp $(pwd)/protobuf/*.proto $rDIR/libpg_query/protobuf/
 
 cd "$rDIR"
 rm -rf "$tmpDir"
