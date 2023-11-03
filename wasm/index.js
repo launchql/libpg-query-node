@@ -1,5 +1,5 @@
-const PgQueryModule = require('./libpg-query.js');
-const { getDefaultContext } = require('@emnapi/runtime');
+import { getDefaultContext } from '@emnapi/runtime';
+import PgQueryModule from './libpg-query.js';
 
 let PgQuery;
 
@@ -11,40 +11,37 @@ const initPromise = PgQueryModule().then((module) => {
   PgQuery = binding;
 });
 
-module.exports = {
-  parseQuery(query) {
-    return new Promise(async (resolve, reject) => {
-      if (!PgQuery) {
-        await initPromise;
-      }
+/**
+ * Function wrapper that waits for the WASM module to initialize
+ * before executing the function.
+ */
+function awaitInit(fn) {
+  return async (...args) => {
+    await initPromise;
+    return fn(...args);
+  };
+}
 
-      PgQuery.parseQueryAsync(query, (err, result) => {
-        err ? reject(err) : resolve(JSON.parse(result));
-      });
+export const parseQuery = awaitInit((query) => {
+  return new Promise(async (resolve, reject) => {
+    PgQuery.parseQueryAsync(query, (err, result) => {
+      err ? reject(err) : resolve(JSON.parse(result));
     });
-  },
+  });
+});
 
-  parsePlPgSQL(query) {
-    return new Promise(async (resolve, reject) => {
-      if (!PgQuery) {
-        await initPromise;
-      }
-
-      PgQuery.parsePlPgSQLAsync(query, (err, result) => {
-        err ? reject(err) : resolve(JSON.parse(result));
-      });
+export const parsePlPgSQL = awaitInit((query) => {
+  return new Promise(async (resolve, reject) => {
+    PgQuery.parsePlPgSQLAsync(query, (err, result) => {
+      err ? reject(err) : resolve(JSON.parse(result));
     });
-  },
+  });
+});
 
-  fingerprint(query) {
-    return new Promise(async (resolve, reject) => {
-      if (!PgQuery) {
-        await initPromise;
-      }
-
-      PgQuery.fingerprintAsync(query, (err, result) => {
-        err ? reject(err) : resolve(result);
-      });
+export const fingerprint = awaitInit((query) => {
+  return new Promise(async (resolve, reject) => {
+    PgQuery.fingerprintAsync(query, (err, result) => {
+      err ? reject(err) : resolve(result);
     });
-  },
-};
+  });
+});

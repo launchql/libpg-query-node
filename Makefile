@@ -69,7 +69,7 @@ ifdef EMSCRIPTEN
 		-s EXPORT_NAME="$(WASM_MODULE_NAME)" \
 		-s ENVIRONMENT="web" \
 		-s MODULARIZE=1 \
-		-s SINGLE_FILE=1 \
+		-s EXPORT_ES6=1 \
 		-l pg_query \
 		-l emnapi-basic \
 		-o $@ \

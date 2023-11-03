@@ -1,7 +1,7 @@
-import parser from '../../../wasm';
+import { parseQuery } from '../../../wasm';
 
 const sql = 'select * from customers;';
-const result = await parser.parseQuery(sql);
+const result = await parseQuery(sql);
 
 console.log(sql);
 console.log(result);
