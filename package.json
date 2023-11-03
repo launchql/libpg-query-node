@@ -19,7 +19,11 @@
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build",
     "rebuild": "node-pre-gyp configure rebuild",
-    "build:wasm": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "make:wasm": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "build:wasm": "yarn make:wasm build",
+    "rebuild:wasm": "yarn make:wasm rebuild",
+    "clean:wasm": "make clean",
+    "clean:cache": "make clean-cache",
     "test": "mocha --timeout 5000",
     "binary:build": "node-pre-gyp rebuild package",
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"

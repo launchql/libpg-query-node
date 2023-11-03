@@ -6,3 +6,4 @@ libpg_query/**/*.a
 libpg_query/**/*.h
 wasm/libpg-query.js
 *.wasm
+.cache
