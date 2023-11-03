@@ -60,6 +60,5 @@
     "module_path": "./build/Release/",
     "host": "https://supabase-public-artifacts-bucket.s3.amazonaws.com",
     "remote_path": "./libpg-query-node/"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }
