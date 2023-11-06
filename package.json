@@ -8,11 +8,25 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "binding.gyp",
+    "index.js",
+    "index.d.ts",
+    "libpg_query/*",
+    "script/*",
+    "src/*",
+    "wasm/*"
+  ],
   "exports": {
     ".": {
       "types": "./index.d.ts",
-      "default": "./index.js",
-      "browser": "./wasm/index.js"
+      "browser": "./wasm/index.js",
+      "node": "./index.js",
+      "default": "./index.js"
+    },
+    "./wasm": {
+      "types": "./index.d.ts",
+      "default": "./wasm/index.js"
     }
   },
   "scripts": {
