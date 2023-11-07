@@ -56,22 +56,21 @@ $(OUT_FILES): $(LIBPG_QUERY_DIR) $(SRC_FILES)
 ifdef EMSCRIPTEN
 	@ $(CXX) \
 		$(CXXFLAGS) \
-		-D NAPI_DISABLE_CPP_EXCEPTIONS \
-		-D NODE_ADDON_API_ENABLE_MAYBE \
-		-D NAPI_HAS_THREADS \
-		-I $(LIBPG_QUERY_DIR) \
-		-I ./node_modules/emnapi/include \
-		-I ./node_modules/node-addon-api \
-		-L ./node_modules/emnapi/lib/wasm32-emscripten \
-		-L $(LIBPG_QUERY_DIR) \
+		-DNAPI_HAS_THREADS \
+		-I$(LIBPG_QUERY_DIR) \
+		-I./node_modules/emnapi/include \
+		-I./node_modules/node-addon-api \
+		-L./node_modules/emnapi/lib/wasm32-emscripten \
+		-L$(LIBPG_QUERY_DIR) \
 		--js-library=./node_modules/emnapi/dist/library_napi.js \
-		-s EXPORTED_FUNCTIONS="['_malloc','_free','_napi_register_wasm_v1','_node_api_module_get_api_version_v1']" \
-		-s EXPORT_NAME="$(WASM_MODULE_NAME)" \
-		-s ENVIRONMENT="web" \
-		-s MODULARIZE=1 \
-		-s EXPORT_ES6=1 \
-		-l pg_query \
-		-l emnapi-basic \
+		-sEXPORTED_FUNCTIONS="['_malloc','_free','_napi_register_wasm_v1','_node_api_module_get_api_version_v1']" \
+		-sEXPORT_NAME="$(WASM_MODULE_NAME)" \
+		-sENVIRONMENT="web" \
+		-sMODULARIZE=1 \
+		-sEXPORT_ES6=1 \
+		-fexceptions \
+		-lpg_query \
+		-lemnapi-basic \
 		-o $@ \
 		$(SRC_FILES)
 else
