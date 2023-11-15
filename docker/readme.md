@@ -6,26 +6,10 @@ build the binary on mac
 yarn
 ```
 
-# 1 build the docker image
-
-run `docker-compose build`
-
-# 2 start the server
+# 1 build and run the docker image
 
 ```sh
-docker run -d \
-  -it \
-  --name build_pg_query \
-  --mount type=bind,source="$(pwd)"/libpg_query,target=/pg_query \
-  pyramation/libpg_query
-```
-
-# 3 jump inside
-
-`ssh` into the box
-
-```sh
-docker exec -it build_pg_query /bin/bash
+docker run --mount type=bind,source="$(pwd)"/libpg_query,target=/pg_query --rm -it $(docker build -q --file docker/Dockerfile .)
 ```
 
 # publishing from inside 
