@@ -1,5 +1,12 @@
 # libpg-query
 
+<p align="center" width="100%">
+   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dt/libpg-query"></a>
+   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dw/libpg-query"/></a>
+   <a href="https://github.com/launchql/libpg-query/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
+   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node"/></a>
+</p>
+
 The real PostgreSQL parser, exposed for nodejs.
 
 Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser)
