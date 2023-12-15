@@ -2,7 +2,7 @@
   "name": "libpg-query",
   "version": "13.3.0",
   "description": "The real PostgreSQL query parser",
-  "homepage": "https://github.com/pyramation/libpg-query-node",
+  "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "index.js",
   "typings": "index.d.ts",
   "publishConfig": {
@@ -20,7 +20,7 @@
   "license": "LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "git://github.com/pyramation/libpg-query-node.git"
+    "url": "git://github.com/launchql/libpg-query-node.git"
   },
   "devDependencies": {
     "chai": "^3.5.0",
