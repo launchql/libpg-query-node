@@ -62,6 +62,6 @@ This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_
 
 All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
 
-Additional thanks for node binding [Ethan Resnick](github.com/ethanresnick).
+Additional thanks for node binding [Ethan Resnick](https://github.com/ethanresnick).
 
 Original [Code](https://github.com/zhm/node-pg-query-native) and [License](https://github.com/zhm/node-pg-query-native/blob/master/LICENSE.md)
