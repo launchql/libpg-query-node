@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commit=1097b2c33e54a37c0d2c0f2d498c7d1cf967eae9
+commit=1ec38940e5c6f09a4c1d17a46d839a881c4f2db7
 
 rDIR=$(pwd)
 tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmpdir.XXXX')
@@ -8,7 +8,7 @@ makeTarget=build
 
 cd "$tmpDir"
 
-git clone -b 13-latest --single-branch https://github.com/pganalyze/libpg_query.git
+git clone -b 16-latest --single-branch https://github.com/pganalyze/libpg_query.git
 cd libpg_query
 
 git checkout $commit
