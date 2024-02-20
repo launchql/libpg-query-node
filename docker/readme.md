@@ -19,12 +19,13 @@ mkdir git && cd git && git clone https://github.com/launchql/libpg-query-node
 cd libpg-query-node/
 yarn
 
-# get the OSX version you build before...
-cp /pg_query/osx/libpg_query.a ./libpg_query/osx/
+# get the linux version and sent it to docker host
+cp ./libpg_query/linux/libpg_query.a /pg_query/linux/
+```
 
-# add your creds real quick... (look in your ~/.npmrc)
-vi .npmrc
-vi package.json
+Now on the docker host machine, you should be able to publish:
+
+```sh
 npm publish
 ```
 
@@ -35,8 +36,6 @@ not necessary, but for fun:
 ```sh
 mkdir git
 cd git/
-git clone git clone git@github.com:pganalyze/libpg_query.git
-git clone git@github.com:pganalyze/libpg_query.git
 git clone https://github.com/pganalyze/libpg_query.git
 cd libpg_query/
 make
@@ -46,18 +45,17 @@ cp libpg_query.a /pg_query/linux/
 you should see `.a` files now :)
 
 ```
-libpg_query/
-libpg_query//osx
-libpg_query//osx/libpg_query.a
-libpg_query//osx/.gitkeep
-libpg_query//include
-libpg_query//include/.gitkeep
-libpg_query//include/pg_query.h
-libpg_query//linux
-libpg_query//linux/libpg_query.a
-libpg_query//linux/.gitkeep
-libpg_query//windows
-libpg_query//windows/.gitkeep
+libpg_query/osx
+libpg_query/osx/libpg_query.a
+libpg_query/osx/.gitkeep
+libpg_query/include
+libpg_query/include/.gitkeep
+libpg_query/include/pg_query.h
+libpg_query/linux
+libpg_query/linux/libpg_query.a
+libpg_query/linux/.gitkeep
+libpg_query/windows
+libpg_query/windows/.gitkeep
 ```
 
 make sure you grab the `pg_query.h` if you don't have it ;)
