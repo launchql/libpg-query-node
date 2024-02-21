@@ -11,6 +11,30 @@ The real PostgreSQL parser, exposed for nodejs.
 
 Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser)
 
+
+## Table of Contents
+
+1. [Installation](#installation)
+2. [Example](#example)
+3. [Building a binary distribution](#building-a-binary-distribution)
+4. [Documentation](#documentation)
+5. [Related Projects](#related-projects)
+6. [Credit](#credit)
+
+
+## Installation
+
+```sh
+npm install libpg-query
+```
+
+## Example
+
+```js
+const parser = require('libpg-query');
+parser.parseQuery('select 1').then(console.log);
+```
+
 ## Building a binary distribution
 
 - Install requirements (`npm i`)
@@ -22,12 +46,6 @@ Or you can run the scripts
 ```
 npm run binary:build
 npm run binary:publish
-```
-
-## Installation
-
-```sh
-npm install libpg-query
 ```
 
 ### Documentation
@@ -42,14 +60,7 @@ The return value is an array, as multiple queries may be provided in a single st
 
 Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration, and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
 
-## Example
-
-```js
-const parser = require('libpg-query');
-parser.parseQuery('select 1').then(console.log);
-```
-
-## Related
+## Related Projects
 
 * [libpg_query](https://github.com/pganalyze/libpg_query)
 * [pgsql-parser](https://github.com/pyramation/pgsql-parser)
