@@ -1,6 +1,6 @@
 {
   "name": "libpg-query",
-  "version": "13.3.1",
+  "version": "13.3.2",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/pyramation/libpg-query-node",
   "main": "index.js",
