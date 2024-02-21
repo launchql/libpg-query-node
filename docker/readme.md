@@ -15,11 +15,12 @@ docker run \
   $(docker build -q --file docker/Dockerfile .)
 ```
 
-# publishing from inside 
+# build inside the docker image
 
 ```sh
+branch=15-latest
 mkdir git_clone_dir && cd git_clone_dir
-git clone https://github.com/launchql/libpg-query-node
+git clone -b $branch --single-branch https://github.com/launchql/libpg-query-node
 cd libpg-query-node/
 yarn
 
@@ -35,12 +36,12 @@ npm publish
 
 # building libpg_query
 
-not necessary, but for fun:
+to build manually using `libpg_query`
 
 ```sh
-mkdir git
-cd git/
-git clone https://github.com/pganalyze/libpg_query.git
+branch=15-latest
+mkdir git_clone_dir && cd git_clone_dir
+git clone -b $branch --single-branch https://github.com/pganalyze/libpg_query.git
 cd libpg_query/
 make
 cp libpg_query.a /pg_query/linux/

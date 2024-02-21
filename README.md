@@ -60,7 +60,7 @@ Our latest is built with `16-latest` branch from libpg_query
 | PG Major Version | libpg_query | Branch                                                                                         | npm 
 |--------------------------|-------------|------------------------------------------------------------------------------------------------|---------|
 | 16                       | 16-latest   | [`16-latest`](https://github.com/launchql/libpg-query-node/tree/16-latest)                       | [`libpg-query@16.0.0`](https://www.npmjs.com/package/libpg-query/v/latest)
-| 15                       | 15-latest   | [`15-latest`](https://github.com/launchql/libpg-query-node/tree/15-latest)                       | [`libpg-query@15.0.0`](https://www.npmjs.com/package/libpg-query/v/15.0.0)
+| 15                       | 15-latest   | [`15-latest`](https://github.com/launchql/libpg-query-node/tree/15-latest)                       | [`libpg-query@15.0.3`](https://www.npmjs.com/package/libpg-query/v/15.0.3)
 | 14                       | 14-latest   | [`14-latest`](https://github.com/launchql/libpg-query-node/tree/14-latest)                       | [`libpg-query@14.0.0`](https://www.npmjs.com/package/libpg-query/v/14.0.0)
 | 13                       | 13-latest   | [`13-latest`](https://github.com/launchql/libpg-query-node/tree/13-latest)                       | [`libpg-query@13.3.1`](https://www.npmjs.com/package/libpg-query/v/13.3.1)
 | 12                       | (n/a)       |                                                                                                |
