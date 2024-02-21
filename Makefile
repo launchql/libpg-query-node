@@ -35,20 +35,6 @@ else
 OUT_FILES := build/Release/queryparser.node $(wildcard build/*)
 endif
 
-build: $(OUT_FILES)
-
-build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
-
-rebuild: clean build
-
-rebuild-cache: clean-cache build-cache
-
-clean:
-	-@ rm -r $(OUT_FILES) > /dev/null 2>&1
-
-clean-cache:
-	-@ rm -rf $(LIBPG_QUERY_DIR)
-
 # Clone libpg_query source (lives in CACHE_DIR) 
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
@@ -86,5 +72,20 @@ else
 # if not wasm, defer to node-gyp
 	yarn rebuild
 endif
+
+# Commands
+build: $(OUT_FILES)
+
+build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
+
+rebuild: clean build
+
+rebuild-cache: clean-cache build-cache
+
+clean:
+	-@ rm -r $(OUT_FILES) > /dev/null 2>&1
+
+clean-cache:
+	-@ rm -rf $(LIBPG_QUERY_DIR)
 
 .PHONY: build build-cache rebuild rebuild-cache clean clean-cache
