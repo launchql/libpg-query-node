@@ -9,13 +9,17 @@ yarn
 # 1 build and run the docker image
 
 ```sh
-docker run --mount type=bind,source="$(pwd)"/libpg_query,target=/pg_query --rm -it $(docker build -q --file docker/Dockerfile .)
+docker run \
+  --mount type=bind,source="$(pwd)"/libpg_query,target=/pg_query \
+  --rm -it \
+  $(docker build -q --file docker/Dockerfile .)
 ```
 
 # publishing from inside 
 
 ```sh
-mkdir git && cd git && git clone https://github.com/launchql/libpg-query-node
+mkdir git_clone_dir && cd git_clone_dir
+git clone https://github.com/launchql/libpg-query-node
 cd libpg-query-node/
 yarn
 
