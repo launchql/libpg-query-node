@@ -1,7 +1,7 @@
 # libpg-query
 
 <p align="center" width="100%">
-    <img src="https://github.com/launchql/libpg-query-node/assets/545047/7f7053b8-9f52-4f4e-95b0-201d656902ed" alt="webincubator" width="100">
+    <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
 </p>
 
 <p align="center" width="100%">
