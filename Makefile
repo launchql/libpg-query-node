@@ -37,11 +37,11 @@ endif
 
 build: $(OUT_FILES)
 
-build-cache: $(LIBPG_QUERY_DIR)
+build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
 
-rebuild: clean $(OUT_FILES)
+rebuild: clean build
 
-rebuild-cache: clean-cache $(LIBPG_QUERY_DIR)
+rebuild-cache: clean-cache build-cache
 
 clean:
 	-@ rm -r $(OUT_FILES) > /dev/null 2>&1
