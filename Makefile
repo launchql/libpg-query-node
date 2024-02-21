@@ -2,7 +2,7 @@ WASM_OUT_DIR := wasm
 WASM_OUT_NAME := libpg-query
 WASM_MODULE_NAME := PgQueryModule
 LIBPG_QUERY_REPO := https://github.com/pganalyze/libpg_query.git
-LIBPG_QUERY_BRANCH := 15-latest
+LIBPG_QUERY_TAG := 15-4.2.4
 CACHE_DIR := .cache
 
 OS ?= $(shell uname -s)
@@ -24,7 +24,7 @@ endif
 
 PLATFORM_ARCH := $(PLATFORM)-$(ARCH)
 SRC_FILES := $(wildcard src/*.cc)
-LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_BRANCH)
+LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_TAG)
 LIBPG_QUERY_ARCHIVE := $(LIBPG_QUERY_DIR)/libpg_query.a
 LIBPG_QUERY_HEADER := $(LIBPG_QUERY_DIR)/pg_query.h
 CXXFLAGS := -O3
@@ -52,7 +52,7 @@ clean-cache:
 # Clone libpg_query source (lives in CACHE_DIR) 
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
-	git clone -b $(LIBPG_QUERY_BRANCH) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
+	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 
