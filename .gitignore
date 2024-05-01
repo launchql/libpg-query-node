@@ -7,3 +7,4 @@ libpg_query/**/*.h
 wasm/libpg-query.js
 *.wasm
 .cache
+libpg_query/windows/*.lib
