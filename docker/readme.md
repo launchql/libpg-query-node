@@ -3,6 +3,7 @@
 build the binary on mac 
 
 ```sh
+rm -rf build
 yarn
 ```
 
