@@ -8,10 +8,36 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "binding.gyp",
+    "index.js",
+    "index.d.ts",
+    "libpg_query/*",
+    "script/*",
+    "src/*",
+    "wasm/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "browser": "./wasm/index.js",
+      "node": "./index.js",
+      "default": "./index.js"
+    },
+    "./wasm": {
+      "types": "./index.d.ts",
+      "default": "./wasm/index.js"
+    }
+  },
   "scripts": {
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build",
     "rebuild": "node-pre-gyp configure rebuild",
+    "make:wasm": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "build:wasm": "yarn make:wasm build",
+    "rebuild:wasm": "yarn make:wasm rebuild",
+    "clean:wasm": "yarn make:wasm clean",
+    "clean-cache:wasm": "yarn make:wasm clean-cache",
     "test": "mocha --timeout 5000",
     "binary:build": "node-pre-gyp rebuild package",
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
@@ -24,12 +50,14 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "emnapi": "^0.43.1",
     "lodash": "^4.17.15",
     "mocha": "^5.2.0"
   },
   "dependencies": {
+    "@emnapi/runtime": "^0.43.1",
     "@mapbox/node-pre-gyp": "^1.0.8",
-    "node-addon-api": "^1.6.3",
+    "node-addon-api": "^7.0.0",
     "node-gyp": "^8.0.0"
   },
   "keywords": [
