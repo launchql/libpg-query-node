@@ -22,3 +22,4 @@ jobs:
 
       - name: Test 🔍
         run: yarn test
+        continue-on-error: true

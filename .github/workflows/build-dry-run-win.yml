@@ -1,0 +1,44 @@
+name: Build Dry Run Windows 🏗
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 🌐
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Install Dependencies & Build 🧶
+        run: |
+          yarn
+          yarn binary:build
+
+      - name: Save Artifacts 🏗
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact-windows-latest
+          # will build the entire directory with single artifact file named like `queryparser-v${PACKAGE_JSON_VERSION}-node-v${NODE_VERSION}-win32-x64.tar.gz`
+          # path: './build/stage/libpg-query-node/queryparser-v16.2.0-node-v108-win32-x64.tar.gz'
+          path: './build/stage/libpg-query-node/'
+
+
+  prepare-and-publish-windows:
+    needs: build-windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts
+      - name: Prepare artifacts
+        run: |
+          # should show the downloaded artifacts wit `win32-x64.tar.gz` suffix
+          ls -al
