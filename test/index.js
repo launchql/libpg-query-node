@@ -3,6 +3,22 @@ const { expect } = require("chai");
 const { omit, cloneDeepWith } = require("lodash");
 
 describe("Queries", () => {
+  describe("Sync Deparsing", () => {
+    it("should deparse", () => {
+      // Parse the SQL query synchronously
+      const result = query.parseQuerySync('select * from mytable');
+
+      // Serialize the result to JSON if it's not already a string
+      const serializedResult = JSON.stringify(result.stmts[0]);
+
+      // Convert the serialized JSON to a Buffer
+      const buffer = Buffer.from(serializedResult, 'utf-8');
+
+      // Now, you can call deparseSync (assuming deparseSync accepts JSON in a buffer)
+      const deparsed = query.deparseSync(buffer);
+      console.log('Deparsed SQL:', deparsed);
+    })
+  });
   describe("Sync Parsing", () => {
     it("should return a single-item parse result for common queries", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];

@@ -23,3 +23,34 @@ Napi::String FingerprintSync(const Napi::CallbackInfo& info) {
 
   return FingerprintResult(info.Env(), result);
 }
+
+Napi::String DeparseSync(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+
+  // Check input arguments
+  if (info.Length() < 1 || !info[0].IsBuffer()) {
+    Napi::TypeError::New(env, "Expected a buffer").ThrowAsJavaScriptException();
+    return Napi::String::New(env, "");
+  }
+
+  Napi::Buffer<uint8_t> buffer = info[0].As<Napi::Buffer<uint8_t>>();
+  PgQueryProtobuf parse_tree;
+  parse_tree.data = reinterpret_cast<char*>(buffer.Data());
+  parse_tree.len = buffer.Length();
+
+  // Perform the deparsing
+  PgQueryDeparseResult result = pg_query_deparse_protobuf(parse_tree);
+
+  // Check for errors and return result or throw an exception
+  if (result.error) {
+    std::string error_message = "Deparsing error: " + std::string(result.error->message);
+    pg_query_free_deparse_result(result); // Corrected to use the specific free function for deparse results
+    Napi::Error::New(env, error_message).ThrowAsJavaScriptException();
+    return Napi::String::New(env, "");
+  } else {
+    Napi::String deparsedQuery = Napi::String::New(env, result.query);
+    pg_query_free_deparse_result(result); // Ensure to free the entire structure, not just the query
+    return deparsedQuery;
+  }
+}
+

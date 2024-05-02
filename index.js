@@ -36,4 +36,20 @@ module.exports = {
   fingerprintSync(query) {
     return PgQuery.fingerprintSync(query);
   },
+
+
+  deparse(parseTree) {
+    // assuming parseTree is a Buffer containing the serialized parse tree data
+    return new Promise((resolve, reject) => {
+      PgQuery.deparseAsync(parseTree, (err, result) => {
+        err ? reject(err) : resolve(result);
+      });
+    });
+  },
+
+  deparseSync(parseTree) {
+    // assuming parseTree is a Buffer for the synchronous version
+    return PgQuery.deparseSync(parseTree);
+  }
+
 };

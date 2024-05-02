@@ -97,6 +97,35 @@ private:
   PgQueryFingerprintResult result;
 };
 
+
+class DeparseWorker : public Napi::AsyncWorker {
+public:
+    DeparseWorker(Napi::Function& callback, PgQueryProtobuf parse_tree)
+        : Napi::AsyncWorker(callback), parse_tree(parse_tree) {}
+
+    void Execute() {
+        result = pg_query_deparse_protobuf(parse_tree);
+    }
+
+    void OnOK() {
+        Napi::HandleScope scope(Env());
+        try {
+            if (result.error) {
+                Napi::Error::New(Env(), result.error->message).ThrowAsJavaScriptException();
+            } else {
+                Callback().Call({Env().Undefined(), Napi::String::New(Env(), result.query)});
+            }
+        } catch (const Napi::Error& e) {
+            Callback().Call({e.Value(), Env().Undefined()});
+        }
+        pg_query_free_deparse_result(result);
+    }
+
+private:
+    PgQueryProtobuf parse_tree;
+    PgQueryDeparseResult result;
+};
+
 Napi::Value ParseQueryAsync(const Napi::CallbackInfo& info) {
   std::string query = info[0].As<Napi::String>();
   Napi::Function callback = info[1].As<Napi::Function>();
@@ -119,4 +148,26 @@ Napi::Value FingerprintAsync(const Napi::CallbackInfo& info) {
   FingeprintWorker* worker = new FingeprintWorker(callback, query);
   worker->Queue();
   return info.Env().Undefined();
+}
+
+
+Napi::Value DeparseAsync(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    if (info.Length() < 2 || !info[0].IsBuffer() || !info[1].IsFunction()) {
+        Napi::TypeError::New(env, "Expected a buffer and a callback function").ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+
+    Napi::Buffer<uint8_t> buffer = info[0].As<Napi::Buffer<uint8_t>>();
+    Napi::Function callback = info[1].As<Napi::Function>();
+
+    PgQueryProtobuf parse_tree;
+    parse_tree.data = reinterpret_cast<char*>(buffer.Data());
+    parse_tree.len = buffer.Length();
+
+    DeparseWorker* worker = new DeparseWorker(callback, parse_tree);
+    worker->Queue();
+
+    return env.Undefined();
 }
