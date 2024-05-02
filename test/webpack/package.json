@@ -1,0 +1,14 @@
+{
+  "name": "webpack-test",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "webpack serve --open",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
