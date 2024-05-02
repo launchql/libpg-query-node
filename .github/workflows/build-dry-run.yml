@@ -36,14 +36,22 @@ jobs:
     needs: build-matrix  # Corrected the needs to reflect the actual job name
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v4
+
+      - name: Get Artifacts
+        uses: actions/download-artifact@v4
         with:
           path: downloaded-artifacts
+
       - name: Prepare artifacts
         run: |
-          # move or prepare artifacts
-          find .
+          cp ./downloaded-artifacts/build-artifact-windows-latest/pg_query.lib ./libpg_query/windows/queryparser.lib
+          cp ./downloaded-artifacts/build-artifact-ubuntu-latest/libpg_query.a ./libpg_query/linux/libpg_query.a
+          cp ./downloaded-artifacts/build-artifact-macos-latest/libpg_query.a ./libpg_query/osx/libpg_query.a
+          rm -rf ./downloaded-artifacts
+          find ./libpg_query
+
     # - name: Publish to NPM
     #   run: |
     #     # Assuming you've set up your package.json and .npmrc correctly
