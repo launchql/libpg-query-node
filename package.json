@@ -30,9 +30,10 @@
     }
   },
   "scripts": {
+    "clean": "rimraf build",
     "configure": "node-pre-gyp configure",
-    "install": "node-pre-gyp install --fallback-to-build",
-    "rebuild": "node-pre-gyp configure rebuild",
+    "install": "node-pre-gyp install --fallback-to-build --loglevel verbose",
+    "rebuild": "node-pre-gyp rebuild --loglevel verbose",
     "make:wasm": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "build:wasm": "yarn make:wasm build",
     "rebuild:wasm": "yarn make:wasm rebuild",
@@ -49,6 +50,7 @@
     "url": "git://github.com/launchql/libpg-query-node.git"
   },
   "devDependencies": {
+    "rimraf": "5.0.0",
     "chai": "^3.5.0",
     "emnapi": "^0.43.1",
     "lodash": "^4.17.15",
