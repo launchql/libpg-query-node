@@ -1,13 +1,11 @@
-name: Run Tests 🧪
+name: Run Tests Windows 🧪
 
 on:
-  pull_request:
-    types: [opened, push, reopened]
   workflow_dispatch:
 
 jobs:
   run-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
