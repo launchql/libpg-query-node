@@ -1,4 +1,4 @@
-name: Build Dry Run 🏗
+name: Build Dry Run No Windows 🏗
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
     steps:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
@@ -29,8 +29,8 @@ jobs:
           name: build-artifact-${{ matrix.os }}
           path: |
             ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
-               matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' || 
-               matrix.os == 'windows-latest' && './libpg_query/windows/queryparser.lib' }}
+               matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' 
+             }}
 
   prepare-and-publish:
     needs: build-matrix  # Corrected the needs to reflect the actual job name
