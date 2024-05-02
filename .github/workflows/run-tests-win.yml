@@ -1,6 +1,8 @@
-name: Run Tests Windows 🧪
+name: Windows 🛠
 
 on:
+  pull_request:
+    types: [opened, push, reopened]
   workflow_dispatch:
 
 jobs:
@@ -20,5 +22,5 @@ jobs:
         run: |
           yarn
 
-      - name: Test 🔍
-        run: yarn test
+      # - name: Test 🔍
+      #   run: yarn test

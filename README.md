@@ -15,6 +15,9 @@
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-mac.yml">
     <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-mac.yml/badge.svg" />
    </a>
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-win.yml">
+    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-win.yml/badge.svg" />
+   </a>
 
 </p>
 

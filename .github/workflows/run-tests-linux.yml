@@ -1,4 +1,4 @@
-name: Run Tests Linux 🧪
+name: Linux 🧪
 
 on:
   pull_request:

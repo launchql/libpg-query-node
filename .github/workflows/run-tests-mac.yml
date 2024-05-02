@@ -1,6 +1,8 @@
-name: Run Tests Mac 🧪
+name: Mac 🧪
 
 on:
+  pull_request:
+    types: [opened, push, reopened]
   workflow_dispatch:
 
 jobs:
