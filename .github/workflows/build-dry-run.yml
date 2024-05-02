@@ -18,28 +18,30 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'yarn'
-    - uses: actions/upload-artifact@v2
-      with:
-        name: build-artifact-${{ matrix.os }}
-        path: |
-          ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
-             matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' || 
-             matrix.os == 'windows-latest' && './libpg_query/windows/queryparser.lib' }}
+
+      - name: Save Artifacts 🏗
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact-${{ matrix.os }}
+          path: |
+            ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
+               matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' || 
+               matrix.os == 'windows-latest' && './libpg_query/windows/queryparser.lib' }}
+
   prepare-and-publish:
-    needs: build
+    needs: build-matrix  # Corrected the needs to reflect the actual job name
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
-      with:
-        path: downloaded-artifacts
-    - name: Prepare artifacts
-      run: |
-        # move or prepare artifacts
-        ls downloaded-artifacts/* 
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          path: downloaded-artifacts
+      - name: Prepare artifacts
+        run: |
+          # move or prepare artifacts
+          ls downloaded-artifacts/* 
     # - name: Publish to NPM
     #   run: |
     #     # Assuming you've set up your package.json and .npmrc correctly
     #     npm publish
       # env:
-        # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
