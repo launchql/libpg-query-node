@@ -1,4 +1,4 @@
-FROM node:12.18.2-alpine3.11
+FROM node:20-alpine
 RUN apk --no-cache add git
 RUN apk add --no-cache bash
 RUN apk add --no-cache make

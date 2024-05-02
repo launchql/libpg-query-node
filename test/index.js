@@ -18,13 +18,13 @@ describe("Queries", () => {
         (it) => it.stmts[0].stmt.SelectStmt.targetList
       );
 
-      expect(selectedDatas[0][0].ResTarget.val.A_Const.val.Integer.ival).to.eq(
+      expect(selectedDatas[0][0].ResTarget.val.A_Const.ival.ival).to.eq(
         1
       );
-      expect(selectedDatas[1][0].ResTarget.val.A_Const.val).to.have.property(
-        "Null"
+      expect(selectedDatas[1][0].ResTarget.val.A_Const.isnull).to.eq(
+        true
       );
-      expect(selectedDatas[2][0].ResTarget.val.A_Const.val.String.str).to.eq(
+      expect(selectedDatas[2][0].ResTarget.val.A_Const.sval.sval).to.eq(
         ""
       );
       expect(selectedDatas[3]).to.have.lengthOf(2);

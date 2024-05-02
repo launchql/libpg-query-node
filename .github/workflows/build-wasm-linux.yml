@@ -1,0 +1,31 @@
+name: Build Wasm Linux 🧪
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 🌐
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Install Linux Deps 🧶
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make
+
+      - name: Install Dependencies 🧶
+        run: |
+          yarn
+
+      - name: Test 🔍
+        run: |
+          yarn make:wasm
+          yarn make build:wasm

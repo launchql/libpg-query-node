@@ -1,0 +1,51 @@
+name: Build Dry Run No Windows 🏗
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-matrix:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    steps:
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 🌐
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Install Dependencies 🧶
+        run: |
+          yarn
+
+      - name: Save Artifacts 🏗
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact-${{ matrix.os }}
+          path: |
+            ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
+               matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' 
+             }}
+
+  prepare-and-publish:
+    needs: build-matrix  # Corrected the needs to reflect the actual job name
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: downloaded-artifacts
+      - name: Prepare artifacts
+        run: |
+          # move or prepare artifacts
+          find .
+    # - name: Publish to NPM
+    #   run: |
+    #     # Assuming you've set up your package.json and .npmrc correctly
+    #     npm publish
+      # env:

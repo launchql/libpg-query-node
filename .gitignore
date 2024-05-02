@@ -5,3 +5,7 @@ npm-debug.log
 libpg_query/**/*.a
 libpg_query/**/*.h
 libpg_query/**/*.proto
+wasm/libpg-query.js
+*.wasm
+.cache
+libpg_query/windows/*.lib
