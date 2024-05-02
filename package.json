@@ -1,6 +1,6 @@
 {
   "name": "libpg-query",
-  "version": "15.0.3",
+  "version": "15.1.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "index.js",
