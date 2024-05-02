@@ -1,4 +1,4 @@
-name: Build Dry Run
+name: Build Dry Run 🏗
 
 on:
   workflow_dispatch:
