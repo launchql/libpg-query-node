@@ -1,6 +1,4 @@
-name: Build and Publish
-
-# on: [push]
+name: Build Dry Run
 
 on:
   workflow_dispatch:
