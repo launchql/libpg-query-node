@@ -1,4 +1,4 @@
-name: Run Tests Linux 🧪
+name: Build Wasm Linux 🧪
 
 on:
   workflow_dispatch:
