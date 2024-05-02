@@ -8,7 +8,14 @@
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dt/libpg-query"></a>
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dw/libpg-query"/></a>
    <a href="https://github.com/launchql/libpg-query/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
-   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node"/></a>
+   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node"/></a><br />
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-linux.yml">
+    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-linux.yml/badge.svg" />
+   </a>
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-mac.yml">
+    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-mac.yml/badge.svg" />
+   </a>
+
 </p>
 
 The real PostgreSQL parser, exposed for nodejs.
