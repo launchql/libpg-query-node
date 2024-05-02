@@ -2,7 +2,7 @@ WASM_OUT_DIR := wasm
 WASM_OUT_NAME := libpg-query
 WASM_MODULE_NAME := PgQueryModule
 LIBPG_QUERY_REPO := https://github.com/pganalyze/libpg_query.git
-LIBPG_QUERY_TAG := 15-4.2.4
+LIBPG_QUERY_TAG := 16-5.1.0
 CACHE_DIR := .cache
 
 OS ?= $(shell uname -s)
