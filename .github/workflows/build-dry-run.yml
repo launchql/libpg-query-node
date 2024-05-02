@@ -20,7 +20,7 @@ jobs:
           cache: 'yarn'
 
       - name: Save Artifacts 🏗
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact-${{ matrix.os }}
           path: |
@@ -32,14 +32,14 @@ jobs:
     needs: build-matrix  # Corrected the needs to reflect the actual job name
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           path: downloaded-artifacts
       - name: Prepare artifacts
         run: |
           # move or prepare artifacts
-          ls downloaded-artifacts/* 
+          find .
     # - name: Publish to NPM
     #   run: |
     #     # Assuming you've set up your package.json and .npmrc correctly
