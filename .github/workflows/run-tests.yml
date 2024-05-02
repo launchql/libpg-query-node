@@ -22,10 +22,5 @@ jobs:
         run: |
           yarn
 
-      - name: Build Project 🏗️
-        run: |
-          yarn build
-          yarn symlink
-
       - name: Test 🔍
         run: yarn test
