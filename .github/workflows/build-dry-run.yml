@@ -10,7 +10,6 @@ jobs:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
     steps:
-    steps:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
 
