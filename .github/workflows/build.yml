@@ -4,11 +4,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-artifacts:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+  make-release-candidate:
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
@@ -31,6 +29,22 @@ jobs:
           git push
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-artifacts:
+    needs: make-release-candidate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    steps:
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 🌐
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
 
       - name: Install and Build 📦
         run: |
@@ -126,8 +140,8 @@ jobs:
       # - name: List Bucket Contents
       #   run: aws s3 ls s3://supabase-public-artifacts-bucket/
 
-      - name: Publish to NPM 🚀
-        run: |
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}
+      # - name: Publish to NPM 🚀
+      #   run: |
+      #     npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}
