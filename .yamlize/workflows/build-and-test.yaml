@@ -1,0 +1,15 @@
+name: Build and Test 🛠
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-artifacts: 
+    import-yaml: yaml/build-artifacts.yaml
+
+  build-wasm:
+    import-yaml: yaml/build-wasm.yaml
+
+  prepare-and-publish:
+    needs: build-wasm
+    import-yaml: yaml/prepare-and-log.yaml
