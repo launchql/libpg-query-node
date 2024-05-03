@@ -95,7 +95,7 @@ jobs:
           cp ./downloaded-artifacts/build-npm-artifact-windows-latest/pg_query.lib ./libpg_query/windows/queryparser.lib
           cp ./downloaded-artifacts/build-npm-artifact-ubuntu-latest/libpg_query.a ./libpg_query/linux/libpg_query.a
           cp ./downloaded-artifacts/build-npm-artifact-macos-latest/libpg_query.a ./libpg_query/osx/libpg_query.a
-          fid ./downloaded-artifacts/
+          find ./downloaded-artifacts/
           # rm -rf ./downloaded-artifacts
           # find ./libpg_query
 
