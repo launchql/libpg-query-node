@@ -8,6 +8,7 @@ jobs:
     import-yaml: yaml/build-artifacts.yaml
 
   build-wasm:
+    needs: build-artifacts
     import-yaml: yaml/build-wasm.yaml
 
   prepare-and-publish:

@@ -59,16 +59,16 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@yamlize/cli@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@yamlize/cli/-/cli-0.7.0.tgz#377cf1b8f7609ae36b9bfe6175d23b15b70f3ae0"
-  integrity sha512-E/NClu9NipPxmFzh8c/o7yVpd5HmMnIc4ELnmZ+Kcr3qL7qvbRDAU+21FPW5ns8mB/W1+8ekuLTI4mMXW13FbQ==
+"@yamlize/cli@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@yamlize/cli/-/cli-0.8.0.tgz#c86673a6ee59a36f6a5621a073cb688b5db00d77"
+  integrity sha512-OuhQ/gYLCuMjENdLMF8UXgM32p7blBB0FxwS4R2Mw4jk/9uvv87uCz2ptq9VB7GjNTNbnRTQKw+bAbwCXyngCA==
   dependencies:
     chalk "4.1.0"
     inquirerer "^1.9.0"
     js-yaml "^4.1.0"
     minimist "1.2.8"
-    yamlize "^0.7.0"
+    yamlize "^0.8.0"
 
 abbrev@1:
   version "1.1.1"
@@ -1172,10 +1172,10 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yamlize@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/yamlize/-/yamlize-0.7.0.tgz#f99eb54b0761cd5249af18dc3f2ec97800de98d6"
-  integrity sha512-4/wp6/fMFEboFr2UyytvpfYN0I4DmVFOZxpiGTaRoutkcg4YEZyVvk9ZL2JujDVaokUIXsM930uXCxBpf3KNDg==
+yamlize@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/yamlize/-/yamlize-0.8.0.tgz#5d263fff74329b7435ff163eeee8e137298a7f5e"
+  integrity sha512-2sXxXTr4gZuIP1TmVmm9yJc/WirEKsqctk/gk4MzPGuochfSAY4+OxKXXqFj02HejQmEgAFRun7b0Ec6YjlE7A==
   dependencies:
     js-yaml "^4.1.0"
     mkdirp "3.0.1"

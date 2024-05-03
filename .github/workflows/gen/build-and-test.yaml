@@ -40,6 +40,7 @@ jobs:
                 matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' || 
                 matrix.os == 'windows-latest' && './libpg_query/windows/pg_query.lib' }}
   build-wasm:
+    needs: build-artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository 📥
@@ -72,6 +73,7 @@ jobs:
           name: wasm-artifacts
           path: wasm
   prepare-and-publish:
+    needs: build-wasm
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository 📥
