@@ -22,11 +22,6 @@ jobs:
       - name: Bump package version (minor release candidate)
         run: |
           npm version prerelease --preid=rc
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"          git commit -am "Bump version to release candidate"
-          # git push
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Install and Build 📦
         run: |
@@ -97,8 +92,6 @@ jobs:
       - name: Bump package version (minor release candidate)
         run: |
           npm version prerelease --preid=rc
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor}}@users.noreply.github.com"          git commit -am "Bump version to release candidate"
 
       - name: Get Artifacts 📚
         uses: actions/download-artifact@v4
@@ -129,6 +122,8 @@ jobs:
 
       # - name: Commit Changes
       #   run: |
+      #     git config --global user.email "developers@cosmology.zone"
+      #     git config --global user.name "Cosmology"
       #     git push
       #   env:
       #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
