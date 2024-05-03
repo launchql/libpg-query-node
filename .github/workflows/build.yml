@@ -19,9 +19,14 @@ jobs:
           node-version: '20.x'
           cache: 'yarn'
 
-      - name: Bump package version (minor release candidate)
-        run: |
-          npm version prerelease --preid=rc
+      # - name: Configure Git
+      #     run: |
+      #       git config user.name "Cosmology"
+      #       git config user.email "developers@cosmology.zone"
+
+      # - name: Bump package version (minor release candidate)
+      #   run: |
+      #     npm version prerelease --preid=rc
 
       - name: Install and Build 📦
         run: |
@@ -88,10 +93,6 @@ jobs:
     steps:
       - name: Checkout Repository 📥
         uses: actions/checkout@v4
-
-      - name: Bump package version (minor release candidate)
-        run: |
-          npm version prerelease --preid=rc
 
       - name: Get Artifacts 📚
         uses: actions/download-artifact@v4
