@@ -1,4 +1,4 @@
-name: Build libpq-query 🏗
+name: Build and Publish libpq-query 🏗
 
 on:
   workflow_dispatch:
