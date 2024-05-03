@@ -51,7 +51,7 @@
     "url": "git://github.com/launchql/libpg-query-node.git"
   },
   "devDependencies": {
-    "@yamlize/cli": "^0.5.0",
+    "@yamlize/cli": "^0.7.0",
     "chai": "^3.5.0",
     "emnapi": "^0.43.1",
     "lodash": "^4.17.15",
