@@ -20,9 +20,9 @@ jobs:
           cache: 'yarn'
 
       - name: Configure Git 🛠
-          run: |
-            git config user.name "Cosmology"
-            git config user.email "developers@cosmology.zone"
+        run: |
+          git config user.name "Cosmology"
+          git config user.email "developers@cosmology.zone"
 
       - name: Minor release candidate 🧪
         run: |
