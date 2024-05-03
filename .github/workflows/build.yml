@@ -19,14 +19,17 @@ jobs:
           node-version: '20.x'
           cache: 'yarn'
 
-      # - name: Configure Git
-      #     run: |
-      #       git config user.name "Cosmology"
-      #       git config user.email "developers@cosmology.zone"
+      - name: Configure Git 🛠
+          run: |
+            git config user.name "Cosmology"
+            git config user.email "developers@cosmology.zone"
 
-      # - name: Bump package version (minor release candidate)
-      #   run: |
-      #     npm version prerelease --preid=rc
+      - name: Minor release candidate 🧪
+        run: |
+          npm version prerelease --preid=rc
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Install and Build 📦
         run: |
@@ -101,36 +104,29 @@ jobs:
 
       - name: Prepare artifacts 📦
         run: |
+          find ./downloaded-artifacts/
           cp ./downloaded-artifacts/build-npm-artifact-windows-latest/pg_query.lib ./libpg_query/windows/queryparser.lib
           cp ./downloaded-artifacts/build-npm-artifact-ubuntu-latest/libpg_query.a ./libpg_query/linux/libpg_query.a
           cp ./downloaded-artifacts/build-npm-artifact-macos-latest/libpg_query.a ./libpg_query/osx/libpg_query.a
-          find ./downloaded-artifacts/
-          # rm -rf ./downloaded-artifacts
-          # find ./libpg_query
+          cp ./downloaded-artifacts/wasm-artifacts/libpg-query.js ./wasm/libpg-query.js
+          cp ./downloaded-artifacts/wasm-artifacts/libpg-query.wasm ./wasm/libpg-query.wasm
+          rm -rf ./downloaded-artifacts
 
-      - name: Setup AWS CLI
-        run: sudo apt-get update && sudo apt-get install awscli -y
+      # - name: Setup AWS CLI
+      #   run: sudo apt-get update && sudo apt-get install awscli -y
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.SUPABASE_AWS_KEY }}
-          aws-secret-access-key: ${{ secrets.SUPABASE_AWS_SECRET }}
-          aws-region: us-east-1
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.SUPABASE_AWS_KEY }}
+      #     aws-secret-access-key: ${{ secrets.SUPABASE_AWS_SECRET }}
+      #     aws-region: us-east-1
 
-      - name: List Bucket Contents
-        run: aws s3 ls s3://supabase-public-artifacts-bucket/
+      # - name: List Bucket Contents
+      #   run: aws s3 ls s3://supabase-public-artifacts-bucket/
 
-      # - name: Commit Changes
-      #   run: |
-      #     git config --global user.email "developers@cosmology.zone"
-      #     git config --global user.name "Cosmology"
-      #     git push
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      # - name: Publish to NPM 🚀
-      #   run: |
-      #     npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}
+      - name: Publish to NPM 🚀
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}
