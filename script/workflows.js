@@ -17,7 +17,7 @@ const cmd = (config, workflow) => ([
   yamldir(`workflows/${workflow}`),
 
   '--outFile',
-  workflowDir(`gen/${workflow}`),
+  workflowDir(`generated-${workflow}`),
 ].join(' '));
 
 
