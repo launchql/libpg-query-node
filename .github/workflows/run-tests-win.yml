@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-tests:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout Repository 📥

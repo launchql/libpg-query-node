@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-tests:
+  build-wasm:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository 📥
