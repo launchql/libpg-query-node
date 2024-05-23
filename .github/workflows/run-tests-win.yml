@@ -1,10 +1,12 @@
-name: Run Tests Windows 🧪
+name: Windows 🛠
 
 on:
+  pull_request:
+    types: [opened, push, reopened]
   workflow_dispatch:
 
 jobs:
-  run-tests:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout Repository 📥
@@ -20,5 +22,5 @@ jobs:
         run: |
           yarn
 
-      - name: Test 🔍
-        run: yarn test
+      # - name: Test 🔍
+      #   run: yarn test

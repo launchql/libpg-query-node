@@ -1,0 +1,5 @@
+name: Save Artifacts For Supabase CDN 🏗
+uses: actions/upload-artifact@v4
+with:
+  name: build-supabase-artifact-${{ matrix.os }}
+  path: './build/stage/libpg-query-node/'

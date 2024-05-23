@@ -1,0 +1,4 @@
+name: Get Artifacts 📚
+uses: actions/download-artifact@v4
+with:
+  path: downloaded-artifacts
