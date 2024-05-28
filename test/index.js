@@ -25,7 +25,7 @@ describe("Queries", () => {
         true
       );
       expect(selectedDatas[2][0].ResTarget.val.A_Const.sval.sval).to.eq(
-        ""
+        undefined
       );
       expect(selectedDatas[3]).to.have.lengthOf(2);
     });
@@ -50,6 +50,24 @@ describe("Queries", () => {
     });
   });
 
+  describe("Sync Deparsing", () => {
+    it("should return the same input sql", () => {
+      const testQuery = "select * from books";
+      const ast = query.parseQuerySync(testQuery);
+      const deparsedQuery = query.deparseQuerySync(ast).toLowerCase();
+
+      expect(deparsedQuery).to.eq(testQuery);
+    });
+
+    it("should error with bad input", () => {
+      try {
+        query.deparseQuerySync({ wrongFormat: 123 }).toLowerCase();
+      } catch (e) {
+        expect(e.message).to.eq("Input AST did not match expected format");
+      }
+    });
+  });
+
   describe("Async parsing", () => {
     it("should return a promise resolving to same result", async () => {
       const testQuery = "select * from john;";
@@ -68,6 +86,31 @@ describe("Queries", () => {
         (e) => {
           expect(e).instanceof(Error);
           expect(e.message).to.match(/NOT/);
+        }
+      );
+    });
+  });
+
+  describe("Async deparsing", () => {
+    it("should return a promise resolving to same result", async () => {
+      const testQuery = "select * from books";
+      const ast = await query.parseQuery(testQuery);
+
+      const resPromise = query.deparseQuery(ast);
+      const res = await resPromise;
+
+      expect(resPromise).to.be.instanceof(Promise);
+      expect(res).to.deep.eq(query.deparseQuerySync(ast));
+    });
+
+    it("should reject on bad input", async () => {
+      return query.deparseQuery({ wrongFormat: 123 }).then(
+        () => {
+          throw new Error("should have rejected");
+        },
+        (e) => {
+          expect(e).instanceof(Error);
+          expect(e.message).to.eq("Input AST did not match expected format");
         }
       );
     });

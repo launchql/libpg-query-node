@@ -12,12 +12,18 @@
       'cflags_cc!': [ '-fno-exceptions' ],
       'include_dirs': [
         "libpg_query/include",
-        "<!@(node -p \"require('node-addon-api').include\")"
+        "<!@(node -p \"require('node-addon-api').include\")",
+        "<!(pkg-config --cflags-only-I protobuf | sed 's/-I//g')"
       ],
       'dependencies': ["<!(node -p \"require('node-addon-api').gyp\")"],
       'conditions': [
         ['OS=="linux"', {
-          "libraries": [ "-L<!(pwd)/libpg_query/linux", "-lpg_query" ],
+          "libraries": [
+            "-L<!(pwd)/libpg_query/linux",
+            "-lpg_query",
+            "<!(pkg-config --libs-only-L protobuf)",
+            "<!(pkg-config --libs-only-l protobuf)"
+          ],
           "actions": [
             {
               "outputs": ['libpg_query/include/pg_query.h'],
@@ -28,7 +34,12 @@
           ],
         }],
         ['OS=="mac"', {
-          "libraries": [ "-L<!(pwd)/libpg_query/osx", "-lpg_query" ],
+          "libraries": [
+            "-L<!(pwd)/libpg_query/osx",
+            "-lpg_query",
+            "<!(pkg-config --libs-only-L protobuf)",
+            "<!(pkg-config --libs-only-l protobuf)"
+          ],
           "xcode_settings": {
             "CLANG_CXX_LIBRARY": "libc++",
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',

@@ -34,6 +34,43 @@ class QueryWorker : public Napi::AsyncWorker {
   PgQueryParseResult result;
 };
 
+class DeparseQueryWorker : public Napi::AsyncWorker {
+ public:
+  DeparseQueryWorker(Napi::Function& callback, const std::string& ast)
+    : Napi::AsyncWorker(callback), ast(ast) {}
+  ~DeparseQueryWorker() {}
+
+  // Executed inside the worker-thread.
+  // It is not safe to access JS engine data structure
+  // here, so everything we need for input and output
+  // should go on `this`.
+  void Execute () {
+    auto protobufResult = json_to_protobuf_parse_result(ast);
+
+    if (protobufResult.error) {
+      result.error = protobufResult.error;
+    } else {
+      result = pg_query_deparse_protobuf(protobufResult.protobuf);
+    }
+  }
+
+  // Executed when the async work is complete
+  // this function will be run inside the main event loop
+  // so it is safe to use JS engine data again
+  void OnOK() {
+    Napi::HandleScope scope(Env());
+    try {
+      Callback().Call({Env().Undefined(), QueryDeparseResult(Env(), result) });
+    } catch (const Napi::Error& e) {
+      Callback().Call({ e.Value(), Env().Undefined() });
+    }
+  }
+
+ private:
+  std::string ast;
+  PgQueryDeparseResult result;
+};
+
 class PgPlQSLWorker : public Napi::AsyncWorker {
  public:
   PgPlQSLWorker(Napi::Function& callback, const std::string& query)
@@ -101,6 +138,14 @@ Napi::Value ParseQueryAsync(const Napi::CallbackInfo& info) {
   std::string query = info[0].As<Napi::String>();
   Napi::Function callback = info[1].As<Napi::Function>();
   QueryWorker* worker = new QueryWorker(callback, query);
+  worker->Queue();
+  return info.Env().Undefined();
+}
+
+Napi::Value DeparseQueryAsync(const Napi::CallbackInfo& info) {
+  std::string ast = info[0].As<Napi::String>();
+  Napi::Function callback = info[1].As<Napi::Function>();
+  DeparseQueryWorker* worker = new DeparseQueryWorker(callback, ast);
   worker->Queue();
   return info.Env().Undefined();
 }

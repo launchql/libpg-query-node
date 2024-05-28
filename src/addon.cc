@@ -15,6 +15,16 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   );
 
   exports.Set(
+    Napi::String::New(env, "deparseQuerySync"),
+    Napi::Function::New(env, DeparseQuerySync)
+  );
+
+  exports.Set(
+    Napi::String::New(env, "deparseQueryAsync"),
+    Napi::Function::New(env, DeparseQueryAsync)
+  );
+
+  exports.Set(
     Napi::String::New(env, "parsePlPgSQLSync"),
     Napi::Function::New(env, ParsePlPgSQLSync)
   );

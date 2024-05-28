@@ -27,7 +27,7 @@ unset MFLAGS
 
 # Adaptively build for macOS or Linux
 if [ "$(uname)" == "Darwin" ]; then
-	make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7' $makeTarget
+	make CFLAGS='-mmacosx-version-min=10.7' PG_CFLAGS='-mmacosx-version-min=10.7' USE_PROTOBUF_CPP=1 $makeTarget
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 	make CFLAGS='' PG_CFLAGS='' $makeTarget
 fi
@@ -61,6 +61,7 @@ fi
 
 # Copy header
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
+cp $(pwd)/protobuf/pg_query.pb.h $rDIR/libpg_query/include/protobuf
 
 # Cleanup: revert to original directory and remove the temp
 cd "$rDIR"
