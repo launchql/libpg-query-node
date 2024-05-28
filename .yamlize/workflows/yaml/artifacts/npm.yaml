@@ -4,5 +4,4 @@ with:
   name: build-npm-artifact-${{ matrix.os }}
   path: |
     ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
-        matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' || 
-        matrix.os == 'windows-latest' && './libpg_query/windows/pg_query.lib' }}
+        matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' }}
