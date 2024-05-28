@@ -54,6 +54,11 @@
   dependencies:
     semver "^7.3.5"
 
+"@pgsql/types@^15.0.0":
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/@pgsql/types/-/types-15.0.0.tgz#99d2c1719fe7b93bd36b88c1e9ccbcc18b23d720"
+  integrity sha512-okesxpqEBQGgSP+4FGX9zivDNWM3r803oNxRIXIrayXN3Gfx9Rjom+5h433YcP6RKmPbkKolXgeuKA2i9MQtOQ==
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
