@@ -8,12 +8,12 @@
         "src/sync.cc",
         "src/async.cc"
       ],
-      'cflags!': [ '-fno-exceptions' ],
-      'cflags_cc!': [ '-fno-exceptions' ],
+      'cflags!': ['-fno-exceptions', '-O3'],
+      'cflags_cc!': ['-fno-exceptions', '-O3'],
       'include_dirs': [
         "libpg_query/include",
         "<!@(node -p \"require('node-addon-api').include\")",
-        "<!(pkg-config --cflags-only-I protobuf | sed 's/-I//g')"
+        "<!(pkg-config --variable=includedir protobuf)"
       ],
       'dependencies': ["<!(node -p \"require('node-addon-api').gyp\")"],
       'conditions': [
@@ -21,8 +21,7 @@
           "libraries": [
             "-L<!(pwd)/libpg_query/linux",
             "-lpg_query",
-            "<!(pkg-config --libs-only-L protobuf)",
-            "<!(pkg-config --libs-only-l protobuf)"
+            "<!(pkg-config --variable=libdir protobuf)/libprotobuf.a"
           ],
           "actions": [
             {
@@ -37,8 +36,7 @@
           "libraries": [
             "-L<!(pwd)/libpg_query/osx",
             "-lpg_query",
-            "<!(pkg-config --libs-only-L protobuf)",
-            "<!(pkg-config --libs-only-l protobuf)"
+            "<!(pkg-config --variable=libdir protobuf)/libprotobuf.a"
           ],
           "xcode_settings": {
             "CLANG_CXX_LIBRARY": "libc++",
