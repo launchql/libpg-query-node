@@ -1,4 +1,4 @@
-name: Build and Publish Release Candidate libpq-query 🏗
+name: Build and Publish Minor libpq-query 🏗
 
 on:
   workflow_dispatch:
