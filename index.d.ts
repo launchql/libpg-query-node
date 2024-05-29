@@ -5,3 +5,4 @@ export function parseQuerySync(sql: string): ParseResult;
 export function parsePlPgSQLSync(funcsSql: string): any;
 export function fingerprint(sql: string): Promise<string>;
 export function fingerprintSync(sql: string): string;
+export * from '@pgsql/types';
