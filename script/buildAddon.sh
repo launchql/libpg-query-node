@@ -61,6 +61,7 @@ fi
 
 # Copy header
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
+cp $(pwd)/protobuf/*.proto $rDIR/libpg_query/protobuf/
 
 # Cleanup: revert to original directory and remove the temp
 cd "$rDIR"

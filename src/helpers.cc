@@ -27,6 +27,19 @@ Napi::String QueryParseResult(Napi::Env env, const PgQueryParseResult& result)
     return returnVal;
 }
 
+Napi::String DeparseResult(Napi::Env env, const PgQueryDeparseResult& result)
+{
+    if (result.error) {
+        auto throwVal = CreateError(env, *result.error);
+        pg_query_free_deparse_result(result);
+        throw throwVal;
+    }
+
+    auto returnVal = Napi::String::New(env, result.query);
+    pg_query_free_deparse_result(result);
+    return returnVal;
+}
+
 Napi::String PlPgSQLParseResult(Napi::Env env, const PgQueryPlpgsqlParseResult& result)
 {
     if (result.error) {

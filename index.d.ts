@@ -3,6 +3,8 @@ export function parseQuery(sql: string): Promise<ParseResult>;
 export function parsePlPgSQL(funcsSql: string): Promise<any>;
 export function parseQuerySync(sql: string): ParseResult;
 export function parsePlPgSQLSync(funcsSql: string): any;
+export function deparse(parseTree: any): Promise<string>;
+export function deparseSync(parseTree: any): any;
 export function fingerprint(sql: string): Promise<string>;
 export function fingerprintSync(sql: string): string;
 export * from '@pgsql/types';

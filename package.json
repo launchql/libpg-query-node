@@ -30,6 +30,7 @@
     }
   },
   "scripts": {
+    "protogen": "node ./script/protogen.js 16-latest",
     "clean": "rimraf build",
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build --loglevel verbose",
@@ -43,7 +44,7 @@
     "test": "mocha --timeout 5000",
     "binary:build": "node-pre-gyp rebuild package",
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
-  },
+  },  
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
   "repository": {
@@ -51,6 +52,7 @@
     "url": "git://github.com/launchql/libpg-query-node.git"
   },
   "devDependencies": {
+    "@launchql/proto-cli": "1.25.0",
     "@yamlize/cli": "^0.8.0",
     "chai": "^3.5.0",
     "emnapi": "^0.43.1",
@@ -60,6 +62,7 @@
   },
   "dependencies": {
     "@emnapi/runtime": "^0.43.1",
+    "@launchql/protobufjs": "7.2.6",
     "@mapbox/node-pre-gyp": "^1.0.8",
     "@pgsql/types": "^15.0.1",
     "node-addon-api": "^7.0.0",
