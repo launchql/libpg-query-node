@@ -1,6 +1,6 @@
 {
   "name": "libpg-query",
-  "version": "15.1.2",
+  "version": "15.2.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "index.js",
@@ -61,7 +61,7 @@
   "dependencies": {
     "@emnapi/runtime": "^0.43.1",
     "@mapbox/node-pre-gyp": "^1.0.8",
-    "@pgsql/types": "^15.0.0",
+    "@pgsql/types": "^15.0.1",
     "node-addon-api": "^7.0.0",
     "node-gyp": "^10.0.1"
   },
