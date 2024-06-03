@@ -4,4 +4,4 @@ env:
   LIBPG_COMMIT: db39825bc7c1ddd45962ec6a626d740b7f8f027a
   LIBPG_BRANCH: 15-latest
   PGSQL_TYPES: 15.0.2
-  OPERATION_SYSYTEMS: [linux,mac]
+  OPERATING_SYSTEMS: [linux,mac]
