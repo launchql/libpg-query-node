@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# this file is auto-generated, use "yarn build:generate <env>" to rebuild with an env (e.g., pg-15)
 
-LIBPG_REPO=https://github.com/pganalyze/libpg_query.git
-LIBPG_COMMIT=db39825bc7c1ddd45962ec6a626d740b7f8f027a
-LIBPG_BRANCH=15-latest
+LIBPG_REPO=___LIBPG_REPO___
+LIBPG_COMMIT=___LIBPG_COMMIT___
+LIBPG_BRANCH=___LIBPG_BRANCH___
 
 # Check if variables are set and exit if not
 if [ -z "$LIBPG_COMMIT" ]; then

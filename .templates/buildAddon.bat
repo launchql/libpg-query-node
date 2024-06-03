@@ -1,9 +1,8 @@
-:: this file is auto-generated, use "yarn build:generate <env>" to rebuild with an env (e.g., pg-15)
 @echo off
 
-set LIBPG_REPO=https://github.com/pganalyze/libpg_query.git
-set LIBPG_COMMIT=db39825bc7c1ddd45962ec6a626d740b7f8f027a
-set LIBPG_BRANCH=15-latest
+set LIBPG_REPO=___LIBPG_REPO___
+set LIBPG_COMMIT=___LIBPG_COMMIT___
+set LIBPG_BRANCH=___LIBPG_BRANCH___
 
 :: Check if each required variable is set
 if "%LIBPG_REPO%"=="" (
