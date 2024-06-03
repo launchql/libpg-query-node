@@ -41,10 +41,11 @@
     "clean:wasm": "yarn make:wasm clean",
     "clean-cache:wasm": "yarn make:wasm clean-cache",
     "workflows": "node script/workflows.js",
+    "build:generate": "node script/utils/generate.js",
     "test": "mocha --timeout 5000",
     "binary:build": "node-pre-gyp rebuild package",
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
-  },  
+  },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
   "repository": {
@@ -64,7 +65,8 @@
     "@emnapi/runtime": "^0.43.1",
     "@launchql/protobufjs": "7.2.6",
     "@mapbox/node-pre-gyp": "^1.0.8",
-    "@pgsql/types": "^15.0.1",
+    "@pgsql/types": "15.0.1",
+    "js-yaml": "^4.1.0",
     "node-addon-api": "^7.0.0",
     "node-gyp": "^10.0.1"
   },

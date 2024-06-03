@@ -1,8 +1,7 @@
-// this file is auto-generated, use "yarn build:generate <env>" to rebuild with an env (e.g., pg-15)
 const { exec } = require('child_process');
 
 // Configuration Variables
-const branchName = '15-latest';
+const branchName = '___LIBPG_BRANCH___';
 const protoUrl = `https://raw.githubusercontent.com/pganalyze/libpg_query/${branchName}/protobuf/pg_query.proto`;
 const inFile = 'libpg_query/protobuf/pg_query.proto';
 const outFile = 'proto.js';

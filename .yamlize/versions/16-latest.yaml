@@ -1,0 +1,7 @@
+env:
+  JOB: pg-16
+  LIBPG_REPO: https://github.com/pganalyze/libpg_query.git
+  LIBPG_COMMIT: 1ec38940e5c6f09a4c1d17a46d839a881c4f2db7
+  LIBPG_BRANCH: 16-latest
+  PGSQL_TYPES: 16.0.0
+  OPERATION_SYSYTEMS: [linux,mac,win]
