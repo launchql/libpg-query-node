@@ -65,7 +65,7 @@
     "@emnapi/runtime": "^0.43.1",
     "@launchql/protobufjs": "7.2.6",
     "@mapbox/node-pre-gyp": "^1.0.8",
-    "@pgsql/types": "15.0.1",
+    "@pgsql/types": "15.0.2",
     "js-yaml": "^4.1.0",
     "node-addon-api": "^7.0.0",
     "node-gyp": "^10.0.1"
