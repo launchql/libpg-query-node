@@ -1,7 +1,7 @@
 runs-on: ${{ matrix.os }}
 strategy:
   matrix:
-    os: [windows-latest, macos-latest, ubuntu-latest]
+    os: [macos-latest, ubuntu-latest]
 steps:
   - import-yaml: git/checkout.yaml
   - import-yaml: node/setup.yaml
@@ -13,4 +13,4 @@ steps:
       yarn binary:build
 
   - import-yaml: artifacts/supabase.yaml
-  - import-yaml: artifacts/npm.yaml
+  - import-yaml: artifacts/npm-no-win.yaml

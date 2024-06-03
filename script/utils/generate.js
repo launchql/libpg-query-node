@@ -90,7 +90,7 @@ templates.forEach(template => {
     let newContent = '';
 
     if (commentPrefix) {
-        const commentLine = `${commentPrefix} this file is auto-generated, use "yarn build:generate <env>" to rebuild with an env (e.g., pg-15)\n`;
+        const commentLine = `${commentPrefix} this file is auto-generated, use "yarn generate:build <env>" to rebuild with an env (e.g., pg-15)\n`;
         if (content.startsWith('#!')) {
             // Find the end of the first line (shebang)
             const firstLineEnd = content.indexOf('\n') + 1;

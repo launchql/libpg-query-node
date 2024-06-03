@@ -1,0 +1,8 @@
+name: Prepare artifacts 📦
+run: |
+  find ./downloaded-artifacts/
+  cp ./downloaded-artifacts/build-npm-artifact-ubuntu-latest/libpg_query.a ./libpg_query/linux/libpg_query.a
+  cp ./downloaded-artifacts/build-npm-artifact-macos-latest/libpg_query.a ./libpg_query/osx/libpg_query.a
+  cp ./downloaded-artifacts/wasm-artifacts/libpg-query.js ./wasm/libpg-query.js
+  cp ./downloaded-artifacts/wasm-artifacts/libpg-query.wasm ./wasm/libpg-query.wasm
+  rm -rf ./downloaded-artifacts

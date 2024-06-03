@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-artifacts: 
-    import-yaml: yaml/build-artifacts.yaml
+    import-yaml: yaml/build-artifacts-no-win.yaml
 
   build-wasm:
     needs: build-artifacts
