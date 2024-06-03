@@ -43,7 +43,7 @@
     "generate:workflows:no-win": "node script/generate-non-win-workflows.js",
     "generate:workflows": "npm run generate:workflows:win && npm run generate:workflows:no-win",
     "generate:build": "node script/utils/generate.js",
-    "test": "mocha --timeout 5000",
+    "test": "node run-tests.js",
     "binary:build": "node-pre-gyp rebuild package",
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
   },
@@ -83,5 +83,16 @@
     "module_path": "./build/Release/",
     "host": "https://supabase-public-artifacts-bucket.s3.amazonaws.com",
     "remote_path": "./libpg-query-node/"
+  },
+  "libpgQueryConfig": {
+    "PGENV": "pg-15",
+    "LIBPG_REPO": "https://github.com/pganalyze/libpg_query.git",
+    "LIBPG_COMMIT": "db39825bc7c1ddd45962ec6a626d740b7f8f027a",
+    "LIBPG_BRANCH": "15-latest",
+    "PGSQL_TYPES": "15.0.2",
+    "OPERATING_SYSTEMS": [
+      "linux",
+      "mac"
+    ]
   }
 }

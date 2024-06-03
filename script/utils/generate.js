@@ -16,11 +16,11 @@ const {
     getTemplates
 } = require('./get-templates');
 
-// Read the JOB from the command line arguments
-const jobFilter = process.argv[2];
-console.log({jobFilter})
+// Read the PGENV from the command line arguments
+const envFilter = process.argv[2];
+console.log({envFilter})
 
-if (!jobFilter) {
+if (!envFilter) {
     console.error('Usage: node script.js <ENV>');
     console.error('ENV is PG version, e.g. pg-15');
     process.exit(1);
@@ -31,10 +31,10 @@ const templates = getTemplates(templatesDir);
 const configs = getConfig(configDir);
 
 // Filter configurations based on the command line input
-const filteredConfigs = configs.filter(config => config.JOB === jobFilter);
+const filteredConfigs = configs.filter(config => config.PGENV === envFilter);
 
 if (filteredConfigs.length === 0) {
-    console.error(`No configurations found for ENV: ${jobFilter}`);
+    console.error(`No configurations found for ENV: ${envFilter}`);
     process.exit(1);
 }
 
@@ -52,6 +52,7 @@ const packageJsonPath = path.join(__dirname, '../../package.json');
 let packageJson = fs.readFileSync(packageJsonPath, 'utf8');
 packageJson = JSON.parse(packageJson);
 packageJson.dependencies['@pgsql/types'] = config.PGSQL_TYPES;
+packageJson.libpgQueryConfig = config;
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
 
 // Generate build files from the templates
@@ -66,11 +67,6 @@ templates.forEach(template => {
 
     // Define the output path for the processed template
     const outputFile = path.join(outputDir, `${template.name}`);
-    const generatedEnv = path.join(outputDir, `env.generated.json`);
-
-    // Write the processed template to the output directory
-    fs.writeFileSync(generatedEnv, JSON.stringify(config, null, 2), 'utf8');
-
 
     // Determine the file extension
     const extension = path.extname(outputFile).toLowerCase();
