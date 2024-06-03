@@ -1,4 +1,4 @@
-name: Generated Build libpg-query no windows 🛠
+name: Generated Build libpg-query 🛠
 'on':
   workflow_dispatch: null
 jobs:
@@ -7,6 +7,7 @@ jobs:
     strategy:
       matrix:
         os:
+          - windows-latest
           - macos-latest
           - ubuntu-latest
     steps:
@@ -17,10 +18,6 @@ jobs:
         with:
           node-version: 20.x
           cache: yarn
-      - name: Configure Git 🛠
-        run: |
-          git config user.name "Cosmology"
-          git config user.email "developers@cosmology.zone"
       - name: Install and Build 📦
         run: |
           yarn
@@ -36,7 +33,8 @@ jobs:
           name: build-npm-artifact-${{ matrix.os }}
           path: |
             ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
-                matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' }}
+                matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' || 
+                matrix.os == 'windows-latest' && './libpg_query/windows/pg_query.lib' }}
   build-wasm:
     needs: build-artifacts
     runs-on: ubuntu-latest
@@ -70,7 +68,7 @@ jobs:
         with:
           name: wasm-artifacts
           path: wasm
-  prepare-and-log:
+  prepare-and-publish:
     needs: build-wasm
     runs-on: ubuntu-latest
     steps:

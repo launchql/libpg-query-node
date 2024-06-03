@@ -23,7 +23,7 @@ const cmd = (config, workflow) => ([
 ].join(' '));
 
 
-exec(cmd('config.yaml', 'build-and-test.yaml'), (error, _stdout, _stderr) => {
+exec(cmd('config.yaml', 'build-and-publish.yaml'), (error, _stdout, _stderr) => {
   if (error) {
     console.error(`Error: ${error.message}`);
     return;
@@ -31,7 +31,7 @@ exec(cmd('config.yaml', 'build-and-test.yaml'), (error, _stdout, _stderr) => {
 
 
   // Read the generated YAML file
-  const outputPath = workflowDir(`generated-build-and-test.yaml`);
+  const outputPath = workflowDir(`generated-build-and-publish.yaml`);
   try {
     const fileContents = fs.readFileSync(outputPath, 'utf8');
     const data = yaml.load(fileContents);

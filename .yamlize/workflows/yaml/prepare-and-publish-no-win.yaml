@@ -10,3 +10,9 @@ steps:
     run: |
       find ./libpg_query/
       find ./wasm
+
+  # - name: Publish to NPM 🚀
+  #   run: |
+  #     npm publish
+  #   env:
+  #     NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}

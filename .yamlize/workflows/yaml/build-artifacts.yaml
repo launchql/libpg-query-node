@@ -5,7 +5,7 @@ strategy:
 steps:
   - import-yaml: git/checkout.yaml
   - import-yaml: node/setup.yaml
-  - import-yaml: git/configure.yaml 
+  # - import-yaml: git/configure.yaml 
 
   - name: Install and Build 📦
     run: |

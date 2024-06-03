@@ -13,4 +13,4 @@ jobs:
 
   prepare-and-publish:
     needs: build-wasm
-    import-yaml: yaml/prepare-and-publish.yaml
+    import-yaml: yaml/prepare-and-publish-no-win.yaml

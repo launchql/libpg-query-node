@@ -6,8 +6,13 @@ steps:
 
   - import-yaml: artifacts/prepare.yaml
 
-  - name: Publish to NPM 🚀
+  - name: Log
     run: |
-      npm publish
-    env:
-      NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}
+      find ./libpg_query/
+      find ./wasm
+
+  # - name: Publish to NPM 🚀
+  #   run: |
+  #     npm publish
+  #   env:
+  #     NODE_AUTH_TOKEN: ${{secrets.NPM_API_KEY}}
