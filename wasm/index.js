@@ -1,4 +1,5 @@
 import { getDefaultContext } from '@emnapi/runtime';
+import { pg_query } from '../proto.js';
 import PgQueryModule from './libpg-query.js';
 
 let PgQuery;
@@ -26,6 +27,16 @@ export const parseQuery = awaitInit((query) => {
   return new Promise(async (resolve, reject) => {
     PgQuery.parseQueryAsync(query, (err, result) => {
       err ? reject(err) : resolve(JSON.parse(result));
+    });
+  });
+});
+
+export const deparse = awaitInit((parseTree) => {
+  const msg = pg_query.ParseResult.fromObject(parseTree);
+  const data = pg_query.ParseResult.encode(msg).finish();
+  return new Promise((resolve, reject) => {
+    PgQuery.deparseAsync(data, (err, result) => {
+      err ? reject(err) : resolve(result);
     });
   });
 });

@@ -137,7 +137,7 @@ Napi::Value ParseQueryAsync(const Napi::CallbackInfo& info) {
 }
 
 Napi::Value DeparseAsync(const Napi::CallbackInfo& info) {
-  if (info.Length() < 2 || !info[0].IsBuffer() || !info[1].IsFunction()) {
+  if (info.Length() < 2 || !(info[0].IsBuffer() || info[0].IsTypedArray()) || !info[1].IsFunction()) {
     Napi::TypeError::New(info.Env(), "Invalid arguments").ThrowAsJavaScriptException();
     return info.Env().Undefined();
   }
