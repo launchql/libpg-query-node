@@ -115,10 +115,10 @@
     "@babel/helper-validator-identifier" "^7.24.5"
     to-fast-properties "^2.0.0"
 
-"@emnapi/runtime@^0.43.1":
-  version "0.43.1"
-  resolved "https://registry.yarnpkg.com/@emnapi/runtime/-/runtime-0.43.1.tgz#c72d5e32f9331f313ae6690d8a64454647ab245b"
-  integrity sha512-Q5sMc4Z4gsD4tlmlyFu+MpNAwpR7Gv2errDhVJ+SOhNjWcx8UTqy+hswb8L31RfC8jBvDgcnT87l3xI2w08rAg==
+"@emnapi/runtime@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@emnapi/runtime/-/runtime-1.2.0.tgz#71d018546c3a91f3b51106530edbc056b9f2f2e3"
+  integrity sha512-bV21/9LQmcQeCPEg3BDFtvwL6cwiTMksYNWQQ4KOxCZikEGalWtenoZ0wCiukJINlGCIi2KXx01g4FoH/LxpzQ==
   dependencies:
     tslib "^2.4.0"
 
@@ -173,10 +173,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@launchql/proto-cli@1.25.0":
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/@launchql/proto-cli/-/proto-cli-1.25.0.tgz#1a939d59fb715f7e3187e12b6435d9ad0ec7b61a"
-  integrity sha512-W5U2U3QS6133GLeM7iqjaIez8wazjEvtPwm3EzgiEDtV7n0I5fQDYXXabCjGTIy/WQ6pHos53pB95EcV+ey93Q==
+"@launchql/proto-cli@1.26.0":
+  version "1.26.0"
+  resolved "https://registry.yarnpkg.com/@launchql/proto-cli/-/proto-cli-1.26.0.tgz#d69be328e07d925a25ca5c14fa90f33366f5cf63"
+  integrity sha512-RQ/mWI+EI7jd5fwRf75XiS/q0qtcpmTlWuzIMSzEU7QPwTDooKrizh/Ye8RAKaoy8ia9Oe8MsnOHGKFbnYCZmw==
   dependencies:
     "@launchql/protobufjs" "7.2.6"
     "@launchql/protobufjs-cli" "1.1.5"
@@ -186,7 +186,7 @@
     minimist "1.2.8"
     mkdirp "3.0.1"
     nested-obj "^0.0.1"
-    pg-proto-parser "^1.23.0"
+    pg-proto-parser "^1.24.0"
 
 "@launchql/protobufjs-cli@1.1.5":
   version "1.1.5"
@@ -690,10 +690,10 @@ eastasianwidth@^0.2.0:
   resolved "https://registry.yarnpkg.com/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
-emnapi@^0.43.1:
-  version "0.43.1"
-  resolved "https://registry.yarnpkg.com/emnapi/-/emnapi-0.43.1.tgz#ce99a639277060cfe99b32b2ddcc9ae6d60c7aa6"
-  integrity sha512-ZsBeBRBHPdoI4GMM2fer2qYN5He8NMc1wg4qWZRZNptRUTDH0hVl8LFu5/uYL3+Z/3qyp1cV/n1FBf+hHlt5Hg==
+emnapi@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/emnapi/-/emnapi-1.2.0.tgz#c61de1428809af92aa82161b77942860e4e56a77"
+  integrity sha512-rcq+dJCcfr08I0XM/57LPRqaUokGfni/+SvhO7NaJthTTjRdohhIy0FQwyC5rR1enAsjkldQg83th8J5hURv0Q==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -1340,10 +1340,10 @@ nested-obj@^0.0.1:
   resolved "https://registry.yarnpkg.com/nested-obj/-/nested-obj-0.0.1.tgz#efe1da127c3d00826fa10ec25673e0f9ec1224fd"
   integrity sha512-kB1WKTng+IePQhZVs1UXtFaHBx4QEM5a0XKGAzYfCKvdx5DhNjCytNDWMUGpNNpHLotln+tiwcA52kWCIgGq1Q==
 
-node-addon-api@^7.0.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-7.1.0.tgz#71f609369379c08e251c558527a107107b5e0fdb"
-  integrity sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==
+node-addon-api@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-8.0.0.tgz#5453b7ad59dd040d12e0f1a97a6fa1c765c5c9d2"
+  integrity sha512-ipO7rsHEBqa9STO5C5T10fj732ml+5kLN1cAG8/jdHd56ldQeGj3Q7+scUS+VHK/qy1zLEwC4wMK5+yM0btPvw==
 
 node-fetch@^2.6.7:
   version "2.7.0"
@@ -1456,10 +1456,10 @@ path-scurry@^1.10.2:
     lru-cache "^10.2.0"
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
 
-pg-proto-parser@^1.23.0:
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/pg-proto-parser/-/pg-proto-parser-1.23.0.tgz#a342d34a4a4b38d01c88158e0e9475d489efd716"
-  integrity sha512-LzX7va8HdHwAK1QLwWYmF8wfeHYV39lWbQICgSyBX5idv/ctsurQhej4WxK1CVt0B075t5Ojvf/rgw2KZVP/AA==
+pg-proto-parser@^1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/pg-proto-parser/-/pg-proto-parser-1.24.0.tgz#8cc52543131c7f63d0caefd06d592e1774147f7d"
+  integrity sha512-6Rr9l0KKvvQJRXGLxAhpEOki3rV7M1IIZWBJGlMZFV0+TunNQBLM+geiXSMALBrB1EvKKes7q3/rt6u7UTzT/g==
   dependencies:
     "@babel/generator" "^7.23.6"
     "@babel/parser" "^7.23.6"
@@ -1639,7 +1639,16 @@ ssri@^10.0.0:
   dependencies:
     minipass "^7.0.3"
 
-"string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+"string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -1664,7 +1673,14 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==

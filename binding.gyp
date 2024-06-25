@@ -42,33 +42,6 @@
               "action_name": 'prebuild_dependencies'
             }
           ],
-        }],
-        ['OS=="win"', {
-          "link_settings": {
-            "library_dirs": [
-              "../libpg_query/windows"
-            ],
-            "libraries": [
-              "../libpg_query/windows/pg_query.lib"
-            ],
-          },
-          "msvs_settings": {
-            "VCCLCompilerTool": {
-              "ExceptionHandling": 0,
-              "AdditionalOptions": ["/EHsc"]
-            }
-          },
-          "defines": [ "NAPI_DISABLE_CPP_EXCEPTIONS" ],
-          "actions":[
-            {
-              "outputs": [
-                ""
-              ],
-              "inputs": [],
-              "action": ['../script/buildAddon.bat'],
-              "action_name": 'prebuild_dependencies'
-            }
-          ]
         }]
       ]
     }

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Set the desired commit hash and branch
-commit=1ec38940e5c6f09a4c1d17a46d839a881c4f2db7
-branch=16-latest
+commit=db39825bc7c1ddd45962ec6a626d740b7f8f027a
+branch=15-latest
 
 # Remember current directory and create a new, unique, temporary directory
 rDIR=$(pwd)
