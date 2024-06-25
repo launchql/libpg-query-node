@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "protogen": "node ./script/protogen.js 16-latest",
+    "protogen": "node ./script/protogen.js 15-latest",
     "clean": "rimraf build",
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build --loglevel verbose",
