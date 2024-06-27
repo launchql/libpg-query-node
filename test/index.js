@@ -88,6 +88,13 @@ describe("Queries", () => {
       expect(deparsed).to.eq(`SELECT * FROM john`)
     });
 
+    it("sync function should return a same SQL (insert)", async () => {
+      const testQuery = "INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22);";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq(`INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22)`)
+    });
+
     it("should reject on bogus input", async () => {
       return query.deparse({stmts: [{}]}).then(
         () => {
