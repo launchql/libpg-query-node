@@ -12,6 +12,7 @@
     "binding.gyp",
     "index.js",
     "index.d.ts",
+    "proto.js",
     "libpg_query/*",
     "script/*",
     "src/*",
@@ -30,7 +31,7 @@
     }
   },
   "scripts": {
-    "protogen": "node ./script/protogen.js 15-latest",
+    "protogen": "node ./script/protogen.js 15-4.2.4",
     "clean": "rimraf build",
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build --loglevel verbose",
@@ -44,7 +45,7 @@
     "test": "mocha --timeout 5000",
     "binary:build": "node-pre-gyp rebuild package",
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
-  },  
+  },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
   "repository": {
