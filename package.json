@@ -55,6 +55,7 @@
   "devDependencies": {
     "@launchql/proto-cli": "1.25.0",
     "@yamlize/cli": "^0.8.0",
+    "aws-sdk": "2.1691.0",
     "chai": "^3.5.0",
     "emnapi": "^0.43.1",
     "lodash": "^4.17.15",
@@ -81,7 +82,10 @@
   "binary": {
     "module_name": "queryparser",
     "module_path": "./build/Release/",
-    "host": "https://supabase-public-artifacts-bucket.s3.amazonaws.com",
-    "remote_path": "./libpg-query-node/"
+    "host": "https://gnbyoxcowpfpalflhptv.supabase.co/storage/v1/s3",
+    "remote_path": "./libpg-query-node/",
+    "bucket": "public-artifacts",
+    "region": "us-east-1",
+    "s3ForcePathStyle": true
   }
 }
