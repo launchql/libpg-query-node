@@ -73,6 +73,41 @@ describe("Queries", () => {
     });
   });
 
+  describe("Deparsing", () => {
+    it("async function should return a promise resolving to same SQL", async () => {
+      const testQuery = "select * from john;";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = await query.deparse(parsed);
+      expect(deparsed).to.eq(`SELECT * FROM john`)
+    });
+
+    it("sync function should return a same SQL", async () => {
+      const testQuery = "select * from john;";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq(`SELECT * FROM john`)
+    });
+
+    it("sync function should return a same SQL (insert)", async () => {
+      const testQuery = "INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22);";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq(`INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22)`)
+    });
+
+    it("should reject on bogus input", async () => {
+      return query.deparse({stmts: [{}]}).then(
+        () => {
+          throw new Error(`should have rejected`);
+        },
+        (e) => {
+          expect(e).instanceof(Error);
+          expect(e.message).to.match(/deparse error/);
+        }
+      );
+    });
+  });
+
   describe("Fingerprint", () => {
     context("sync", () => {
       it("should not fingerprint a bogus query", () => {
