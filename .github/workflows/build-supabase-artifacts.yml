@@ -1,4 +1,4 @@
-name: Build Supabase Artifacts Linux 🏗
+name: Build Supabase Artifacts 🏗
 
 on:
   workflow_dispatch:
