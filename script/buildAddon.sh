@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Set the desired commit hash and branch
-commit=1ec38940e5c6f09a4c1d17a46d839a881c4f2db7
+commit=06670290ad39e61805ecacbc6267df61f6ae3d91
 branch=16-latest
 
 # Remember current directory and create a new, unique, temporary directory
