@@ -45,7 +45,7 @@
     "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
-  "license": "LICENSE IN LICENSE",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/launchql/libpg-query-node.git"
