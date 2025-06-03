@@ -95,6 +95,41 @@ describe("Queries", () => {
       expect(deparsed).to.eq(`INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22)`)
     });
 
+    it("sync function should return a same SQL (update)", async () => {
+      const testQuery = "UPDATE people SET age = age + 1 WHERE name = 'John';";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq("UPDATE people SET age = age + 1 WHERE name = 'John'");
+    });
+
+    it("sync function should return a same SQL (join and where)", async () => {
+      const testQuery = "select a.id, b.name from table_a a join table_b b on a.id = b.a_id where b.status = 'active';";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq("SELECT a.id, b.name FROM table_a a JOIN table_b b ON a.id = b.a_id WHERE b.status = 'active'");
+    });
+
+    it("sync function should return a same SQL (CTE)", async () => {
+      const testQuery = "with recent as (select * from people where age > 30) select name from recent;";
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq("WITH recent AS (SELECT * FROM people WHERE age > 30) SELECT name FROM recent");
+    });
+
+    it("sync function should return a same SQL (create table)", async () => {
+      const testQuery = `CREATE TABLE orders (
+        id serial PRIMARY KEY,
+        user_id integer NOT NULL,
+        total numeric(10,2) DEFAULT 0.00,
+        ordered_at timestamp with time zone DEFAULT now(),
+        description text,
+        CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      );`;
+      const parsed = query.parseQuerySync(testQuery);
+      const deparsed = query.deparseSync(parsed);
+      expect(deparsed).to.eq(`CREATE TABLE orders (id serial PRIMARY KEY, user_id int NOT NULL, total numeric(10, 2) DEFAULT 0.00, ordered_at timestamp with time zone DEFAULT now(), description text, CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE)`);
+    });
+
     it("should reject on bogus input", async () => {
       return query.deparse({stmts: [{}]}).then(
         () => {
