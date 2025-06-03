@@ -1,6 +1,6 @@
 {
   "name": "libpg-query",
-  "version": "15.2.0-rc.deparse.3",
+  "version": "17.1.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "index.js",
@@ -31,7 +31,7 @@
     }
   },
   "scripts": {
-    "protogen": "node ./script/protogen.js 15-4.2.4",
+    "protogen": "node ./script/protogen.js 17-6.1.0",
     "clean": "rimraf build",
     "configure": "node-pre-gyp configure",
     "install": "node-pre-gyp install --fallback-to-build --loglevel verbose",
@@ -66,7 +66,7 @@
     "@emnapi/runtime": "^0.43.1",
     "@launchql/protobufjs": "7.2.6",
     "@mapbox/node-pre-gyp": "^1.0.8",
-    "@pgsql/types": "^15.0.1",
+    "@pgsql/types": "^17.0.0",
     "node-addon-api": "^7.0.0",
     "node-gyp": "^10.0.1"
   },

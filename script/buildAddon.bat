@@ -1,7 +1,7 @@
 @echo off
 
-set commit=db39825bc7c1ddd45962ec6a626d740b7f8f027a
-set branch=15-latest
+set commit=1c1a32ed2f4c7799830d50bf4cb159222aafec48
+set branch=17-6.1.0
 
 setlocal enabledelayedexpansion
 
