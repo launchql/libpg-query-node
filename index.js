@@ -1,57 +1,24 @@
-const PgQuery = require('./build/Release/queryparser');
-const { pg_query } = require('./proto');
-
+const wasmModule = require('./wasm/index.cjs');
 
 module.exports = {
-  parseQuery(query) {
-    return new Promise((resolve, reject) => {
-      PgQuery.parseQueryAsync(query, (err, result) => {
-        err ? reject(err) : resolve(JSON.parse(result));
-      });
-    });
-  },
-
-  deparse(parseTree) {
-    const msg = pg_query.ParseResult.fromObject(parseTree);
-    const data = pg_query.ParseResult.encode(msg).finish();
-    return new Promise((resolve, reject) => {
-      PgQuery.deparseAsync(data, (err, result) => {
-        err ? reject(err) : resolve(result);
-      });
-    });
-  },
-
-  parsePlPgSQL(query) {
-    return new Promise((resolve, reject) => {
-      PgQuery.parsePlPgSQLAsync(query, (err, result) => {
-        err ? reject(err) : resolve(JSON.parse(result));
-      });
-    });
-  },
-
+  parseQuery: wasmModule.parseQuery,
+  deparse: wasmModule.deparse,
+  parsePlPgSQL: wasmModule.parsePlPgSQL,
+  fingerprint: wasmModule.fingerprint,
+  
   parseQuerySync(query) {
-    return JSON.parse(PgQuery.parseQuerySync(query));
+    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
   },
 
   deparseSync(parseTree) {
-    const msg = pg_query.ParseResult.fromObject(parseTree);
-    const data = pg_query.ParseResult.encode(msg).finish();
-    return PgQuery.deparseSync(data);
+    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
   },
 
   parsePlPgSQLSync(query) {
-    return JSON.parse(PgQuery.parsePlPgSQLSync(query));
-  },
-
-  fingerprint(query) {
-    return new Promise((resolve, reject) => {
-      PgQuery.fingerprintAsync(query, (err, result) => {
-        err ? reject(err) : resolve(result);
-      });
-    });
+    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
   },
 
   fingerprintSync(query) {
-    return PgQuery.fingerprintSync(query);
-  },
+    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
+  }
 };
