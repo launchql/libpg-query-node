@@ -1,34 +1,35 @@
 const wasmModule = require('./wasm/index.cjs');
 const deasync = require('deasync');
 
-let initComplete = false;
+let initDone = false;
+let initError = null;
+
 wasmModule.initPromise.then(() => {
-  initComplete = true;
-}).catch(() => {
-  initComplete = true;
+  initDone = true;
+}).catch((err) => {
+  initError = err;
+  initDone = true;
 });
 
-function ensureInit() {
-  deasync.loopWhile(() => !initComplete);
+deasync.loopWhile(() => !initDone);
+
+if (initError) {
+  throw initError;
 }
 
 function parseQuerySync(query) {
-  ensureInit();
   return wasmModule.parseQuerySync(query);
 }
 
 function deparseSync(parseTree) {
-  ensureInit();
   return wasmModule.deparseSync(parseTree);
 }
 
 function parsePlPgSQLSync(query) {
-  ensureInit();
   return wasmModule.parsePlPgSQLSync(query);
 }
 
 function fingerprintSync(query) {
-  ensureInit();
   return wasmModule.fingerprintSync(query);
 }
 
