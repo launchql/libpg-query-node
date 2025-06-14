@@ -31,12 +31,11 @@
   "scripts": {
     "protogen": "node ./script/protogen.js 17-6.1.0",
     "clean": "rimraf build",
-    "make:wasm": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
-    "build:wasm": "yarn make:wasm build",
-    "rebuild:wasm": "yarn make:wasm rebuild",
-    "clean:wasm": "yarn make:wasm clean",
-    "clean-cache:wasm": "yarn make:wasm clean-cache",
-    "workflows": "node script/workflows.js",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:build": "yarn wasm:make build",
+    "wasm:rebuild": "yarn wasm:make rebuild",
+    "wasm:clean": "yarn wasm:make clean",
+    "wasm:clean-cache": "yarn wasm:make clean-cache",
     "test": "mocha --timeout 5000"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
