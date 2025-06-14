@@ -12,15 +12,9 @@
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
     <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml/badge.svg" />
    </a><br />
-   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
-    <img height="20" src="https://img.shields.io/github/actions/workflow/status/launchql/libpg-query-node/ci.yml?label=Linux%20🐧" />
-   </a>
-   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
-    <img height="20" src="https://img.shields.io/github/actions/workflow/status/launchql/libpg-query-node/ci.yml?label=Mac%20🍎" />
-   </a>
-   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
-    <img height="20" src="https://img.shields.io/github/actions/workflow/status/launchql/libpg-query-node/ci.yml?label=Windows%20🪟" />
-   </a>
+   [![macOS](https://img.shields.io/badge/macOS-available-333333?logo=apple&logoColor=white)](https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml)
+   [![Windows](https://img.shields.io/badge/Windows-available-333333?logo=windows&logoColor=white)](https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml)
+   [![Linux](https://img.shields.io/badge/Linux-available-333333?logo=linux&logoColor=white)](https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml)
 </p>
 
 The real PostgreSQL parser for Node.js, powered by **WebAssembly (WASM)** for true cross-platform compatibility.
