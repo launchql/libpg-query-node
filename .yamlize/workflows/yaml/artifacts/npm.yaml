@@ -1,7 +1,0 @@
-name: Save Artifacts For NPM 🏗
-uses: actions/upload-artifact@v4
-with:
-  name: build-npm-artifact-${{ matrix.os }}
-  path: |
-    ${{ matrix.os == 'macos-latest' && './libpg_query/osx/libpg_query.a' || 
-        matrix.os == 'ubuntu-latest' && './libpg_query/linux/libpg_query.a' }}
