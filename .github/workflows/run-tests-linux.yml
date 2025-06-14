@@ -22,5 +22,8 @@ jobs:
         run: |
           yarn
 
+      - name: Build WASM 🔧
+        run: npm run build:wasm
+
       - name: Test 🔍
         run: yarn test
