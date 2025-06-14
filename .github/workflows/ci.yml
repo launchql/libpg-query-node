@@ -35,7 +35,7 @@ jobs:
           retention-days: 1
 
   test:
-    name: Test on ${{ matrix.os }} 🧪
+    name: Test on ${{ matrix.os }} ${{ matrix.os == 'ubuntu-latest' && '🐧' || matrix.os == 'macos-latest' && '🍎' || '🪟' }}
     needs: build-wasm
     strategy:
       matrix:
