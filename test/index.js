@@ -5,6 +5,10 @@ const { omit, cloneDeepWith } = require("lodash");
 
 
 describe("Queries", () => {
+  before(async () => {
+    await query.parseQuery("SELECT 1"); // Initialize WASM module
+  });
+
   describe("Sync Parsing", () => {
     it("should return a single-item parse result for common queries", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];

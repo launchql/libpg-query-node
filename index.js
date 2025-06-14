@@ -1,21 +1,5 @@
 const wasmModule = require('./wasm/index.cjs');
-const deasync = require('deasync');
 
-let initDone = false;
-let initError = null;
-
-wasmModule.initPromise.then(() => {
-  initDone = true;
-}).catch((err) => {
-  initError = err;
-  initDone = true;
-});
-
-deasync.loopWhile(() => !initDone);
-
-if (initError) {
-  throw initError;
-}
 
 function parseQuerySync(query) {
   return wasmModule.parseQuerySync(query);
