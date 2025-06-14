@@ -23,41 +23,18 @@ A WASM-based PostgreSQL query parser that provides the same functionality as the
 ## Table of Contents
 
 1. [Installation](#installation)
-2. [Example](#example)
-3. [Usage](#usage)
-4. [Build Instructions](#build-instructions)
-5. [Testing](#testing)
-6. [Versions](#versions)
-7. [Related Projects](#related-projects)
-8. [Credit](#credit)
+2. [Usage](#usage)
+3. [Build Instructions](#build-instructions)
+4. [Testing](#testing)
+5. [Versions](#versions)
+6. [Related Projects](#related-projects)
+7. [Credit](#credit)
 
 
 ## Installation
 
 ```sh
 npm install libpg-query
-```
-
-## Example
-
-```typescript
-import { parseQuery, parseQuerySync } from 'libpg-query';
-
-// Async usage (recommended)
-const result = await parseQuery('SELECT * FROM users WHERE id = $1');
-console.log(result);
-
-// Sync usage
-const syncResult = parseQuerySync('SELECT * FROM users WHERE id = $1');
-console.log(syncResult);
-```
-
-### CommonJS Usage
-
-```javascript
-const { parseQuery, parseQuerySync } = require('libpg-query');
-
-parseQuery('SELECT * FROM users WHERE id = $1').then(console.log);
 ```
 
 ## Usage
