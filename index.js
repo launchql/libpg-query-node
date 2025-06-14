@@ -1,4 +1,36 @@
 const wasmModule = require('./wasm/index.cjs');
+const deasync = require('deasync');
+
+let initComplete = false;
+wasmModule.initPromise.then(() => {
+  initComplete = true;
+}).catch(() => {
+  initComplete = true;
+});
+
+function ensureInit() {
+  deasync.loopWhile(() => !initComplete);
+}
+
+function parseQuerySync(query) {
+  ensureInit();
+  return wasmModule.parseQuerySync(query);
+}
+
+function deparseSync(parseTree) {
+  ensureInit();
+  return wasmModule.deparseSync(parseTree);
+}
+
+function parsePlPgSQLSync(query) {
+  ensureInit();
+  return wasmModule.parsePlPgSQLSync(query);
+}
+
+function fingerprintSync(query) {
+  ensureInit();
+  return wasmModule.fingerprintSync(query);
+}
 
 module.exports = {
   parseQuery: wasmModule.parseQuery,
@@ -6,19 +38,8 @@ module.exports = {
   parsePlPgSQL: wasmModule.parsePlPgSQL,
   fingerprint: wasmModule.fingerprint,
   
-  parseQuerySync(query) {
-    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
-  },
-
-  deparseSync(parseTree) {
-    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
-  },
-
-  parsePlPgSQLSync(query) {
-    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
-  },
-
-  fingerprintSync(query) {
-    throw new Error('Sync methods not available in WASM-only build. Use async methods instead.');
-  }
+  parseQuerySync,
+  deparseSync,
+  parsePlPgSQLSync,
+  fingerprintSync
 };

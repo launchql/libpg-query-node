@@ -90,9 +90,92 @@ const fingerprint = awaitInit(async (query) => {
   return resultStr;
 });
 
+// Sync versions that assume WASM module is already initialized
+function parseQuerySync(query) {
+  if (!wasmModule) {
+    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+  }
+  const queryPtr = stringToPtr(query);
+  const resultPtr = wasmModule._wasm_parse_query(queryPtr);
+  wasmModule._free(queryPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
+  }
+  
+  return JSON.parse(resultStr);
+}
+
+function deparseSync(parseTree) {
+  if (!wasmModule) {
+    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+  }
+  const msg = pg_query.ParseResult.fromObject(parseTree);
+  const data = pg_query.ParseResult.encode(msg).finish();
+  
+  const dataPtr = wasmModule._malloc(data.length);
+  wasmModule.HEAPU8.set(data, dataPtr);
+  
+  const resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
+  wasmModule._free(dataPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
+  }
+  
+  return resultStr;
+}
+
+function parsePlPgSQLSync(query) {
+  if (!wasmModule) {
+    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+  }
+  const queryPtr = stringToPtr(query);
+  const resultPtr = wasmModule._wasm_parse_plpgsql(queryPtr);
+  wasmModule._free(queryPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
+  }
+  
+  return JSON.parse(resultStr);
+}
+
+function fingerprintSync(query) {
+  if (!wasmModule) {
+    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+  }
+  const queryPtr = stringToPtr(query);
+  const resultPtr = wasmModule._wasm_fingerprint(queryPtr);
+  wasmModule._free(queryPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
+  }
+  
+  return resultStr;
+}
+
 module.exports = {
   parseQuery,
   deparse,
   parsePlPgSQL,
-  fingerprint
+  fingerprint,
+  parseQuerySync,
+  deparseSync,
+  parsePlPgSQLSync,
+  fingerprintSync,
+  initPromise
 };
