@@ -1,21 +1,12 @@
-import { getDefaultContext } from '@emnapi/runtime';
 import { pg_query } from '../proto.js';
 import PgQueryModule from './libpg-query.js';
 
-let PgQuery;
+let wasmModule;
 
 const initPromise = PgQueryModule().then((module) => {
-  const binding = module.emnapiInit({
-    context: getDefaultContext(),
-  });
-
-  PgQuery = binding;
+  wasmModule = module;
 });
 
-/**
- * Function wrapper that waits for the WASM module to initialize
- * before executing the function.
- */
 function awaitInit(fn) {
   return async (...args) => {
     await initPromise;
@@ -23,36 +14,78 @@ function awaitInit(fn) {
   };
 }
 
-export const parseQuery = awaitInit((query) => {
-  return new Promise(async (resolve, reject) => {
-    PgQuery.parseQueryAsync(query, (err, result) => {
-      err ? reject(err) : resolve(JSON.parse(result));
-    });
-  });
+function stringToPtr(str) {
+  const len = wasmModule.lengthBytesUTF8(str) + 1;
+  const ptr = wasmModule._malloc(len);
+  wasmModule.stringToUTF8(str, ptr, len);
+  return ptr;
+}
+
+function ptrToString(ptr) {
+  return wasmModule.UTF8ToString(ptr);
+}
+
+export const parseQuery = awaitInit(async (query) => {
+  const queryPtr = stringToPtr(query);
+  const resultPtr = wasmModule._wasm_parse_query(queryPtr);
+  wasmModule._free(queryPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr === 'ERROR') {
+    throw new Error('Operation failed');
+  }
+  
+  return JSON.parse(resultStr);
 });
 
-export const deparse = awaitInit((parseTree) => {
+export const deparse = awaitInit(async (parseTree) => {
   const msg = pg_query.ParseResult.fromObject(parseTree);
   const data = pg_query.ParseResult.encode(msg).finish();
-  return new Promise((resolve, reject) => {
-    PgQuery.deparseAsync(data, (err, result) => {
-      err ? reject(err) : resolve(result);
-    });
-  });
+  
+  const dataPtr = wasmModule._malloc(data.length);
+  wasmModule.HEAPU8.set(data, dataPtr);
+  
+  const resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
+  wasmModule._free(dataPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr === 'ERROR') {
+    throw new Error('Operation failed');
+  }
+  
+  return resultStr;
 });
 
-export const parsePlPgSQL = awaitInit((query) => {
-  return new Promise(async (resolve, reject) => {
-    PgQuery.parsePlPgSQLAsync(query, (err, result) => {
-      err ? reject(err) : resolve(JSON.parse(result));
-    });
-  });
+export const parsePlPgSQL = awaitInit(async (query) => {
+  const queryPtr = stringToPtr(query);
+  const resultPtr = wasmModule._wasm_parse_plpgsql(queryPtr);
+  wasmModule._free(queryPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr === 'ERROR') {
+    throw new Error('Operation failed');
+  }
+  
+  return JSON.parse(resultStr);
 });
 
-export const fingerprint = awaitInit((query) => {
-  return new Promise(async (resolve, reject) => {
-    PgQuery.fingerprintAsync(query, (err, result) => {
-      err ? reject(err) : resolve(result);
-    });
-  });
+export const fingerprint = awaitInit(async (query) => {
+  const queryPtr = stringToPtr(query);
+  const resultPtr = wasmModule._wasm_fingerprint(queryPtr);
+  wasmModule._free(queryPtr);
+  
+  const resultStr = ptrToString(resultPtr);
+  wasmModule._wasm_free_string(resultPtr);
+  
+  if (resultStr === 'ERROR') {
+    throw new Error('Operation failed');
+  }
+  
+  return resultStr;
 });
