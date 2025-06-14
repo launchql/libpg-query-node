@@ -33,8 +33,8 @@ const parseQuery = awaitInit(async (query) => {
   const resultStr = ptrToString(resultPtr);
   wasmModule._wasm_free_string(resultPtr);
   
-  if (resultStr === 'ERROR') {
-    throw new Error('Operation failed');
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
   }
   
   return JSON.parse(resultStr);
@@ -53,8 +53,8 @@ const deparse = awaitInit(async (parseTree) => {
   const resultStr = ptrToString(resultPtr);
   wasmModule._wasm_free_string(resultPtr);
   
-  if (resultStr === 'ERROR') {
-    throw new Error('Operation failed');
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
   }
   
   return resultStr;
@@ -68,8 +68,8 @@ const parsePlPgSQL = awaitInit(async (query) => {
   const resultStr = ptrToString(resultPtr);
   wasmModule._wasm_free_string(resultPtr);
   
-  if (resultStr === 'ERROR') {
-    throw new Error('Operation failed');
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
   }
   
   return JSON.parse(resultStr);
@@ -83,8 +83,8 @@ const fingerprint = awaitInit(async (query) => {
   const resultStr = ptrToString(resultPtr);
   wasmModule._wasm_free_string(resultPtr);
   
-  if (resultStr === 'ERROR') {
-    throw new Error('Operation failed');
+  if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    throw new Error(resultStr);
   }
   
   return resultStr;
