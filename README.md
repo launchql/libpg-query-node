@@ -11,6 +11,15 @@
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node"/></a><br />
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
     <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml/badge.svg" />
+   </a><br />
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
+    <img height="20" src="https://img.shields.io/github/actions/workflow/status/launchql/libpg-query-node/ci.yml?label=Linux%20🐧" />
+   </a>
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
+    <img height="20" src="https://img.shields.io/github/actions/workflow/status/launchql/libpg-query-node/ci.yml?label=Mac%20🍎" />
+   </a>
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
+    <img height="20" src="https://img.shields.io/github/actions/workflow/status/launchql/libpg-query-node/ci.yml?label=Windows%20🪟" />
    </a>
 </p>
 
