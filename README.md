@@ -24,9 +24,9 @@ A WASM-based PostgreSQL query parser that provides the same functionality as the
 
 1. [Installation](#installation)
 2. [Example](#example)
-3. [Build Instructions](#build-instructions)
-4. [Testing](#testing)
-5. [Documentation](#documentation)
+3. [Usage](#usage)
+4. [Build Instructions](#build-instructions)
+5. [Testing](#testing)
 6. [Versions](#versions)
 7. [Related Projects](#related-projects)
 8. [Credit](#credit)
@@ -60,93 +60,7 @@ const { parseQuery, parseQuerySync } = require('libpg-query');
 parseQuery('SELECT * FROM users WHERE id = $1').then(console.log);
 ```
 
-## Build Instructions
-
-This package uses a **WASM-only build system** for true cross-platform compatibility without native compilation dependencies.
-
-### Prerequisites
-
-- Node.js (version 16 or higher recommended)
-- Docker (for WASM compilation using Emscripten)
-- yarn or npm
-
-### Building WASM Artifacts
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-2. **Build WASM artifacts:**
-   ```bash
-   npm run wasm:build
-   # or
-   yarn wasm:build
-   ```
-
-3. **Clean WASM build (if needed):**
-   ```bash
-   npm run wasm:clean
-   # or
-   yarn wasm:clean
-   ```
-
-4. **Rebuild WASM artifacts from scratch:**
-   ```bash
-   npm run wasm:clean && npm run wasm:build
-   # or
-   yarn wasm:clean && yarn wasm:build
-   ```
-
-### Build Process Details
-
-The WASM build process:
-- Uses Docker with Emscripten SDK for compilation
-- Compiles C wrapper code to WebAssembly
-- Generates `wasm/libpg-query.js` and `wasm/libpg-query.wasm` files
-- No native compilation or node-gyp dependencies required
-
-## Testing
-
-### Running Tests
-
-```bash
-npm test
-# or
-yarn test
-```
-
-### Test Requirements
-
-- WASM artifacts must be built before running tests
-- If tests fail with "fetch failed" errors, rebuild WASM artifacts:
-  ```bash
-  npm run wasm:clean && npm run wasm:build && npm test
-  ```
-
-### Expected Test Output
-
-All tests should pass:
-```
-  Queries
-    Sync Parsing
-      ✓ should return a single-item parse result for common queries
-      ✓ should support parsing multiple queries
-      ✓ should not parse a bogus query
-    Async parsing
-      ✓ should return a promise resolving to same result
-      ✓ should reject on bogus queries
-    Deparsing
-      ✓ async function should return a promise resolving to same SQL
-      ✓ sync function should return a same SQL
-      [... more tests ...]
-
-  18 passing (70ms)
-```
-
-## Documentation
+## Usage
 
 ### `parseQuery(sql: string): Promise<ParseResult[]>`
 
@@ -215,6 +129,74 @@ interface Statement {
 ```
 
 **Note:** The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as PostgreSQL expects).
+
+## Build Instructions
+
+This package uses a **WASM-only build system** for true cross-platform compatibility without native compilation dependencies.
+
+### Prerequisites
+
+- Node.js (version 16 or higher recommended)
+- Docker (for WASM compilation using Emscripten)
+- yarn or npm
+
+### Building WASM Artifacts
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+2. **Build WASM artifacts:**
+   ```bash
+   npm run wasm:build
+   # or
+   yarn wasm:build
+   ```
+
+3. **Clean WASM build (if needed):**
+   ```bash
+   npm run wasm:clean
+   # or
+   yarn wasm:clean
+   ```
+
+4. **Rebuild WASM artifacts from scratch:**
+   ```bash
+   npm run wasm:clean && npm run wasm:build
+   # or
+   yarn wasm:clean && yarn wasm:build
+   ```
+
+### Build Process Details
+
+The WASM build process:
+- Uses Docker with Emscripten SDK for compilation
+- Compiles C wrapper code to WebAssembly
+- Generates `wasm/libpg-query.js` and `wasm/libpg-query.wasm` files
+- No native compilation or node-gyp dependencies required
+
+## Testing
+
+### Running Tests
+
+```bash
+npm test
+# or
+yarn test
+```
+
+### Test Requirements
+
+- WASM artifacts must be built before running tests
+- If tests fail with "fetch failed" errors, rebuild WASM artifacts:
+  ```bash
+  npm run wasm:clean && npm run wasm:build && npm test
+  ```
+
+
 
 ## Versions
 
