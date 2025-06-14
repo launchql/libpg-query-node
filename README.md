@@ -9,20 +9,14 @@
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dw/libpg-query"/></a>
    <a href="https://github.com/launchql/libpg-query/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node"/></a><br />
-   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-linux.yml">
-    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-linux.yml/badge.svg" />
-   </a>
-   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-mac.yml">
-    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-mac.yml/badge.svg" />
-   </a>
-   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-win.yml">
-    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/run-tests-win.yml/badge.svg" />
+   <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml">
+    <img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml/badge.svg" />
    </a>
 </p>
 
-The real PostgreSQL parser, exposed for nodejs.
+The real PostgreSQL parser for Node.js, powered by **WebAssembly (WASM)** for true cross-platform compatibility.
 
-Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser)
+A WASM-based PostgreSQL query parser that provides the same functionality as the native PostgreSQL parser without requiring native compilation or platform-specific binaries. Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser).
 
 
 ## Table of Contents
@@ -45,9 +39,24 @@ npm install libpg-query
 
 ## Example
 
-```js
-const parser = require('libpg-query');
-parser.parseQuery('select 1').then(console.log);
+```typescript
+import { parseQuery, parseQuerySync } from 'libpg-query';
+
+// Async usage (recommended)
+const result = await parseQuery('SELECT * FROM users WHERE id = $1');
+console.log(result);
+
+// Sync usage
+const syncResult = parseQuerySync('SELECT * FROM users WHERE id = $1');
+console.log(syncResult);
+```
+
+### CommonJS Usage
+
+```javascript
+const { parseQuery, parseQuerySync } = require('libpg-query');
+
+parseQuery('SELECT * FROM users WHERE id = $1').then(console.log);
 ```
 
 ## Build Instructions
@@ -138,15 +147,73 @@ All tests should pass:
 
 ## Documentation
 
-### `query.parseQuery(sql)`/`parseQuerySync`
+### `parseQuery(sql: string): Promise<ParseResult[]>`
 
-Parses the sql and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
+Parses the SQL and returns a Promise for the parse tree. May reject with a parse error.
 
-The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as Postgres expects).
+```typescript
+import { parseQuery } from 'libpg-query';
 
-### `query.parsePlPgSQL(funcsSql)`/`query.parsePlPgSQLSync(funcsSql)`
+const result = await parseQuery('SELECT * FROM users WHERE active = true');
+// Returns: ParseResult[] - array of parsed query objects
+```
 
-Parses the contents of a PL/PGSql function, from a `CREATE FUNCTION` declaration, and returns a Promise for the parse tree (or returns the parse tree directly in the sync version). May reject with/throw a parse error.
+### `parseQuerySync(sql: string): ParseResult[]`
+
+Synchronous version that returns the parse tree directly. May throw a parse error.
+
+```typescript
+import { parseQuerySync } from 'libpg-query';
+
+const result = parseQuerySync('SELECT * FROM users WHERE active = true');
+// Returns: ParseResult[] - array of parsed query objects
+```
+
+### `parsePlPgSQL(funcsSql: string): Promise<ParseResult>`
+
+Parses the contents of a PL/pgSQL function from a `CREATE FUNCTION` declaration. Returns a Promise for the parse tree.
+
+```typescript
+import { parsePlPgSQL } from 'libpg-query';
+
+const functionSql = `
+CREATE FUNCTION get_user_count() RETURNS integer AS $$
+BEGIN
+    RETURN (SELECT COUNT(*) FROM users);
+END;
+$$ LANGUAGE plpgsql;
+`;
+
+const result = await parsePlPgSQL(functionSql);
+```
+
+### `parsePlPgSQLSync(funcsSql: string): ParseResult`
+
+Synchronous version of PL/pgSQL parsing.
+
+```typescript
+import { parsePlPgSQLSync } from 'libpg-query';
+
+const result = parsePlPgSQLSync(functionSql);
+```
+
+### Type Definitions
+
+```typescript
+interface ParseResult {
+  version: number;
+  stmts: Statement[];
+}
+
+interface Statement {
+  stmt_type: string;
+  stmt_len: number;
+  stmt_location: number;
+  query: string;
+}
+```
+
+**Note:** The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as PostgreSQL expects).
 
 ## Versions
 
