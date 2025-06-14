@@ -29,11 +29,12 @@ Primarily used for the node.js parser and deparser [pgsql-parser](https://github
 
 1. [Installation](#installation)
 2. [Example](#example)
+3. [Build Instructions](#build-instructions)
+4. [Testing](#testing)
 5. [Documentation](#documentation)
-3. [Versions](#versions)
-4. [Building a binary distribution](#building-a-binary-distribution)
-6. [Related Projects](#related-projects)
-7. [Credit](#credit)
+6. [Versions](#versions)
+7. [Related Projects](#related-projects)
+8. [Credit](#credit)
 
 
 ## Installation
@@ -49,7 +50,93 @@ const parser = require('libpg-query');
 parser.parseQuery('select 1').then(console.log);
 ```
 
-### Documentation
+## Build Instructions
+
+This package uses a **WASM-only build system** for true cross-platform compatibility without native compilation dependencies.
+
+### Prerequisites
+
+- Node.js (version 16 or higher recommended)
+- Docker (for WASM compilation using Emscripten)
+- yarn or npm
+
+### Building WASM Artifacts
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+2. **Build WASM artifacts:**
+   ```bash
+   npm run wasm:build
+   # or
+   yarn wasm:build
+   ```
+
+3. **Clean WASM build (if needed):**
+   ```bash
+   npm run wasm:clean
+   # or
+   yarn wasm:clean
+   ```
+
+4. **Rebuild WASM artifacts from scratch:**
+   ```bash
+   npm run wasm:clean && npm run wasm:build
+   # or
+   yarn wasm:clean && yarn wasm:build
+   ```
+
+### Build Process Details
+
+The WASM build process:
+- Uses Docker with Emscripten SDK for compilation
+- Compiles C wrapper code to WebAssembly
+- Generates `wasm/libpg-query.js` and `wasm/libpg-query.wasm` files
+- No native compilation or node-gyp dependencies required
+
+## Testing
+
+### Running Tests
+
+```bash
+npm test
+# or
+yarn test
+```
+
+### Test Requirements
+
+- WASM artifacts must be built before running tests
+- If tests fail with "fetch failed" errors, rebuild WASM artifacts:
+  ```bash
+  npm run wasm:clean && npm run wasm:build && npm test
+  ```
+
+### Expected Test Output
+
+All tests should pass:
+```
+  Queries
+    Sync Parsing
+      ✓ should return a single-item parse result for common queries
+      ✓ should support parsing multiple queries
+      ✓ should not parse a bogus query
+    Async parsing
+      ✓ should return a promise resolving to same result
+      ✓ should reject on bogus queries
+    Deparsing
+      ✓ async function should return a promise resolving to same SQL
+      ✓ sync function should return a same SQL
+      [... more tests ...]
+
+  18 passing (70ms)
+```
+
+## Documentation
 
 ### `query.parseQuery(sql)`/`parseQuerySync`
 
@@ -78,15 +165,29 @@ Our latest is built with `17-latest` branch from libpg_query
 | 10                       | 10-latest   |                        | `@1.3.1` ([tree](https://github.com/pyramation/pgsql-parser/tree/39b7b1adc8914253226e286a48105785219a81ca))      |
 
 
-## Building WASM Distribution
+## Troubleshooting
 
-This package now uses WASM-only builds for true cross-platform compatibility without native compilation.
+### Common Issues
 
-- Install requirements (`npm i`)
-- Build WASM: `npm run build:wasm`
-- Clean WASM build: `npm run clean:wasm`
+**"fetch failed" errors during tests:**
+- This indicates stale or missing WASM artifacts
+- Solution: `npm run wasm:clean && npm run wasm:build`
 
-The WASM build uses Emscripten and emnapi to provide N-API compatibility in WebAssembly.
+**"WASM module not initialized" errors:**
+- Ensure you call an async method first to initialize the WASM module
+- Or use the async versions of methods which handle initialization automatically
+
+**Docker permission errors:**
+- Ensure Docker is running and accessible
+- On Linux, you may need to add your user to the docker group
+
+### Build Artifacts
+
+The build process generates these files:
+- `wasm/libpg-query.js` - Emscripten-generated JavaScript loader
+- `wasm/libpg-query.wasm` - WebAssembly binary
+- `wasm/index.js` - ES module exports
+- `wasm/index.cjs` - CommonJS exports with sync wrappers
 
 ## Related Projects
 
