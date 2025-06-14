@@ -9,8 +9,7 @@ char* wasm_parse_query(const char* input) {
     PgQueryParseResult result = pg_query_parse(input);
     
     if (result.error) {
-        char* error_msg = malloc(8);
-        strcpy(error_msg, "ERROR");
+        char* error_msg = strdup(result.error->message);
         pg_query_free_parse_result(result);
         return error_msg;
     }
@@ -29,8 +28,7 @@ char* wasm_deparse_protobuf(const char* protobuf_data, size_t data_len) {
     PgQueryDeparseResult result = pg_query_deparse_protobuf(pbuf);
     
     if (result.error) {
-        char* error_msg = malloc(8);
-        strcpy(error_msg, "ERROR");
+        char* error_msg = strdup(result.error->message);
         pg_query_free_deparse_result(result);
         return error_msg;
     }
@@ -45,8 +43,7 @@ char* wasm_parse_plpgsql(const char* input) {
     PgQueryPlpgsqlParseResult result = pg_query_parse_plpgsql(input);
     
     if (result.error) {
-        char* error_msg = malloc(8);
-        strcpy(error_msg, "ERROR");
+        char* error_msg = strdup(result.error->message);
         pg_query_free_plpgsql_parse_result(result);
         return error_msg;
     }
@@ -61,8 +58,7 @@ char* wasm_fingerprint(const char* input) {
     PgQueryFingerprintResult result = pg_query_fingerprint(input);
     
     if (result.error) {
-        char* error_msg = malloc(8);
-        strcpy(error_msg, "ERROR");
+        char* error_msg = strdup(result.error->message);
         pg_query_free_fingerprint_result(result);
         return error_msg;
     }
