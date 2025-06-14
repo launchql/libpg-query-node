@@ -78,18 +78,15 @@ Our latest is built with `17-latest` branch from libpg_query
 | 10                       | 10-latest   |                        | `@1.3.1` ([tree](https://github.com/pyramation/pgsql-parser/tree/39b7b1adc8914253226e286a48105785219a81ca))      |
 
 
-## Building a binary distribution
+## Building WASM Distribution
+
+This package now uses WASM-only builds for true cross-platform compatibility without native compilation.
 
 - Install requirements (`npm i`)
-- `npx node-pre-gyp rebuild package`
-- With appropriate AWS credentials configured, `npx node-pre-gyp publish`
+- Build WASM: `npm run build:wasm`
+- Clean WASM build: `npm run clean:wasm`
 
-Or you can run the scripts
-
-```
-npm run binary:build
-npm run binary:publish
-```
+The WASM build uses Emscripten and emnapi to provide N-API compatibility in WebAssembly.
 
 ## Related Projects
 

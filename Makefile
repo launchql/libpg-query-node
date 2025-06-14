@@ -33,7 +33,7 @@ CXXFLAGS := -O3
 ifdef EMSCRIPTEN
 OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
 else
-OUT_FILES := build/Release/queryparser.node $(wildcard build/*)
+$(error Native builds are no longer supported. Use EMSCRIPTEN=1 for WASM builds only.)
 endif
 
 # Clone libpg_query source (lives in CACHE_DIR) 
@@ -70,8 +70,7 @@ ifdef EMSCRIPTEN
 		-o $@ \
 		$(SRC_FILES)
 else
-# if not wasm, defer to node-gyp
-	yarn rebuild
+$(error Native builds are no longer supported. Use EMSCRIPTEN=1 for WASM builds only.)
 endif
 
 # Commands
