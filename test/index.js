@@ -2,20 +2,11 @@ const query = require("../");
 const { expect } = require("chai");
 const { omit, cloneDeepWith } = require("lodash");
 
-function isWasmOnlyMode() {
-  try {
-    query.parseQuerySync("SELECT 1");
-    return false;
-  } catch (e) {
-    return e.message.includes("Sync methods not available");
-  }
-}
 
-const WASM_ONLY = isWasmOnlyMode();
 
 describe("Queries", () => {
   describe("Sync Parsing", () => {
-    (WASM_ONLY ? it.skip : it)("should return a single-item parse result for common queries", () => {
+    it("should return a single-item parse result for common queries", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];
       const results = queries.map(query.parseQuerySync);
       results.forEach((res) => {
@@ -41,7 +32,7 @@ describe("Queries", () => {
       expect(selectedDatas[3]).to.have.lengthOf(2);
     });
 
-    (WASM_ONLY ? it.skip : it)("should support parsing multiple queries", () => {
+    it("should support parsing multiple queries", () => {
       const res = query.parseQuerySync("select 1; select null;");
       const changedProps = [
         "stmt_len",
@@ -56,7 +47,7 @@ describe("Queries", () => {
       ]);
     });
 
-    (WASM_ONLY ? it.skip : it)("should not parse a bogus query", () => {
+    it("should not parse a bogus query", () => {
       expect(() => query.parseQuerySync("NOT A QUERY")).to.throw(Error);
     });
   });
@@ -68,12 +59,7 @@ describe("Queries", () => {
       const res = await resPromise;
 
       expect(resPromise).to.be.instanceof(Promise);
-      if (!WASM_ONLY) {
-        expect(res).to.deep.eq(query.parseQuerySync(testQuery));
-      } else {
-        expect(res).to.have.property('stmts');
-        expect(res.stmts).to.be.an('array');
-      }
+      expect(res).to.deep.eq(query.parseQuerySync(testQuery));
     });
 
     it("should reject on bogus queries", async () => {
@@ -97,42 +83,42 @@ describe("Queries", () => {
       expect(deparsed).to.eq(`SELECT * FROM john`)
     });
 
-    (WASM_ONLY ? it.skip : it)("sync function should return a same SQL", async () => {
+    it("sync function should return a same SQL", async () => {
       const testQuery = "select * from john;";
       const parsed = query.parseQuerySync(testQuery);
       const deparsed = query.deparseSync(parsed);
       expect(deparsed).to.eq(`SELECT * FROM john`)
     });
 
-    (WASM_ONLY ? it.skip : it)("sync function should return a same SQL (insert)", async () => {
+    it("sync function should return a same SQL (insert)", async () => {
       const testQuery = "INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22);";
       const parsed = query.parseQuerySync(testQuery);
       const deparsed = query.deparseSync(parsed);
       expect(deparsed).to.eq(`INSERT INTO people (name, age) VALUES ('John', 28), ('Jane', 22)`)
     });
 
-    (WASM_ONLY ? it.skip : it)("sync function should return a same SQL (update)", async () => {
+    it("sync function should return a same SQL (update)", async () => {
       const testQuery = "UPDATE people SET age = age + 1 WHERE name = 'John';";
       const parsed = query.parseQuerySync(testQuery);
       const deparsed = query.deparseSync(parsed);
       expect(deparsed).to.eq("UPDATE people SET age = age + 1 WHERE name = 'John'");
     });
 
-    (WASM_ONLY ? it.skip : it)("sync function should return a same SQL (join and where)", async () => {
+    it("sync function should return a same SQL (join and where)", async () => {
       const testQuery = "select a.id, b.name from table_a a join table_b b on a.id = b.a_id where b.status = 'active';";
       const parsed = query.parseQuerySync(testQuery);
       const deparsed = query.deparseSync(parsed);
       expect(deparsed).to.eq("SELECT a.id, b.name FROM table_a a JOIN table_b b ON a.id = b.a_id WHERE b.status = 'active'");
     });
 
-    (WASM_ONLY ? it.skip : it)("sync function should return a same SQL (CTE)", async () => {
+    it("sync function should return a same SQL (CTE)", async () => {
       const testQuery = "with recent as (select * from people where age > 30) select name from recent;";
       const parsed = query.parseQuerySync(testQuery);
       const deparsed = query.deparseSync(parsed);
       expect(deparsed).to.eq("WITH recent AS (SELECT * FROM people WHERE age > 30) SELECT name FROM recent");
     });
 
-    (WASM_ONLY ? it.skip : it)("sync function should return a same SQL (create table)", async () => {
+    it("sync function should return a same SQL (create table)", async () => {
       const testQuery = `CREATE TABLE orders (
         id serial PRIMARY KEY,
         user_id integer NOT NULL,
@@ -161,11 +147,11 @@ describe("Queries", () => {
 
   describe("Fingerprint", () => {
     context("sync", () => {
-      (WASM_ONLY ? it.skip : it)("should not fingerprint a bogus query", () => {
+      it("should not fingerprint a bogus query", () => {
         expect(() => query.fingerprintSync("NOT A QUERY")).to.throw(Error);
       });
 
-      (WASM_ONLY ? it.skip : it)("should fingerprint a query", () => {
+      it("should fingerprint a query", () => {
         const queries = ["select 1", "select null", "select ''", "select a, b"];
         const results = queries.map(query.fingerprintSync);
 
