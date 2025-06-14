@@ -95,7 +95,6 @@ Converts a parse tree back to SQL string. Returns a Promise for the SQL string.
 
 ```typescript
 import { parseQuery, deparse } from 'libpg-query';
-import { ParseResult } from '@pgsql/types';
 
 const parseTree = await parseQuery('SELECT * FROM users WHERE active = true');
 const sql = await deparse(parseTree[0]);
@@ -108,7 +107,6 @@ Synchronous version that converts a parse tree back to SQL string directly.
 
 ```typescript
 import { parseQuerySync, deparseSync } from 'libpg-query';
-import { ParseResult } from '@pgsql/types';
 
 const parseTree = parseQuerySync('SELECT * FROM users WHERE active = true');
 const sql = deparseSync(parseTree[0]);
