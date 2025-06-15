@@ -13,7 +13,7 @@ static char* safe_strdup(const char* str) {
     if (!str) return NULL;
     char* result = strdup(str);
     if (!result) {
-        return strdup("Memory allocation failed");
+        return NULL;
     }
     return result;
 }
@@ -47,6 +47,10 @@ char* wasm_parse_query(const char* input) {
 
 EMSCRIPTEN_KEEPALIVE
 char* wasm_deparse_protobuf(const char* protobuf_data, size_t data_len) {
+    if (!protobuf_data || data_len == 0) {
+        return safe_strdup("Invalid input: protobuf data cannot be null or empty");
+    }
+    
     PgQueryProtobuf pbuf;
     pbuf.data = (char*)protobuf_data;
     pbuf.len = data_len;
@@ -125,6 +129,11 @@ char* wasm_fingerprint(const char* input) {
 
 EMSCRIPTEN_KEEPALIVE
 char* wasm_parse_query_protobuf(const char* input, int* out_len) {
+    if (!validate_input(input)) {
+        *out_len = 0;
+        return safe_strdup("Invalid input: query cannot be null or empty");
+    }
+    
     PgQueryProtobufParseResult result = pg_query_parse_protobuf(input);
     
     if (result.error) {
@@ -149,6 +158,10 @@ char* wasm_parse_query_protobuf(const char* input, int* out_len) {
 
 EMSCRIPTEN_KEEPALIVE
 int wasm_get_protobuf_len(const char* input) {
+    if (!validate_input(input)) {
+        return 0;
+    }
+    
     PgQueryProtobufParseResult result = pg_query_parse_protobuf(input);
     
     if (result.error) {
