@@ -10,7 +10,7 @@ describe("Query Normalization", () => {
     it("should normalize a simple query", () => {
       const normalized = query.normalizeSync("select 1");
       expect(normalized).to.be.a("string");
-      expect(normalized).to.include("SELECT");
+      expect(normalized).to.include("$1");
     });
 
     it("should normalize parameter values", () => {
