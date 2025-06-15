@@ -21,7 +21,9 @@ function normalizeSync(query) {
   return wasmModule.normalizeSync(query);
 }
 
-
+function parseQueryDetailedSync(query) {
+  return wasmModule.parseQueryDetailedSync(query);
+}
 
 module.exports = {
   parseQuery: wasmModule.parseQuery,
@@ -35,5 +37,6 @@ module.exports = {
   deparseSync,
   parsePlPgSQLSync,
   fingerprintSync,
-  normalizeSync
+  normalizeSync,
+  parseQueryDetailedSync
 };
