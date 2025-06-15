@@ -29,7 +29,7 @@
   },
   "scripts": {
     "clean": "rimraf build",
-    "wasm:make": "emmake make",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "wasm:build": "yarn wasm:make build",
     "wasm:rebuild": "yarn wasm:make rebuild",
     "wasm:clean": "yarn wasm:make clean",
