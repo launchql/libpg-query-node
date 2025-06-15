@@ -28,7 +28,6 @@
     }
   },
   "scripts": {
-    "protogen": "node ./script/protogen.js 17-6.1.0",
     "clean": "rimraf build",
     "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "wasm:build": "yarn wasm:make build",
