@@ -4,7 +4,7 @@ test
 .travis.yml
 package.json
 build
-docker
+
 libpg_query/**/*.a
 libpg_query/**/*.h
 
