@@ -88,7 +88,7 @@ char* wasm_parse_plpgsql(const char* input) {
     }
     
     size_t funcs_len = strlen(result.plpgsql_funcs);
-    size_t json_len = funcs_len + 32; // Extra space for wrapper JSON
+    size_t json_len = strlen("{\"plpgsql_funcs\":}") + funcs_len + 1;
     char* wrapped_result = safe_malloc(json_len);
     
     if (!wrapped_result) {
@@ -230,7 +230,7 @@ WasmDetailedResult* wasm_parse_query_detailed(const char* input) {
     
     if (parse_result.error) {
         result->has_error = 1;
-        size_t message_len = strlen(parse_result.error->message) + 100;
+        size_t message_len = strlen("Parse error:  at line , position ") + strlen(parse_result.error->message) + 20;
         char* prefixed_message = safe_malloc(message_len);
         if (!prefixed_message) {
             pg_query_free_parse_result(parse_result);
