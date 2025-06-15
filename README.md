@@ -113,6 +113,76 @@ const sql = deparseSync(parseTree[0]);
 // Returns: string - reconstructed SQL query
 ```
 
+### `fingerprint(sql: string): Promise<string>`
+
+Generates a unique fingerprint for a SQL query that can be used for query identification and caching. Returns a Promise for a 16-character fingerprint string.
+
+```typescript
+import { fingerprint } from 'libpg-query';
+
+const fp = await fingerprint('SELECT * FROM users WHERE active = $1');
+// Returns: string - unique 16-character fingerprint (e.g., "50fde20626009aba")
+```
+
+### `fingerprintSync(sql: string): string`
+
+Synchronous version that generates a unique fingerprint for a SQL query directly.
+
+```typescript
+import { fingerprintSync } from 'libpg-query';
+
+const fp = fingerprintSync('SELECT * FROM users WHERE active = $1');
+// Returns: string - unique 16-character fingerprint
+```
+
+### `normalize(sql: string): Promise<string>`
+
+Normalizes a SQL query by removing comments, standardizing whitespace, and converting to a canonical form. Returns a Promise for the normalized SQL string.
+
+```typescript
+import { normalize } from 'libpg-query';
+
+const normalized = await normalize('SELECT * FROM users WHERE active = true');
+// Returns: string - normalized SQL query
+```
+
+### `normalizeSync(sql: string): string`
+
+Synchronous version that normalizes a SQL query directly.
+
+```typescript
+import { normalizeSync } from 'libpg-query';
+
+const normalized = normalizeSync('SELECT * FROM users WHERE active = true');
+// Returns: string - normalized SQL query
+```
+
+### `parseQueryDetailed(sql: string): Promise<DetailedParseResult>`
+
+Parses a SQL query with enhanced error reporting that includes detailed location information for parse errors. Returns a Promise for either the parse tree or detailed error information.
+
+```typescript
+import { parseQueryDetailed } from 'libpg-query';
+
+try {
+  const result = await parseQueryDetailed('SELECT * FROM users WHERE');
+} catch (error) {
+  // Enhanced error with line number, position, and context information
+  console.log(error.message); // "Parse error: syntax error at end of input at line 1, position 26"
+}
+```
+
+### `parseQueryDetailedSync(sql: string): DetailedParseResult`
+
+Synchronous version of detailed parsing with enhanced error reporting.
+
+```typescript
+import { parseQueryDetailedSync } from 'libpg-query';
+
+const result = parseQueryDetailedSync('SELECT * FROM users WHERE active = true');
+// Returns: DetailedParseResult with enhanced error information if parsing fails
+```
+
 ### Type Definitions
 
 ```typescript
