@@ -159,14 +159,14 @@ char* wasm_parse_query_protobuf(const char* input, int* out_len) {
 EMSCRIPTEN_KEEPALIVE
 int wasm_get_protobuf_len(const char* input) {
     if (!validate_input(input)) {
-        return 0;
+        return -1;
     }
     
     PgQueryProtobufParseResult result = pg_query_parse_protobuf(input);
     
     if (result.error) {
         pg_query_free_protobuf_parse_result(result);
-        return 0;
+        return -1;
     }
     
     int len = (int)result.parse_tree.len;
@@ -216,15 +216,17 @@ typedef struct {
 
 EMSCRIPTEN_KEEPALIVE
 WasmDetailedResult* wasm_parse_query_detailed(const char* input) {
-    if (!validate_input(input)) {
-        return NULL;
-    }
-    
     WasmDetailedResult* result = safe_malloc(sizeof(WasmDetailedResult));
     if (!result) {
         return NULL;
     }
     memset(result, 0, sizeof(WasmDetailedResult));
+    
+    if (!validate_input(input)) {
+        result->has_error = 1;
+        result->message = safe_strdup("Invalid input: query cannot be null or empty");
+        return result;
+    }
     
     PgQueryParseResult parse_result = pg_query_parse(input);
     
