@@ -69,6 +69,39 @@ char* wasm_fingerprint(const char* input) {
 }
 
 EMSCRIPTEN_KEEPALIVE
+char* wasm_parse_query_protobuf(const char* input, int* out_len) {
+    PgQueryProtobufParseResult result = pg_query_parse_protobuf(input);
+    
+    if (result.error) {
+        *out_len = 0;
+        char* error_msg = strdup(result.error->message);
+        pg_query_free_protobuf_parse_result(result);
+        return error_msg;
+    }
+    
+    char* protobuf_data = malloc(result.parse_tree.len);
+    memcpy(protobuf_data, result.parse_tree.data, result.parse_tree.len);
+    *out_len = (int)result.parse_tree.len;
+    
+    pg_query_free_protobuf_parse_result(result);
+    return protobuf_data;
+}
+
+EMSCRIPTEN_KEEPALIVE
+int wasm_get_protobuf_len(const char* input) {
+    PgQueryProtobufParseResult result = pg_query_parse_protobuf(input);
+    
+    if (result.error) {
+        pg_query_free_protobuf_parse_result(result);
+        return 0;
+    }
+    
+    int len = (int)result.parse_tree.len;
+    pg_query_free_protobuf_parse_result(result);
+    return len;
+}
+
+EMSCRIPTEN_KEEPALIVE
 void wasm_free_string(char* str) {
     free(str);
 }
