@@ -208,8 +208,6 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 ### Prerequisites
 
 - Node.js (version 16 or higher recommended)
-- Docker (for WASM compilation using Emscripten)
-- yarn or npm
 
 ### Building WASM Artifacts
 
@@ -236,7 +234,7 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 ### Build Process Details
 
 The WASM build process:
-- Uses Docker with Emscripten SDK for compilation
+- Uses Emscripten SDK for compilation
 - Compiles C wrapper code to WebAssembly
 - Generates `wasm/libpg-query.js` and `wasm/libpg-query.wasm` files
 - No native compilation or node-gyp dependencies required
@@ -288,9 +286,9 @@ Our latest is built with `17-latest` branch from libpg_query
 - Ensure you call an async method first to initialize the WASM module
 - Or use the async versions of methods which handle initialization automatically
 
-**Docker permission errors:**
-- Ensure Docker is running and accessible
-- On Linux, you may need to add your user to the docker group
+**Build environment issues:**
+- Ensure Emscripten SDK is properly installed and configured
+- Check that all required build dependencies are available
 
 ### Build Artifacts
 
