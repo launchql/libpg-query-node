@@ -216,29 +216,21 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 1. **Install dependencies:**
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
 2. **Build WASM artifacts:**
    ```bash
    npm run wasm:build
-   # or
-   yarn wasm:build
    ```
 
 3. **Clean WASM build (if needed):**
    ```bash
    npm run wasm:clean
-   # or
-   yarn wasm:clean
    ```
 
 4. **Rebuild WASM artifacts from scratch:**
    ```bash
    npm run wasm:clean && npm run wasm:build
-   # or
-   yarn wasm:clean && yarn wasm:build
    ```
 
 ### Build Process Details
@@ -255,8 +247,6 @@ The WASM build process:
 
 ```bash
 npm test
-# or
-yarn test
 ```
 
 ### Test Requirements
