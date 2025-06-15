@@ -1,3 +1,14 @@
+# 17.2.1
+* Remove proto.js dependency (5.4MB bundle size reduction)
+* Add normalize() and normalizeSync() functions for SQL normalization
+* Add parseQueryDetailed() and parseQueryDetailedSync() with enhanced error reporting
+* Add fingerprint() and fingerprintSync() functions for query fingerprinting
+* Add isReady() function to check WASM module initialization status
+* Improve memory management and error handling in WASM wrapper
+* Remove unused dependencies (lodash, deasync, @launchql/protobufjs)
+* Split test suite into separate files for better organization
+* Update documentation with comprehensive function examples
+
 # 1.2.1
 * Rename package
 
