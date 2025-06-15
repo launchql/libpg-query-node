@@ -11,7 +11,6 @@
   "files": [
     "index.js",
     "index.d.ts",
-    "proto.js",
     "libpg_query/*",
     "script/*",
     "wasm/*"
@@ -36,7 +35,7 @@
     "wasm:rebuild": "yarn wasm:make rebuild",
     "wasm:clean": "yarn wasm:make clean",
     "wasm:clean-cache": "yarn wasm:make clean-cache",
-    "test": "mocha --timeout 5000"
+    "test": "mocha test/*.test.js --timeout 5000"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
