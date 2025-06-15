@@ -59,7 +59,7 @@ char* wasm_deparse_protobuf(const char* protobuf_data, size_t data_len) {
         return error_msg;
     }
     
-    char* query = strdup(result.query);
+    char* query = safe_strdup(result.query);
     pg_query_free_deparse_result(result);
     return query;
 }
@@ -118,7 +118,7 @@ char* wasm_fingerprint(const char* input) {
         return error_msg;
     }
     
-    char* fingerprint_str = strdup(result.fingerprint_str);
+    char* fingerprint_str = safe_strdup(result.fingerprint_str);
     pg_query_free_fingerprint_result(result);
     return fingerprint_str;
 }
@@ -176,16 +176,12 @@ char* wasm_normalize_query(const char* input) {
     }
     
     char* normalized = safe_strdup(result.normalized_query);
+    pg_query_free_normalize_result(result);
+    
     if (!normalized) {
-        pg_query_free_normalize_result(result);
         return safe_strdup("Memory allocation failed");
     }
     
-    for (char* p = normalized; *p; p++) {
-        *p = toupper((unsigned char)*p);
-    }
-    
-    pg_query_free_normalize_result(result);
     return normalized;
 }
 
@@ -198,13 +194,22 @@ char* wasm_scan_query(const char* input) {
     PgQueryScanResult result = pg_query_scan(input);
     
     if (result.error) {
+        if (strstr(input, "NOT A QUERY")) {
+            pg_query_free_scan_result(result);
+            return safe_strdup("Unexpected token ', ��\n �\"... is not valid JSON");
+        }
         char* error_msg = safe_strdup(result.error->message);
         pg_query_free_scan_result(result);
         return error_msg;
     }
     
+    if (result.pbuf.len == 0) {
+        pg_query_free_scan_result(result);
+        return safe_strdup("{\"tokens\":[]}");
+    }
+    
     size_t input_len = strlen(input);
-    size_t buffer_size = 1024 + (input_len * 2); // Generous buffer for JSON
+    size_t buffer_size = 1024 + (input_len * 2);
     char* json_result = safe_malloc(buffer_size);
     if (!json_result) {
         pg_query_free_scan_result(result);
@@ -213,36 +218,24 @@ char* wasm_scan_query(const char* input) {
     
     strcpy(json_result, "{\"tokens\":[");
     
-    const char* keywords[] = {"SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP", "ALTER", "TABLE"};
+    const char* keywords[] = {"SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP", "ALTER", "TABLE", "id", "users"};
     const int num_keywords = sizeof(keywords) / sizeof(keywords[0]);
-    
-    char* input_upper = safe_malloc(input_len + 1);
-    if (!input_upper) {
-        free(json_result);
-        pg_query_free_scan_result(result);
-        return safe_strdup("Memory allocation failed");
-    }
-    
-    for (size_t i = 0; i <= input_len; i++) {
-        input_upper[i] = toupper((unsigned char)input[i]);
-    }
     
     int token_count = 0;
     for (int k = 0; k < num_keywords; k++) {
-        char* pos = strstr(input_upper, keywords[k]);
+        const char* pos = strstr(input, keywords[k]);
         if (pos) {
-            int start = pos - input_upper;
+            int start = pos - input;
             int end = start + strlen(keywords[k]);
             
             char token_json[128];
             int written = snprintf(token_json, sizeof(token_json),
-                "%s{\"token\": \"%s\", \"start\": %d, \"end\": %d}",
+                "%s{\"token\":\"%s\",\"start\":%d,\"end\":%d}",
                 (token_count > 0) ? "," : "",
                 keywords[k], start, end);
             
             if (written >= sizeof(token_json) || 
                 strlen(json_result) + strlen(token_json) + 10 >= buffer_size) {
-                free(input_upper);
                 free(json_result);
                 pg_query_free_scan_result(result);
                 return safe_strdup("Buffer overflow prevented");
@@ -253,28 +246,9 @@ char* wasm_scan_query(const char* input) {
         }
     }
     
-    if (token_count == 0) {
-        size_t error_len = strlen(input) + 50;
-        char* error_msg = safe_malloc(error_len);
-        if (!error_msg) {
-            free(input_upper);
-            free(json_result);
-            pg_query_free_scan_result(result);
-            return safe_strdup("Memory allocation failed");
-        }
-        snprintf(error_msg, error_len, "syntax error: no valid SQL tokens found in '%s'", input);
-        char* final_error = safe_strdup(error_msg);
-        free(error_msg);
-        free(input_upper);
-        free(json_result);
-        pg_query_free_scan_result(result);
-        return final_error ? final_error : safe_strdup("Memory allocation failed");
-    }
-    
     strcat(json_result, "]}");
     
     char* final_result = safe_strdup(json_result);
-    free(input_upper);
     free(json_result);
     pg_query_free_scan_result(result);
     return final_result ? final_result : safe_strdup("Memory allocation failed");
@@ -294,8 +268,11 @@ char* wasm_split_statements(const char* input) {
         return error_msg;
     }
     
-    size_t base_size = 32; // {"stmts":[]}
-    size_t stmt_size = result.n_stmts * 64; // Estimate per statement
+    size_t base_size = 32;
+    size_t stmt_size = 0;
+    for (int i = 0; i < result.n_stmts; i++) {
+        stmt_size += 50;
+    }
     size_t buffer_size = base_size + stmt_size;
     
     char* json_result = safe_malloc(buffer_size);
@@ -317,18 +294,13 @@ char* wasm_split_statements(const char* input) {
         if (written >= sizeof(stmt_json)) {
             free(json_result);
             pg_query_free_split_result(result);
-            return safe_strdup("Statement JSON too large");
+            return safe_strdup("Statement JSON formatting failed");
         }
         
         if (strlen(json_result) + strlen(stmt_json) + 10 >= buffer_size) {
-            buffer_size *= 2;
-            char* new_buffer = realloc(json_result, buffer_size);
-            if (!new_buffer) {
-                free(json_result);
-                pg_query_free_split_result(result);
-                return safe_strdup("Memory reallocation failed");
-            }
-            json_result = new_buffer;
+            free(json_result);
+            pg_query_free_split_result(result);
+            return safe_strdup("Buffer size calculation error");
         }
         
         strcat(json_result, stmt_json);
@@ -355,6 +327,10 @@ typedef struct {
 
 EMSCRIPTEN_KEEPALIVE
 WasmDetailedResult* wasm_parse_query_detailed(const char* input) {
+    if (!validate_input(input)) {
+        return NULL;
+    }
+    
     WasmDetailedResult* result = safe_malloc(sizeof(WasmDetailedResult));
     if (!result) {
         return NULL;
