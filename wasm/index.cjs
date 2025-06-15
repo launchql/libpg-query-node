@@ -1,3 +1,4 @@
+const { pg_query } = require('../proto.js');
 const PgQueryModule = require('./libpg-query.js');
 
 let wasmModule;
@@ -29,12 +30,9 @@ function ptrToString(ptr) {
   return wasmModule.UTF8ToString(ptr);
 }
 
-const protobufCache = new WeakMap();
-
 const parseQuery = awaitInit(async (query) => {
   const queryPtr = stringToPtr(query);
   let resultPtr;
-  let protobufPtr;
   
   try {
     resultPtr = wasmModule._wasm_parse_query(queryPtr);
@@ -44,48 +42,25 @@ const parseQuery = awaitInit(async (query) => {
       throw new Error(resultStr);
     }
     
-    const parseResult = JSON.parse(resultStr);
-    
-    const protobufLen = wasmModule._wasm_get_protobuf_len(queryPtr);
-    if (protobufLen > 0) {
-      const lenPtr = wasmModule._malloc(4);
-      wasmModule.HEAPU32[lenPtr >> 2] = 0;
-      protobufPtr = wasmModule._wasm_parse_query_protobuf(queryPtr, lenPtr);
-      const actualLen = wasmModule.HEAPU32[lenPtr >> 2];
-      wasmModule._free(lenPtr);
-      
-      if (actualLen > 0) {
-        const protobufData = new Uint8Array(wasmModule.HEAPU8.buffer, protobufPtr, actualLen);
-        const protobufCopy = new Uint8Array(protobufData);
-        protobufCache.set(parseResult, protobufCopy);
-      }
-    }
-    
-    return parseResult;
+    return JSON.parse(resultStr);
   } finally {
     wasmModule._free(queryPtr);
     if (resultPtr) {
       wasmModule._wasm_free_string(resultPtr);
     }
-    if (protobufPtr) {
-      wasmModule._wasm_free_string(protobufPtr);
-    }
   }
 });
 
 const deparse = awaitInit(async (parseTree) => {
-  const protobufData = protobufCache.get(parseTree);
+  const msg = pg_query.ParseResult.fromObject(parseTree);
+  const data = pg_query.ParseResult.encode(msg).finish();
   
-  if (!protobufData) {
-    throw new Error('deparse error: No protobuf data found for parse tree. Make sure to use the result from parseQuery directly.');
-  }
-  
-  const dataPtr = wasmModule._malloc(protobufData.length);
+  const dataPtr = wasmModule._malloc(data.length);
   let resultPtr;
   
   try {
-    wasmModule.HEAPU8.set(protobufData, dataPtr);
-    resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, protobufData.length);
+    wasmModule.HEAPU8.set(data, dataPtr);
+    resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
     const resultStr = ptrToString(resultPtr);
     
     if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
@@ -150,7 +125,6 @@ function parseQuerySync(query) {
   }
   const queryPtr = stringToPtr(query);
   let resultPtr;
-  let protobufPtr;
   
   try {
     resultPtr = wasmModule._wasm_parse_query(queryPtr);
@@ -160,31 +134,11 @@ function parseQuerySync(query) {
       throw new Error(resultStr);
     }
     
-    const parseResult = JSON.parse(resultStr);
-    
-    const protobufLen = wasmModule._wasm_get_protobuf_len(queryPtr);
-    if (protobufLen > 0) {
-      const lenPtr = wasmModule._malloc(4);
-      wasmModule.HEAPU32[lenPtr >> 2] = 0;
-      protobufPtr = wasmModule._wasm_parse_query_protobuf(queryPtr, lenPtr);
-      const actualLen = wasmModule.HEAPU32[lenPtr >> 2];
-      wasmModule._free(lenPtr);
-      
-      if (actualLen > 0) {
-        const protobufData = new Uint8Array(wasmModule.HEAPU8.buffer, protobufPtr, actualLen);
-        const protobufCopy = new Uint8Array(protobufData);
-        protobufCache.set(parseResult, protobufCopy);
-      }
-    }
-    
-    return parseResult;
+    return JSON.parse(resultStr);
   } finally {
     wasmModule._free(queryPtr);
     if (resultPtr) {
       wasmModule._wasm_free_string(resultPtr);
-    }
-    if (protobufPtr) {
-      wasmModule._wasm_free_string(protobufPtr);
     }
   }
 }
@@ -193,18 +147,15 @@ function deparseSync(parseTree) {
   if (!wasmModule) {
     throw new Error('WASM module not initialized. Call an async method first to initialize.');
   }
-  const protobufData = protobufCache.get(parseTree);
+  const msg = pg_query.ParseResult.fromObject(parseTree);
+  const data = pg_query.ParseResult.encode(msg).finish();
   
-  if (!protobufData) {
-    throw new Error('deparse error: No protobuf data found for parse tree. Make sure to use the result from parseQuery directly.');
-  }
-  
-  const dataPtr = wasmModule._malloc(protobufData.length);
+  const dataPtr = wasmModule._malloc(data.length);
   let resultPtr;
   
   try {
-    wasmModule.HEAPU8.set(protobufData, dataPtr);
-    resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, protobufData.length);
+    wasmModule.HEAPU8.set(data, dataPtr);
+    resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
     const resultStr = ptrToString(resultPtr);
     
     if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {

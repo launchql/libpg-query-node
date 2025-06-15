@@ -102,6 +102,99 @@ int wasm_get_protobuf_len(const char* input) {
 }
 
 EMSCRIPTEN_KEEPALIVE
+char* wasm_normalize_query(const char* input) {
+    PgQueryNormalizeResult result = pg_query_normalize(input);
+    
+    if (result.error) {
+        char* error_msg = strdup(result.error->message);
+        pg_query_free_normalize_result(result);
+        return error_msg;
+    }
+    
+    char* normalized = strdup(result.normalized_query);
+    pg_query_free_normalize_result(result);
+    return normalized;
+}
+
+EMSCRIPTEN_KEEPALIVE
+char* wasm_scan_query(const char* input) {
+    PgQueryScanResult result = pg_query_scan(input);
+    
+    if (result.error) {
+        char* error_msg = strdup(result.error->message);
+        pg_query_free_scan_result(result);
+        return error_msg;
+    }
+    
+    char* scan_result = strdup(result.pbuf.data);
+    pg_query_free_scan_result(result);
+    return scan_result;
+}
+
+EMSCRIPTEN_KEEPALIVE
+char* wasm_split_statements(const char* input) {
+    PgQuerySplitResult result = pg_query_split_with_parser(input);
+    
+    if (result.error) {
+        char* error_msg = strdup(result.error->message);
+        pg_query_free_split_result(result);
+        return error_msg;
+    }
+    
+    char* split_result = strdup(result.pbuf.data);
+    pg_query_free_split_result(result);
+    return split_result;
+}
+
+typedef struct {
+    int has_error;
+    char* message;
+    char* funcname;
+    char* filename;
+    int lineno;
+    int cursorpos;
+    char* context;
+    char* data;
+    size_t data_len;
+} WasmDetailedResult;
+
+EMSCRIPTEN_KEEPALIVE
+WasmDetailedResult* wasm_parse_query_detailed(const char* input) {
+    WasmDetailedResult* result = malloc(sizeof(WasmDetailedResult));
+    memset(result, 0, sizeof(WasmDetailedResult));
+    
+    PgQueryParseResult parse_result = pg_query_parse(input);
+    
+    if (parse_result.error) {
+        result->has_error = 1;
+        result->message = strdup(parse_result.error->message);
+        result->funcname = parse_result.error->funcname ? strdup(parse_result.error->funcname) : NULL;
+        result->filename = parse_result.error->filename ? strdup(parse_result.error->filename) : NULL;
+        result->lineno = parse_result.error->lineno;
+        result->cursorpos = parse_result.error->cursorpos;
+        result->context = parse_result.error->context ? strdup(parse_result.error->context) : NULL;
+    } else {
+        result->data = strdup(parse_result.parse_tree);
+        result->data_len = strlen(result->data);
+    }
+    
+    pg_query_free_parse_result(parse_result);
+    return result;
+}
+
+EMSCRIPTEN_KEEPALIVE
+void wasm_free_detailed_result(WasmDetailedResult* result) {
+    if (result) {
+        free(result->message);
+        free(result->funcname);
+        free(result->filename);
+        free(result->context);
+        free(result->data);
+        free(result);
+    }
+}
+
+EMSCRIPTEN_KEEPALIVE
 void wasm_free_string(char* str) {
     free(str);
 }
