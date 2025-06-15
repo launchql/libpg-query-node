@@ -168,43 +168,7 @@ char* wasm_normalize_query(const char* input) {
 }
 ```
 
-**Query Scanning/Tokenization**:
-```c
-EMSCRIPTEN_KEEPALIVE
-char* wasm_scan_query(const char* input) {
-    PgQueryScanResult result = pg_query_scan(input);
-    
-    if (result.error) {
-        char* error_msg = strdup(result.error->message);
-        pg_query_free_scan_result(result);
-        return error_msg;
-    }
-    
-    // Convert protobuf to JSON or return raw protobuf
-    // Implementation depends on desired output format
-    pg_query_free_scan_result(result);
-    return NULL; // Placeholder
-}
-```
 
-**Statement Splitting**:
-```c
-EMSCRIPTEN_KEEPALIVE
-char* wasm_split_statements(const char* input) {
-    PgQuerySplitResult result = pg_query_split_with_parser(input);
-    
-    if (result.error) {
-        char* error_msg = strdup(result.error->message);
-        pg_query_free_split_result(result);
-        return error_msg;
-    }
-    
-    // Convert split results to JSON
-    // Implementation needed
-    pg_query_free_split_result(result);
-    return NULL; // Placeholder
-}
-```
 
 ### 4. Enhanced Error Handling
 

@@ -164,47 +164,7 @@ const normalize = awaitInit(async (query) => {
   }
 });
 
-const scan = awaitInit(async (query) => {
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_scan_query(queryPtr);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return JSON.parse(resultStr);
-  } finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
-});
 
-const split = awaitInit(async (query) => {
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_split_statements(queryPtr);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return JSON.parse(resultStr);
-  } finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
-});
 
 const parseQueryDetailed = awaitInit(async (query) => {
   const queryPtr = stringToPtr(query);
@@ -394,53 +354,7 @@ function normalizeSync(query) {
   }
 }
 
-function scanSync(query) {
-  if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
-  }
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_scan_query(queryPtr);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return JSON.parse(resultStr);
-  } finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
-}
 
-function splitSync(query) {
-  if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
-  }
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_split_statements(queryPtr);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return JSON.parse(resultStr);
-  } finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
-}
 
 module.exports = {
   parseQuery,
@@ -448,15 +362,11 @@ module.exports = {
   parsePlPgSQL,
   fingerprint,
   normalize,
-  scan,
-  split,
   parseQueryDetailed,
   parseQuerySync,
   deparseSync,
   parsePlPgSQLSync,
   fingerprintSync,
   normalizeSync,
-  scanSync,
-  splitSync,
   initPromise
 };
