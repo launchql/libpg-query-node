@@ -183,6 +183,30 @@ const result = parseQueryDetailedSync('SELECT * FROM users WHERE active = true')
 // Returns: DetailedParseResult with enhanced error information if parsing fails
 ```
 
+### `isReady(): boolean`
+
+Checks if the WebAssembly module is initialized and ready for synchronous operations. This is useful when using sync methods to avoid "WASM module not initialized" errors.
+
+```typescript
+import { isReady, parseQuerySync, parseQuery } from 'libpg-query';
+
+// Check if module is ready before using sync methods
+if (isReady()) {
+  const result = parseQuerySync('SELECT * FROM users');
+} else {
+  // Initialize by calling any async method first
+  await parseQuery('SELECT 1');
+  // Now sync methods will work
+  const result = parseQuerySync('SELECT * FROM users');
+}
+
+// Alternative pattern - always safe
+if (!isReady()) {
+  await parseQuery('SELECT 1'); // Initialize module
+}
+const result = parseQuerySync('SELECT * FROM users');
+```
+
 ### Type Definitions
 
 ```typescript

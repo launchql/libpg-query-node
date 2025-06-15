@@ -394,3 +394,7 @@ export function parseQueryDetailedSync(query) {
     wasmModule._free(queryPtr);
   }
 }
+
+export function isReady() {
+  return !!wasmModule;
+}

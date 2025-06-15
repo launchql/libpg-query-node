@@ -398,6 +398,10 @@ function parseQueryDetailedSync(query) {
 
 
 
+function isReady() {
+  return !!wasmModule;
+}
+
 module.exports = {
   parseQuery,
   deparse,
@@ -411,5 +415,6 @@ module.exports = {
   fingerprintSync,
   normalizeSync,
   parseQueryDetailedSync,
+  isReady,
   initPromise
 };
