@@ -1,4 +1,3 @@
-const { pg_query } = require('../proto.js');
 const PgQueryModule = require('./libpg-query.js');
 
 let wasmModule;
@@ -52,28 +51,7 @@ const parseQuery = awaitInit(async (query) => {
 });
 
 const deparse = awaitInit(async (parseTree) => {
-  const msg = pg_query.ParseResult.fromObject(parseTree);
-  const data = pg_query.ParseResult.encode(msg).finish();
-  
-  const dataPtr = wasmModule._malloc(data.length);
-  let resultPtr;
-  
-  try {
-    wasmModule.HEAPU8.set(data, dataPtr);
-    resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return resultStr;
-  } finally {
-    wasmModule._free(dataPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
+  throw new Error('deparse function temporarily disabled - proto.js dependency removed');
 });
 
 const parsePlPgSQL = awaitInit(async (query) => {
@@ -147,28 +125,7 @@ function deparseSync(parseTree) {
   if (!wasmModule) {
     throw new Error('WASM module not initialized. Call an async method first to initialize.');
   }
-  const msg = pg_query.ParseResult.fromObject(parseTree);
-  const data = pg_query.ParseResult.encode(msg).finish();
-  
-  const dataPtr = wasmModule._malloc(data.length);
-  let resultPtr;
-  
-  try {
-    wasmModule.HEAPU8.set(data, dataPtr);
-    resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return resultStr;
-  } finally {
-    wasmModule._free(dataPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
+  throw new Error('deparse function temporarily disabled - proto.js dependency removed');
 }
 
 function parsePlPgSQLSync(query) {

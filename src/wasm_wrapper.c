@@ -141,9 +141,30 @@ char* wasm_split_statements(const char* input) {
         return error_msg;
     }
     
-    char* split_result = strdup(result.pbuf.data);
+    size_t buffer_size = 1024 + (result.n_stmts * 64);
+    char* json_result = malloc(buffer_size);
+    strcpy(json_result, "{\"stmts\":[");
+    
+    for (int i = 0; i < result.n_stmts; i++) {
+        char stmt_json[256];
+        snprintf(stmt_json, sizeof(stmt_json), 
+                "%s{\"stmt_location\":%d,\"stmt_len\":%d}",
+                (i > 0) ? "," : "",
+                result.stmts[i]->stmt_location,
+                result.stmts[i]->stmt_len);
+        
+        if (strlen(json_result) + strlen(stmt_json) + 10 >= buffer_size) {
+            buffer_size *= 2;
+            json_result = realloc(json_result, buffer_size);
+        }
+        strcat(json_result, stmt_json);
+    }
+    strcat(json_result, "]}");
+    
+    char* final_result = strdup(json_result);
+    free(json_result);
     pg_query_free_split_result(result);
-    return split_result;
+    return final_result;
 }
 
 typedef struct {
