@@ -77,7 +77,7 @@ const deparse = awaitInit(async (parseTree) => {
   const protobufData = protobufCache.get(parseTree);
   
   if (!protobufData) {
-    throw new Error('No protobuf data found for parse tree. Make sure to use the result from parseQuery directly.');
+    throw new Error('deparse error: No protobuf data found for parse tree. Make sure to use the result from parseQuery directly.');
   }
   
   const dataPtr = wasmModule._malloc(protobufData.length);
@@ -196,7 +196,7 @@ function deparseSync(parseTree) {
   const protobufData = protobufCache.get(parseTree);
   
   if (!protobufData) {
-    throw new Error('No protobuf data found for parse tree. Make sure to use the result from parseQuery directly.');
+    throw new Error('deparse error: No protobuf data found for parse tree. Make sure to use the result from parseQuery directly.');
   }
   
   const dataPtr = wasmModule._malloc(protobufData.length);
