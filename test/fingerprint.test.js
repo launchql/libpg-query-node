@@ -23,8 +23,8 @@ describe("Query Fingerprinting", () => {
     });
 
     it("should return different fingerprints for different queries", () => {
-      const fp1 = query.fingerprintSync("select 1");
-      const fp2 = query.fingerprintSync("select 2");
+      const fp1 = query.fingerprintSync("select name from users");
+      const fp2 = query.fingerprintSync("select id from customers");
       
       expect(fp1).to.not.eq(fp2);
     });
