@@ -25,6 +25,10 @@ function parseQueryDetailedSync(query) {
   return wasmModule.parseQueryDetailedSync(query);
 }
 
+function isReady() {
+  return wasmModule.isReady();
+}
+
 module.exports = {
   parseQuery: wasmModule.parseQuery,
   deparse: wasmModule.deparse,
@@ -38,5 +42,6 @@ module.exports = {
   parsePlPgSQLSync,
   fingerprintSync,
   normalizeSync,
-  parseQueryDetailedSync
+  parseQueryDetailedSync,
+  isReady
 };
