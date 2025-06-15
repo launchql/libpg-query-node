@@ -52,9 +52,7 @@
     "rimraf": "5.0.0"
   },
   "dependencies": {
-    "@launchql/protobufjs": "7.2.6",
-    "@pgsql/types": "^17.0.0",
-    "deasync": "^0.1.30"
+    "@pgsql/types": "^17.0.0"
   },
   "keywords": [
     "sql",
