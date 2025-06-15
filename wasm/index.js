@@ -164,47 +164,7 @@ export const normalize = awaitInit(async (query) => {
   }
 });
 
-export const scan = awaitInit(async (query) => {
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_scan_query(queryPtr);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return JSON.parse(resultStr);
-  } finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
-});
 
-export const split = awaitInit(async (query) => {
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_split_statements(queryPtr);
-    const resultStr = ptrToString(resultPtr);
-    
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
-      throw new Error(resultStr);
-    }
-    
-    return JSON.parse(resultStr);
-  } finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_string(resultPtr);
-    }
-  }
-});
 
 export const parseQueryDetailed = awaitInit(async (query) => {
   const queryPtr = stringToPtr(query);
