@@ -46,8 +46,6 @@
     "@launchql/proto-cli": "1.25.0",
     "@yamlize/cli": "^0.8.0",
     "chai": "^3.5.0",
-    "esbuild": "^0.25.5",
-    "lodash": "^4.17.15",
     "mocha": "^5.2.0",
     "rimraf": "5.0.0"
   },
