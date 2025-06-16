@@ -183,29 +183,49 @@ const result = parseQueryDetailedSync('SELECT * FROM users WHERE active = true')
 // Returns: DetailedParseResult with enhanced error information if parsing fails
 ```
 
-### `isReady(): boolean`
+### Initialization
 
-Checks if the WebAssembly module is initialized and ready for synchronous operations. This is only needed when using the synchronous methods (`parseQuerySync`, `deparseSync`, etc.).
+The library provides both async and sync methods. Async methods handle initialization automatically, while sync methods require explicit initialization.
+
+#### Async Methods (Recommended)
+
+Async methods handle initialization automatically and are always safe to use:
 
 ```typescript
-import { isReady, parseQuerySync } from 'libpg-query';
+import { parseQuery, deparse } from 'libpg-query';
 
-// Check if module is ready before using sync methods
-if (isReady()) {
-  const result = parseQuerySync('SELECT * FROM users');
-} else {
-  // Module needs initialization
-  console.warn('WASM module not initialized. Use async methods first to initialize.');
-}
+// These handle initialization automatically
+const result = await parseQuery('SELECT * FROM users');
+const sql = await deparse(result[0]);
+```
 
-// Recommended pattern for sync methods
-if (!isReady()) {
-  throw new Error('WASM module not initialized. Use async methods first to initialize.');
-}
+#### Sync Methods
+
+Sync methods require explicit initialization using `loadModule()`:
+
+```typescript
+import { loadModule, parseQuerySync } from 'libpg-query';
+
+// Initialize first
+await loadModule();
+
+// Now safe to use sync methods
 const result = parseQuerySync('SELECT * FROM users');
 ```
 
-Note: The async methods (`parseQuery`, `deparse`, `parsePlPgSQL`, etc.) handle initialization automatically and are always safe to use. The `isReady()` check is only needed for the synchronous versions of these methods.
+### `loadModule(): Promise<void>`
+
+Explicitly initializes the WASM module. Required before using any sync methods.
+
+```typescript
+import { loadModule, parseQuerySync } from 'libpg-query';
+
+// Initialize before using sync methods
+await loadModule();
+const result = parseQuerySync('SELECT * FROM users');
+```
+
+Note: We recommend using async methods as they handle initialization automatically. Use sync methods only when necessary, and always call `loadModule()` first.
 
 ### Type Definitions
 
