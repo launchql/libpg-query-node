@@ -1,5 +1,7 @@
 const { exec } = require('child_process');
 
+// IMPORTANT — SEE ISSUE: https://github.com/launchql/libpg-query-node/issues/92
+
 // Configuration Variables
 const branchName = '17-6.1.0';
 const protoUrl = `https://raw.githubusercontent.com/pganalyze/libpg_query/${branchName}/protobuf/pg_query.proto`;
