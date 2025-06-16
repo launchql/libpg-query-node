@@ -12,7 +12,5 @@ export function fingerprint(sql: string): Promise<string>;
 export function fingerprintSync(sql: string): string;
 export function normalize(sql: string): Promise<string>;
 export function normalizeSync(sql: string): string;
-export function parseQueryDetailed(sql: string): Promise<ParseResult>;
-export function parseQueryDetailedSync(sql: string): ParseResult;
 
 export * from '@pgsql/types'; 

@@ -154,45 +154,6 @@ const normalize = awaitInit(async (query) => {
   }
 });
 
-const parseQueryDetailed = awaitInit(async (query) => {
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_parse_query_detailed(queryPtr);
-    
-    const hasError = wasmModule.HEAPU32[resultPtr >> 2];
-    
-    if (hasError) {
-      const messagePtr = wasmModule.HEAPU32[(resultPtr + 4) >> 2];
-      const funcnamePtr = wasmModule.HEAPU32[(resultPtr + 8) >> 2];
-      const filenamePtr = wasmModule.HEAPU32[(resultPtr + 12) >> 2];
-      const lineno = wasmModule.HEAPU32[(resultPtr + 16) >> 2];
-      const cursorpos = wasmModule.HEAPU32[(resultPtr + 20) >> 2];
-      const contextPtr = wasmModule.HEAPU32[(resultPtr + 24) >> 2];
-      
-      const error = {
-        message: messagePtr ? ptrToString(messagePtr) : '',
-        funcname: funcnamePtr ? ptrToString(funcnamePtr) : null,
-        filename: filenamePtr ? ptrToString(filenamePtr) : null,
-        lineno: lineno,
-        cursorpos: cursorpos,
-        context: contextPtr ? ptrToString(contextPtr) : null
-      };
-      
-      wasmModule._wasm_free_detailed_result(resultPtr);
-      throw new Error(error.message);
-    } else {
-      const dataPtr = wasmModule.HEAPU32[(resultPtr + 28) >> 2];
-      const result = JSON.parse(ptrToString(dataPtr));
-      wasmModule._wasm_free_detailed_result(resultPtr);
-      return result;
-    }
-  } finally {
-    wasmModule._free(queryPtr);
-  }
-});
-
 // Sync versions
 function parseQuerySync(query) {
   if (!wasmModule) {
@@ -326,48 +287,6 @@ function normalizeSync(query) {
   }
 }
 
-function parseQueryDetailedSync(query) {
-  if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call loadModule() first.');
-  }
-  const queryPtr = stringToPtr(query);
-  let resultPtr;
-  
-  try {
-    resultPtr = wasmModule._wasm_parse_query_detailed(queryPtr);
-    
-    const hasError = wasmModule.HEAPU32[resultPtr >> 2];
-    
-    if (hasError) {
-      const messagePtr = wasmModule.HEAPU32[(resultPtr + 4) >> 2];
-      const funcnamePtr = wasmModule.HEAPU32[(resultPtr + 8) >> 2];
-      const filenamePtr = wasmModule.HEAPU32[(resultPtr + 12) >> 2];
-      const lineno = wasmModule.HEAPU32[(resultPtr + 16) >> 2];
-      const cursorpos = wasmModule.HEAPU32[(resultPtr + 20) >> 2];
-      const contextPtr = wasmModule.HEAPU32[(resultPtr + 24) >> 2];
-      
-      const error = {
-        message: messagePtr ? ptrToString(messagePtr) : '',
-        funcname: funcnamePtr ? ptrToString(funcnamePtr) : null,
-        filename: filenamePtr ? ptrToString(filenamePtr) : null,
-        lineno: lineno,
-        cursorpos: cursorpos,
-        context: contextPtr ? ptrToString(contextPtr) : null
-      };
-      
-      wasmModule._wasm_free_detailed_result(resultPtr);
-      throw new Error(error.message);
-    } else {
-      const dataPtr = wasmModule.HEAPU32[(resultPtr + 28) >> 2];
-      const result = JSON.parse(ptrToString(dataPtr));
-      wasmModule._wasm_free_detailed_result(resultPtr);
-      return result;
-    }
-  } finally {
-    wasmModule._free(queryPtr);
-  }
-}
-
 module.exports = {
   loadModule,
   parseQuery,
@@ -375,11 +294,9 @@ module.exports = {
   parsePlPgSQL,
   fingerprint,
   normalize,
-  parseQueryDetailed,
   parseQuerySync,
   deparseSync,
   parsePlPgSQLSync,
   fingerprintSync,
-  normalizeSync,
-  parseQueryDetailedSync
+  normalizeSync
 };
