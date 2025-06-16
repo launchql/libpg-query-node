@@ -56,22 +56,14 @@ describe("Query Deparsing", () => {
   it('should deparse a parse tree', async () => {
     const sql = 'SELECT * FROM users';
     const parseTree = await query.parseQuery(sql);
-    console.log('Parse Tree:', parseTree);
-    
     const deparsed = await query.deparse(parseTree);
-    console.log('Deparsed:', deparsed);
-    
     expect(deparsed).to.equal(sql);
   });
 
   it('should throw on invalid parse tree', () => {
-    console.log('Testing empty object...');
     try {
       query.deparseSync({});
-      console.log('No error thrown!');
-    } catch (err) {
-      console.log('Error caught:', err.message);
-    }
+    } catch (err) { }
     expect(() => query.deparseSync({})).to.throw('No parseTree provided');
   });
 });
