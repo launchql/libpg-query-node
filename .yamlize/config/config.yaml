@@ -1,5 +1,5 @@
 git:
-  USER_NAME: Cosmology
-  USER_EMAIL: developers@cosmology.zone
+  USER_NAME: Hyperweb
+  USER_EMAIL: developers@hyperweb.io
 EMSCRIPTEN_VERSION: '3.1.59'
 NODE_VERSION: '20.x'

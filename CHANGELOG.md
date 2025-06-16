@@ -1,5 +1,4 @@
 # 17.2.1
-* Remove proto.js dependency (5.4MB bundle size reduction)
 * Add normalize() and normalizeSync() functions for SQL normalization
 * Add parseQueryDetailed() and parseQueryDetailedSync() with enhanced error reporting
 * Add fingerprint() and fingerprintSync() functions for query fingerprinting
