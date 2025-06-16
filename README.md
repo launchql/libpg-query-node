@@ -185,27 +185,27 @@ const result = parseQueryDetailedSync('SELECT * FROM users WHERE active = true')
 
 ### `isReady(): boolean`
 
-Checks if the WebAssembly module is initialized and ready for synchronous operations. This is useful when using sync methods to avoid "WASM module not initialized" errors.
+Checks if the WebAssembly module is initialized and ready for synchronous operations. This is only needed when using the synchronous methods (`parseQuerySync`, `deparseSync`, etc.).
 
 ```typescript
-import { isReady, parseQuerySync, parseQuery } from 'libpg-query';
+import { isReady, parseQuerySync } from 'libpg-query';
 
 // Check if module is ready before using sync methods
 if (isReady()) {
   const result = parseQuerySync('SELECT * FROM users');
 } else {
-  // Initialize by calling any async method first
-  await parseQuery('SELECT 1');
-  // Now sync methods will work
-  const result = parseQuerySync('SELECT * FROM users');
+  // Module needs initialization
+  console.warn('WASM module not initialized. Use async methods first to initialize.');
 }
 
-// Alternative pattern - always safe
+// Recommended pattern for sync methods
 if (!isReady()) {
-  await parseQuery('SELECT 1'); // Initialize module
+  throw new Error('WASM module not initialized. Use async methods first to initialize.');
 }
 const result = parseQuerySync('SELECT * FROM users');
 ```
+
+Note: The async methods (`parseQuery`, `deparse`, `parsePlPgSQL`, etc.) handle initialization automatically and are always safe to use. The `isReady()` check is only needed for the synchronous versions of these methods.
 
 ### Type Definitions
 
