@@ -80,23 +80,4 @@ describe("Query Parsing", () => {
       );
     });
   });
-
-  describe("Detailed Error Parsing", () => {
-    it("should provide detailed error information for invalid queries", async () => {
-      try {
-        await query.parseQueryDetailed("SELECT FROM");
-        throw new Error("should have thrown");
-      } catch (e) {
-        expect(e.message).to.include("Parse error:");
-        expect(e.message).to.include("line");
-        expect(e.message).to.include("position");
-      }
-    });
-
-    it("should parse valid queries with detailed parsing", async () => {
-      const result = await query.parseQueryDetailed("SELECT 1");
-      expect(result.stmts).to.have.lengthOf(1);
-      expect(result.stmts[0].stmt.SelectStmt).to.exist;
-    });
-  });
 });

@@ -157,32 +157,6 @@ const normalized = normalizeSync('SELECT * FROM users WHERE active = true');
 // Returns: string - normalized SQL query
 ```
 
-### `parseQueryDetailed(sql: string): Promise<DetailedParseResult>`
-
-Parses a SQL query with enhanced error reporting that includes detailed location information for parse errors. Returns a Promise for either the parse tree or detailed error information.
-
-```typescript
-import { parseQueryDetailed } from 'libpg-query';
-
-try {
-  const result = await parseQueryDetailed('SELECT * FROM users WHERE');
-} catch (error) {
-  // Enhanced error with line number, position, and context information
-  console.log(error.message); // "Parse error: syntax error at end of input at line 1, position 26"
-}
-```
-
-### `parseQueryDetailedSync(sql: string): DetailedParseResult`
-
-Synchronous version of detailed parsing with enhanced error reporting.
-
-```typescript
-import { parseQueryDetailedSync } from 'libpg-query';
-
-const result = parseQueryDetailedSync('SELECT * FROM users WHERE active = true');
-// Returns: DetailedParseResult with enhanced error information if parsing fails
-```
-
 ### Initialization
 
 The library provides both async and sync methods. Async methods handle initialization automatically, while sync methods require explicit initialization.

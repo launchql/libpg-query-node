@@ -1,6 +1,5 @@
 # 17.2.1
 * Add normalize() and normalizeSync() functions for SQL normalization
-* Add parseQueryDetailed() and parseQueryDetailedSync() with enhanced error reporting
 * Add fingerprint() and fingerprintSync() functions for query fingerprinting
 * Add isReady() function to check WASM module initialization status
 * Improve memory management and error handling in WASM wrapper
