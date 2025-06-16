@@ -1,12 +1,8 @@
 # project files
 test
 .gitignore
-.travis.yml
 package.json
 build
-
-libpg_query/**/*.a
-libpg_query/**/*.h
 
 *.log
 npm-debug.log*
