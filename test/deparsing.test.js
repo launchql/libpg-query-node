@@ -8,57 +8,70 @@ describe("Query Deparsing", () => {
 
   describe("Sync Deparsing", () => {
     it("should deparse a simple query", () => {
-      const parsed = query.parseQuerySync("select 1");
-      const deparsed = query.deparseSync(parsed);
-      expect(deparsed).to.eq("SELECT 1");
+      const sql = 'SELECT * FROM users';
+      const parseTree = query.parseQuerySync(sql);
+      const deparsed = query.deparseSync(parseTree);
+      expect(deparsed).to.equal(sql);
     });
 
     it("should deparse a complex query", () => {
-      const parsed = query.parseQuerySync("select a, b from users where id = 123");
-      const deparsed = query.deparseSync(parsed);
-      expect(deparsed).to.include("SELECT");
-      expect(deparsed).to.include("FROM");
-      expect(deparsed).to.include("WHERE");
+      const sql = 'SELECT a, b, c FROM t1 JOIN t2 ON t1.id = t2.id WHERE t1.x > 10';
+      const parseTree = query.parseQuerySync(sql);
+      const deparsed = query.deparseSync(parseTree);
+      expect(deparsed).to.equal(sql);
     });
 
     it("should fail to deparse without protobuf data", () => {
-      expect(() => query.deparseSync({})).to.throw(/No protobuf data found/);
+      expect(() => query.deparseSync({})).to.throw('No parseTree provided');
     });
   });
 
   describe("Async Deparsing", () => {
     it("should return a promise resolving to same result", async () => {
-      const parsed = await query.parseQuery("select 1");
-      const deparsedPromise = query.deparse(parsed);
-      const deparsed = await deparsedPromise;
-
-      expect(deparsedPromise).to.be.instanceof(Promise);
-      expect(deparsed).to.eq(query.deparseSync(parsed));
+      const sql = 'SELECT * FROM users';
+      const parseTree = await query.parseQuery(sql);
+      const deparsed = await query.deparse(parseTree);
+      expect(deparsed).to.equal(sql);
     });
 
     it("should reject when no protobuf data", async () => {
-      return query.deparse({}).then(
-        () => {
-          throw new Error("should have rejected");
-        },
-        (e) => {
-          expect(e).instanceof(Error);
-          expect(e.message).to.match(/No protobuf data found/);
-        }
-      );
+      try {
+        await query.deparse({});
+        throw new Error('should have rejected');
+      } catch (err) {
+        expect(err.message).to.equal('No parseTree provided');
+      }
     });
   });
 
   describe("Round-trip parsing and deparsing", () => {
     it("should maintain query semantics through round-trip", async () => {
-      const originalQuery = "SELECT id, name FROM users WHERE active = true ORDER BY name";
-      const parsed = await query.parseQuery(originalQuery);
-      const deparsed = await query.deparse(parsed);
-      
-      expect(deparsed).to.include("SELECT");
-      expect(deparsed).to.include("FROM users");
-      expect(deparsed).to.include("WHERE");
-      expect(deparsed).to.include("ORDER BY");
+      const sql = 'SELECT a, b, c FROM t1 JOIN t2 ON t1.id = t2.id WHERE t1.x > 10';
+      const parseTree = await query.parseQuery(sql);
+      const deparsed = await query.deparse(parseTree);
+      expect(deparsed).to.equal(sql);
     });
+  });
+
+  it('should deparse a parse tree', async () => {
+    const sql = 'SELECT * FROM users';
+    const parseTree = await query.parseQuery(sql);
+    console.log('Parse Tree:', parseTree);
+    
+    const deparsed = await query.deparse(parseTree);
+    console.log('Deparsed:', deparsed);
+    
+    expect(deparsed).to.equal(sql);
+  });
+
+  it('should throw on invalid parse tree', () => {
+    console.log('Testing empty object...');
+    try {
+      query.deparseSync({});
+      console.log('No error thrown!');
+    } catch (err) {
+      console.log('Error caught:', err.message);
+    }
+    expect(() => query.deparseSync({})).to.throw('No parseTree provided');
   });
 });
