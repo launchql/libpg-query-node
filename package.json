@@ -3,28 +3,21 @@
   "version": "17.2.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "./wasm/index.cjs",
+  "typings": "./wasm/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "index.js",
-    "index.d.ts",
+    "wasm/*",
     "libpg_query/*",
-    "script/*",
-    "wasm/*"
+    "script/*"
   ],
   "exports": {
     ".": {
-      "types": "./index.d.ts",
+      "types": "./wasm/index.d.ts",
       "import": "./wasm/index.js",
-      "require": "./index.js",
-      "default": "./index.js"
-    },
-    "./wasm": {
-      "types": "./index.d.ts",
-      "default": "./wasm/index.js"
+      "require": "./wasm/index.cjs"
     }
   },
   "scripts": {

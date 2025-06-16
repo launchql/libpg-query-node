@@ -6,6 +6,13 @@ const initPromise = PgQueryModule.default().then((module) => {
   wasmModule = module;
 });
 
+async function loadModule() {
+  if (!wasmModule) {
+    await initPromise;
+  }
+  return wasmModule;
+}
+
 function awaitInit(fn) {
   return async (...args) => {
     await initPromise;
@@ -164,8 +171,6 @@ const normalize = awaitInit(async (query) => {
   }
 });
 
-
-
 const parseQueryDetailed = awaitInit(async (query) => {
   const queryPtr = stringToPtr(query);
   let resultPtr;
@@ -208,7 +213,7 @@ const parseQueryDetailed = awaitInit(async (query) => {
 // Sync versions that assume WASM module is already initialized
 function parseQuerySync(query) {
   if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+    throw new Error('WASM module not initialized. Call loadModule() first.');
   }
   const queryPtr = stringToPtr(query);
   let resultPtr;
@@ -253,7 +258,7 @@ function parseQuerySync(query) {
 
 function deparseSync(parseTree) {
   if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+    throw new Error('WASM module not initialized. Call loadModule() first.');
   }
   const protobufData = protobufCache.get(parseTree);
   
@@ -284,7 +289,7 @@ function deparseSync(parseTree) {
 
 function parsePlPgSQLSync(query) {
   if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+    throw new Error('WASM module not initialized. Call loadModule() first.');
   }
   const queryPtr = stringToPtr(query);
   let resultPtr;
@@ -308,7 +313,7 @@ function parsePlPgSQLSync(query) {
 
 function fingerprintSync(query) {
   if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+    throw new Error('WASM module not initialized. Call loadModule() first.');
   }
   const queryPtr = stringToPtr(query);
   let resultPtr;
@@ -332,7 +337,7 @@ function fingerprintSync(query) {
 
 function normalizeSync(query) {
   if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+    throw new Error('WASM module not initialized. Call loadModule() first.');
   }
   const queryPtr = stringToPtr(query);
   let resultPtr;
@@ -356,7 +361,7 @@ function normalizeSync(query) {
 
 function parseQueryDetailedSync(query) {
   if (!wasmModule) {
-    throw new Error('WASM module not initialized. Call an async method first to initialize.');
+    throw new Error('WASM module not initialized. Call loadModule() first.');
   }
   const queryPtr = stringToPtr(query);
   let resultPtr;
@@ -396,13 +401,8 @@ function parseQueryDetailedSync(query) {
   }
 }
 
-
-
-function isReady() {
-  return !!wasmModule;
-}
-
 module.exports = {
+  loadModule,
   parseQuery,
   deparse,
   parsePlPgSQL,
@@ -414,7 +414,5 @@ module.exports = {
   parsePlPgSQLSync,
   fingerprintSync,
   normalizeSync,
-  parseQueryDetailedSync,
-  isReady,
-  initPromise
+  parseQueryDetailedSync
 };
