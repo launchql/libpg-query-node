@@ -282,6 +282,38 @@ void wasm_free_detailed_result(WasmDetailedResult* result) {
 }
 
 EMSCRIPTEN_KEEPALIVE
+char* wasm_deparse_json(const char* json_input) {
+    if (!validate_input(json_input)) {
+        return safe_strdup("Invalid input: JSON cannot be null or empty");
+    }
+    
+    PgQueryProtobuf protobuf = pg_query_json_to_protobuf(json_input);
+    
+    if (!protobuf.data || protobuf.len <= 0) {
+        return safe_strdup("Failed to convert JSON to protobuf");
+    }
+    
+    PgQueryDeparseResult deparse_result = pg_query_deparse_protobuf(protobuf);
+    
+    free(protobuf.data);
+    
+    if (deparse_result.error) {
+        char* error_msg = safe_strdup(deparse_result.error->message);
+        pg_query_free_deparse_result(deparse_result);
+        return error_msg;
+    }
+    
+    if (!deparse_result.query) {
+        pg_query_free_deparse_result(deparse_result);
+        return safe_strdup("Failed to deparse query");
+    }
+    
+    char* query_copy = safe_strdup(deparse_result.query);
+    pg_query_free_deparse_result(deparse_result);
+    return query_copy;
+}
+
+EMSCRIPTEN_KEEPALIVE
 void wasm_free_string(char* str) {
     free(str);
 }

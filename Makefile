@@ -55,7 +55,7 @@ ifdef EMSCRIPTEN
 		$(CXXFLAGS) \
 		-I$(LIBPG_QUERY_DIR) \
 		-L$(LIBPG_QUERY_DIR) \
-		-sEXPORTED_FUNCTIONS="['_malloc','_free','_wasm_parse_query','_wasm_parse_query_protobuf','_wasm_get_protobuf_len','_wasm_deparse_protobuf','_wasm_parse_plpgsql','_wasm_fingerprint','_wasm_normalize_query','_wasm_parse_query_detailed','_wasm_free_detailed_result','_wasm_free_string']" \
+		-sEXPORTED_FUNCTIONS="['_malloc','_free','_wasm_parse_query','_wasm_parse_query_protobuf','_wasm_get_protobuf_len','_wasm_deparse_protobuf','_wasm_deparse_json','_wasm_parse_plpgsql','_wasm_fingerprint','_wasm_normalize_query','_wasm_parse_query_detailed','_wasm_free_detailed_result','_wasm_free_string']" \
 		-sEXPORTED_RUNTIME_METHODS="['lengthBytesUTF8','stringToUTF8','UTF8ToString','HEAPU8','HEAPU32']" \
 		-sEXPORT_NAME="$(WASM_MODULE_NAME)" \
 		-sENVIRONMENT="web,node" \
