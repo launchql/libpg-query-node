@@ -11,7 +11,8 @@
   "files": [
     "wasm/*",
     "libpg_query/*",
-    "script/*"
+    "script/*",
+    "proto.js"
   ],
   "exports": {
     ".": {
@@ -28,7 +29,9 @@
     "wasm:rebuild": "yarn wasm:make rebuild",
     "wasm:clean": "yarn wasm:make clean",
     "wasm:clean-cache": "yarn wasm:make clean-cache",
-    "test": "mocha test/*.test.js --timeout 5000"
+    "test": "mocha test/*.test.js --timeout 5000",
+    "yamlize": "node ./scripts/yamlize.js",
+    "protogen": "node ./scripts/protogen.js"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
@@ -44,7 +47,8 @@
     "rimraf": "5.0.0"
   },
   "dependencies": {
-    "@pgsql/types": "^17.0.0"
+    "@pgsql/types": "^17.0.0",
+    "@launchql/protobufjs": "7.2.6"
   },
   "keywords": [
     "sql",
