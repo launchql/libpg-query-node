@@ -6,3 +6,5 @@ libpg_query/**/*.proto
 wasm/libpg-query.js
 *.wasm
 .cache
+esm/
+cjs/

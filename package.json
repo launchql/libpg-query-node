@@ -21,8 +21,9 @@
     }
   },
   "scripts": {
-    "clean": "yarn wasm:clean",
-    "build": "yarn wasm:clean && yarn wasm:build",
+    "clean": "yarn wasm:clean && rimraf cjs esm",
+    "build:js": "node scripts/build.js",
+    "build": "yarn clean; yarn wasm:build; yarn build:js",
     "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "wasm:build": "yarn wasm:make build",
     "wasm:rebuild": "yarn wasm:make rebuild",
@@ -43,7 +44,8 @@
     "@yamlize/cli": "^0.8.0",
     "chai": "^3.5.0",
     "mocha": "^5.2.0",
-    "rimraf": "5.0.0"
+    "rimraf": "5.0.0",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@pgsql/types": "^17.0.0",
