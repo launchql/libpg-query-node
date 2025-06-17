@@ -10,6 +10,8 @@ npm-debug.log*
 # Dependency directories
 node_modules
 
+libpg_query/*
+
 # npm package lock
 package-lock.json
 yarn.lock
