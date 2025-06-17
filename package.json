@@ -10,7 +10,6 @@
   },
   "files": [
     "wasm/*",
-    "libpg_query/*",
     "proto.js"
   ],
   "exports": {
