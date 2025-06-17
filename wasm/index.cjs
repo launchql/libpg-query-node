@@ -17,9 +17,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.normalize = exports.fingerprint = exports.parsePlPgSQL = exports.deparse = exports.parseQuery = void 0;
+exports.normalize = exports.fingerprint = exports.parsePlPgSQL = exports.deparse = exports.parse = void 0;
 exports.loadModule = loadModule;
-exports.parseQuerySync = parseQuerySync;
+exports.parseSync = parseSync;
 exports.deparseSync = deparseSync;
 exports.parsePlPgSQLSync = parsePlPgSQLSync;
 exports.fingerprintSync = fingerprintSync;
@@ -59,7 +59,7 @@ function stringToPtr(str) {
 function ptrToString(ptr) {
     return wasmModule.UTF8ToString(ptr);
 }
-exports.parseQuery = awaitInit(async (query) => {
+exports.parse = awaitInit(async (query) => {
     const queryPtr = stringToPtr(query);
     let resultPtr = 0;
     try {
@@ -156,7 +156,7 @@ exports.normalize = awaitInit(async (query) => {
     }
 });
 // Sync versions
-function parseQuerySync(query) {
+function parseSync(query) {
     if (!wasmModule) {
         throw new Error('WASM module not initialized. Call loadModule() first.');
     }

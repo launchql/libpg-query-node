@@ -3,7 +3,7 @@ const { expect } = require("chai");
 
 describe("PL/pgSQL Parsing", () => {
   before(async () => {
-    await query.parseQuery("SELECT 1");
+    await query.parse("SELECT 1");
   });
 
   describe("Sync PL/pgSQL Parsing", () => {

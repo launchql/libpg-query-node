@@ -3,7 +3,7 @@ const { expect } = require("chai");
 
 describe("Query Normalization", () => {
   before(async () => {
-    await query.parseQuery("SELECT 1");
+    await query.parse("SELECT 1");
   });
 
   describe("Sync Normalization", () => {

@@ -24,13 +24,13 @@ function removeLocationProperties(obj) {
 
 describe("Query Parsing", () => {
   before(async () => {
-    await query.parseQuery("SELECT 1");
+    await query.parse("SELECT 1");
   });
 
   describe("Sync Parsing", () => {
     it("should return a single-item parse result for common queries", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];
-      const results = queries.map(query.parseQuerySync);
+      const results = queries.map(query.parseSync);
       results.forEach((res) => {
         expect(res.stmts).to.have.lengthOf(1);
       });
@@ -46,30 +46,30 @@ describe("Query Parsing", () => {
     });
 
     it("should support parsing multiple queries", () => {
-      const res = query.parseQuerySync("select 1; select null;");
+      const res = query.parseSync("select 1; select null;");
       expect(res.stmts.map(removeLocationProperties)).to.deep.eq([
-        ...query.parseQuerySync("select 1;").stmts.map(removeLocationProperties),
-        ...query.parseQuerySync("select null;").stmts.map(removeLocationProperties),
+        ...query.parseSync("select 1;").stmts.map(removeLocationProperties),
+        ...query.parseSync("select null;").stmts.map(removeLocationProperties),
       ]);
     });
 
     it("should not parse a bogus query", () => {
-      expect(() => query.parseQuerySync("NOT A QUERY")).to.throw(Error);
+      expect(() => query.parseSync("NOT A QUERY")).to.throw(Error);
     });
   });
 
   describe("Async parsing", () => {
     it("should return a promise resolving to same result", async () => {
       const testQuery = "select * from john;";
-      const resPromise = query.parseQuery(testQuery);
+      const resPromise = query.parse(testQuery);
       const res = await resPromise;
 
       expect(resPromise).to.be.instanceof(Promise);
-      expect(res).to.deep.eq(query.parseQuerySync(testQuery));
+      expect(res).to.deep.eq(query.parseSync(testQuery));
     });
 
     it("should reject on bogus queries", async () => {
-      return query.parseQuery("NOT A QUERY").then(
+      return query.parse("NOT A QUERY").then(
         () => {
           throw new Error("should have rejected");
         },

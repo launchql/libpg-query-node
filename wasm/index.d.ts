@@ -1,12 +1,12 @@
 import { ParseResult } from "@pgsql/types";
 export * from "@pgsql/types";
 export declare function loadModule(): Promise<void>;
-export declare const parseQuery: (query: string) => Promise<ParseResult>;
+export declare const parse: (query: string) => Promise<ParseResult>;
 export declare const deparse: (parseTree: ParseResult) => Promise<string>;
 export declare const parsePlPgSQL: (query: string) => Promise<ParseResult>;
 export declare const fingerprint: (query: string) => Promise<string>;
 export declare const normalize: (query: string) => Promise<string>;
-export declare function parseQuerySync(query: string): ParseResult;
+export declare function parseSync(query: string): ParseResult;
 export declare function deparseSync(parseTree: ParseResult): string;
 export declare function parsePlPgSQLSync(query: string): ParseResult;
 export declare function fingerprintSync(query: string): string;

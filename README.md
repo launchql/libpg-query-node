@@ -39,26 +39,26 @@ npm install libpg-query
 
 ## Usage
 
-### `parseQuery(sql: string): Promise<ParseResult[]>`
+### `parse(query: string): Promise<ParseResult>`
 
 Parses the SQL and returns a Promise for the parse tree. May reject with a parse error.
 
 ```typescript
-import { parseQuery } from 'libpg-query';
+import { parse } from 'libpg-query';
 
-const result = await parseQuery('SELECT * FROM users WHERE active = true');
-// Returns: ParseResult[] - array of parsed query objects
+const result = await parse('SELECT * FROM users WHERE active = true');
+// Returns: ParseResult - parsed query object
 ```
 
-### `parseQuerySync(sql: string): ParseResult[]`
+### `parseSync(query: string): ParseResult`
 
 Synchronous version that returns the parse tree directly. May throw a parse error.
 
 ```typescript
-import { parseQuerySync } from 'libpg-query';
+import { parseSync } from 'libpg-query';
 
-const result = parseQuerySync('SELECT * FROM users WHERE active = true');
-// Returns: ParseResult[] - array of parsed query objects
+const result = parseSync('SELECT * FROM users WHERE active = true');
+// Returns: ParseResult - parsed query object
 ```
 
 ### `parsePlPgSQL(funcsSql: string): Promise<ParseResult>`
@@ -94,10 +94,10 @@ const result = parsePlPgSQLSync(functionSql);
 Converts a parse tree back to SQL string. Returns a Promise for the SQL string.
 
 ```typescript
-import { parseQuery, deparse } from 'libpg-query';
+import { parse, deparse } from 'libpg-query';
 
-const parseTree = await parseQuery('SELECT * FROM users WHERE active = true');
-const sql = await deparse(parseTree[0]);
+const parseTree = await parse('SELECT * FROM users WHERE active = true');
+const sql = await deparse(parseTree);
 // Returns: string - reconstructed SQL query
 ```
 
@@ -106,10 +106,10 @@ const sql = await deparse(parseTree[0]);
 Synchronous version that converts a parse tree back to SQL string directly.
 
 ```typescript
-import { parseQuerySync, deparseSync } from 'libpg-query';
+import { parseSync, deparseSync } from 'libpg-query';
 
-const parseTree = parseQuerySync('SELECT * FROM users WHERE active = true');
-const sql = deparseSync(parseTree[0]);
+const parseTree = parseSync('SELECT * FROM users WHERE active = true');
+const sql = deparseSync(parseTree);
 // Returns: string - reconstructed SQL query
 ```
 
@@ -166,11 +166,11 @@ The library provides both async and sync methods. Async methods handle initializ
 Async methods handle initialization automatically and are always safe to use:
 
 ```typescript
-import { parseQuery, deparse } from 'libpg-query';
+import { parse, deparse } from 'libpg-query';
 
 // These handle initialization automatically
-const result = await parseQuery('SELECT * FROM users');
-const sql = await deparse(result[0]);
+const result = await parse('SELECT * FROM users');
+const sql = await deparse(result);
 ```
 
 #### Sync Methods
@@ -178,13 +178,13 @@ const sql = await deparse(result[0]);
 Sync methods require explicit initialization using `loadModule()`:
 
 ```typescript
-import { loadModule, parseQuerySync } from 'libpg-query';
+import { loadModule, parseSync } from 'libpg-query';
 
 // Initialize first
 await loadModule();
 
 // Now safe to use sync methods
-const result = parseQuerySync('SELECT * FROM users');
+const result = parseSync('SELECT * FROM users');
 ```
 
 ### `loadModule(): Promise<void>`
@@ -192,11 +192,11 @@ const result = parseQuerySync('SELECT * FROM users');
 Explicitly initializes the WASM module. Required before using any sync methods.
 
 ```typescript
-import { loadModule, parseQuerySync } from 'libpg-query';
+import { loadModule, parseSync } from 'libpg-query';
 
 // Initialize before using sync methods
 await loadModule();
-const result = parseQuerySync('SELECT * FROM users');
+const result = parseSync('SELECT * FROM users');
 ```
 
 Note: We recommend using async methods as they handle initialization automatically. Use sync methods only when necessary, and always call `loadModule()` first.

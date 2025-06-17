@@ -56,7 +56,7 @@ function ptrToString(ptr: number): string {
   return wasmModule.UTF8ToString(ptr);
 }
 
-export const parseQuery = awaitInit(async (query: string): Promise<ParseResult> => {
+export const parse = awaitInit(async (query: string): Promise<ParseResult> => {
   const queryPtr = stringToPtr(query);
   let resultPtr = 0;
   
@@ -170,7 +170,7 @@ export const normalize = awaitInit(async (query: string): Promise<string> => {
 });
 
 // Sync versions
-export function parseQuerySync(query: string): ParseResult {
+export function parseSync(query: string): ParseResult {
   if (!wasmModule) {
     throw new Error('WASM module not initialized. Call loadModule() first.');
   }
