@@ -241,3 +241,42 @@ export function normalizeSync(query) {
         }
     }
 }
+export const scan = awaitInit(async (query) => {
+    const queryPtr = stringToPtr(query);
+    let resultPtr = 0;
+    try {
+        resultPtr = wasmModule._wasm_scan(queryPtr);
+        const resultStr = ptrToString(resultPtr);
+        if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+            throw new Error(resultStr);
+        }
+        return JSON.parse(resultStr);
+    }
+    finally {
+        wasmModule._free(queryPtr);
+        if (resultPtr) {
+            wasmModule._wasm_free_string(resultPtr);
+        }
+    }
+});
+export function scanSync(query) {
+    if (!wasmModule) {
+        throw new Error('WASM module not initialized. Call loadModule() first.');
+    }
+    const queryPtr = stringToPtr(query);
+    let resultPtr = 0;
+    try {
+        resultPtr = wasmModule._wasm_scan(queryPtr);
+        const resultStr = ptrToString(resultPtr);
+        if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+            throw new Error(resultStr);
+        }
+        return JSON.parse(resultStr);
+    }
+    finally {
+        wasmModule._free(queryPtr);
+        if (resultPtr) {
+            wasmModule._wasm_free_string(resultPtr);
+        }
+    }
+}

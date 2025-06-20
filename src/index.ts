@@ -1,6 +1,21 @@
 import { ParseResult } from "@pgsql/types";
 export * from "@pgsql/types";
 
+export interface ScanToken {
+  start: number;
+  end: number;
+  text: string;
+  tokenType: number;
+  tokenName: string;
+  keywordKind: number;
+  keywordName: string;
+}
+
+export interface ScanResult {
+  version: number;
+  tokens: ScanToken[];
+}
+
 // @ts-ignore
 import PgQueryModule from './libpg-query.js';
 // @ts-ignore
@@ -15,6 +30,7 @@ interface WasmModule {
   _wasm_parse_plpgsql: (queryPtr: number) => number;
   _wasm_fingerprint: (queryPtr: number) => number;
   _wasm_normalize_query: (queryPtr: number) => number;
+  _wasm_scan: (queryPtr: number) => number;
   lengthBytesUTF8: (str: string) => number;
   stringToUTF8: (str: string, ptr: number, len: number) => void;
   UTF8ToString: (ptr: number) => string;
@@ -290,6 +306,51 @@ export function normalizeSync(query: string): string {
     }
     
     return resultStr;
+  } finally {
+    wasmModule._free(queryPtr);
+    if (resultPtr) {
+      wasmModule._wasm_free_string(resultPtr);
+    }
+  }
+}
+
+export const scan = awaitInit(async (query: string): Promise<ScanResult> => {
+  const queryPtr = stringToPtr(query);
+  let resultPtr = 0;
+  
+  try {
+    resultPtr = wasmModule._wasm_scan(queryPtr);
+    const resultStr = ptrToString(resultPtr);
+    
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+      throw new Error(resultStr);
+    }
+    
+    return JSON.parse(resultStr);
+  } finally {
+    wasmModule._free(queryPtr);
+    if (resultPtr) {
+      wasmModule._wasm_free_string(resultPtr);
+    }
+  }
+});
+
+export function scanSync(query: string): ScanResult {
+  if (!wasmModule) {
+    throw new Error('WASM module not initialized. Call loadModule() first.');
+  }
+  const queryPtr = stringToPtr(query);
+  let resultPtr = 0;
+  
+  try {
+    resultPtr = wasmModule._wasm_scan(queryPtr);
+    const resultStr = ptrToString(resultPtr);
+    
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+      throw new Error(resultStr);
+    }
+    
+    return JSON.parse(resultStr);
   } finally {
     wasmModule._free(queryPtr);
     if (resultPtr) {

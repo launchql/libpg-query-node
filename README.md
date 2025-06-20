@@ -157,6 +157,29 @@ const normalized = normalizeSync('SELECT * FROM users WHERE active = true');
 // Returns: string - normalized SQL query
 ```
 
+### `scan(sql: string): Promise<ScanResult>`
+
+Scans (tokenizes) a SQL query and returns detailed information about each token. Returns a Promise for a ScanResult containing all tokens with their positions, types, and classifications.
+
+```typescript
+import { scan } from 'libpg-query';
+
+const result = await scan('SELECT * FROM users WHERE id = $1');
+// Returns: ScanResult - detailed tokenization information
+console.log(result.tokens[0]); // { start: 0, end: 6, text: "SELECT", tokenType: 651, tokenName: "UNKNOWN", keywordKind: 4, keywordName: "RESERVED_KEYWORD" }
+```
+
+### `scanSync(sql: string): ScanResult`
+
+Synchronous version that scans (tokenizes) a SQL query directly.
+
+```typescript
+import { scanSync } from 'libpg-query';
+
+const result = scanSync('SELECT * FROM users WHERE id = $1');
+// Returns: ScanResult - detailed tokenization information
+```
+
 ### Initialization
 
 The library provides both async and sync methods. Async methods handle initialization automatically, while sync methods require explicit initialization.
@@ -166,11 +189,12 @@ The library provides both async and sync methods. Async methods handle initializ
 Async methods handle initialization automatically and are always safe to use:
 
 ```typescript
-import { parse, deparse } from 'libpg-query';
+import { parse, deparse, scan } from 'libpg-query';
 
 // These handle initialization automatically
 const result = await parse('SELECT * FROM users');
 const sql = await deparse(result);
+const tokens = await scan('SELECT * FROM users');
 ```
 
 #### Sync Methods
@@ -178,13 +202,14 @@ const sql = await deparse(result);
 Sync methods require explicit initialization using `loadModule()`:
 
 ```typescript
-import { loadModule, parseSync } from 'libpg-query';
+import { loadModule, parseSync, scanSync } from 'libpg-query';
 
 // Initialize first
 await loadModule();
 
 // Now safe to use sync methods
 const result = parseSync('SELECT * FROM users');
+const tokens = scanSync('SELECT * FROM users');
 ```
 
 ### `loadModule(): Promise<void>`
@@ -192,11 +217,12 @@ const result = parseSync('SELECT * FROM users');
 Explicitly initializes the WASM module. Required before using any sync methods.
 
 ```typescript
-import { loadModule, parseSync } from 'libpg-query';
+import { loadModule, parseSync, scanSync } from 'libpg-query';
 
 // Initialize before using sync methods
 await loadModule();
 const result = parseSync('SELECT * FROM users');
+const tokens = scanSync('SELECT * FROM users');
 ```
 
 Note: We recommend using async methods as they handle initialization automatically. Use sync methods only when necessary, and always call `loadModule()` first.
@@ -214,6 +240,21 @@ interface Statement {
   stmt_len: number;
   stmt_location: number;
   query: string;
+}
+
+interface ScanResult {
+  version: number;
+  tokens: ScanToken[];
+}
+
+interface ScanToken {
+  start: number;          // Starting position in the SQL string
+  end: number;            // Ending position in the SQL string
+  text: string;           // The actual token text
+  tokenType: number;      // Numeric token type identifier
+  tokenName: string;      // Human-readable token type name
+  keywordKind: number;    // Numeric keyword classification
+  keywordName: string;    // Human-readable keyword classification
 }
 ```
 

@@ -17,13 +17,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.normalize = exports.fingerprint = exports.parsePlPgSQL = exports.deparse = exports.parse = void 0;
+exports.scan = exports.normalize = exports.fingerprint = exports.parsePlPgSQL = exports.deparse = exports.parse = void 0;
 exports.loadModule = loadModule;
 exports.parseSync = parseSync;
 exports.deparseSync = deparseSync;
 exports.parsePlPgSQLSync = parsePlPgSQLSync;
 exports.fingerprintSync = fingerprintSync;
 exports.normalizeSync = normalizeSync;
+exports.scanSync = scanSync;
 __exportStar(require("@pgsql/types"), exports);
 // @ts-ignore
 const libpg_query_js_1 = __importDefault(require("./libpg-query.js"));
@@ -259,6 +260,45 @@ function normalizeSync(query) {
             throw new Error(resultStr);
         }
         return resultStr;
+    }
+    finally {
+        wasmModule._free(queryPtr);
+        if (resultPtr) {
+            wasmModule._wasm_free_string(resultPtr);
+        }
+    }
+}
+exports.scan = awaitInit(async (query) => {
+    const queryPtr = stringToPtr(query);
+    let resultPtr = 0;
+    try {
+        resultPtr = wasmModule._wasm_scan(queryPtr);
+        const resultStr = ptrToString(resultPtr);
+        if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+            throw new Error(resultStr);
+        }
+        return JSON.parse(resultStr);
+    }
+    finally {
+        wasmModule._free(queryPtr);
+        if (resultPtr) {
+            wasmModule._wasm_free_string(resultPtr);
+        }
+    }
+});
+function scanSync(query) {
+    if (!wasmModule) {
+        throw new Error('WASM module not initialized. Call loadModule() first.');
+    }
+    const queryPtr = stringToPtr(query);
+    let resultPtr = 0;
+    try {
+        resultPtr = wasmModule._wasm_scan(queryPtr);
+        const resultStr = ptrToString(resultPtr);
+        if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+            throw new Error(resultStr);
+        }
+        return JSON.parse(resultStr);
     }
     finally {
         wasmModule._free(queryPtr);

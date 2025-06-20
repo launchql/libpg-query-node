@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rg:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(EMSCRIPTEN=1 make build 2 >& 1)",
+      "Bash(yarn wasm:build:*)",
+      "Bash(yarn build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(yarn install)",
+      "Bash(node:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}
