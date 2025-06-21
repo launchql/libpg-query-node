@@ -1,3 +1,12 @@
+# 17.2.1
+* Add normalize() and normalizeSync() functions for SQL normalization
+* Add fingerprint() and fingerprintSync() functions for query fingerprinting
+* Add isReady() function to check WASM module initialization status
+* Improve memory management and error handling in WASM wrapper
+* Remove unused dependencies (lodash, deasync, @launchql/protobufjs)
+* Split test suite into separate files for better organization
+* Update documentation with comprehensive function examples
+
 # 1.2.1
 * Rename package
 

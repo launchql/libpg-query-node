@@ -24,7 +24,7 @@ ARCH := wasm
 endif
 
 PLATFORM_ARCH := $(PLATFORM)-$(ARCH)
-SRC_FILES := $(wildcard src/*.cc)
+SRC_FILES := src/wasm_wrapper.c
 LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_TAG)
 LIBPG_QUERY_ARCHIVE := $(LIBPG_QUERY_DIR)/libpg_query.a
 LIBPG_QUERY_HEADER := $(LIBPG_QUERY_DIR)/pg_query.h
@@ -33,7 +33,7 @@ CXXFLAGS := -O3
 ifdef EMSCRIPTEN
 OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
 else
-OUT_FILES := build/Release/queryparser.node $(wildcard build/*)
+$(error Native builds are no longer supported. Use EMSCRIPTEN=1 for WASM builds only.)
 endif
 
 # Clone libpg_query source (lives in CACHE_DIR) 
@@ -47,31 +47,26 @@ $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 $(LIBPG_QUERY_ARCHIVE): $(LIBPG_QUERY_DIR)
 	cd $(LIBPG_QUERY_DIR); $(MAKE) build
 
-# Build libpg-query-node (based on platform)
+# Build libpg-query-node WASM module
 $(OUT_FILES): $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER) $(SRC_FILES)
 ifdef EMSCRIPTEN
-	@ $(CXX) \
+	$(CC) \
+		-v \
 		$(CXXFLAGS) \
-		-DNAPI_HAS_THREADS \
 		-I$(LIBPG_QUERY_DIR) \
-		-I./node_modules/emnapi/include \
-		-I./node_modules/node-addon-api \
-		-L./node_modules/emnapi/lib/wasm32-emscripten \
 		-L$(LIBPG_QUERY_DIR) \
-		--js-library=./node_modules/emnapi/dist/library_napi.js \
-		-sEXPORTED_FUNCTIONS="['_malloc','_free','_napi_register_wasm_v1','_node_api_module_get_api_version_v1']" \
+		-sEXPORTED_FUNCTIONS="['_malloc','_free','_wasm_parse_query','_wasm_parse_query_protobuf','_wasm_get_protobuf_len','_wasm_deparse_protobuf','_wasm_parse_plpgsql','_wasm_fingerprint','_wasm_normalize_query','_wasm_parse_query_detailed','_wasm_free_detailed_result','_wasm_free_string']" \
+		-sEXPORTED_RUNTIME_METHODS="['lengthBytesUTF8','stringToUTF8','UTF8ToString','HEAPU8','HEAPU32']" \
 		-sEXPORT_NAME="$(WASM_MODULE_NAME)" \
-		-sENVIRONMENT="web" \
+		-sENVIRONMENT="web,node" \
 		-sMODULARIZE=1 \
 		-sEXPORT_ES6=1 \
-		-fexceptions \
+		-sALLOW_MEMORY_GROWTH=1 \
 		-lpg_query \
-		-lemnapi-basic \
 		-o $@ \
 		$(SRC_FILES)
 else
-# if not wasm, defer to node-gyp
-	yarn rebuild
+$(error Native builds are no longer supported. Use EMSCRIPTEN=1 for WASM builds only.)
 endif
 
 # Commands

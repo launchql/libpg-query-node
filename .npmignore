@@ -1,18 +1,16 @@
 # project files
 test
 .gitignore
-.travis.yml
 package.json
 build
-docker
-libpg_query/**/*.a
-libpg_query/**/*.h
 
 *.log
 npm-debug.log*
 
 # Dependency directories
 node_modules
+
+libpg_query/*
 
 # npm package lock
 package-lock.json

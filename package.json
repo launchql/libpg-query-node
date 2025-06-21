@@ -1,50 +1,36 @@
 {
   "name": "libpg-query",
-  "version": "17.1.1",
+  "version": "17.2.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "./wasm/index.cjs",
+  "typings": "./wasm/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "binding.gyp",
-    "index.js",
-    "index.d.ts",
-    "proto.js",
-    "libpg_query/*",
-    "script/*",
-    "src/*",
-    "wasm/*"
+    "wasm/*",
+    "proto.js"
   ],
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "browser": "./wasm/index.js",
-      "node": "./index.js",
-      "default": "./index.js"
-    },
-    "./wasm": {
-      "types": "./index.d.ts",
-      "default": "./wasm/index.js"
+      "types": "./wasm/index.d.ts",
+      "import": "./wasm/index.js",
+      "require": "./wasm/index.cjs"
     }
   },
   "scripts": {
-    "protogen": "node ./script/protogen.js 17-6.1.0",
-    "clean": "rimraf build",
-    "configure": "node-pre-gyp configure",
-    "install": "node-pre-gyp install --fallback-to-build --loglevel verbose",
-    "rebuild": "node-pre-gyp rebuild --loglevel verbose",
-    "make:wasm": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
-    "build:wasm": "yarn make:wasm build",
-    "rebuild:wasm": "yarn make:wasm rebuild",
-    "clean:wasm": "yarn make:wasm clean",
-    "clean-cache:wasm": "yarn make:wasm clean-cache",
-    "workflows": "node script/workflows.js",
-    "test": "mocha --timeout 5000",
-    "binary:build": "node-pre-gyp rebuild package",
-    "binary:publish": "AWS_PROFILE=supabase-dev node-pre-gyp publish"
+    "clean": "yarn wasm:clean && rimraf cjs esm",
+    "build:js": "node scripts/build.js",
+    "build": "yarn clean; yarn wasm:build; yarn build:js",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:build": "yarn wasm:make build",
+    "wasm:rebuild": "yarn wasm:make rebuild",
+    "wasm:clean": "yarn wasm:make clean",
+    "wasm:clean-cache": "yarn wasm:make clean-cache",
+    "test": "mocha test/*.test.js --timeout 5000",
+    "yamlize": "node ./scripts/yamlize.js",
+    "protogen": "node ./scripts/protogen.js"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
@@ -55,20 +41,14 @@
   "devDependencies": {
     "@launchql/proto-cli": "1.25.0",
     "@yamlize/cli": "^0.8.0",
-    "aws-sdk": "2.1691.0",
     "chai": "^3.5.0",
-    "emnapi": "^0.43.1",
-    "lodash": "^4.17.15",
     "mocha": "^5.2.0",
-    "rimraf": "5.0.0"
+    "rimraf": "5.0.0",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@emnapi/runtime": "^0.43.1",
-    "@launchql/protobufjs": "7.2.6",
-    "@mapbox/node-pre-gyp": "^1.0.8",
     "@pgsql/types": "^17.0.0",
-    "node-addon-api": "^7.0.0",
-    "node-gyp": "^10.0.1"
+    "@launchql/protobufjs": "7.2.6"
   },
   "keywords": [
     "sql",
@@ -78,14 +58,5 @@
     "query",
     "plpgsql",
     "database"
-  ],
-  "binary": {
-    "module_name": "queryparser",
-    "module_path": "./build/Release/",
-    "host": "https://gnbyoxcowpfpalflhptv.supabase.co/storage/v1/s3",
-    "remote_path": "./libpg-query-node/",
-    "bucket": "public-artifacts",
-    "region": "us-east-1",
-    "s3ForcePathStyle": true
-  }
+  ]
 }
