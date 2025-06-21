@@ -1,5 +1,5 @@
 {
-  "name": "libpg-query-full",
+  "name": "libpg-query-17",
   "version": "17.2.0",
   "description": "The real PostgreSQL query parser (PostgreSQL 17 - full functionality)",
   "homepage": "https://github.com/launchql/libpg-query-node",
