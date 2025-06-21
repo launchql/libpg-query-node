@@ -10,7 +10,8 @@
       "Bash(npx tsc:*)",
       "Bash(yarn install)",
       "Bash(node:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(yarn test:*)"
     ],
     "deny": []
   }
