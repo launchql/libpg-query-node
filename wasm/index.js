@@ -7,6 +7,10 @@ let wasmModule;
 const initPromise = PgQueryModule().then((module) => {
     wasmModule = module;
 });
+function ensureLoaded() {
+    if (!wasmModule)
+        throw new Error("WASM module not initialized. Call `loadModule()` first.");
+}
 export async function loadModule() {
     if (!wasmModule) {
         await initPromise;
@@ -19,6 +23,7 @@ function awaitInit(fn) {
     });
 }
 function stringToPtr(str) {
+    ensureLoaded();
     const len = wasmModule.lengthBytesUTF8(str) + 1;
     const ptr = wasmModule._malloc(len);
     try {
@@ -31,6 +36,7 @@ function stringToPtr(str) {
     }
 }
 function ptrToString(ptr) {
+    ensureLoaded();
     return wasmModule.UTF8ToString(ptr);
 }
 export const parse = awaitInit(async (query) => {

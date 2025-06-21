@@ -1,9 +1,10 @@
 {
   "name": "libpg-query",
-  "version": "17.3.0",
+  "version": "17.3.1",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "./wasm/index.cjs",
+  "module": "./wasm/index.js",
   "typings": "./wasm/index.d.ts",
   "publishConfig": {
     "access": "public"
@@ -12,13 +13,6 @@
     "wasm/*",
     "proto.js"
   ],
-  "exports": {
-    ".": {
-      "types": "./wasm/index.d.ts",
-      "import": "./wasm/index.js",
-      "require": "./wasm/index.cjs"
-    }
-  },
   "scripts": {
     "clean": "yarn wasm:clean && rimraf cjs esm",
     "build:js": "node scripts/build.js",

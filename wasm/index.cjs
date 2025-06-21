@@ -34,6 +34,10 @@ let wasmModule;
 const initPromise = (0, libpg_query_js_1.default)().then((module) => {
     wasmModule = module;
 });
+function ensureLoaded() {
+    if (!wasmModule)
+        throw new Error("WASM module not initialized. Call `loadModule()` first.");
+}
 async function loadModule() {
     if (!wasmModule) {
         await initPromise;
@@ -46,6 +50,7 @@ function awaitInit(fn) {
     });
 }
 function stringToPtr(str) {
+    ensureLoaded();
     const len = wasmModule.lengthBytesUTF8(str) + 1;
     const ptr = wasmModule._malloc(len);
     try {
@@ -58,6 +63,7 @@ function stringToPtr(str) {
     }
 }
 function ptrToString(ptr) {
+    ensureLoaded();
     return wasmModule.UTF8ToString(ptr);
 }
 exports.parse = awaitInit(async (query) => {

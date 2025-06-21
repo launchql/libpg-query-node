@@ -61,6 +61,7 @@ ifdef EMSCRIPTEN
 		-sEXPORT_NAME="$(WASM_MODULE_NAME)" \
 		-sENVIRONMENT="web,node" \
 		-sMODULARIZE=1 \
+		-sEXPORT_ES6=0 \
 		-sALLOW_MEMORY_GROWTH=1 \
 		-lpg_query \
 		-o $@ \
