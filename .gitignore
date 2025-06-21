@@ -8,3 +8,4 @@ wasm/libpg-query.js
 .cache
 esm/
 cjs/
+.claude
