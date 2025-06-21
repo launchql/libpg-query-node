@@ -37,6 +37,7 @@
 | -Oz only | 2,004,452 | 59,577 | 2,084,743 | 81.46 KB (3.76%) | ✅ 53/53 |
 | Full optimization (-Oz + --closure 1 + --gc-sections + --strip-all) | 2,004,452 | 20,451 | 2,045,617 | 120.59 KB (5.57%) | ✅ 53/53 |
 | Full optimization + -sFILESYSTEM=0 | 2,004,452 | 6,804 | 2,031,970 | 134.24 KB (6.20%) | ✅ 53/53 |
+| **Parse-only build** | 1,143,575 | 5,628 | 1,169,917 | **996.29 KB (45.98%)** | ✅ Parse tests |
 
 ### Key Findings
 - **WASM optimization**: `-Oz` flag reduced WASM size by 80,967 bytes (3.88% reduction)
@@ -46,7 +47,11 @@
 - **wasm-opt integration**: Already built into Emscripten pipeline with comprehensive optimization passes
 - **Functionality preserved**: All 53 tests continue to pass with all optimized builds
 - **Build time impact**: Optimized build takes ~20 seconds vs ~15 seconds for standard build
-- **Final result**: **6.20% total bundle size reduction** while maintaining full API compatibility
+- **Parse-only optimization**: **45.98% total bundle size reduction** by removing non-parse functionality
+- **Function removal**: Eliminated deparse, fingerprint, normalize, scan, parsePlPgSQL functions
+- **Protobuf dependency**: Removed protobuf dependencies from parse-only build
+- **Minimal exports**: Only `_malloc`, `_free`, `_wasm_parse_query`, `_wasm_free_string` exported
+- **Final result**: **6.20% optimization** for full-featured build, **45.98% optimization** for parse-only build
 
 ### wasm-opt Analysis
 The build process already includes extensive `wasm-opt` optimization through Emscripten's pipeline:
@@ -68,10 +73,45 @@ npm run wasm:build-optimized
 # Optimized build without filesystem
 npm run wasm:build-optimized-no-fs
 
+# Parse-only build (maximum size reduction)
+npm run wasm:build-parse-only
+npm run build:parse-only
+npm run build:parse-only-test
+
 # Size reporting
 npm run size-baseline  # Save current as baseline
 npm run size-report    # Show current sizes
 npm run size-compare   # Compare with baseline
+```
+
+## Parse-Only Build Details
+
+The parse-only build provides maximum bundle size reduction by removing all non-essential functionality:
+
+### Removed Components
+- **Deparse functionality**: `deparse()`, `deparseSync()` functions
+- **Utility functions**: `fingerprint()`, `normalize()`, `scan()`, `parsePlPgSQL()` and sync versions
+- **WASM exports**: `_wasm_deparse_protobuf`, `_wasm_fingerprint`, `_wasm_normalize_query`, `_wasm_scan`, `_wasm_parse_plpgsql`
+- **Protobuf dependencies**: Removed from TypeScript interface (proto.js still present for full build)
+- **C wrapper functions**: Simplified to only include parse functionality
+
+### Retained Components
+- **Core parsing**: `parse()`, `parseSync()` functions
+- **WASM exports**: `_malloc`, `_free`, `_wasm_parse_query`, `_wasm_free_string`
+- **Module loading**: `loadModule()` function
+- **Error handling**: Full error handling for parse operations
+- **TypeScript types**: Complete type definitions for parse results
+
+### Usage
+```typescript
+import { parse, parseSync, loadModule } from './wasm/index.js';
+
+// Async usage
+const result = await parse('SELECT * FROM users');
+
+// Sync usage (requires manual module loading)
+await loadModule();
+const result = parseSync('SELECT * FROM users');
 ```
 
 ## Notes
