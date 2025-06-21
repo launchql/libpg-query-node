@@ -114,7 +114,37 @@ await loadModule();
 const result = parseSync('SELECT * FROM users');
 ```
 
+### External Tool Investigation
+
+#### Binaryen wasm-opt
+- **Additional reduction**: 163 bytes (0.014% beyond parse-only optimization)
+- **Command**: `wasm-opt --enable-nontrapping-float-to-int --enable-bulk-memory -Oz`
+- **Result**: 1,143,575 bytes → 1,143,412 bytes
+- **Converge option**: No additional benefit beyond standard optimization
+- **Assessment**: Minimal benefit does not justify additional build complexity
+
+#### WABT Tools Analysis
+- **wasm-objdump**: Provides detailed binary structure analysis
+- **Binary sections**: Code (338KB), Data (805KB), with 343 functions and 2509 data segments
+- **Usage**: Useful for debugging and analysis but no size optimization benefits
+
+#### External Tool Integration
+- **Docker approach**: Created docker-compose.yml with binaryen and wabt services
+- **Pre-built binaries**: Downloaded and tested binaryen v123 and wabt v1.0.36
+- **Recommendation**: Keep external tools as optional advanced optimization only
+- **Build complexity**: Additional dependencies and build time not justified for 163-byte reduction
+
+### Final Size Comparison
+
+| Build Type | WASM Size | JS Size | Total Size | Reduction | External Tool Bonus |
+|------------|-----------|---------|------------|-----------|-------------------|
+| Baseline (-O3) | 2,085,419 | 60,072 | 2,166,205 | - | - |
+| Full optimization | 2,004,452 | 6,804 | 2,031,970 | 134.24 KB (6.20%) | +163 bytes |
+| **Parse-only build** | 1,143,575 | 5,628 | 1,169,917 | **996.29 KB (45.98%)** | +163 bytes |
+
 ## Notes
 - All optimizations maintain full API compatibility
 - Test suite validates functionality after each optimization
 - Performance impact analysis needed for production use
+- External tools provide minimal additional benefit (0.014% reduction)
+- Docker-based optimization infrastructure available but not integrated by default

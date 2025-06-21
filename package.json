@@ -38,6 +38,8 @@
     "size-report": "node scripts/size-report.js",
     "size-baseline": "node scripts/size-compare.js --save-baseline",
     "size-compare": "node scripts/size-compare.js",
+    "wasm-opt-external": "~/browser_downloads/binaryen-version_123/bin/wasm-opt --enable-nontrapping-float-to-int --enable-bulk-memory -Oz wasm/libpg-query.wasm -o wasm/libpg-query.external.wasm",
+    "wasm-objdump-external": "~/browser_downloads/wabt-1.0.36/bin/wasm-objdump -h wasm/libpg-query.wasm",
     "test": "mocha test/*.test.js --timeout 5000",
     "yamlize": "node ./scripts/yamlize.js",
     "protogen": "node ./scripts/protogen.js"

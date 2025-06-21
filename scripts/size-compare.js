@@ -28,6 +28,17 @@ function compareSizes() {
     console.log(`Total Size Change: ${formatBytes(Math.abs(totalDiff))} ${totalDiff >= 0 ? 'increase' : 'reduction'} (${totalPercent}%)`);
     console.log(`Before: ${formatBytes(baseline.totalSize)}`);
     console.log(`After:  ${formatBytes(current.totalSize)}`);
+    
+    const externalPath = path.join(__dirname, '../wasm/libpg-query.external.wasm');
+    if (fs.existsSync(externalPath)) {
+        const externalSize = fs.statSync(externalPath).size;
+        const externalDiff = current.files.find(f => f.name === 'libpg-query.wasm').size - externalSize;
+        const externalPercent = ((externalDiff / current.files.find(f => f.name === 'libpg-query.wasm').size) * 100).toFixed(3);
+        console.log('');
+        console.log('=== External Optimization ===');
+        console.log(`External wasm-opt reduction: ${formatBytes(externalDiff)} (${externalPercent}%)`);
+        console.log(`External optimized size: ${formatBytes(externalSize)}`);
+    }
 }
 
 if (require.main === module) {

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  binaryen:
+    container_name: binaryen-container
+    build:
+      context: tools/binaryen
+      dockerfile: Dockerfile
+    working_dir: /work
+    volumes:
+      - $PWD:/work
+  
+  wabt:
+    container_name: wabt-container
+    build:
+      context: tools/wabt
+      dockerfile: Dockerfile
+    working_dir: /work
+    volumes:
+      - $PWD:/work
