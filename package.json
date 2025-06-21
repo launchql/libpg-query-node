@@ -42,7 +42,7 @@
     "@launchql/proto-cli": "1.25.0",
     "@yamlize/cli": "^0.8.0",
     "chai": "^3.5.0",
-    "mocha": "^5.2.0",
+    "mocha": "^11.7.0",
     "rimraf": "5.0.0",
     "typescript": "^5.3.3"
   },
