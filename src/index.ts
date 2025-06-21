@@ -62,6 +62,9 @@ function awaitInit<T extends (...args: any[]) => Promise<any>>(fn: T): T {
 
 function stringToPtr(str: string): number {
   ensureLoaded();
+  if (typeof str !== 'string') {
+    throw new TypeError(`Expected a string, got ${typeof str}`);
+  }
   const len = wasmModule.lengthBytesUTF8(str) + 1;
   const ptr = wasmModule._malloc(len);
   try {
@@ -75,6 +78,9 @@ function stringToPtr(str: string): number {
 
 function ptrToString(ptr: number): string {
   ensureLoaded();
+  if (typeof ptr !== 'number') {
+    throw new TypeError(`Expected a number, got ${typeof ptr}`);
+  }
   return wasmModule.UTF8ToString(ptr);
 }
 

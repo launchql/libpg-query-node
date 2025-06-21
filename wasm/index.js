@@ -24,6 +24,9 @@ function awaitInit(fn) {
 }
 function stringToPtr(str) {
     ensureLoaded();
+    if (typeof str !== 'string') {
+        throw new TypeError(`Expected a string, got ${typeof str}`);
+    }
     const len = wasmModule.lengthBytesUTF8(str) + 1;
     const ptr = wasmModule._malloc(len);
     try {
@@ -37,6 +40,9 @@ function stringToPtr(str) {
 }
 function ptrToString(ptr) {
     ensureLoaded();
+    if (typeof ptr !== 'number') {
+        throw new TypeError(`Expected a number, got ${typeof ptr}`);
+    }
     return wasmModule.UTF8ToString(ptr);
 }
 export const parse = awaitInit(async (query) => {
