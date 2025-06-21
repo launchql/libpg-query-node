@@ -1,0 +1,5 @@
+name: Build with Emscripten 🏗
+run: |
+  source ./emsdk/emsdk_env.sh
+  emmake make
+  emmake make build
