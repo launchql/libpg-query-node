@@ -19,15 +19,19 @@
     "build": "yarn clean; yarn wasm:build; yarn build:js",
     "build:optimized": "yarn clean; yarn wasm:build-optimized; yarn build:js",
     "build:optimized-no-fs": "yarn clean; yarn wasm:build-optimized-no-fs; yarn build:js",
+    "build:parse-only": "yarn clean; yarn wasm:build-parse-only; yarn build:js",
+    "build:parse-only-test": "yarn build:parse-only && node -e \"const lib = require('./wasm/index.cjs'); lib.loadModule().then(() => { console.log('Parse test:', lib.parseSync('SELECT 1')); }).catch(console.error);\"",
 
     "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "wasm:build": "yarn wasm:make build",
     "wasm:build-optimized": "yarn wasm:make build-optimized",
     "wasm:build-optimized-no-fs": "yarn wasm:make build-optimized-no-fs",
+    "wasm:build-parse-only": "yarn wasm:make build-parse-only",
 
     "wasm:rebuild": "yarn wasm:make rebuild",
     "wasm:rebuild-optimized": "yarn wasm:make rebuild-optimized",
     "wasm:rebuild-optimized-no-fs": "yarn wasm:make rebuild-optimized-no-fs",
+    "wasm:rebuild-parse-only": "yarn wasm:make rebuild-parse-only",
 
     "wasm:clean": "yarn wasm:make clean",
     "wasm:clean-cache": "yarn wasm:make clean-cache",

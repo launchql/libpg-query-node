@@ -31,6 +31,8 @@ LIBPG_QUERY_HEADER := $(LIBPG_QUERY_DIR)/pg_query.h
 CXXFLAGS := -O3
 CXXFLAGS_OPTIMIZED := -Oz
 LDFLAGS_OPTIMIZED := -Wl,--gc-sections,--strip-all --closure 1
+EXPORTED_FUNCTIONS := ['_malloc','_free','_wasm_parse_query','_wasm_parse_query_protobuf','_wasm_get_protobuf_len','_wasm_deparse_protobuf','_wasm_parse_plpgsql','_wasm_fingerprint','_wasm_normalize_query','_wasm_scan','_wasm_parse_query_detailed','_wasm_free_detailed_result','_wasm_free_string']
+EXPORTED_FUNCTIONS_PARSE_ONLY := ['_malloc','_free','_wasm_parse_query','_wasm_free_string']
 
 ifdef EMSCRIPTEN
 OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
@@ -59,7 +61,7 @@ ifdef EMSCRIPTEN
 		-I$(LIBPG_QUERY_DIR) \
 		-I$(LIBPG_QUERY_DIR)/vendor \
 		-L$(LIBPG_QUERY_DIR) \
-		-sEXPORTED_FUNCTIONS="['_malloc','_free','_wasm_parse_query','_wasm_parse_query_protobuf','_wasm_get_protobuf_len','_wasm_deparse_protobuf','_wasm_parse_plpgsql','_wasm_fingerprint','_wasm_normalize_query','_wasm_scan','_wasm_parse_query_detailed','_wasm_free_detailed_result','_wasm_free_string']" \
+		-sEXPORTED_FUNCTIONS="$(EXPORTED_FUNCTIONS)" \
 		-sEXPORTED_RUNTIME_METHODS="['lengthBytesUTF8','stringToUTF8','UTF8ToString','HEAPU8','HEAPU32']" \
 		-sEXPORT_NAME="$(WASM_MODULE_NAME)" \
 		-sENVIRONMENT="web,node" \
@@ -84,6 +86,14 @@ build-optimized-no-fs: CXXFLAGS := $(CXXFLAGS_OPTIMIZED)
 build-optimized-no-fs: LDFLAGS += $(LDFLAGS_OPTIMIZED) -sFILESYSTEM=0
 build-optimized-no-fs: $(OUT_FILES)
 
+build-parse-only: CXXFLAGS := $(CXXFLAGS_OPTIMIZED)
+build-parse-only: LDFLAGS += $(LDFLAGS_OPTIMIZED) -sFILESYSTEM=0
+build-parse-only: WASM_OUT_NAME := libpg-query-parse-only
+build-parse-only: SRC_FILES := src/wasm_wrapper_parse_only.c
+build-parse-only: EXPORTED_FUNCTIONS := $(EXPORTED_FUNCTIONS_PARSE_ONLY)
+build-parse-only: OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
+build-parse-only: $(OUT_FILES)
+
 
 
 build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
@@ -93,6 +103,8 @@ rebuild: clean build
 rebuild-optimized: clean build-optimized
 
 rebuild-optimized-no-fs: clean build-optimized-no-fs
+
+rebuild-parse-only: clean build-parse-only
 
 
 
@@ -104,4 +116,4 @@ clean:
 clean-cache:
 	-@ rm -rf $(LIBPG_QUERY_DIR)
 
-.PHONY: build build-optimized build-optimized-no-fs build-cache rebuild rebuild-optimized rebuild-optimized-no-fs rebuild-cache clean clean-cache
+.PHONY: build build-optimized build-optimized-no-fs build-parse-only build-cache rebuild rebuild-optimized rebuild-optimized-no-fs rebuild-parse-only rebuild-cache clean clean-cache
