@@ -1,4 +1,4 @@
-# libpg-query
+# libpg-query-node
 
 <p align="center" width="100%">
     <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
@@ -17,27 +17,99 @@
 
 The real PostgreSQL parser for Node.js, powered by **WebAssembly (WASM)** for true cross-platform compatibility.
 
-A WASM-based PostgreSQL query parser that provides the same functionality as the native PostgreSQL parser without requiring native compilation or platform-specific binaries. Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser).
+This repository provides two distinct packages:
+
+- **pg17-full**: Complete PostgreSQL parser with all functionality including scan, deparse, and protobuf support
+- **pg17**: Minimal PostgreSQL parser focused on core parsing, fingerprinting, and normalization (excludes scan/deparse functionality)
+
+Both packages are WASM-based PostgreSQL query parsers that provide the same core functionality as the native PostgreSQL parser without requiring native compilation or platform-specific binaries.
 
 
 ## Table of Contents
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Build Instructions](#build-instructions)
-4. [Testing](#testing)
-5. [Versions](#versions)
-6. [Related Projects](#related-projects)
-7. [Credit](#credit)
+1. [Package Structure](#package-structure)
+2. [Installation](#installation)
+3. [Building Both Packages](#building-both-packages)
+4. [Usage](#usage)
+5. [Build Instructions](#build-instructions)
+6. [Testing](#testing)
+7. [Versions](#versions)
+8. [Related Projects](#related-projects)
+9. [Credit](#credit)
 
+## Package Structure
+
+This repository contains two packages:
+
+### pg17-full (Complete Package)
+- Full PostgreSQL parsing functionality
+- Includes scan, deparse, and protobuf support
+- Larger package size due to complete feature set
+- Located in `./pg17-full/`
+
+### pg17 (Minimal Package)  
+- Core PostgreSQL parsing functionality
+- Excludes scan, deparse, and protobuf features
+- Smaller package size optimized for basic parsing needs
+- Located in `./pg17/`
 
 ## Installation
 
-```sh
-npm install libpg-query
+Choose the package that best fits your needs:
+
+**For full functionality:**
+```bash
+cd pg17-full
+npm install
+```
+
+**For minimal parsing:**
+```bash
+cd pg17
+npm install
+```
+
+## Building Both Packages
+
+Use the package management Makefile to build both packages:
+
+```bash
+# Install dependencies for both packages
+make -f Makefile.packages install
+
+# Build both packages
+make -f Makefile.packages build
+
+# Clean both packages
+make -f Makefile.packages clean
+
+# Test both packages
+make -f Makefile.packages test
 ```
 
 ## Usage
+
+### Basic Examples
+
+**pg17-full (Complete Package):**
+```typescript
+import { parse, deparse, scan } from './pg17-full/src/index.js';
+
+const result = await parse('SELECT * FROM users WHERE active = true');
+const sql = await deparse(result);
+const tokens = await scan('SELECT * FROM users');
+console.log(JSON.stringify(result, null, 2));
+```
+
+**pg17 (Minimal Package):**
+```typescript
+import { parse, fingerprint, normalize } from './pg17/src/index.js';
+
+const result = await parse('SELECT * FROM users WHERE active = true');
+const fp = await fingerprint('SELECT * FROM users');
+const norm = await normalize('SELECT * FROM users');
+console.log(JSON.stringify(result, null, 2));
+```
 
 ### `parse(query: string): Promise<ParseResult>`
 
