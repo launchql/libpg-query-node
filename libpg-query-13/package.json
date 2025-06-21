@@ -1,0 +1,33 @@
+{
+  "name": "libpg-query-13",
+  "version": "13.2.0",
+  "description": "PostgreSQL 13 query parser (lightweight - no deparse/scan)",
+  "main": "wasm/index.js",
+  "types": "wasm/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./wasm/index.js",
+      "types": "./wasm/index.d.ts"
+    }
+  },
+  "files": [
+    "wasm/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "EMSCRIPTEN=1 make build",
+    "clean": "make clean",
+    "test": "mocha test/*.test.js --timeout 5000"
+  },
+  "dependencies": {
+    "@pgsql/types": "^13.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "keywords": ["postgresql", "parser", "sql", "pg13"],
+  "author": "Dan Lynch",
+  "license": "MIT"
+}

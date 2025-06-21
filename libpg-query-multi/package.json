@@ -1,0 +1,48 @@
+{
+  "name": "libpg-query-multi",
+  "version": "1.0.0",
+  "description": "Multi-version PostgreSQL query parser (PG15/16/17 with runtime version selection)",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./pg15": {
+      "import": "./pg15/index.js",
+      "types": "./pg15/index.d.ts"
+    },
+    "./pg16": {
+      "import": "./pg16/index.js",
+      "types": "./pg16/index.d.ts"
+    },
+    "./pg17": {
+      "import": "./pg17/index.js",
+      "types": "./pg17/index.d.ts"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "pg15/",
+    "pg16/",
+    "pg17/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "make build",
+    "clean": "make clean",
+    "test": "mocha test/*.test.js --timeout 5000",
+    "generate-types": "node ./scripts/generate-types.js"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "pg-proto-parser": "^0.6.3"
+  },
+  "keywords": ["postgresql", "parser", "sql", "multi-version", "pg15", "pg16", "pg17"],
+  "author": "Dan Lynch",
+  "license": "MIT"
+}
