@@ -23,6 +23,12 @@
 - **Before/after comparison**: `scripts/size-compare.js`
 - **Build integration**: New npm scripts for optimized builds
 
+### 4. wasm-opt Integration (Built-in)
+- **Emscripten pipeline**: `wasm-opt` is already integrated in Emscripten's build process
+- **Multiple optimization passes**: `-Oz`, `--enable-bulk-memory`, `--minify-imports-and-exports-and-modules`
+- **Advanced features**: `--optimize-level=2`, `--shrink-level=2`, `--optimize-stack-ir`
+- **Dead code elimination**: `wasm-metadce` for comprehensive unused code removal
+
 ## Results Summary
 
 | Optimization | WASM Size | JS Size | Total Size | Size Reduction | Tests Passing |
@@ -37,9 +43,18 @@
 - **JavaScript optimization**: Closure Compiler (`--closure 1`) reduced JS wrapper by 39,621 bytes (66% reduction)
 - **Filesystem removal**: `-sFILESYSTEM=0` provided additional 13.65 KB JS reduction (67% further reduction)
 - **Dead code elimination**: `--gc-sections` and `--strip-all` provided additional optimizations
+- **wasm-opt integration**: Already built into Emscripten pipeline with comprehensive optimization passes
 - **Functionality preserved**: All 53 tests continue to pass with all optimized builds
 - **Build time impact**: Optimized build takes ~20 seconds vs ~15 seconds for standard build
 - **Final result**: **6.20% total bundle size reduction** while maintaining full API compatibility
+
+### wasm-opt Analysis
+The build process already includes extensive `wasm-opt` optimization through Emscripten's pipeline:
+1. **Initial optimization**: `wasm-opt --post-emscripten -Oz --low-memory-unused --zero-filled-memory`
+2. **Dead code elimination**: `wasm-metadce` with comprehensive graph-based removal
+3. **Final optimization**: `wasm-opt --minify-imports-and-exports-and-modules --optimize-level=2 --shrink-level=2`
+
+Additional post-processing with `wasm-opt` is redundant and can cause validation conflicts.
 
 ## Build Commands
 

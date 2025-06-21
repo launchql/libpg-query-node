@@ -84,6 +84,8 @@ build-optimized-no-fs: CXXFLAGS := $(CXXFLAGS_OPTIMIZED)
 build-optimized-no-fs: LDFLAGS += $(LDFLAGS_OPTIMIZED) -sFILESYSTEM=0
 build-optimized-no-fs: $(OUT_FILES)
 
+
+
 build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
 
 rebuild: clean build
@@ -91,6 +93,8 @@ rebuild: clean build
 rebuild-optimized: clean build-optimized
 
 rebuild-optimized-no-fs: clean build-optimized-no-fs
+
+
 
 rebuild-cache: clean-cache build-cache
 

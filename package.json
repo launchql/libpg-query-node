@@ -19,13 +19,16 @@
     "build": "yarn clean; yarn wasm:build; yarn build:js",
     "build:optimized": "yarn clean; yarn wasm:build-optimized; yarn build:js",
     "build:optimized-no-fs": "yarn clean; yarn wasm:build-optimized-no-fs; yarn build:js",
+
     "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "wasm:build": "yarn wasm:make build",
     "wasm:build-optimized": "yarn wasm:make build-optimized",
     "wasm:build-optimized-no-fs": "yarn wasm:make build-optimized-no-fs",
+
     "wasm:rebuild": "yarn wasm:make rebuild",
     "wasm:rebuild-optimized": "yarn wasm:make rebuild-optimized",
     "wasm:rebuild-optimized-no-fs": "yarn wasm:make rebuild-optimized-no-fs",
+
     "wasm:clean": "yarn wasm:make clean",
     "wasm:clean-cache": "yarn wasm:make clean-cache",
     "size-report": "node scripts/size-report.js",
