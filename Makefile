@@ -33,6 +33,7 @@ CXXFLAGS_OPTIMIZED := -Oz
 LDFLAGS_OPTIMIZED := -Wl,--gc-sections,--strip-all --closure 1
 EXPORTED_FUNCTIONS := ['_malloc','_free','_wasm_parse_query','_wasm_parse_query_protobuf','_wasm_get_protobuf_len','_wasm_deparse_protobuf','_wasm_parse_plpgsql','_wasm_fingerprint','_wasm_normalize_query','_wasm_scan','_wasm_parse_query_detailed','_wasm_free_detailed_result','_wasm_free_string']
 EXPORTED_FUNCTIONS_PARSE_ONLY := ['_malloc','_free','_wasm_parse_query','_wasm_free_string']
+EXPORTED_FUNCTIONS_PARSE_SCAN := ['_malloc','_free','_wasm_parse_query','_wasm_scan','_wasm_free_string']
 
 ifdef EMSCRIPTEN
 OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
@@ -94,6 +95,14 @@ build-parse-only: EXPORTED_FUNCTIONS := $(EXPORTED_FUNCTIONS_PARSE_ONLY)
 build-parse-only: OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
 build-parse-only: $(OUT_FILES)
 
+build-parse-scan: CXXFLAGS := $(CXXFLAGS_OPTIMIZED)
+build-parse-scan: LDFLAGS += $(LDFLAGS_OPTIMIZED) -sFILESYSTEM=0
+build-parse-scan: WASM_OUT_NAME := libpg-query-parse-scan
+build-parse-scan: SRC_FILES := src/wasm_wrapper_parse_scan.c
+build-parse-scan: EXPORTED_FUNCTIONS := $(EXPORTED_FUNCTIONS_PARSE_SCAN)
+build-parse-scan: OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
+build-parse-scan: $(OUT_FILES)
+
 
 
 build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
@@ -106,6 +115,8 @@ rebuild-optimized-no-fs: clean build-optimized-no-fs
 
 rebuild-parse-only: clean build-parse-only
 
+rebuild-parse-scan: clean build-parse-scan
+
 
 
 rebuild-cache: clean-cache build-cache
@@ -116,4 +127,4 @@ clean:
 clean-cache:
 	-@ rm -rf $(LIBPG_QUERY_DIR)
 
-.PHONY: build build-optimized build-optimized-no-fs build-parse-only build-cache rebuild rebuild-optimized rebuild-optimized-no-fs rebuild-parse-only rebuild-cache clean clean-cache
+.PHONY: build build-optimized build-optimized-no-fs build-parse-only build-parse-scan build-cache rebuild rebuild-optimized rebuild-optimized-no-fs rebuild-parse-only rebuild-parse-scan rebuild-cache clean clean-cache

@@ -78,6 +78,11 @@ npm run wasm:build-parse-only
 npm run build:parse-only
 npm run build:parse-only-test
 
+# Parse+scan build (parse and scan functionality)
+npm run wasm:build-parse-scan
+npm run build:parse-scan
+npm run build:parse-scan-test
+
 # Size reporting
 npm run size-baseline  # Save current as baseline
 npm run size-report    # Show current sizes
@@ -103,6 +108,8 @@ The parse-only build provides maximum bundle size reduction by removing all non-
 - **TypeScript types**: Complete type definitions for parse results
 
 ### Usage
+
+**Parse-Only Build:**
 ```typescript
 import { parse, parseSync, loadModule } from './wasm/index.js';
 
@@ -112,6 +119,22 @@ const result = await parse('SELECT * FROM users');
 // Sync usage (requires manual module loading)
 await loadModule();
 const result = parseSync('SELECT * FROM users');
+```
+
+**Parse+Scan Build:**
+```typescript
+import { parse, parseSync, scan, scanSync, loadModule } from './wasm/index.js';
+
+// Parse functionality
+const parseResult = await parse('SELECT * FROM users WHERE id = $1');
+
+// Scan functionality (tokenization)
+const scanResult = await scan('SELECT * FROM users WHERE id = $1');
+
+// Sync usage (requires manual module loading)
+await loadModule();
+const parseResult = parseSync('SELECT * FROM users WHERE id = $1');
+const scanResult = scanSync('SELECT * FROM users WHERE id = $1');
 ```
 
 ### External Tool Investigation
@@ -141,6 +164,18 @@ const result = parseSync('SELECT * FROM users');
 | Baseline (-O3) | 2,085,419 | 60,072 | 2,166,205 | - | - |
 | Full optimization | 2,004,452 | 6,804 | 2,031,970 | 134.24 KB (6.20%) | +163 bytes |
 | **Parse-only build** | 1,143,575 | 5,628 | 1,169,917 | **996.29 KB (45.98%)** | +163 bytes |
+| **Parse+Scan build** | 1,192,397 | 6,059 | 1,198,456 | **967.75 KB (44.66%)** | +163 bytes |
+
+### Parse-Only vs Parse+Scan Analysis
+
+The comparison between parse-only and parse+scan builds reveals the size impact of adding scan functionality:
+
+- **Scan functionality cost**: 48,822 bytes WASM + 431 bytes JS = **49,253 bytes total (4.22% increase)**
+- **Parse-only**: 1,169,917 bytes total (45.98% reduction from baseline)
+- **Parse+scan**: 1,198,456 bytes total (44.66% reduction from baseline)
+- **Functionality trade-off**: Adding scan capability reduces overall optimization by 1.32 percentage points
+
+This analysis shows that scan functionality has a relatively modest size impact, making the parse+scan build a viable option for applications that need both parsing and tokenization capabilities while still achieving significant bundle size reduction.
 
 ## Notes
 - All optimizations maintain full API compatibility
