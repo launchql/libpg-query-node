@@ -2,32 +2,57 @@
   "name": "libpg-query-15",
   "version": "15.4.2",
   "description": "PostgreSQL 15 query parser (lightweight - no deparse/scan)",
-  "main": "wasm/index.js",
-  "types": "wasm/index.d.ts",
-  "type": "module",
-  "exports": {
-    ".": {
-      "import": "./wasm/index.js",
-      "types": "./wasm/index.d.ts"
-    }
+  "homepage": "https://github.com/launchql/libpg-query-node",
+  "main": "./wasm/index.cjs",
+  "typings": "./wasm/index.d.ts",
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
-    "wasm/",
-    "README.md"
+    "wasm/*"
   ],
+  "exports": {
+    ".": {
+      "types": "./wasm/index.d.ts",
+      "import": "./wasm/index.js",
+      "require": "./wasm/index.cjs"
+    }
+  },
   "scripts": {
-    "build": "EMSCRIPTEN=1 make build",
-    "clean": "make clean",
+    "clean": "yarn wasm:clean && rimraf cjs esm",
+    "build:js": "node scripts/build.js",
+    "build": "yarn clean; yarn wasm:build; yarn build:js",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:build": "yarn wasm:make build",
+    "wasm:rebuild": "yarn wasm:make rebuild",
+    "wasm:clean": "yarn wasm:make clean",
+    "wasm:clean-cache": "yarn wasm:make clean-cache",
     "test": "mocha test/*.test.js --timeout 5000"
+  },
+  "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
+  "license": "LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/launchql/libpg-query-node.git"
+  },
+  "devDependencies": {
+    "@launchql/proto-cli": "1.25.0",
+    "@yamlize/cli": "^0.8.0",
+    "chai": "^3.5.0",
+    "mocha": "^11.7.0",
+    "rimraf": "5.0.0",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@pgsql/types": "^15.0.0"
   },
-  "devDependencies": {
-    "chai": "^4.3.7",
-    "mocha": "^10.2.0"
-  },
-  "keywords": ["postgresql", "parser", "sql", "pg15"],
-  "author": "Dan Lynch",
-  "license": "MIT"
+  "keywords": [
+    "sql",
+    "postgres",
+    "postgresql",
+    "pg",
+    "query",
+    "plpgsql",
+    "database"
+  ]
 }

@@ -2,13 +2,25 @@
   "name": "libpg-query-multi",
   "version": "1.0.0",
   "description": "Multi-version PostgreSQL query parser (PG15/16/17 with runtime version selection)",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "type": "module",
+  "homepage": "https://github.com/launchql/libpg-query-node",
+  "main": "./index.cjs",
+  "typings": "./index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js",
+    "index.cjs",
+    "index.d.ts",
+    "pg15/*",
+    "pg16/*",
+    "pg17/*"
+  ],
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "import": "./index.js",
-      "types": "./index.d.ts"
+      "require": "./index.cjs"
     },
     "./pg15": {
       "import": "./pg15/index.js",
@@ -23,26 +35,42 @@
       "types": "./pg17/index.d.ts"
     }
   },
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "pg15/",
-    "pg16/",
-    "pg17/",
-    "README.md"
-  ],
   "scripts": {
-    "build": "make build",
-    "clean": "make clean",
+    "clean": "yarn wasm:clean && rimraf cjs esm",
+    "build:js": "node scripts/build.js",
+    "build": "yarn clean; yarn wasm:build; yarn build:js",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:build": "yarn wasm:make build",
+    "wasm:rebuild": "yarn wasm:make rebuild",
+    "wasm:clean": "yarn wasm:make clean",
+    "wasm:clean-cache": "yarn wasm:make clean-cache",
     "test": "mocha test/*.test.js --timeout 5000",
     "generate-types": "node ./scripts/generate-types.js"
   },
+  "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
+  "license": "LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/launchql/libpg-query-node.git"
+  },
   "devDependencies": {
-    "chai": "^4.3.7",
-    "mocha": "^10.2.0",
+    "@launchql/proto-cli": "1.25.0",
+    "@yamlize/cli": "^0.8.0",
+    "chai": "^3.5.0",
+    "mocha": "^11.7.0",
+    "rimraf": "5.0.0",
+    "typescript": "^5.3.3",
     "pg-proto-parser": "^0.6.3"
   },
-  "keywords": ["postgresql", "parser", "sql", "multi-version", "pg15", "pg16", "pg17"],
-  "author": "Dan Lynch",
-  "license": "MIT"
+  "dependencies": {},
+  "keywords": [
+    "sql",
+    "postgres",
+    "postgresql",
+    "pg",
+    "query",
+    "plpgsql",
+    "database",
+    "multi-version"
+  ]
 }

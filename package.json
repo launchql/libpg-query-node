@@ -1,62 +1,31 @@
 {
-  "name": "libpg-query",
-  "version": "17.2.0",
-  "description": "The real PostgreSQL query parser",
-  "homepage": "https://github.com/launchql/libpg-query-node",
-  "main": "./wasm/index.cjs",
-  "typings": "./wasm/index.d.ts",
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "wasm/*",
-    "proto.js"
-  ],
-  "exports": {
-    ".": {
-      "types": "./wasm/index.d.ts",
-      "import": "./wasm/index.js",
-      "require": "./wasm/index.cjs"
-    }
-  },
+  "name": "libpg-query-node-workspace",
+  "version": "1.0.0",
+  "description": "Multi-version PostgreSQL query parser workspace",
+  "private": true,
   "scripts": {
-    "clean": "yarn wasm:clean && rimraf cjs esm",
-    "build:js": "node scripts/build.js",
-    "build": "yarn clean; yarn wasm:build; yarn build:js",
-    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
-    "wasm:build": "yarn wasm:make build",
-    "wasm:rebuild": "yarn wasm:make rebuild",
-    "wasm:clean": "yarn wasm:make clean",
-    "wasm:clean-cache": "yarn wasm:make clean-cache",
-    "test": "mocha test/*.test.js --timeout 5000",
-    "yamlize": "node ./scripts/yamlize.js",
-    "protogen": "node ./scripts/protogen.js"
+    "build-all": "make build-all",
+    "clean-all": "make clean-all", 
+    "test-all": "make test-all",
+    "install-deps": "make install-deps"
   },
+  "devDependencies": {
+    "rimraf": "5.0.0"
+  },
+  "keywords": [
+    "sql",
+    "postgres", 
+    "postgresql",
+    "pg",
+    "query",
+    "plpgsql",
+    "database",
+    "multi-version"
+  ],
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "git://github.com/launchql/libpg-query-node.git"
-  },
-  "devDependencies": {
-    "@launchql/proto-cli": "1.25.0",
-    "@yamlize/cli": "^0.8.0",
-    "chai": "^3.5.0",
-    "mocha": "^11.7.0",
-    "rimraf": "5.0.0",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "@pgsql/types": "^17.0.0",
-    "@launchql/protobufjs": "7.2.6"
-  },
-  "keywords": [
-    "sql",
-    "postgres",
-    "postgresql",
-    "pg",
-    "query",
-    "plpgsql",
-    "database"
-  ]
+  }
 }
