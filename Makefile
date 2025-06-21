@@ -29,6 +29,8 @@ LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_TAG)
 LIBPG_QUERY_ARCHIVE := $(LIBPG_QUERY_DIR)/libpg_query.a
 LIBPG_QUERY_HEADER := $(LIBPG_QUERY_DIR)/pg_query.h
 CXXFLAGS := -O3
+CXXFLAGS_OPTIMIZED := -Oz
+LDFLAGS_OPTIMIZED := -Wl,--gc-sections,--strip-all --closure 1
 
 ifdef EMSCRIPTEN
 OUT_FILES := $(foreach EXT,.js .wasm,$(WASM_OUT_DIR)/$(WASM_OUT_NAME)$(EXT))
@@ -53,6 +55,7 @@ ifdef EMSCRIPTEN
 	$(CC) \
 		-v \
 		$(CXXFLAGS) \
+		$(LDFLAGS) \
 		-I$(LIBPG_QUERY_DIR) \
 		-I$(LIBPG_QUERY_DIR)/vendor \
 		-L$(LIBPG_QUERY_DIR) \
@@ -73,9 +76,21 @@ endif
 # Commands
 build: $(OUT_FILES)
 
+build-optimized: CXXFLAGS := $(CXXFLAGS_OPTIMIZED)
+build-optimized: LDFLAGS += $(LDFLAGS_OPTIMIZED)
+build-optimized: $(OUT_FILES)
+
+build-optimized-no-fs: CXXFLAGS := $(CXXFLAGS_OPTIMIZED)
+build-optimized-no-fs: LDFLAGS += $(LDFLAGS_OPTIMIZED) -sFILESYSTEM=0
+build-optimized-no-fs: $(OUT_FILES)
+
 build-cache: $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER)
 
 rebuild: clean build
+
+rebuild-optimized: clean build-optimized
+
+rebuild-optimized-no-fs: clean build-optimized-no-fs
 
 rebuild-cache: clean-cache build-cache
 
@@ -85,4 +100,4 @@ clean:
 clean-cache:
 	-@ rm -rf $(LIBPG_QUERY_DIR)
 
-.PHONY: build build-cache rebuild rebuild-cache clean clean-cache
+.PHONY: build build-optimized build-optimized-no-fs build-cache rebuild rebuild-optimized rebuild-optimized-no-fs rebuild-cache clean clean-cache

@@ -1,0 +1,21 @@
+{
+  "totalSize": 2166205,
+  "files": [
+    {
+      "name": "libpg-query.wasm",
+      "size": 2085419
+    },
+    {
+      "name": "libpg-query.js",
+      "size": 60072
+    },
+    {
+      "name": "index.js",
+      "size": 9707
+    },
+    {
+      "name": "index.cjs",
+      "size": 11007
+    }
+  ]
+}
