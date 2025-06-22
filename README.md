@@ -1,18 +1,5 @@
 # libpg-query
 
----
-
-## 🚨 Updates
-
-**2024-06: This project has migrated to a [pnpm workspace](https://pnpm.io/workspaces)!**
-
-- All development and CI now use pnpm for dependency management and scripts.
-- The main package is now located in the `libpg-query` subdirectory.
-- Please use `pnpm install`, `pnpm run build`, `pnpm run test`, and `pnpm run clean` from the root directory.
-- See below for updated instructions.
-
----
-
 <p align="center" width="100%">
     <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
 </p>
