@@ -1,18 +1,5 @@
 # libpg-query
 
----
-
-## 🚨 Updates
-
-**2024-06: This project has migrated to a [pnpm workspace](https://pnpm.io/workspaces)!**
-
-- All development and CI now use pnpm for dependency management and scripts.
-- The main package is now located in the `libpg-query` subdirectory.
-- Please use `pnpm install`, `pnpm run build`, `pnpm run test`, and `pnpm run clean` from the root directory.
-- See below for updated instructions.
-
----
-
 <p align="center" width="100%">
     <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
 </p>
@@ -280,28 +267,27 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 ### Prerequisites
 
 - Node.js (version 16 or higher recommended)
-- [pnpm](https://pnpm.io/) (v8+ recommended)
 
 ### Building WASM Artifacts
 
 1. **Install dependencies:**
    ```bash
-   pnpm install
+   npm install
    ```
 
 2. **Build WASM artifacts:**
    ```bash
-   pnpm run build
+   npm run wasm:build
    ```
 
 3. **Clean WASM build (if needed):**
    ```bash
-   pnpm run clean
+   npm run wasm:clean
    ```
 
 4. **Rebuild WASM artifacts from scratch:**
    ```bash
-   pnpm run clean && pnpm run build
+   npm run wasm:clean && npm run wasm:build
    ```
 
 ### Build Process Details
@@ -317,7 +303,7 @@ The WASM build process:
 ### Running Tests
 
 ```bash
-pnpm run test
+npm test
 ```
 
 ### Test Requirements
@@ -325,7 +311,7 @@ pnpm run test
 - WASM artifacts must be built before running tests
 - If tests fail with "fetch failed" errors, rebuild WASM artifacts:
   ```bash
-  pnpm run clean && pnpm run build && pnpm run test
+  npm run wasm:clean && npm run wasm:build && npm test
   ```
 
 
@@ -353,7 +339,7 @@ Our latest is built with `17-latest` branch from libpg_query
 
 **"fetch failed" errors during tests:**
 - This indicates stale or missing WASM artifacts
-- Solution: `pnpm run clean && pnpm run build`
+- Solution: `npm run wasm:clean && npm run wasm:build`
 
 **"WASM module not initialized" errors:**
 - Ensure you call an async method first to initialize the WASM module

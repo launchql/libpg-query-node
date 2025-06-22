@@ -1,0 +1,56 @@
+{
+  "name": "libpg-query",
+  "version": "17.3.3",
+  "description": "The real PostgreSQL query parser",
+  "homepage": "https://github.com/launchql/libpg-query-node",
+  "main": "./wasm/index.cjs",
+  "module": "./wasm/index.js",
+  "typings": "./wasm/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "wasm/*",
+    "proto.js"
+  ],
+  "scripts": {
+    "clean": "pnpm wasm:clean && rimraf cjs esm",
+    "build:js": "node scripts/build.js",
+    "build": "pnpm clean; pnpm wasm:build; pnpm build:js",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:build": "pnpm wasm:make build",
+    "wasm:rebuild": "pnpm wasm:make rebuild",
+    "wasm:clean": "pnpm wasm:make clean",
+    "wasm:clean-cache": "pnpm wasm:make clean-cache",
+    "test": "mocha test/*.test.js --timeout 5000",
+    "yamlize": "node ./scripts/yamlize.js",
+    "protogen": "node ./scripts/protogen.js"
+  },
+  "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
+  "license": "LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/launchql/libpg-query-node.git"
+  },
+  "devDependencies": {
+    "@launchql/proto-cli": "1.25.0",
+    "@yamlize/cli": "^0.8.0",
+    "chai": "^3.5.0",
+    "mocha": "^11.7.0",
+    "rimraf": "5.0.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@pgsql/types": "^17.0.0",
+    "@launchql/protobufjs": "7.2.6"
+  },
+  "keywords": [
+    "sql",
+    "postgres",
+    "postgresql",
+    "pg",
+    "query",
+    "plpgsql",
+    "database"
+  ]
+}

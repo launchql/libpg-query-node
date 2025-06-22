@@ -1,4 +1,0 @@
-name: Configure Git 🛠
-run: |
-  git config user.name "${{yamlize.git.USER_NAME}}"
-  git config user.email "${{yamlize.git.USER_EMAIL}}"
