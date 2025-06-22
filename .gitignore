@@ -1,14 +1,26 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Build artifacts
 build/
 libs/
-npm-debug.log
-libpg_query/**/*.proto
-wasm/libpg-query.js
-*.wasm
-.cache
 esm/
 cjs/
-.claude
+
+# WASM build outputs
 wasm/
-versions/17/wasm/
-.pnpm-store/
+versions/*/wasm/
+*.wasm
+wasm/libpg-query.js
+
+# Build cache and temporary files
+.cache
+
+# Generated files
+libpg_query/**/*.proto
+
+# Development tools and logs
+npm-debug.log
+.claude
+.openhands/
