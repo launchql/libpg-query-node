@@ -2,16 +2,42 @@
 
 ## Types Packages
 
-### Quick Publish
-```bash
-# Build and prepare a specific version
-pnpm --filter "@libpg-query/types17" run build
-pnpm --filter "@libpg-query/types17" run prepare:types
-cd types/17/dist && npm publish
+Quick Publish
 
-# Or build all types
-pnpm run build:types
-pnpm run prepare:types
+```bash
+# Set the version (e.g. 17, 16, 15, etc.)
+VERSION=17
+
+# Build and prepare a specific version
+pnpm --filter "@libpg-query/types${VERSION}" version patch
+git add . && git commit -m "release: bump @libpg-query/types${VERSION} version"
+pnpm --filter "@libpg-query/types${VERSION}" run build
+pnpm --filter "@libpg-query/types${VERSION}" run prepare:types
+pnpm --filter "@libpg-query/types${VERSION}" publish --tag pg${VERSION}
+```
+
+Or build all types
+
+```bash
+# Set the version (e.g. 17, 16, 15, etc.)
+VERSION=17
+
+cd types/${VERSION}
+pnpm version patch
+git add . && git commit -m "release: bump @libpg-query/types${VERSION} version"
+pnpm build
+pnpm prepare:types
+pnpm publish --tag pg${VERSION}
+```
+
+Promote to latest (optional)
+
+```bash
+# Set the version (e.g. 17, 16, 15, etc.)
+VERSION=17
+
+# Promote pg${VERSION} tag to latest
+npm dist-tag add @pgsql/types@pg${VERSION} latest
 ```
 
 ### What it does
@@ -19,23 +45,20 @@ pnpm run prepare:types
 - Transforms `@libpg-query/types16` → `@pgsql/types` with tag `pg16`
 - etc.
 
-### Install published packages
-```bash
-npm install @pgsql/types@pg17  # PostgreSQL 17 types
-npm install @pgsql/types@pg16  # PostgreSQL 16 types
-```
-
 ## Version Packages
 
 ### Quick Publish
 ```bash
+# Set the version (e.g. 17, 16, 15, etc.)
+VERSION=17
+
 # Build and publish a specific version
-cd versions/17
+cd versions/${VERSION}
 pnpm build
 pnpm run publish:pkg
 
 # Or manually with custom tag
-cd versions/17
+cd versions/${VERSION}
 pnpm build
 TAG=beta node ../../scripts/publish-versions.js
 ```
