@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'yarn'
+        working-directory: libpg-query
 
       - name: Install Dependencies 🧶
         run: yarn install
@@ -53,6 +54,7 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'yarn'
+        working-directory: libpg-query
 
       - name: Install Dependencies 🧶
         run: yarn install

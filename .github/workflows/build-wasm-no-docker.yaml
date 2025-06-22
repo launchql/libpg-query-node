@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: 20.x
           cache: yarn
+        working-directory: libpg-query
       - name: Install and Build 🚀
         run: |
           yarn
