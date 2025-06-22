@@ -23,14 +23,19 @@ This is the official PostgreSQL parser, compiled to WebAssembly (WASM) for seaml
 
 Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this library delivers full fidelity with the Postgres C codebase — no rewrites, no shortcuts.
 
-### Features
+## Features
 
 * 🔧 **Powered by PostgreSQL** – Uses the official Postgres C parser compiled to WebAssembly
 * 🖥️ **Cross-Platform** – Runs smoothly on macOS, Linux, and Windows
 * 🌐 **Node.js & Browser Support** – Consistent behavior in any JS environment
 * 📦 **No Native Builds Required** – No compilation, no system-specific dependencies
 * 🧠 **Spec-Accurate Parsing** – Produces faithful, standards-compliant ASTs
-* 🚀 **Production-Grade** – Powers tools like [`pgsql-parser`](https://github.com/pyramation/pgsql-parser)
+* 🚀 **Production-Grade** – Millions of downloads powering 1000s of projects
+
+## 🚀 For Round-trip Codegen
+
+> 🎯 **Want to parse + deparse (full round trip)?**  
+> We highly recommend using [`pgsql-parser`](https://github.com/launchql/pgsql-parser) which leverages a pure TypeScript deparser that has been battle-tested against 21,000+ SQL statements and is built on top of libpg-query.
 
 ## Installation
 
@@ -47,105 +52,51 @@ const result = await parse('SELECT * FROM users WHERE active = true');
 // {"version":170004,"stmts":[{"stmt":{"SelectStmt":{"targetList":[{"ResTarget" ... "op":"SETOP_NONE"}}}]}
 ```
 
-## Versions
+## 📦 Packages
 
-Our latest is built with `17-latest` branch from libpg_query
+This repository contains multiple packages to support different PostgreSQL versions and use cases:
 
-| PG Major Version | libpg_query | npm dist-tag 
-|--------------------------|-------------|---------|
-| 17                       | 17-6.1.0    | [`pg17`](https://www.npmjs.com/package/libpg-query/v/latest)
-| 16                       | 16-5.2.0    | [`pg16`](https://www.npmjs.com/package/libpg-query/v/pg16)
-| 15                       | 15-4.2.4    | [`pg15`](https://www.npmjs.com/package/libpg-query/v/pg15)
-| 14                       | 14-3.0.0    | [`pg14`](https://www.npmjs.com/package/libpg-query/v/pg14)
-| 13                       | 13-2.2.0    | [`pg13`](https://www.npmjs.com/package/libpg-query/v/pg13)
+### Available Packages & Versions
 
-## Usage
+| Package | Description | PostgreSQL Versions | npm Package |
+|---------|-------------|---------------------|-------------|
+| **[libpg-query](https://github.com/launchql/libpg-query-node/tree/main/versions)** | Lightweight parser (parse only) | 13, 14, 15, 16, 17 | [`libpg-query`](https://www.npmjs.com/package/libpg-query) |
+| **[@pgsql/types](https://github.com/launchql/libpg-query-node/tree/main/types)** | TypeScript type definitions | 13, 14, 15, 16, 17 | [`@pgsql/types`](https://www.npmjs.com/package/@pgsql/types) |
+| **[@pgsql/enums](https://github.com/launchql/libpg-query-node/tree/main/enums)** | TypeScript enum definitions | 13, 14, 15, 16, 17 | [`@pgsql/enums`](https://www.npmjs.com/package/@pgsql/enums) |
+| **[@libpg-query/parser](https://github.com/launchql/libpg-query-node/tree/main/full)** | Full parser with all features | 17 only | [`@libpg-query/parser`](https://www.npmjs.com/package/@libpg-query/parser) |
 
-### `parse(query: string): Promise<ParseResult>`
+### Version Tags
 
-Parses the SQL and returns a Promise for the parse tree. May reject with a parse error.
+Each versioned package uses npm dist-tags for PostgreSQL version selection:
 
-```typescript
-import { parse } from 'libpg-query';
+```bash
+# Install specific PostgreSQL version
+npm install libpg-query@pg17      # PostgreSQL 17 (latest)
+npm install libpg-query@pg16      # PostgreSQL 16
+npm install @pgsql/types@pg17     # Types for PostgreSQL 17
+npm install @pgsql/enums@pg15     # Enums for PostgreSQL 15
 
-const result = await parse('SELECT * FROM users WHERE active = true');
-// Returns: ParseResult - parsed query object
+# Install latest (defaults to pg17)
+npm install libpg-query
+npm install @pgsql/types
+npm install @pgsql/enums
 ```
 
-### `parseSync(query: string): ParseResult`
+### Which Package Should I Use?
 
-Synchronous version that returns the parse tree directly. May throw a parse error.
+- **Just need to parse SQL?** → Use `libpg-query` (lightweight, all PG versions)
+- **Need TypeScript types?** → Add `@pgsql/types` and/or `@pgsql/enums`
+- **Need fingerprint, normalize, or deparse?** → Use `@libpg-query/parser` (PG 17 only)
 
-```typescript
-import { parseSync } from 'libpg-query';
 
-const result = parseSync('SELECT * FROM users WHERE active = true');
-// Returns: ParseResult - parsed query object
-```
+## API Documentation
 
-⚠ **Note:** If you need additional functionality like `fingerprint`, `scan`, `deparse`, or `normalize`, check out the full package (`@libpg-query/parser`) in the [./full](https://github.com/launchql/libpg-query-node/tree/main/full) folder of the repo.
+For detailed API documentation and usage examples, see the package-specific READMEs:
 
-### Initialization
-
-The library provides both async and sync methods. Async methods handle initialization automatically, while sync methods require explicit initialization.
-
-#### Async Methods (Recommended)
-
-Async methods handle initialization automatically and are always safe to use:
-
-```typescript
-import { parse } from 'libpg-query';
-
-// These handle initialization automatically
-const result = await parse('SELECT * FROM users');
-```
-
-#### Sync Methods
-
-Sync methods require explicit initialization using `loadModule()`:
-
-```typescript
-import { loadModule, parseSync } from 'libpg-query';
-
-// Initialize first
-await loadModule();
-
-// Now safe to use sync methods
-const result = parseSync('SELECT * FROM users');
-```
-
-### `loadModule(): Promise<void>`
-
-Explicitly initializes the WASM module. Required before using any sync methods.
-
-```typescript
-import { loadModule, parseSync } from 'libpg-query';
-
-// Initialize before using sync methods
-await loadModule();
-const result = parseSync('SELECT * FROM users');
-```
-
-Note: We recommend using async methods as they handle initialization automatically. Use sync methods only when necessary, and always call `loadModule()` first.
-
-### Type Definitions
-
-```typescript
-interface ParseResult {
-  version: number;
-  stmts: Statement[];
-}
-
-interface Statement {
-  stmt_type: string;
-  stmt_len: number;
-  stmt_location: number;
-  query: string;
-}
-
-```
-
-**Note:** The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as PostgreSQL expects).
+- **libpg-query** - [Parser API Documentation](https://github.com/launchql/libpg-query-node/tree/main/versions/17)
+- **@pgsql/types** - [Types Documentation](https://github.com/launchql/libpg-query-node/tree/main/types/17)
+- **@pgsql/enums** - [Enums Documentation](https://github.com/launchql/libpg-query-node/tree/main/enums/17)
+- **@libpg-query/parser** - [Full Parser Documentation](https://github.com/launchql/libpg-query-node/tree/main/full)
 
 ## Build Instructions
 
