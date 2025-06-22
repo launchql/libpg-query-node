@@ -34,6 +34,19 @@ importers:
         specifier: ^5.3.3
         version: 5.8.3
 
+  versions/16:
+    dependencies:
+      '@pgsql/types':
+        specifier: ^17.0.0
+        version: 17.4.2
+    devDependencies:
+      rimraf:
+        specifier: 5.0.0
+        version: 5.0.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.8.3
+
   versions/17:
     dependencies:
       '@pgsql/types':
