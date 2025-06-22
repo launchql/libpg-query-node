@@ -47,26 +47,26 @@ importers:
   versions/13:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.4.2
-        version: 17.4.2
+        specifier: ^13.10.0
+        version: 13.10.0
 
   versions/14:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.4.2
-        version: 17.4.2
+        specifier: ^14.0.0
+        version: 14.0.0
 
   versions/15:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.4.2
-        version: 17.4.2
+        specifier: ^15.0.2
+        version: 15.0.2
 
   versions/16:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.4.2
-        version: 17.4.2
+        specifier: ^16.0.0
+        version: 16.0.0
 
   versions/17:
     dependencies:
@@ -290,6 +290,22 @@ packages:
       '@protobufjs/utf8': 1.1.0
       '@types/node': 20.19.1
       long: 5.3.2
+
+  /@pgsql/types@13.10.0:
+    resolution: {integrity: sha512-W2xBQnbaBzGFFDhxdATV+PHq5HET8HTp8Yu7ZdR3gYSLJOU35GjAUE/WQ+ll8pC1m1j+zW11L97S5B1l5eLlbQ==}
+    dev: false
+
+  /@pgsql/types@14.0.0:
+    resolution: {integrity: sha512-QbqqGhlinfZKrJudTK2LgbxvMzqjtCZIEHhTNoqySwIlV3EVJHpNv5edrcxsMB61QWP8vRusPpcpFq90LT7Gqg==}
+    dev: false
+
+  /@pgsql/types@15.0.2:
+    resolution: {integrity: sha512-K3gtnbqbSUuUVmPm143qx5Gy2EmKuooshV95yMD48EUQ1256sgZBriEfY61OWJnlzdREdqHTIOxQqpZAb7XdZg==}
+    dev: false
+
+  /@pgsql/types@16.0.0:
+    resolution: {integrity: sha512-5y6LsSqrsiZApustJl5a+5Vh2glyhdUVgRJfG+f7AosMvohLG/yptBZg234/rKXsOdFJBXwwUdhv6ynbdZuMHA==}
+    dev: false
 
   /@pgsql/types@17.4.2:
     resolution: {integrity: sha512-8vD/R/bDpeWjmmofYTWuzW5rw3OjKst4d//zJllDNBW/JkRrsNlCzSUUCIrb6S5GBaU5XPGUggyXRjQYwlnftw==}
