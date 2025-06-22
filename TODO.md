@@ -1,7 +1,7 @@
 TODO
 
 - [ ] update the @pgsql/types for each
-- [ ] publish setup with name proxy
+- [x] publish setup with name proxy
 
 ### Workaround Ideas for Your `dist-tag` Use Case:
 

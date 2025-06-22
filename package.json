@@ -13,9 +13,12 @@
     "build:all": "pnpm -r build",
     "test:all": "pnpm -r test",
     "clean:all": "pnpm -r clean",
-    "analyze:sizes": "node scripts/analyze-sizes.js"
+    "analyze:sizes": "node scripts/analyze-sizes.js",
+    "publish:dry-run": "node scripts/publish-versions.js --dry-run",
+    "publish:versions": "node scripts/publish-versions.js",
+    "publish:specific": "node scripts/publish-versions.js --versions"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"
   }
-} 
+}  
