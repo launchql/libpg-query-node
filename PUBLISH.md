@@ -2,29 +2,13 @@
 
 ## Types Packages
 
-Quick Publish
-
-```bash
-# Set the version (e.g. 17, 16, 15, etc.)
-VERSION=17
-
-# Build and prepare a specific version
-pnpm --filter "@libpg-query/types${VERSION}" version patch
-git add . && git commit -m "release: bump @libpg-query/types${VERSION} version"
-pnpm --filter "@libpg-query/types${VERSION}" run build
-pnpm --filter "@libpg-query/types${VERSION}" run prepare:types
-pnpm --filter "@libpg-query/types${VERSION}" publish --tag pg${VERSION}
-```
-
-Or build all types
-
 ```bash
 # Set the version (e.g. 17, 16, 15, etc.)
 VERSION=17
 
 cd types/${VERSION}
 pnpm version patch
-git add . && git commit -m "release: bump @libpg-query/types${VERSION} version"
+git add . && git commit -m "release: bump @pgsql/types${VERSION} version"
 pnpm build
 pnpm prepare:types
 pnpm publish --tag pg${VERSION}
