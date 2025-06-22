@@ -34,12 +34,10 @@
   },
   "devDependencies": {
     "@launchql/proto-cli": "1.25.0",
-    "@yamlize/cli": "^0.8.0",
-    "rimraf": "5.0.0",
-    "typescript": "^5.3.3"
+    "@yamlize/cli": "^0.8.0"
   },
   "dependencies": {
-    "@pgsql/types": "^17.0.0",
+    "@pgsql/types": "^17.4.2",
     "@launchql/protobufjs": "7.2.6"
   },
   "keywords": [

@@ -27,8 +27,8 @@ importers:
         specifier: 7.2.6
         version: 7.2.6
       '@pgsql/types':
-        specifier: ^17.0.0
-        version: link:../types/17/dist
+        specifier: ^17.4.2
+        version: 17.4.2
     devDependencies:
       '@launchql/proto-cli':
         specifier: 1.25.0
@@ -36,12 +36,6 @@ importers:
       '@yamlize/cli':
         specifier: ^0.8.0
         version: 0.8.0
-      rimraf:
-        specifier: 5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.8.3
 
   types/17:
     devDependencies:
@@ -53,67 +47,32 @@ importers:
   versions/13:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.0.0
-        version: link:../../types/17/dist
-    devDependencies:
-      rimraf:
-        specifier: 5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.8.3
+        specifier: ^17.4.2
+        version: 17.4.2
 
   versions/14:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.0.0
-        version: link:../../types/17/dist
-    devDependencies:
-      rimraf:
-        specifier: 5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.8.3
+        specifier: ^17.4.2
+        version: 17.4.2
 
   versions/15:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.0.0
-        version: link:../../types/17/dist
-    devDependencies:
-      rimraf:
-        specifier: 5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.8.3
+        specifier: ^17.4.2
+        version: 17.4.2
 
   versions/16:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.0.0
-        version: link:../../types/17/dist
-    devDependencies:
-      rimraf:
-        specifier: 5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.8.3
+        specifier: ^17.4.2
+        version: 17.4.2
 
   versions/17:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.0.0
-        version: link:../../types/17/dist
-    devDependencies:
-      rimraf:
-        specifier: 5.0.0
-        version: 5.0.0
-      typescript:
-        specifier: ^5.3.3
-        version: 5.8.3
+        specifier: ^17.4.2
+        version: 17.4.2
 
 packages:
 
@@ -331,6 +290,10 @@ packages:
       '@protobufjs/utf8': 1.1.0
       '@types/node': 20.19.1
       long: 5.3.2
+
+  /@pgsql/types@17.4.2:
+    resolution: {integrity: sha512-8vD/R/bDpeWjmmofYTWuzW5rw3OjKst4d//zJllDNBW/JkRrsNlCzSUUCIrb6S5GBaU5XPGUggyXRjQYwlnftw==}
+    dev: false
 
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}

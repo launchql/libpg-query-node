@@ -37,11 +37,9 @@
     "url": "git://github.com/launchql/libpg-query-node.git"
   },
   "devDependencies": {
-    "rimraf": "5.0.0",
-    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@pgsql/types": "^17.0.0"
+    "@pgsql/types": "^17.4.2"
   },
   "keywords": [
     "sql",
