@@ -12,7 +12,8 @@
   "x-publish": {
     "publishName": "libpg-query",
     "pgVersion": "16",
-    "distTag": "pg16"
+    "distTag": "pg16",
+    "libpgQueryTag": "16-5.2.0"
   },
   "files": [
     "wasm/*"

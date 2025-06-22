@@ -12,7 +12,8 @@
   "x-publish": {
     "publishName": "libpg-query",
     "pgVersion": "13",
-    "distTag": "pg13"
+    "distTag": "pg13",
+    "libpgQueryTag": "13-2.2.0"
   },
   "files": [
     "wasm/*"

@@ -4,4 +4,5 @@ packages:
   - 'versions/16' 
   - 'versions/15' 
   - 'versions/14' 
-  - 'versions/13' 
+  - 'versions/13'
+  - 'types/17' 

@@ -10,9 +10,15 @@
     "build:all": "pnpm -r build",
     "test:all": "pnpm -r test",
     "clean:all": "pnpm -r clean",
-    "analyze:sizes": "node scripts/analyze-sizes.js"
+    "analyze:sizes": "node scripts/analyze-sizes.js",
+    "fetch:protos": "node scripts/fetch-protos.js"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3",
+    "rimraf": "^5.0.0",
+    "copyfiles": "^2.4.1",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
   }
 } 
