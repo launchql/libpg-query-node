@@ -15,26 +15,27 @@
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml"><img height="20" src="https://img.shields.io/badge/Linux-available-333333?logo=linux&logoColor=white" /></a>
 </p>
 
-The real PostgreSQL parser for Node.js, powered by **WebAssembly (WASM)** for true cross-platform compatibility.
+# The Real PostgreSQL Parser for JavaScript
 
-A WASM-based PostgreSQL query parser that provides the same functionality as the native PostgreSQL parser without requiring native compilation or platform-specific binaries. Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser).
+### Bring the power of PostgreSQL’s native parser to your JavaScript projects — no native builds, no platform headaches.
 
+This is the official PostgreSQL parser, compiled to WebAssembly (WASM) for seamless, cross-platform compatibility. Use it in Node.js or the browser, on Linux, Windows, or anywhere JavaScript runs.
 
-## Table of Contents
+Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this library delivers full fidelity with the Postgres C codebase — no rewrites, no shortcuts.
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Build Instructions](#build-instructions)
-4. [Testing](#testing)
-5. [Versions](#versions)
-6. [Related Projects](#related-projects)
-7. [Credit](#credit)
+### Features
 
+* 🔧 **Powered by PostgreSQL** – Uses the official Postgres C parser compiled to WebAssembly
+* 🖥️ **Cross-Platform** – Runs smoothly on macOS, Linux, and Windows
+* 🌐 **Node.js & Browser Support** – Consistent behavior in any JS environment
+* 📦 **No Native Builds Required** – No compilation, no system-specific dependencies
+* 🧠 **Spec-Accurate Parsing** – Produces faithful, standards-compliant ASTs
+* 🚀 **Production-Grade** – Powers tools like [`pgsql-parser`](https://github.com/pyramation/pgsql-parser)
 
 ## Installation
 
 ```sh
-npm install libpg-query@pg15
+npm install libpg-query
 ```
 
 ## Usage
@@ -61,6 +62,11 @@ const result = parseSync('SELECT * FROM users WHERE active = true');
 // Returns: ParseResult - parsed query object
 ```
 
+
+
+
+
+
 ### Initialization
 
 The library provides both async and sync methods. Async methods handle initialization automatically, while sync methods require explicit initialization.
@@ -70,12 +76,10 @@ The library provides both async and sync methods. Async methods handle initializ
 Async methods handle initialization automatically and are always safe to use:
 
 ```typescript
-import { parse, deparse, scan } from 'libpg-query';
+import { parse } from 'libpg-query';
 
 // These handle initialization automatically
 const result = await parse('SELECT * FROM users');
-const sql = await deparse(result);
-const tokens = await scan('SELECT * FROM users');
 ```
 
 #### Sync Methods
@@ -83,14 +87,13 @@ const tokens = await scan('SELECT * FROM users');
 Sync methods require explicit initialization using `loadModule()`:
 
 ```typescript
-import { loadModule, parseSync, scanSync } from 'libpg-query';
+import { loadModule, parseSync } from 'libpg-query';
 
 // Initialize first
 await loadModule();
 
 // Now safe to use sync methods
 const result = parseSync('SELECT * FROM users');
-const tokens = scanSync('SELECT * FROM users');
 ```
 
 ### `loadModule(): Promise<void>`
@@ -98,12 +101,11 @@ const tokens = scanSync('SELECT * FROM users');
 Explicitly initializes the WASM module. Required before using any sync methods.
 
 ```typescript
-import { loadModule, parseSync, scanSync } from 'libpg-query';
+import { loadModule, parseSync } from 'libpg-query';
 
 // Initialize before using sync methods
 await loadModule();
 const result = parseSync('SELECT * FROM users');
-const tokens = scanSync('SELECT * FROM users');
 ```
 
 Note: We recommend using async methods as they handle initialization automatically. Use sync methods only when necessary, and always call `loadModule()` first.
@@ -148,27 +150,28 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 ### Prerequisites
 
 - Node.js (version 16 or higher recommended)
+- [pnpm](https://pnpm.io/) (v8+ recommended)
 
 ### Building WASM Artifacts
 
 1. **Install dependencies:**
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. **Build WASM artifacts:**
    ```bash
-   npm run wasm:build
+   pnpm run build
    ```
 
 3. **Clean WASM build (if needed):**
    ```bash
-   npm run wasm:clean
+   pnpm run clean
    ```
 
 4. **Rebuild WASM artifacts from scratch:**
    ```bash
-   npm run wasm:clean && npm run wasm:build
+   pnpm run clean && pnpm run build
    ```
 
 ### Build Process Details
@@ -184,7 +187,7 @@ The WASM build process:
 ### Running Tests
 
 ```bash
-npm test
+pnpm run test
 ```
 
 ### Test Requirements
@@ -192,7 +195,7 @@ npm test
 - WASM artifacts must be built before running tests
 - If tests fail with "fetch failed" errors, rebuild WASM artifacts:
   ```bash
-  npm run wasm:clean && npm run wasm:build && npm test
+  pnpm run clean && pnpm run build && pnpm run test
   ```
 
 
@@ -202,13 +205,13 @@ npm test
 Our latest is built with `17-latest` branch from libpg_query
 
 
-| PG Major Version | libpg_query | Branch                                                                                         | npm 
-|--------------------------|-------------|------------------------------------------------------------------------------------------------|---------|
-| 17                       | 17-latest   | [`17-latest`](https://github.com/launchql/libpg-query-node/tree/17-latest)                       | [`libpg-query@17.2.0`](https://www.npmjs.com/package/libpg-query/v/latest)
-| 16                       | 16-latest   | [`16-latest`](https://github.com/launchql/libpg-query-node/tree/16-latest)                       | [`libpg-query@16.2.0`](https://www.npmjs.com/package/libpg-query/v/16.2.0)
-| 15                       | 15-latest   | [`15-latest`](https://github.com/launchql/libpg-query-node/tree/15-latest)                       | [`libpg-query@15.1.0`](https://www.npmjs.com/package/libpg-query/v/15.1.0)
-| 14                       | 14-latest   | [`14-latest`](https://github.com/launchql/libpg-query-node/tree/14-latest)                       | [`libpg-query@14.0.0`](https://www.npmjs.com/package/libpg-query/v/14.0.0)
-| 13                       | 13-latest   | [`13-latest`](https://github.com/launchql/libpg-query-node/tree/13-latest)                       | [`libpg-query@13.3.1`](https://www.npmjs.com/package/libpg-query/v/13.3.1)
+| PG Major Version | libpg_query | npm dist-tag 
+|--------------------------|-------------|---------|
+| 17                       | 17-6.1.0    | [`pg17`](https://www.npmjs.com/package/libpg-query/v/latest)
+| 16                       | 16-5.2.0    | [`pg16`](https://www.npmjs.com/package/libpg-query/v/pg16)
+| 15                       | 15-4.2.4    | [`pg15`](https://www.npmjs.com/package/libpg-query/v/pg15)
+| 14                       | 14-3.0.0    | [`pg14`](https://www.npmjs.com/package/libpg-query/v/pg14)
+| 13                       | 13-2.2.0    | [`pg13`](https://www.npmjs.com/package/libpg-query/v/pg13)
 | 12                       | (n/a)       |                                                                                                |
 | 11                       | (n/a)       |                                                                                                |
 | 10                       | 10-latest   |                        | `@1.3.1` ([tree](https://github.com/pyramation/pgsql-parser/tree/39b7b1adc8914253226e286a48105785219a81ca))      |
@@ -220,7 +223,7 @@ Our latest is built with `17-latest` branch from libpg_query
 
 **"fetch failed" errors during tests:**
 - This indicates stale or missing WASM artifacts
-- Solution: `npm run wasm:clean && npm run wasm:build`
+- Solution: `pnpm run clean && pnpm run build`
 
 **"WASM module not initialized" errors:**
 - Ensure you call an async method first to initialize the WASM module
@@ -247,10 +250,25 @@ The build process generates these files:
 
 ## Credit
 
-This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_query). This wraps the static library output and links it into a node module for use in js.
+* This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_query). This wraps the static library output and links it into a node module for use in js.
 
-All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
+* All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
 
-Additional thanks for the original Node.js integration work by [Ethan Resnick](https://github.com/ethanresnick).
+* Additional thanks for the original Node.js integration work by [Ethan Resnick](https://github.com/ethanresnick).
 
-Original [Code](https://github.com/zhm/node-pg-query-native) and [License](https://github.com/zhm/node-pg-query-native/blob/master/LICENSE.md)
+* Original [Code](https://github.com/zhm/node-pg-query-native) and [License](https://github.com/zhm/node-pg-query-native/blob/master/LICENSE.md)
+
+## Related
+
+* [pgsql-parser](https://github.com/launchql/pgsql-parser): The real PostgreSQL parser for Node.js, providing symmetric parsing and deparsing of SQL statements with actual PostgreSQL parser integration.
+* [pgsql-deparser](https://github.com/launchql/pgsql-parser/tree/main/packages/deparser): A streamlined tool designed for converting PostgreSQL ASTs back into SQL queries, focusing solely on deparser functionality to complement `pgsql-parser`.
+* [@pgsql/types](https://github.com/launchql/pgsql-parser/tree/main/packages/types): Offers TypeScript type definitions for PostgreSQL AST nodes, facilitating type-safe construction, analysis, and manipulation of ASTs.
+* [@pgsql/utils](https://github.com/launchql/pgsql-parser/tree/main/packages/utils): A comprehensive utility library for PostgreSQL, offering type-safe AST node creation and enum value conversions, simplifying the construction and manipulation of PostgreSQL ASTs.
+* [pg-proto-parser](https://github.com/launchql/pg-proto-parser): A TypeScript tool that parses PostgreSQL Protocol Buffers definitions to generate TypeScript interfaces, utility functions, and JSON mappings for enums.
+* [libpg-query](https://github.com/launchql/libpg-query-node): The real PostgreSQL parser exposed for Node.js, used primarily in `pgsql-parser` for parsing and deparsing SQL queries.
+
+## Disclaimer
+
+AS DESCRIBED IN THE LICENSES, THE SOFTWARE IS PROVIDED “AS IS”, AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND.
+
+No developer or entity involved in creating Software will be liable for any claims or damages whatsoever associated with your use, inability to use, or your interaction with other users of the Software code or Software CLI, including any direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits, cryptocurrencies, tokens, or anything else of value.
