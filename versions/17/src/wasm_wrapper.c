@@ -42,3 +42,8 @@ char* wasm_parse_query(const char* input) {
     pg_query_free_parse_result(result);
     return parse_tree;
 }
+
+EMSCRIPTEN_KEEPALIVE
+void wasm_free_string(char* str) {
+    free(str);
+}

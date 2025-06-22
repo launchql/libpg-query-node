@@ -9,5 +9,6 @@ wasm/libpg-query.js
 esm/
 cjs/
 .claude
+wasm/
 versions/17/wasm/
 .pnpm-store/

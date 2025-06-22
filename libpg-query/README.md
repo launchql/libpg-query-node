@@ -15,21 +15,22 @@
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml"><img height="20" src="https://img.shields.io/badge/Linux-available-333333?logo=linux&logoColor=white" /></a>
 </p>
 
-The real PostgreSQL parser for Node.js, powered by **WebAssembly (WASM)** for true cross-platform compatibility.
+# The Real PostgreSQL Parser for JavaScript
 
-A WASM-based PostgreSQL query parser that provides the same functionality as the native PostgreSQL parser without requiring native compilation or platform-specific binaries. Primarily used for the node.js parser and deparser [pgsql-parser](https://github.com/pyramation/pgsql-parser).
+### Bring the power of PostgreSQL’s native parser to your JavaScript projects — no native builds, no platform headaches.
 
+This is the official PostgreSQL parser, compiled to WebAssembly (WASM) for seamless, cross-platform compatibility. Use it in Node.js or the browser, on Linux, Windows, or anywhere JavaScript runs.
 
-## Table of Contents
+Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this library delivers full fidelity with the Postgres C codebase — no rewrites, no shortcuts.
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Build Instructions](#build-instructions)
-4. [Testing](#testing)
-5. [Versions](#versions)
-6. [Related Projects](#related-projects)
-7. [Credit](#credit)
+### Features
 
+* 🔧 **Powered by PostgreSQL** – Uses the official Postgres C parser compiled to WebAssembly
+* 🖥️ **Cross-Platform** – Runs smoothly on macOS, Linux, and Windows
+* 🌐 **Node.js & Browser Support** – Consistent behavior in any JS environment
+* 📦 **No Native Builds Required** – No compilation, no system-specific dependencies
+* 🧠 **Spec-Accurate Parsing** – Produces faithful, standards-compliant ASTs
+* 🚀 **Production-Grade** – Powers tools like [`pgsql-parser`](https://github.com/pyramation/pgsql-parser)
 
 ## Installation
 
@@ -267,27 +268,28 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 ### Prerequisites
 
 - Node.js (version 16 or higher recommended)
+- [pnpm](https://pnpm.io/) (v8+ recommended)
 
 ### Building WASM Artifacts
 
 1. **Install dependencies:**
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. **Build WASM artifacts:**
    ```bash
-   npm run wasm:build
+   pnpm run build
    ```
 
 3. **Clean WASM build (if needed):**
    ```bash
-   npm run wasm:clean
+   pnpm run clean
    ```
 
 4. **Rebuild WASM artifacts from scratch:**
    ```bash
-   npm run wasm:clean && npm run wasm:build
+   pnpm run clean && pnpm run build
    ```
 
 ### Build Process Details
@@ -303,7 +305,7 @@ The WASM build process:
 ### Running Tests
 
 ```bash
-npm test
+pnpm run test
 ```
 
 ### Test Requirements
@@ -311,7 +313,7 @@ npm test
 - WASM artifacts must be built before running tests
 - If tests fail with "fetch failed" errors, rebuild WASM artifacts:
   ```bash
-  npm run wasm:clean && npm run wasm:build && npm test
+  pnpm run clean && pnpm run build && pnpm run test
   ```
 
 
@@ -339,7 +341,7 @@ Our latest is built with `17-latest` branch from libpg_query
 
 **"fetch failed" errors during tests:**
 - This indicates stale or missing WASM artifacts
-- Solution: `npm run wasm:clean && npm run wasm:build`
+- Solution: `pnpm run clean && pnpm run build`
 
 **"WASM module not initialized" errors:**
 - Ensure you call an async method first to initialize the WASM module
