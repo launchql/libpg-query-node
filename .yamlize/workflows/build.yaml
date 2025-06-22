@@ -1,8 +1,0 @@
-name: Build Wasm 🛠
-
-on:
-  workflow_dispatch:
-
-jobs:
-  build-wasm: 
-    import-yaml: yaml/build-wasm.yaml
