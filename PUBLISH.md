@@ -1,6 +1,34 @@
 # Publishing Guide
 
-## Types Packages
+## Automated Publishing (Recommended)
+
+### Types Packages
+```bash
+pnpm run publish:types
+```
+
+This interactive script will:
+- Check for uncommitted changes (will error if any exist)
+- Let you select which versions to publish (or all)
+- Ask for version bump type (patch or minor only)
+- Build, prepare, and publish each selected version
+- Optionally promote pg17 to latest
+
+### Enums Packages
+```bash
+pnpm run publish:enums
+```
+
+This interactive script will:
+- Check for uncommitted changes (will error if any exist)
+- Let you select which versions to publish (or all)
+- Ask for version bump type (patch or minor only)
+- Build, prepare, and publish each selected version
+- Optionally promote pg17 to latest
+
+## Manual Publishing
+
+### Types Packages
 
 ```bash
 # Set the version (e.g. 17, 16, 15, etc.)
@@ -27,6 +55,35 @@ npm dist-tag add @pgsql/types@pg${VERSION} latest
 ### What it does
 - Transforms `@libpg-query/types17` → `@pgsql/types` with tag `pg17`
 - Transforms `@libpg-query/types16` → `@pgsql/types` with tag `pg16`
+- etc.
+
+### Enums Packages
+
+```bash
+# Set the version (e.g. 17, 16, 15, etc.)
+VERSION=17
+
+cd enums/${VERSION}
+pnpm version patch
+git add . && git commit -m "release: bump @pgsql/enums${VERSION} version"
+pnpm build
+pnpm prepare:enums
+pnpm publish --tag pg${VERSION}
+```
+
+Promote to latest (optional)
+
+```bash
+# Set the version (e.g. 17, 16, 15, etc.)
+VERSION=17
+
+# Promote pg${VERSION} tag to latest
+npm dist-tag add @pgsql/enums@pg${VERSION} latest
+```
+
+### What it does
+- Transforms `@libpg-query/enums17` → `@pgsql/enums` with tag `pg17`
+- Transforms `@libpg-query/enums16` → `@pgsql/enums` with tag `pg16`
 - etc.
 
 ## Version Packages

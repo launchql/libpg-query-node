@@ -15,7 +15,9 @@
     "build:types": "node scripts/build-types.js",
     "prepare:types": "node scripts/prepare-types.js",
     "build:enums": "node scripts/build-enums.js",
-    "prepare:enums": "node scripts/prepare-enums.js"
+    "prepare:enums": "node scripts/prepare-enums.js",
+    "publish:types": "node scripts/publish-types.js",
+    "publish:enums": "node scripts/publish-enums.js"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
