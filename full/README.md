@@ -30,7 +30,12 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 * 🌐 **Node.js & Browser Support** – Consistent behavior in any JS environment
 * 📦 **No Native Builds Required** – No compilation, no system-specific dependencies
 * 🧠 **Spec-Accurate Parsing** – Produces faithful, standards-compliant ASTs
-* 🚀 **Production-Grade** – Powers tools like [`pgsql-parser`](https://github.com/pyramation/pgsql-parser)
+* 🚀 **Production-Grade** – Millions of downloads powering 1000s of projects
+
+## 🚀 For Round-trip Codegen
+
+> 🎯 **Want to parse + deparse (full round trip)?**  
+> We highly recommend using [`pgsql-parser`](https://github.com/launchql/pgsql-parser) which leverages a pure TypeScript deparser that has been battle-tested against 21,000+ SQL statements and is built on top of libpg-query.
 
 ## Installation
 
