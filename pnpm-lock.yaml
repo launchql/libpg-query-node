@@ -68,8 +68,8 @@ importers:
         specifier: 7.2.6
         version: 7.2.6
       '@pgsql/types':
-        specifier: ^17.4.2
-        version: 17.5.2
+        specifier: ^17.6.0
+        version: 17.6.0
     devDependencies:
       '@launchql/proto-cli':
         specifier: 1.25.0
@@ -116,32 +116,32 @@ importers:
   versions/13:
     dependencies:
       '@pgsql/types':
-        specifier: ^13.10.0
-        version: 13.10.0
+        specifier: ^13.11.0
+        version: 13.11.0
 
   versions/14:
     dependencies:
       '@pgsql/types':
-        specifier: ^14.0.0
-        version: 14.0.0
+        specifier: ^14.1.0
+        version: 14.1.0
 
   versions/15:
     dependencies:
       '@pgsql/types':
-        specifier: ^15.0.2
-        version: 15.0.2
+        specifier: ^15.1.0
+        version: 15.1.0
 
   versions/16:
     dependencies:
       '@pgsql/types':
-        specifier: ^16.0.0
-        version: 16.0.0
+        specifier: ^16.1.0
+        version: 16.1.0
 
   versions/17:
     dependencies:
       '@pgsql/types':
-        specifier: ^17.4.2
-        version: 17.5.2
+        specifier: ^17.6.0
+        version: 17.6.0
 
 packages:
 
@@ -374,24 +374,24 @@ packages:
       '@types/node': 20.19.1
       long: 5.3.2
 
-  /@pgsql/types@13.10.0:
-    resolution: {integrity: sha512-W2xBQnbaBzGFFDhxdATV+PHq5HET8HTp8Yu7ZdR3gYSLJOU35GjAUE/WQ+ll8pC1m1j+zW11L97S5B1l5eLlbQ==}
+  /@pgsql/types@13.11.0:
+    resolution: {integrity: sha512-+pxiFm38fPBF3zgCF7sp8/kU6afr/I8d8FvtwiTRbNetwY2rJ8ASSgdwC4e4ejkz91Pq2Mwyrd+j8AfabYRFeg==}
     dev: false
 
-  /@pgsql/types@14.0.0:
-    resolution: {integrity: sha512-QbqqGhlinfZKrJudTK2LgbxvMzqjtCZIEHhTNoqySwIlV3EVJHpNv5edrcxsMB61QWP8vRusPpcpFq90LT7Gqg==}
+  /@pgsql/types@14.1.0:
+    resolution: {integrity: sha512-TiKzDVkTFxT5Twd604RH/6wmiBdIMyDXRlsZPevdtDpWXowPFm6GEv2TALB0QWq6Xa2GLtBtOCDtdMC2XANmyA==}
     dev: false
 
-  /@pgsql/types@15.0.2:
-    resolution: {integrity: sha512-K3gtnbqbSUuUVmPm143qx5Gy2EmKuooshV95yMD48EUQ1256sgZBriEfY61OWJnlzdREdqHTIOxQqpZAb7XdZg==}
+  /@pgsql/types@15.1.0:
+    resolution: {integrity: sha512-r2qxkInQSev6JyaIwtXVh2dQQ5C5yMR+oIv8ZE2qHRvBqku6eIqcPxldAjAXod2gQ42QGaiXF0rLw/Ijf8Cv5A==}
     dev: false
 
-  /@pgsql/types@16.0.0:
-    resolution: {integrity: sha512-5y6LsSqrsiZApustJl5a+5Vh2glyhdUVgRJfG+f7AosMvohLG/yptBZg234/rKXsOdFJBXwwUdhv6ynbdZuMHA==}
+  /@pgsql/types@16.1.0:
+    resolution: {integrity: sha512-ZsHVTfhxkhHKZYVH3qy24u5HsYYTYgC+d+80Iul+P1lpKAoS4yToMgrWKznhcqiK6iBeHNf8AcdQJXyLolce5g==}
     dev: false
 
-  /@pgsql/types@17.5.2:
-    resolution: {integrity: sha512-LAuKOfWhYNR31iE+MSZP215kOhkobCB5R8dm1+ZJTV0jqKJRIr7dCVdYeOJA2YL7gOmZmu55ELH/qiZTZqWLSg==}
+  /@pgsql/types@17.6.0:
+    resolution: {integrity: sha512-WGVIne1kFm3pIHiCkUWGbv7vlhxCRT+61UigsYejhmEsl4Iyf8d2CBnt9muhi571mfuwvtkeD0sxo5y8oj0ijQ==}
     dev: false
 
   /@pkgjs/parseargs@0.11.0:

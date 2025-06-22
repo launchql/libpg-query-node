@@ -37,7 +37,7 @@
     "@yamlize/cli": "^0.8.0"
   },
   "dependencies": {
-    "@pgsql/types": "^17.4.2",
+    "@pgsql/types": "^17.6.0",
     "@launchql/protobufjs": "7.2.6"
   },
   "keywords": [

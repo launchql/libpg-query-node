@@ -82,6 +82,41 @@ versionDirs.forEach(version => {
   updatedCount++;
 });
 
+// Also update the full package (which uses PostgreSQL 17)
+console.log('\n📦 Checking full package...');
+const fullPackageJsonPath = path.join(__dirname, '..', 'full', 'package.json');
+
+if (fs.existsSync(fullPackageJsonPath)) {
+  const fullPackageJson = JSON.parse(fs.readFileSync(fullPackageJsonPath, 'utf8'));
+  const targetTypeVersion = typeVersions['17']; // Full package uses PG 17
+  
+  if (targetTypeVersion) {
+    const currentTypeVersion = fullPackageJson.dependencies?.['@pgsql/types'];
+    const expectedTypeVersion = `^${targetTypeVersion}`;
+    
+    if (currentTypeVersion === expectedTypeVersion) {
+      console.log(`✅ Full package: @pgsql/types already up to date (${currentTypeVersion})`);
+    } else {
+      // Update the dependency
+      if (!fullPackageJson.dependencies) {
+        fullPackageJson.dependencies = {};
+      }
+      
+      fullPackageJson.dependencies['@pgsql/types'] = expectedTypeVersion;
+      
+      // Write back the updated package.json
+      fs.writeFileSync(
+        fullPackageJsonPath,
+        JSON.stringify(fullPackageJson, null, 2) + '\n',
+        'utf8'
+      );
+      
+      console.log(`📦 Full package: Updated @pgsql/types from ${currentTypeVersion || 'none'} to ${expectedTypeVersion}`);
+      updatedCount++;
+    }
+  }
+}
+
 console.log(`\n✨ Updated ${updatedCount} package(s)`);
 
 if (updatedCount > 0) {
