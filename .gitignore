@@ -9,3 +9,6 @@ wasm/libpg-query.js
 esm/
 cjs/
 .claude
+
+# pnpm
+.pnpm-store/

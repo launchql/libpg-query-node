@@ -1,5 +1,18 @@
 # libpg-query
 
+---
+
+## 🚨 Updates
+
+**2024-06: This project has migrated to a [pnpm workspace](https://pnpm.io/workspaces)!**
+
+- All development and CI now use pnpm for dependency management and scripts.
+- The main package is now located in the `libpq-query` subdirectory.
+- Please use `pnpm install`, `pnpm run build`, `pnpm run test`, and `pnpm run clean` from the root directory.
+- See below for updated instructions.
+
+---
+
 <p align="center" width="100%">
     <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
 </p>
@@ -267,27 +280,28 @@ This package uses a **WASM-only build system** for true cross-platform compatibi
 ### Prerequisites
 
 - Node.js (version 16 or higher recommended)
+- [pnpm](https://pnpm.io/) (v8+ recommended)
 
 ### Building WASM Artifacts
 
 1. **Install dependencies:**
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. **Build WASM artifacts:**
    ```bash
-   npm run wasm:build
+   pnpm run build
    ```
 
 3. **Clean WASM build (if needed):**
    ```bash
-   npm run wasm:clean
+   pnpm run clean
    ```
 
 4. **Rebuild WASM artifacts from scratch:**
    ```bash
-   npm run wasm:clean && npm run wasm:build
+   pnpm run clean && pnpm run build
    ```
 
 ### Build Process Details
@@ -303,7 +317,7 @@ The WASM build process:
 ### Running Tests
 
 ```bash
-npm test
+pnpm run test
 ```
 
 ### Test Requirements
@@ -311,7 +325,7 @@ npm test
 - WASM artifacts must be built before running tests
 - If tests fail with "fetch failed" errors, rebuild WASM artifacts:
   ```bash
-  npm run wasm:clean && npm run wasm:build && npm test
+  pnpm run clean && pnpm run build && pnpm run test
   ```
 
 
@@ -339,7 +353,7 @@ Our latest is built with `17-latest` branch from libpg_query
 
 **"fetch failed" errors during tests:**
 - This indicates stale or missing WASM artifacts
-- Solution: `npm run wasm:clean && npm run wasm:build`
+- Solution: `pnpm run clean && pnpm run build`
 
 **"WASM module not initialized" errors:**
 - Ensure you call an async method first to initialize the WASM module
