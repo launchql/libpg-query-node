@@ -1,4 +1,4 @@
-name: Build Wasm 🛠
+name: Build Wasm No Docker 🛠
 'on':
   workflow_dispatch: null
 jobs:
