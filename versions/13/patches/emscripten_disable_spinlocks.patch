@@ -1,14 +1,20 @@
 --- a/Makefile
 +++ b/Makefile
-@@ -36,6 +36,11 @@ OBJ_FILES := $(filter-out $(NOT_OBJ_FILES), $(SRC_FILES:.c=.o))
+@@ -36,6 +36,9 @@ OBJ_FILES := $(filter-out $(NOT_OBJ_FILES), $(SRC_FILES:.c=.o))
  override CFLAGS += -g -I. -I./vendor -I./src/postgres/include -Wall -Wno-unused-function -Wno-unused-value -Wno-unused-variable -fno-strict-aliasing -fwrapv -fPIC
  
  override PG_CONFIGURE_FLAGS += -q --without-readline --without-zlib
 +
-+# Disable spinlocks when building with Emscripten
-+ifdef EMSCRIPTEN
-+override PG_CONFIGURE_FLAGS += --disable-spinlocks
-+endif
++# Disable spinlocks and thread safety for WASM/Emscripten builds
++override PG_CONFIGURE_FLAGS += --disable-spinlocks --disable-thread-safety
  
  override TEST_CFLAGS += -I. -I./vendor -g
  override TEST_LDFLAGS += -pthread
+@@ -177,6 +180,6 @@ extract_source: $(PGDIR)
+ .cc.o:
+ 	@$(ECHO) compiling $(<)
+ 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
+ 
+-$(ARLIB): $(OBJ_FILES) Makefile
++$(ARLIB): extract_source $(OBJ_FILES) Makefile
+ 	@$(AR) $@ $(OBJ_FILES)
