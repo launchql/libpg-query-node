@@ -1,5 +1,5 @@
 {
-  "name": "@pgsql/parser",
+  "name": "@libpg-query/parser",
   "version": "17.5.0",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
