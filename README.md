@@ -38,6 +38,27 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 npm install libpg-query
 ```
 
+## Example
+
+```typescript
+import { parse } from 'libpg-query';
+
+const result = await parse('SELECT * FROM users WHERE active = true');
+// {"version":170004,"stmts":[{"stmt":{"SelectStmt":{"targetList":[{"ResTarget" ... "op":"SETOP_NONE"}}}]}
+```
+
+## Versions
+
+Our latest is built with `17-latest` branch from libpg_query
+
+| PG Major Version | libpg_query | npm dist-tag 
+|--------------------------|-------------|---------|
+| 17                       | 17-6.1.0    | [`pg17`](https://www.npmjs.com/package/libpg-query/v/latest)
+| 16                       | 16-5.2.0    | [`pg16`](https://www.npmjs.com/package/libpg-query/v/pg16)
+| 15                       | 15-4.2.4    | [`pg15`](https://www.npmjs.com/package/libpg-query/v/pg15)
+| 14                       | 14-3.0.0    | [`pg14`](https://www.npmjs.com/package/libpg-query/v/pg14)
+| 13                       | 13-2.2.0    | [`pg13`](https://www.npmjs.com/package/libpg-query/v/pg13)
+
 ## Usage
 
 ### `parse(query: string): Promise<ParseResult>`
@@ -62,124 +83,8 @@ const result = parseSync('SELECT * FROM users WHERE active = true');
 // Returns: ParseResult - parsed query object
 ```
 
-### `parsePlPgSQL(funcsSql: string): Promise<ParseResult>`
 
-Parses the contents of a PL/pgSQL function from a `CREATE FUNCTION` declaration. Returns a Promise for the parse tree.
-
-```typescript
-import { parsePlPgSQL } from 'libpg-query';
-
-const functionSql = `
-CREATE FUNCTION get_user_count() RETURNS integer AS $$
-BEGIN
-    RETURN (SELECT COUNT(*) FROM users);
-END;
-$$ LANGUAGE plpgsql;
-`;
-
-const result = await parsePlPgSQL(functionSql);
-```
-
-### `parsePlPgSQLSync(funcsSql: string): ParseResult`
-
-Synchronous version of PL/pgSQL parsing.
-
-```typescript
-import { parsePlPgSQLSync } from 'libpg-query';
-
-const result = parsePlPgSQLSync(functionSql);
-```
-
-### `deparse(parseTree: ParseResult): Promise<string>`
-
-Converts a parse tree back to SQL string. Returns a Promise for the SQL string.
-
-```typescript
-import { parse, deparse } from 'libpg-query';
-
-const parseTree = await parse('SELECT * FROM users WHERE active = true');
-const sql = await deparse(parseTree);
-// Returns: string - reconstructed SQL query
-```
-
-### `deparseSync(parseTree: ParseResult): string`
-
-Synchronous version that converts a parse tree back to SQL string directly.
-
-```typescript
-import { parseSync, deparseSync } from 'libpg-query';
-
-const parseTree = parseSync('SELECT * FROM users WHERE active = true');
-const sql = deparseSync(parseTree);
-// Returns: string - reconstructed SQL query
-```
-
-### `fingerprint(sql: string): Promise<string>`
-
-Generates a unique fingerprint for a SQL query that can be used for query identification and caching. Returns a Promise for a 16-character fingerprint string.
-
-```typescript
-import { fingerprint } from 'libpg-query';
-
-const fp = await fingerprint('SELECT * FROM users WHERE active = $1');
-// Returns: string - unique 16-character fingerprint (e.g., "50fde20626009aba")
-```
-
-### `fingerprintSync(sql: string): string`
-
-Synchronous version that generates a unique fingerprint for a SQL query directly.
-
-```typescript
-import { fingerprintSync } from 'libpg-query';
-
-const fp = fingerprintSync('SELECT * FROM users WHERE active = $1');
-// Returns: string - unique 16-character fingerprint
-```
-
-### `normalize(sql: string): Promise<string>`
-
-Normalizes a SQL query by removing comments, standardizing whitespace, and converting to a canonical form. Returns a Promise for the normalized SQL string.
-
-```typescript
-import { normalize } from 'libpg-query';
-
-const normalized = await normalize('SELECT * FROM users WHERE active = true');
-// Returns: string - normalized SQL query
-```
-
-### `normalizeSync(sql: string): string`
-
-Synchronous version that normalizes a SQL query directly.
-
-```typescript
-import { normalizeSync } from 'libpg-query';
-
-const normalized = normalizeSync('SELECT * FROM users WHERE active = true');
-// Returns: string - normalized SQL query
-```
-
-### `scan(sql: string): Promise<ScanResult>`
-
-Scans (tokenizes) a SQL query and returns detailed information about each token. Returns a Promise for a ScanResult containing all tokens with their positions, types, and classifications.
-
-```typescript
-import { scan } from 'libpg-query';
-
-const result = await scan('SELECT * FROM users WHERE id = $1');
-// Returns: ScanResult - detailed tokenization information
-console.log(result.tokens[0]); // { start: 0, end: 6, text: "SELECT", tokenType: 651, tokenName: "UNKNOWN", keywordKind: 4, keywordName: "RESERVED_KEYWORD" }
-```
-
-### `scanSync(sql: string): ScanResult`
-
-Synchronous version that scans (tokenizes) a SQL query directly.
-
-```typescript
-import { scanSync } from 'libpg-query';
-
-const result = scanSync('SELECT * FROM users WHERE id = $1');
-// Returns: ScanResult - detailed tokenization information
-```
+**Note:** If you need additional functionality like `fingerprint`, `scan`, `deparse`, or `normalize`, check out the full package (`@pgsql/parser`) in the [./full](https://github.com/launchql/libpg-query-node/tree/17-latest/libpg-query) folder of the repo.
 
 ### Initialization
 
@@ -190,12 +95,10 @@ The library provides both async and sync methods. Async methods handle initializ
 Async methods handle initialization automatically and are always safe to use:
 
 ```typescript
-import { parse, deparse, scan } from 'libpg-query';
+import { parse } from 'libpg-query';
 
 // These handle initialization automatically
 const result = await parse('SELECT * FROM users');
-const sql = await deparse(result);
-const tokens = await scan('SELECT * FROM users');
 ```
 
 #### Sync Methods
@@ -203,14 +106,13 @@ const tokens = await scan('SELECT * FROM users');
 Sync methods require explicit initialization using `loadModule()`:
 
 ```typescript
-import { loadModule, parseSync, scanSync } from 'libpg-query';
+import { loadModule, parseSync } from 'libpg-query';
 
 // Initialize first
 await loadModule();
 
 // Now safe to use sync methods
 const result = parseSync('SELECT * FROM users');
-const tokens = scanSync('SELECT * FROM users');
 ```
 
 ### `loadModule(): Promise<void>`
@@ -218,12 +120,11 @@ const tokens = scanSync('SELECT * FROM users');
 Explicitly initializes the WASM module. Required before using any sync methods.
 
 ```typescript
-import { loadModule, parseSync, scanSync } from 'libpg-query';
+import { loadModule, parseSync } from 'libpg-query';
 
 // Initialize before using sync methods
 await loadModule();
 const result = parseSync('SELECT * FROM users');
-const tokens = scanSync('SELECT * FROM users');
 ```
 
 Note: We recommend using async methods as they handle initialization automatically. Use sync methods only when necessary, and always call `loadModule()` first.
@@ -243,20 +144,6 @@ interface Statement {
   query: string;
 }
 
-interface ScanResult {
-  version: number;
-  tokens: ScanToken[];
-}
-
-interface ScanToken {
-  start: number;          // Starting position in the SQL string
-  end: number;            // Ending position in the SQL string
-  text: string;           // The actual token text
-  tokenType: number;      // Numeric token type identifier
-  tokenName: string;      // Human-readable token type name
-  keywordKind: number;    // Numeric keyword classification
-  keywordName: string;    // Human-readable keyword classification
-}
 ```
 
 **Note:** The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as PostgreSQL expects).
@@ -315,25 +202,6 @@ pnpm run test
   ```bash
   pnpm run clean && pnpm run build && pnpm run test
   ```
-
-
-
-## Versions
-
-Our latest is built with `17-latest` branch from libpg_query
-
-
-| PG Major Version | libpg_query | npm dist-tag 
-|--------------------------|-------------|---------|
-| 17                       | 17-6.1.0    | [`pg17`](https://www.npmjs.com/package/libpg-query/v/latest)
-| 16                       | 16-5.2.0    | [`pg16`](https://www.npmjs.com/package/libpg-query/v/pg16)
-| 15                       | 15-4.2.4    | [`pg15`](https://www.npmjs.com/package/libpg-query/v/pg15)
-| 14                       | 14-3.0.0    | [`pg14`](https://www.npmjs.com/package/libpg-query/v/pg14)
-| 13                       | 13-2.2.0    | [`pg13`](https://www.npmjs.com/package/libpg-query/v/pg13)
-| 12                       | (n/a)       |                                                                                                |
-| 11                       | (n/a)       |                                                                                                |
-| 10                       | 10-latest   |                        | `@1.3.1` ([tree](https://github.com/pyramation/pgsql-parser/tree/39b7b1adc8914253226e286a48105785219a81ca))      |
-
 
 ## Troubleshooting
 

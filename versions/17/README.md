@@ -38,6 +38,27 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 npm install libpg-query
 ```
 
+## Example
+
+```typescript
+import { parse } from 'libpg-query';
+
+const result = await parse('SELECT * FROM users WHERE active = true');
+// {"version":170004,"stmts":[{"stmt":{"SelectStmt":{"targetList":[{"ResTarget" ... "op":"SETOP_NONE"}}}]}
+```
+
+## Versions
+
+Our latest is built with `17-latest` branch from libpg_query
+
+| PG Major Version | libpg_query | npm dist-tag 
+|--------------------------|-------------|---------|
+| 17                       | 17-6.1.0    | [`pg17`](https://www.npmjs.com/package/libpg-query/v/latest)
+| 16                       | 16-5.2.0    | [`pg16`](https://www.npmjs.com/package/libpg-query/v/pg16)
+| 15                       | 15-4.2.4    | [`pg15`](https://www.npmjs.com/package/libpg-query/v/pg15)
+| 14                       | 14-3.0.0    | [`pg14`](https://www.npmjs.com/package/libpg-query/v/pg14)
+| 13                       | 13-2.2.0    | [`pg13`](https://www.npmjs.com/package/libpg-query/v/pg13)
+
 ## Usage
 
 ### `parse(query: string): Promise<ParseResult>`
@@ -63,9 +84,7 @@ const result = parseSync('SELECT * FROM users WHERE active = true');
 ```
 
 
-
-
-
+**Note:** If you need additional functionality like `fingerprint`, `scan`, `deparse`, or `normalize`, check out the full package (`@pgsql/parser`) in the [./full](https://github.com/launchql/libpg-query-node/tree/17-latest/libpg-query) folder of the repo.
 
 ### Initialization
 
@@ -125,20 +144,6 @@ interface Statement {
   query: string;
 }
 
-interface ScanResult {
-  version: number;
-  tokens: ScanToken[];
-}
-
-interface ScanToken {
-  start: number;          // Starting position in the SQL string
-  end: number;            // Ending position in the SQL string
-  text: string;           // The actual token text
-  tokenType: number;      // Numeric token type identifier
-  tokenName: string;      // Human-readable token type name
-  keywordKind: number;    // Numeric keyword classification
-  keywordName: string;    // Human-readable keyword classification
-}
 ```
 
 **Note:** The return value is an array, as multiple queries may be provided in a single string (semicolon-delimited, as PostgreSQL expects).
@@ -197,25 +202,6 @@ pnpm run test
   ```bash
   pnpm run clean && pnpm run build && pnpm run test
   ```
-
-
-
-## Versions
-
-Our latest is built with `17-latest` branch from libpg_query
-
-
-| PG Major Version | libpg_query | npm dist-tag 
-|--------------------------|-------------|---------|
-| 17                       | 17-6.1.0    | [`pg17`](https://www.npmjs.com/package/libpg-query/v/latest)
-| 16                       | 16-5.2.0    | [`pg16`](https://www.npmjs.com/package/libpg-query/v/pg16)
-| 15                       | 15-4.2.4    | [`pg15`](https://www.npmjs.com/package/libpg-query/v/pg15)
-| 14                       | 14-3.0.0    | [`pg14`](https://www.npmjs.com/package/libpg-query/v/pg14)
-| 13                       | 13-2.2.0    | [`pg13`](https://www.npmjs.com/package/libpg-query/v/pg13)
-| 12                       | (n/a)       |                                                                                                |
-| 11                       | (n/a)       |                                                                                                |
-| 10                       | 10-latest   |                        | `@1.3.1` ([tree](https://github.com/pyramation/pgsql-parser/tree/39b7b1adc8914253226e286a48105785219a81ca))      |
-
 
 ## Troubleshooting
 
