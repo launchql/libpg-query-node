@@ -11,7 +11,7 @@
    <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/npm/dt/@pgsql/enums"></a>
    <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/npm/dw/@pgsql/enums"/></a>
    <a href="https://github.com/launchql/libpg-query-node/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
-   <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node?filename=packages%2F13%2Fpackage.json"/></a>
+   <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node?filename=enums%2F13%2Fpackage.json"/></a>
 </p>
 
 `@pgsql/enums` is a TypeScript library providing enum definitions for PostgreSQL AST nodes, primarily used in conjunction with [`pgsql-parser`](https://github.com/launchql/pgsql-parser). It offers a comprehensive and type-safe way to work with PostgreSQL enum values in query parsing and AST manipulation.
