@@ -1,13 +1,18 @@
 {
   "name": "@libpg-query/v17",
-  "version": "17.0.0",
-  "description": "PostgreSQL 17 query parser (parse only) - Simplified API with smaller bundle size",
+  "version": "17.4.0",
+  "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "./wasm/index.cjs",
   "module": "./wasm/index.js",
   "typings": "./wasm/index.d.ts",
   "publishConfig": {
     "access": "public"
+  },
+  "x-publish": {
+    "publishName": "libpg-query",
+    "pgVersion": "17",
+    "distTag": "pg17"
   },
   "files": [
     "wasm/*"
@@ -16,6 +21,7 @@
     "clean": "pnpm wasm:clean && rimraf wasm/*.js wasm/*.cjs wasm/*.d.ts",
     "build:js": "node scripts/build.js",
     "build": "pnpm clean && pnpm wasm:build && pnpm build:js",
+    "publish:pkg": "node ../../scripts/publish.js",
     "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
     "wasm:build": "pnpm wasm:make build",
     "wasm:rebuild": "pnpm wasm:make rebuild",

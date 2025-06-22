@@ -2,7 +2,7 @@ name: Build Wasm No Docker 🛠
 'on':
   workflow_dispatch: null
 jobs:
-  build-wasm:
+  build-wasm-no-docker:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository 📥

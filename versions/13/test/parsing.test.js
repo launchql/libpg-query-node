@@ -25,7 +25,7 @@ function removeLocationProperties(obj) {
 
 describe("Query Parsing", () => {
   before(async () => {
-    await query.parse("SELECT 1");
+    await query.loadModule();
   });
 
   describe("Sync Parsing", () => {
@@ -40,9 +40,9 @@ describe("Query Parsing", () => {
         (it) => it.stmts[0].stmt.SelectStmt.targetList
       );
 
-      assert.equal(selectedDatas[0][0].ResTarget.val.A_Const.ival.ival, 1);
-      assert.equal(selectedDatas[1][0].ResTarget.val.A_Const.isnull, true);
-      assert.equal(selectedDatas[2][0].ResTarget.val.A_Const.sval.sval, "");
+      assert.equal(selectedDatas[0][0].ResTarget.val.A_Const.val.Integer.ival, 1);
+      assert.ok(selectedDatas[1][0].ResTarget.val.A_Const.val.Null);
+      assert.equal(selectedDatas[2][0].ResTarget.val.A_Const.val.String.str, "");
       assert.equal(selectedDatas[3].length, 2);
     });
 

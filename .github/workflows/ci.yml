@@ -10,7 +10,7 @@ on:
 jobs:
   build-wasm:
     name: Build WASM ${{ matrix.package }} 🔧
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         package: 
