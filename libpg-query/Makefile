@@ -50,6 +50,7 @@ $(LIBPG_QUERY_ARCHIVE): $(LIBPG_QUERY_DIR)
 # Build libpg-query-node WASM module
 $(OUT_FILES): $(LIBPG_QUERY_ARCHIVE) $(LIBPG_QUERY_HEADER) $(SRC_FILES)
 ifdef EMSCRIPTEN
+	mkdir -p $(WASM_OUT_DIR)
 	$(CC) \
 		-v \
 		$(CXXFLAGS) \
