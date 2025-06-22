@@ -75,7 +75,7 @@ function analyzePackage(packagePath, packageName) {
 function getVersionPackages() {
   const versionsDir = './versions';
   const packages = [
-    { path: './libpg-query', name: 'libpg-query (Original)', version: 'original' }
+    { path: './full', name: 'full (Full)', version: 'original' }
   ];
 
   if (fs.existsSync(versionsDir)) {
