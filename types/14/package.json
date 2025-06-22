@@ -1,6 +1,6 @@
 {
   "name": "@libpg-query/types14",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "author": "Dan Lynch <pyramation@gmail.com>",
   "description": "PostgreSQL AST types from the real Postgres parser",
   "main": "index.js",
