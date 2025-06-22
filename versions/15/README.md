@@ -83,8 +83,7 @@ const result = parseSync('SELECT * FROM users WHERE active = true');
 // Returns: ParseResult - parsed query object
 ```
 
-
-**Note:** If you need additional functionality like `fingerprint`, `scan`, `deparse`, or `normalize`, check out the full package (`@pgsql/parser`) in the [./full](https://github.com/launchql/libpg-query-node/tree/17-latest/libpg-query) folder of the repo.
+⚠ **Note:** If you need additional functionality like `fingerprint`, `scan`, `deparse`, or `normalize`, check out the full package (`@pgsql/parser`) in the [./full](https://github.com/launchql/libpg-query-node/tree/main/full) folder of the repo.
 
 ### Initialization
 
