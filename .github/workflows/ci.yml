@@ -4,7 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   push:
-    branches: [17-latest]
   workflow_dispatch:
 
 jobs:
