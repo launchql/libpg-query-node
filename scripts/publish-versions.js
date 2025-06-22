@@ -43,25 +43,36 @@ function restorePackageJson(packagePath) {
   }
 }
 
-function modifyPackageJsonForPublishing(packagePath, version) {
+function modifyPackageJsonForPublishing(packagePath, version, customVersion = null) {
   const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   
   packageJson.name = 'libpg-query';
   
-  packageJson.version = `${version}.0.0`;
+  if (customVersion) {
+    packageJson.version = customVersion;
+  } else {
+    packageJson.version = `${version}.0.0`;
+  }
   
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2) + '\n');
   
   return packageJson;
 }
 
-function publishPackage(packageInfo, dryRun = false) {
+function publishPackage(packageInfo, options = {}) {
+  const { dryRun = false, customVersion = null, skipBuild = false } = options;
   const { path: packagePath, packageJsonPath, version } = packageInfo;
   const distTag = `pg${version}`;
+  const publishVersion = customVersion || `${version}.0.0`;
   
   console.log(`\n📦 Publishing ${packageInfo.originalName} as libpg-query@${distTag}`);
+  console.log(`   Version: ${publishVersion}`);
   
   if (dryRun) {
+    console.log(`   [DRY RUN] Would modify package.json: name -> "libpg-query", version -> "${publishVersion}"`);
+    if (!skipBuild) {
+      console.log(`   [DRY RUN] Would run: cd ${packagePath} && pnpm build`);
+    }
     console.log(`   [DRY RUN] Would run: cd ${packagePath} && pnpm publish --tag ${distTag}`);
     return;
   }
@@ -70,15 +81,17 @@ function publishPackage(packageInfo, dryRun = false) {
   try {
     backupPath = backupPackageJson(packageJsonPath);
     
-    modifyPackageJsonForPublishing(packageJsonPath, version);
+    modifyPackageJsonForPublishing(packageJsonPath, version, customVersion);
     
-    console.log(`   Building package...`);
-    execSync('pnpm build', { cwd: packagePath, stdio: 'inherit' });
+    if (!skipBuild) {
+      console.log(`   Building package...`);
+      execSync('pnpm build', { cwd: packagePath, stdio: 'inherit' });
+    }
     
     console.log(`   Publishing with tag ${distTag}...`);
     execSync(`pnpm publish --tag ${distTag}`, { cwd: packagePath, stdio: 'inherit' });
     
-    console.log(`   ✅ Successfully published libpg-query@${distTag}`);
+    console.log(`   ✅ Successfully published libpg-query@${distTag} (${publishVersion})`);
     
   } catch (error) {
     console.error(`   ❌ Failed to publish ${packageInfo.originalName}:`, error.message);
@@ -91,7 +104,7 @@ function publishPackage(packageInfo, dryRun = false) {
 }
 
 function publishAllVersions(options = {}) {
-  const { dryRun = false, versions = [] } = options;
+  const { dryRun = false, versions = [], customVersion = null, skipBuild = false } = options;
   
   console.log('🚀 libpg-query Multi-Version Publisher');
   console.log('=====================================');
@@ -113,8 +126,13 @@ function publishAllVersions(options = {}) {
   
   console.log(`Found ${packagesToPublish.length} packages to publish:`);
   packagesToPublish.forEach(pkg => {
-    console.log(`  - ${pkg.originalName} (v${pkg.version}) -> libpg-query@pg${pkg.version}`);
+    const publishVersion = customVersion || `${pkg.version}.0.0`;
+    console.log(`  - ${pkg.originalName} (v${pkg.version}) -> libpg-query@pg${pkg.version} (${publishVersion})`);
   });
+  
+  if (customVersion) {
+    console.log(`\n📝 Using custom version: ${customVersion}`);
+  }
   
   if (!dryRun) {
     console.log('\n⚠️  This will publish to npm registry. Continue? (Press Ctrl+C to cancel)');
@@ -126,7 +144,7 @@ function publishAllVersions(options = {}) {
   
   for (const packageInfo of packagesToPublish) {
     try {
-      publishPackage(packageInfo, dryRun);
+      publishPackage(packageInfo, { dryRun, customVersion, skipBuild });
       publishedCount++;
     } catch (error) {
       failedCount++;
@@ -151,7 +169,9 @@ function main() {
   const args = process.argv.slice(2);
   const options = {
     dryRun: args.includes('--dry-run') || args.includes('-d'),
-    versions: []
+    versions: [],
+    customVersion: null,
+    skipBuild: args.includes('--skip-build')
   };
   
   const versionIndex = args.findIndex(arg => arg === '--versions' || arg === '-v');
@@ -159,22 +179,68 @@ function main() {
     options.versions = args[versionIndex + 1].split(',').map(v => v.trim());
   }
   
+  const customVersionIndex = args.findIndex(arg => arg === '--set-version');
+  if (customVersionIndex !== -1 && args[customVersionIndex + 1]) {
+    options.customVersion = args[customVersionIndex + 1];
+  }
+  
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
 libpg-query Multi-Version Publisher
 
-Usage:
+DESCRIPTION:
+  Publishes multiple PostgreSQL version packages under the unified "libpg-query" 
+  name using dist-tags. Handles workspace naming conflicts by temporarily 
+  modifying package.json files during publishing.
+
+USAGE:
   node scripts/publish-versions.js [options]
 
-Options:
-  --dry-run, -d           Run in dry-run mode (no actual publishing)
-  --versions, -v <list>   Comma-separated list of versions to publish (e.g., "13,16,17")
-  --help, -h              Show this help message
+OPTIONS:
+  --dry-run, -d              Run in dry-run mode (no actual publishing)
+  --versions, -v <list>      Comma-separated list of versions to publish (e.g., "13,16,17")
+  --set-version <version>    Set custom version for all packages (e.g., "1.2.3")
+  --skip-build               Skip the build step (assumes packages are already built)
+  --help, -h                 Show this help message
 
-Examples:
+EXAMPLES:
+  # Test publishing all versions (dry-run)
   node scripts/publish-versions.js --dry-run
+  
+  # Publish specific versions
   node scripts/publish-versions.js --versions "16,17"
-  node scripts/publish-versions.js --dry-run --versions "13"
+  
+  # Publish with custom version
+  node scripts/publish-versions.js --versions "17" --set-version "1.3.0"
+  
+  # Test single version with custom version
+  node scripts/publish-versions.js --dry-run --versions "13" --set-version "2.0.0"
+  
+  # Skip build step (if already built)
+  node scripts/publish-versions.js --versions "17" --skip-build
+
+PUBLISHING WORKFLOW:
+  1. Script discovers all version packages in versions/ directory
+  2. For each package:
+     - Backs up original package.json
+     - Temporarily changes name to "libpg-query" 
+     - Sets version (default: {major}.0.0, or custom with --set-version)
+     - Builds package (unless --skip-build)
+     - Publishes with dist-tag pg{version}
+     - Restores original package.json
+  
+  3. Users can then install: npm install libpg-query@pg17
+
+VERSION MANAGEMENT:
+  - Default: Uses major version matching folder (13.0.0, 14.0.0, etc.)
+  - Custom: Use --set-version to specify exact version
+  - Dist-tags: Always uses pg{version} format (pg13, pg14, pg15, pg16, pg17)
+
+SAFETY FEATURES:
+  - Dry-run mode for testing
+  - Automatic backup/restore of package.json files
+  - Error handling with cleanup
+  - 5-second confirmation before actual publishing
 `);
     return;
   }
