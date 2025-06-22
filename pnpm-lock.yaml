@@ -27,7 +27,7 @@ importers:
         specifier: ^5.3.3
         version: 5.8.3
 
-  libpg-query:
+  full:
     dependencies:
       '@launchql/protobufjs':
         specifier: 7.2.6
@@ -795,7 +795,7 @@ packages:
   /inquirerer@1.9.1:
     resolution: {integrity: sha512-c7N3Yd9warVEpWdyX04dJUtYSad1qZFnNQYsKdqk0Av4qRg83lmxSnhWLn8Ok+UNzj87xXxo/ww0ReIL3ZO92g==}
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       deepmerge: 4.3.1
       js-yaml: 4.1.0
       minimist: 1.2.8
