@@ -27,41 +27,23 @@ npm install @pgsql/enums
 
 ## Usage
 
-`@pgsql/enums` provides TypeScript enum definitions for PostgreSQL Abstract Syntax Tree (AST) nodes. These enums are useful for constructing, analyzing, or manipulating ASTs in a type-safe manner with exact enum values.
-
-Here are a few examples of how you can use these enums in your TypeScript projects:
-
-### Using Enum Values
-
-You can use the enums to work with specific PostgreSQL AST enum values:
+Here's a simple example showing how to work with enums, converting between enum names and their numeric values:
 
 ```ts
-import { ConstrType, ObjectType } from '@pgsql/enums';
+import { ObjectType } from '@pgsql/enums';
 
-function createConstraint() {
-  return {
-    contype: ConstrType.CONSTR_PRIMARY
-  };
+// Get the numeric value of an enum
+const tableValue = ObjectType.OBJECT_TABLE;
+console.log(tableValue); // 41
+
+// Convert from value back to enum name
+const enumName = ObjectType[41];
+console.log(enumName); // "OBJECT_TABLE"
+
+// Use in comparisons
+if (someNode.objectType === ObjectType.OBJECT_TABLE) {
+  console.log("This is a table object");
 }
-
-function getObjectType() {
-  return ObjectType.OBJECT_TABLE;
-}
-```
-
-### Type-Safe Enum Operations
-
-Enums help ensure that you use correct PostgreSQL enum values:
-
-```ts
-import { CmdType, JoinType } from '@pgsql/enums';
-
-const command = {
-  cmdType: CmdType.CMD_SELECT,
-  joinType: JoinType.JOIN_INNER
-};
-
-console.log(command);
 ```
 
 ## Versions

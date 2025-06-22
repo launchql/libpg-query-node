@@ -11,7 +11,7 @@
    <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/npm/dt/@pgsql/enums"></a>
    <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/npm/dw/@pgsql/enums"/></a>
    <a href="https://github.com/launchql/libpg-query-node/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
-   <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node?filename=packages%2F17%2Fpackage.json"/></a>
+   <a href="https://www.npmjs.com/package/@pgsql/enums"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node?filename=packages%2F13%2Fpackage.json"/></a>
 </p>
 
 `@pgsql/enums` is a TypeScript library providing enum definitions for PostgreSQL AST nodes, primarily used in conjunction with [`pgsql-parser`](https://github.com/launchql/pgsql-parser). It offers a comprehensive and type-safe way to work with PostgreSQL enum values in query parsing and AST manipulation.
@@ -27,41 +27,23 @@ npm install @pgsql/enums
 
 ## Usage
 
-`@pgsql/enums` provides TypeScript enum definitions for PostgreSQL Abstract Syntax Tree (AST) nodes. These enums are useful for constructing, analyzing, or manipulating ASTs in a type-safe manner with exact enum values.
-
-Here are a few examples of how you can use these enums in your TypeScript projects:
-
-### Using Enum Values
-
-You can use the enums to work with specific PostgreSQL AST enum values:
+Here's a simple example showing how to work with enums, converting between enum names and their numeric values:
 
 ```ts
-import { ConstrType, ObjectType } from '@pgsql/enums';
+import { ObjectType } from '@pgsql/enums';
 
-function createConstraint() {
-  return {
-    contype: ConstrType.CONSTR_PRIMARY
-  };
+// Get the numeric value of an enum
+const tableValue = ObjectType.OBJECT_TABLE;
+console.log(tableValue); // 41
+
+// Convert from value back to enum name
+const enumName = ObjectType[41];
+console.log(enumName); // "OBJECT_TABLE"
+
+// Use in comparisons
+if (someNode.objectType === ObjectType.OBJECT_TABLE) {
+  console.log("This is a table object");
 }
-
-function getObjectType() {
-  return ObjectType.OBJECT_TABLE;
-}
-```
-
-### Type-Safe Enum Operations
-
-Enums help ensure that you use correct PostgreSQL enum values:
-
-```ts
-import { CmdType, JoinType } from '@pgsql/enums';
-
-const command = {
-  cmdType: CmdType.CMD_SELECT,
-  joinType: JoinType.JOIN_INNER
-};
-
-console.log(command);
 ```
 
 ## Versions
