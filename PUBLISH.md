@@ -38,6 +38,8 @@ VERSION=17
 
 # Build and publish a specific version
 cd versions/${VERSION}
+pnpm version patch
+git add . && git commit -m "release: bump libpg-query${VERSION} version"
 pnpm build
 pnpm test
 pnpm run publish:pkg

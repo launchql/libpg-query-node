@@ -36,8 +36,7 @@
     "type": "git",
     "url": "git://github.com/launchql/libpg-query-node.git"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "@pgsql/types": "^13.10.0"
   },
