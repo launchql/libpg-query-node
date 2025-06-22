@@ -16,7 +16,7 @@
     "clean": "pnpm wasm:clean && rimraf wasm/*.js wasm/*.cjs wasm/*.d.ts",
     "build:js": "node scripts/build.js",
     "build": "pnpm clean && pnpm wasm:build && pnpm build:js",
-    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) -e EMSCRIPTEN=1 emscripten/emsdk emmake make",
     "wasm:build": "pnpm wasm:make build",
     "wasm:rebuild": "pnpm wasm:make rebuild",
     "wasm:clean": "pnpm wasm:make clean",
