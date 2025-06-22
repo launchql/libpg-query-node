@@ -2,3 +2,6 @@ packages:
   - 'libpg-query'
   - 'versions/17' 
   - 'versions/16' 
+  - 'versions/15' 
+  - 'versions/14' 
+  - 'versions/13' 
