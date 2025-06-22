@@ -52,7 +52,16 @@ jobs:
         run: pnpm install
 
       - name: Build WASM 🏗
-        run: pnpm run build
+        run: |
+          if [ "${{ matrix.package.name }}" = "v13" ]; then
+            # Download prebuilt WASM for v13 since it can't build in CI
+            mkdir -p wasm
+            curl -o v13.tgz "https://registry.npmjs.org/@libpg-query/v13/-/v13-13.0.0.tgz"
+            tar -xzf v13.tgz --strip-components=1 package/wasm
+            rm v13.tgz
+          else
+            pnpm run build
+          fi
         working-directory: ${{ matrix.package.path }}
 
       - name: Upload WASM Artifacts 📦
