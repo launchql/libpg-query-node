@@ -1,5 +1,6 @@
 const query = require("../");
-const { expect } = require("chai");
+const { describe, it, before, after, beforeEach, afterEach } = require('node:test');
+const assert = require('node:assert/strict');
 
 describe("Query Normalization", () => {
   before(async () => {
@@ -9,37 +10,37 @@ describe("Query Normalization", () => {
   describe("Sync Normalization", () => {
     it("should normalize a simple query", () => {
       const normalized = query.normalizeSync("select 1");
-      expect(normalized).to.be.a("string");
-      expect(normalized).to.include("$1");
+      assert.equal(typeof normalized, "string");
+      assert.ok(normalized.includes("$1"));
     });
 
     it("should normalize parameter values", () => {
       const normalized1 = query.normalizeSync("select * from users where id = 123");
       const normalized2 = query.normalizeSync("select * from users where id = 456");
       
-      expect(normalized1).to.eq(normalized2);
-      expect(normalized1).to.include("$1");
+      assert.equal(normalized1, normalized2);
+      assert.ok(normalized1.includes("$1"));
     });
 
     it("should normalize string literals", () => {
       const normalized1 = query.normalizeSync("select * from users where name = 'john'");
       const normalized2 = query.normalizeSync("select * from users where name = 'jane'");
       
-      expect(normalized1).to.eq(normalized2);
-      expect(normalized1).to.include("$1");
+      assert.equal(normalized1, normalized2);
+      assert.ok(normalized1.includes("$1"));
     });
 
     it("should preserve query structure", () => {
       const normalized = query.normalizeSync("SELECT id, name FROM users WHERE active = true ORDER BY name");
       
-      expect(normalized).to.include("SELECT");
-      expect(normalized).to.include("FROM");
-      expect(normalized).to.include("WHERE");
-      expect(normalized).to.include("ORDER BY");
+      assert.ok(normalized.includes("SELECT"));
+      assert.ok(normalized.includes("FROM"));
+      assert.ok(normalized.includes("WHERE"));
+      assert.ok(normalized.includes("ORDER BY"));
     });
 
     it("should fail on invalid queries", () => {
-      expect(() => query.normalizeSync("NOT A QUERY")).to.throw(Error);
+      assert.throws(() => query.normalizeSync("NOT A QUERY"), Error);
     });
   });
 
@@ -49,8 +50,8 @@ describe("Query Normalization", () => {
       const normalizedPromise = query.normalize(testQuery);
       const normalized = await normalizedPromise;
 
-      expect(normalizedPromise).to.be.instanceof(Promise);
-      expect(normalized).to.eq(query.normalizeSync(testQuery));
+      assert.ok(normalizedPromise instanceof Promise);
+      assert.equal(normalized, query.normalizeSync(testQuery));
     });
 
     it("should reject on bogus queries", async () => {
@@ -59,8 +60,8 @@ describe("Query Normalization", () => {
           throw new Error("should have rejected");
         },
         (e) => {
-          expect(e).instanceof(Error);
-          expect(e.message).to.match(/NOT/);
+          assert.ok(e instanceof Error);
+          assert.match(e.message, /NOT/);
         }
       );
     });

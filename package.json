@@ -6,9 +6,21 @@
   "scripts": {
     "build": "pnpm --filter libpg-query build",
     "test": "pnpm --filter libpg-query test",
-    "clean": "pnpm --filter libpg-query clean"
+    "clean": "pnpm --filter libpg-query clean",
+    "build:all": "pnpm -r build",
+    "test:all": "pnpm -r test",
+    "clean:all": "pnpm -r clean",
+    "analyze:sizes": "node scripts/analyze-sizes.js",
+    "fetch:protos": "node scripts/fetch-protos.js",
+    "build:types": "node scripts/build-types.js",
+    "prepare:types": "node scripts/prepare-types.js"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.3",
+    "pg-proto-parser": "^1.28.2"
   }
 } 

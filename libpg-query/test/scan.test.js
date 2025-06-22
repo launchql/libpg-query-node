@@ -1,5 +1,6 @@
 const query = require("../");
-const { expect } = require("chai");
+const { describe, it, before, after, beforeEach, afterEach } = require('node:test');
+const assert = require('node:assert/strict');
 
 describe("Query Scanning", () => {
   before(async () => {
@@ -10,45 +11,45 @@ describe("Query Scanning", () => {
     it("should return a scan result with version and tokens", () => {
       const result = query.scanSync("SELECT 1");
       
-      expect(result).to.be.an("object");
-      expect(result).to.have.property("version");
-      expect(result).to.have.property("tokens");
-      expect(result.version).to.be.a("number");
-      expect(result.tokens).to.be.an("array");
+      assert.equal(typeof result, "object");
+      assert.ok("version" in result);
+      assert.ok("tokens" in result);
+      assert.equal(typeof result.version, "number");
+      assert.ok(Array.isArray(result.tokens));
     });
 
     it("should scan a simple SELECT query correctly", () => {
       const result = query.scanSync("SELECT 1");
       
-      expect(result.tokens).to.have.lengthOf(2);
+      assert.equal(result.tokens.length, 2);
       
       // First token should be SELECT
       const selectToken = result.tokens[0];
-      expect(selectToken.text).to.eq("SELECT");
-      expect(selectToken.start).to.eq(0);
-      expect(selectToken.end).to.eq(6);
-      expect(selectToken.tokenName).to.eq("UNKNOWN"); // SELECT is mapped as UNKNOWN in our simplified mapping
-      expect(selectToken.keywordName).to.eq("RESERVED_KEYWORD");
+      assert.equal(selectToken.text, "SELECT");
+      assert.equal(selectToken.start, 0);
+      assert.equal(selectToken.end, 6);
+      assert.equal(selectToken.tokenName, "UNKNOWN"); // SELECT is mapped as UNKNOWN in our simplified mapping
+      assert.equal(selectToken.keywordName, "RESERVED_KEYWORD");
       
       // Second token should be 1
       const numberToken = result.tokens[1];
-      expect(numberToken.text).to.eq("1");
-      expect(numberToken.start).to.eq(7);
-      expect(numberToken.end).to.eq(8);
-      expect(numberToken.tokenName).to.eq("ICONST");
-      expect(numberToken.keywordName).to.eq("NO_KEYWORD");
+      assert.equal(numberToken.text, "1");
+      assert.equal(numberToken.start, 7);
+      assert.equal(numberToken.end, 8);
+      assert.equal(numberToken.tokenName, "ICONST");
+      assert.equal(numberToken.keywordName, "NO_KEYWORD");
     });
 
     it("should scan tokens with correct positions", () => {
       const sql = "SELECT * FROM users";
       const result = query.scanSync(sql);
       
-      expect(result.tokens).to.have.lengthOf(4);
+      assert.equal(result.tokens.length, 4);
       
       // Verify each token position matches the original SQL
       result.tokens.forEach(token => {
         const actualText = sql.substring(token.start, token.end);
-        expect(token.text).to.eq(actualText);
+        assert.equal(token.text, actualText);
       });
     });
 
@@ -56,12 +57,12 @@ describe("Query Scanning", () => {
       const result = query.scanSync("SELECT 'string', 123, 3.14, $1 FROM users");
       
       const tokenTypes = result.tokens.map(t => t.tokenName);
-      expect(tokenTypes).to.include("SCONST");  // String constant
-      expect(tokenTypes).to.include("ICONST");  // Integer constant  
-      expect(tokenTypes).to.include("FCONST");  // Float constant
-      expect(tokenTypes).to.include("PARAM");   // Parameter marker
+      assert.ok(tokenTypes.includes("SCONST"));  // String constant
+      assert.ok(tokenTypes.includes("ICONST"));  // Integer constant  
+      assert.ok(tokenTypes.includes("FCONST"));  // Float constant
+      assert.ok(tokenTypes.includes("PARAM"));   // Parameter marker
       // Note: keywords like FROM may be tokenized as UNKNOWN in our simplified mapping
-      expect(tokenTypes).to.include("UNKNOWN"); // Keywords and identifiers
+      assert.ok(tokenTypes.includes("UNKNOWN")); // Keywords and identifiers
     });
 
     it("should identify operators and punctuation", () => {
@@ -71,9 +72,9 @@ describe("Query Scanning", () => {
         t.tokenName.startsWith("ASCII_") || t.text === "="
       );
       
-      expect(operators).to.have.length.greaterThan(0);
-      expect(operators.some(t => t.text === "*")).to.be.true;
-      expect(operators.some(t => t.text === "=")).to.be.true;
+      assert.ok(operators.length > 0);
+      assert.equal(operators.some(t => t.text === "*"), true);
+      assert.equal(operators.some(t => t.text === "="), true);
     });
 
     it("should classify keyword types correctly", () => {
@@ -86,68 +87,68 @@ describe("Query Scanning", () => {
         t.keywordName === "UNRESERVED_KEYWORD"
       );
       
-      expect(reservedKeywords.length).to.be.greaterThan(0);
+      assert.ok(reservedKeywords.length > 0);
       // SELECT, FROM, WHERE should be reserved keywords
-      expect(reservedKeywords.some(t => t.text === "SELECT")).to.be.true;
-      expect(reservedKeywords.some(t => t.text === "FROM")).to.be.true;
-      expect(reservedKeywords.some(t => t.text === "WHERE")).to.be.true;
+      assert.equal(reservedKeywords.some(t => t.text === "SELECT"), true);
+      assert.equal(reservedKeywords.some(t => t.text === "FROM"), true);
+      assert.equal(reservedKeywords.some(t => t.text === "WHERE"), true);
     });
 
     it("should handle complex queries with parameters", () => {
       const result = query.scanSync("SELECT * FROM users WHERE id = $1 AND name = $2");
       
       const params = result.tokens.filter(t => t.tokenName === "PARAM");
-      expect(params).to.have.lengthOf(2);
-      expect(params[0].text).to.eq("$1");
-      expect(params[1].text).to.eq("$2");
+      assert.equal(params.length, 2);
+      assert.equal(params[0].text, "$1");
+      assert.equal(params[1].text, "$2");
     });
 
     it("should handle string escaping in JSON output", () => {
       const result = query.scanSync("SELECT 'text with \"quotes\" and \\backslash'");
       
       const stringToken = result.tokens.find(t => t.tokenName === "SCONST");
-      expect(stringToken).to.exist;
-      expect(stringToken.text).to.include('"');
-      expect(stringToken.text).to.include('\\');
+      assert.ok(stringToken);
+      assert.ok(stringToken.text.includes('"'));
+      assert.ok(stringToken.text.includes('\\'));
     });
 
     it("should scan INSERT statements", () => {
       const result = query.scanSync("INSERT INTO table VALUES (1, 'text', 3.14)");
       
-      expect(result.tokens.some(t => t.text === "INSERT")).to.be.true;
-      expect(result.tokens.some(t => t.text === "INTO")).to.be.true;
-      expect(result.tokens.some(t => t.text === "VALUES")).to.be.true;
-      expect(result.tokens.some(t => t.tokenName === "ICONST")).to.be.true;
-      expect(result.tokens.some(t => t.tokenName === "SCONST")).to.be.true;
-      expect(result.tokens.some(t => t.tokenName === "FCONST")).to.be.true;
+      assert.equal(result.tokens.some(t => t.text === "INSERT"), true);
+      assert.equal(result.tokens.some(t => t.text === "INTO"), true);
+      assert.equal(result.tokens.some(t => t.text === "VALUES"), true);
+      assert.equal(result.tokens.some(t => t.tokenName === "ICONST"), true);
+      assert.equal(result.tokens.some(t => t.tokenName === "SCONST"), true);
+      assert.equal(result.tokens.some(t => t.tokenName === "FCONST"), true);
     });
 
     it("should scan UPDATE statements", () => {
       const result = query.scanSync("UPDATE users SET name = 'John' WHERE id = 1");
       
-      expect(result.tokens.some(t => t.text === "UPDATE")).to.be.true;
-      expect(result.tokens.some(t => t.text === "SET")).to.be.true;
-      expect(result.tokens.some(t => t.text === "=")).to.be.true;
+      assert.equal(result.tokens.some(t => t.text === "UPDATE"), true);
+      assert.equal(result.tokens.some(t => t.text === "SET"), true);
+      assert.equal(result.tokens.some(t => t.text === "="), true);
     });
 
     it("should scan DELETE statements", () => {
       const result = query.scanSync("DELETE FROM users WHERE active = false");
       
-      expect(result.tokens.some(t => t.text === "DELETE")).to.be.true;
-      expect(result.tokens.some(t => t.text === "FROM")).to.be.true;
-      expect(result.tokens.some(t => t.text === "WHERE")).to.be.true;
+      assert.equal(result.tokens.some(t => t.text === "DELETE"), true);
+      assert.equal(result.tokens.some(t => t.text === "FROM"), true);
+      assert.equal(result.tokens.some(t => t.text === "WHERE"), true);
     });
 
     it("should handle empty or whitespace-only input", () => {
       const result = query.scanSync("   ");
-      expect(result.tokens).to.have.lengthOf(0);
+      assert.equal(result.tokens.length, 0);
     });
 
     it("should handle unusual input gracefully", () => {
       // The scanner is more permissive than the parser and may tokenize unusual input
       const result = query.scanSync("$$$INVALID$$$");
-      expect(result).to.be.an("object");
-      expect(result.tokens).to.be.an("array");
+      assert.equal(typeof result, "object");
+      assert.ok(Array.isArray(result.tokens));
       // Scanner may still produce tokens even for unusual input
     });
 
@@ -157,7 +158,7 @@ describe("Query Scanning", () => {
       
       // Tokens should be in order of appearance
       for (let i = 1; i < result.tokens.length; i++) {
-        expect(result.tokens[i].start).to.be.at.least(result.tokens[i-1].end);
+        assert.ok(result.tokens[i].start >= result.tokens[i-1].end);
       }
     });
   });
@@ -168,24 +169,24 @@ describe("Query Scanning", () => {
       const resultPromise = query.scan(testQuery);
       const result = await resultPromise;
 
-      expect(resultPromise).to.be.instanceof(Promise);
-      expect(result).to.deep.eq(query.scanSync(testQuery));
+      assert.ok(resultPromise instanceof Promise);
+      assert.deepEqual(result, query.scanSync(testQuery));
     });
 
     it("should handle complex queries asynchronously", async () => {
       const testQuery = "SELECT COUNT(*) as total FROM orders WHERE status = 'completed' AND created_at > '2023-01-01'";
       const result = await query.scan(testQuery);
       
-      expect(result).to.be.an("object");
-      expect(result.tokens).to.be.an("array");
-      expect(result.tokens.length).to.be.greaterThan(10);
+      assert.equal(typeof result, "object");
+      assert.ok(Array.isArray(result.tokens));
+      assert.ok(result.tokens.length > 10);
     });
 
     it("should handle unusual input asynchronously", async () => {
       // Scanner is more permissive than parser
       const result = await query.scan("$$$INVALID$$$");
-      expect(result).to.be.an("object");
-      expect(result.tokens).to.be.an("array");
+      assert.equal(typeof result, "object");
+      assert.ok(Array.isArray(result.tokens));
     });
   });
 
@@ -194,9 +195,9 @@ describe("Query Scanning", () => {
       const result = query.scanSync("SELECT 1 -- this is a comment");
       
       // Should have at least SELECT and 1 tokens
-      expect(result.tokens.length).to.be.at.least(2);
-      expect(result.tokens.some(t => t.text === "SELECT")).to.be.true;
-      expect(result.tokens.some(t => t.text === "1")).to.be.true;
+      assert.ok(result.tokens.length >= 2);
+      assert.equal(result.tokens.some(t => t.text === "SELECT"), true);
+      assert.equal(result.tokens.some(t => t.text === "1"), true);
     });
 
     it("should handle very long identifiers", () => {
@@ -204,25 +205,25 @@ describe("Query Scanning", () => {
       const result = query.scanSync(`SELECT ${longIdentifier} FROM table`);
       
       const identToken = result.tokens.find(t => t.text === longIdentifier);
-      expect(identToken).to.exist;
-      expect(identToken.tokenName).to.eq("IDENT");
+      assert.ok(identToken);
+      assert.equal(identToken.tokenName, "IDENT");
     });
 
     it("should handle special PostgreSQL operators", () => {
       const result = query.scanSync("SELECT id::text FROM users");
       
-      expect(result.tokens.some(t => t.text === "::")).to.be.true;
+      assert.equal(result.tokens.some(t => t.text === "::"), true);
       const typecastToken = result.tokens.find(t => t.text === "::");
-      expect(typecastToken?.tokenName).to.eq("TYPECAST");
+      assert.equal(typecastToken?.tokenName, "TYPECAST");
     });
 
     it("should provide consistent version information", () => {
       const result1 = query.scanSync("SELECT 1");
       const result2 = query.scanSync("INSERT INTO table VALUES (1)");
       
-      expect(result1.version).to.eq(result2.version);
-      expect(result1.version).to.be.a("number");
-      expect(result1.version).to.be.greaterThan(0);
+      assert.equal(result1.version, result2.version);
+      assert.equal(typeof result1.version, "number");
+      assert.ok(result1.version > 0);
     });
   });
 });

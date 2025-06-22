@@ -12,6 +12,11 @@ const wasmDir = path.join(__dirname, '../wasm');
 const cjsDir = path.join(__dirname, '../cjs');
 const esmDir = path.join(__dirname, '../esm');
 
+// Ensure wasm directory exists
+if (!fs.existsSync(wasmDir)) {
+  fs.mkdirSync(wasmDir, { recursive: true });
+}
+
 // Rename CommonJS files
 fs.renameSync(
   path.join(cjsDir, 'index.js'),
