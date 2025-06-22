@@ -7,7 +7,7 @@
 **2024-06: This project has migrated to a [pnpm workspace](https://pnpm.io/workspaces)!**
 
 - All development and CI now use pnpm for dependency management and scripts.
-- The main package is now located in the `libpq-query` subdirectory.
+- The main package is now located in the `libpg-query` subdirectory.
 - Please use `pnpm install`, `pnpm run build`, `pnpm run test`, and `pnpm run clean` from the root directory.
 - See below for updated instructions.
 

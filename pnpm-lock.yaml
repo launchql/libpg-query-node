@@ -12,7 +12,7 @@ importers:
         specifier: ^20.0.0
         version: 20.19.1
 
-  libpq-query:
+  libpg-query:
     dependencies:
       '@launchql/protobufjs':
         specifier: 7.2.6

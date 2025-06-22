@@ -3,9 +3,6 @@
   "private": true,
   "description": "PostgreSQL query parser monorepo",
   "packageManager": "pnpm@8.15.0",
-  "workspaces": [
-    "libpq-query"
-  ],
   "scripts": {
     "build": "pnpm --filter libpg-query build",
     "test": "pnpm --filter libpg-query test",
