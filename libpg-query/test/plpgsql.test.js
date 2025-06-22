@@ -1,5 +1,6 @@
 const query = require("../");
-const { expect } = require("chai");
+const { describe, it, before, after, beforeEach, afterEach } = require('node:test');
+const assert = require('node:assert/strict');
 
 describe("PL/pgSQL Parsing", () => {
   before(async () => {
@@ -18,8 +19,8 @@ describe("PL/pgSQL Parsing", () => {
       `;
       
       const result = query.parsePlPgSQLSync(funcSql);
-      expect(result).to.be.an("object");
-      expect(result.plpgsql_funcs).to.be.an("array");
+      assert.equal(typeof result, "object");
+      assert.ok(Array.isArray(result.plpgsql_funcs));
     });
 
     it("should parse function with parameters", () => {
@@ -33,11 +34,11 @@ describe("PL/pgSQL Parsing", () => {
       `;
       
       const result = query.parsePlPgSQLSync(funcSql);
-      expect(result.plpgsql_funcs).to.have.length.greaterThan(0);
+      assert.ok(result.plpgsql_funcs.length > 0);
     });
 
     it("should fail on invalid PL/pgSQL", () => {
-      expect(() => query.parsePlPgSQLSync("NOT A FUNCTION")).to.throw(Error);
+      assert.throws(() => query.parsePlPgSQLSync("NOT A FUNCTION"), Error);
     });
   });
 
@@ -55,8 +56,8 @@ describe("PL/pgSQL Parsing", () => {
       const resultPromise = query.parsePlPgSQL(funcSql);
       const result = await resultPromise;
 
-      expect(resultPromise).to.be.instanceof(Promise);
-      expect(result).to.deep.eq(query.parsePlPgSQLSync(funcSql));
+      assert.ok(resultPromise instanceof Promise);
+      assert.deepEqual(result, query.parsePlPgSQLSync(funcSql));
     });
 
     it("should reject on invalid PL/pgSQL", async () => {
@@ -65,8 +66,8 @@ describe("PL/pgSQL Parsing", () => {
           throw new Error("should have rejected");
         },
         (e) => {
-          expect(e).instanceof(Error);
-          expect(e.message).to.match(/NOT/);
+          assert.ok(e instanceof Error);
+          assert.match(e.message, /NOT/);
         }
       );
     });

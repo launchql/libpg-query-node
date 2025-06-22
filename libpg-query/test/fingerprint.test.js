@@ -1,5 +1,6 @@
 const query = require("../");
-const { expect } = require("chai");
+const { describe, it, before, after, beforeEach, afterEach } = require('node:test');
+const assert = require('node:assert/strict');
 
 describe("Query Fingerprinting", () => {
   before(async () => {
@@ -9,8 +10,8 @@ describe("Query Fingerprinting", () => {
   describe("Sync Fingerprinting", () => {
     it("should return a fingerprint for a simple query", () => {
       const fingerprint = query.fingerprintSync("select 1");
-      expect(fingerprint).to.be.a("string");
-      expect(fingerprint).to.have.lengthOf(16);
+      assert.equal(typeof fingerprint, "string");
+      assert.equal(fingerprint.length, 16);
     });
 
     it("should return same fingerprint for equivalent queries", () => {
@@ -18,26 +19,26 @@ describe("Query Fingerprinting", () => {
       const fp2 = query.fingerprintSync("SELECT 1");
       const fp3 = query.fingerprintSync("select   1");
       
-      expect(fp1).to.eq(fp2);
-      expect(fp1).to.eq(fp3);
+      assert.equal(fp1, fp2);
+      assert.equal(fp1, fp3);
     });
 
     it("should return different fingerprints for different queries", () => {
       const fp1 = query.fingerprintSync("select name from users");
       const fp2 = query.fingerprintSync("select id from customers");
       
-      expect(fp1).to.not.eq(fp2);
+      assert.notEqual(fp1, fp2);
     });
 
     it("should normalize parameter values", () => {
       const fp1 = query.fingerprintSync("select * from users where id = 123");
       const fp2 = query.fingerprintSync("select * from users where id = 456");
       
-      expect(fp1).to.eq(fp2);
+      assert.equal(fp1, fp2);
     });
 
     it("should fail on invalid queries", () => {
-      expect(() => query.fingerprintSync("NOT A QUERY")).to.throw(Error);
+      assert.throws(() => query.fingerprintSync("NOT A QUERY"), Error);
     });
   });
 
@@ -47,8 +48,8 @@ describe("Query Fingerprinting", () => {
       const fpPromise = query.fingerprint(testQuery);
       const fp = await fpPromise;
 
-      expect(fpPromise).to.be.instanceof(Promise);
-      expect(fp).to.eq(query.fingerprintSync(testQuery));
+      assert.ok(fpPromise instanceof Promise);
+      assert.equal(fp, query.fingerprintSync(testQuery));
     });
 
     it("should reject on bogus queries", async () => {
@@ -57,8 +58,8 @@ describe("Query Fingerprinting", () => {
           throw new Error("should have rejected");
         },
         (e) => {
-          expect(e).instanceof(Error);
-          expect(e.message).to.match(/NOT/);
+          assert.ok(e instanceof Error);
+          assert.match(e.message, /NOT/);
         }
       );
     });

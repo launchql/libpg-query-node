@@ -1,5 +1,6 @@
 const query = require("../");
-const { expect } = require("chai");
+const { describe, it, before, after, beforeEach, afterEach } = require('node:test');
+const assert = require('node:assert/strict');
 
 function removeLocationProperties(obj) {
   if (typeof obj !== 'object' || obj === null) {
@@ -32,29 +33,29 @@ describe("Query Parsing", () => {
       const queries = ["select 1", "select null", "select ''", "select a, b"];
       const results = queries.map(query.parseSync);
       results.forEach((res) => {
-        expect(res.stmts).to.have.lengthOf(1);
+        assert.equal(res.stmts.length, 1);
       });
 
       const selectedDatas = results.map(
         (it) => it.stmts[0].stmt.SelectStmt.targetList
       );
 
-      expect(selectedDatas[0][0].ResTarget.val.A_Const.ival.ival).to.eq(1);
-      expect(selectedDatas[1][0].ResTarget.val.A_Const.isnull).to.eq(true);
-      expect(selectedDatas[2][0].ResTarget.val.A_Const.sval.sval).to.eq("");
-      expect(selectedDatas[3]).to.have.lengthOf(2);
+      assert.equal(selectedDatas[0][0].ResTarget.val.A_Const.ival.ival, 1);
+      assert.equal(selectedDatas[1][0].ResTarget.val.A_Const.isnull, true);
+      assert.equal(selectedDatas[2][0].ResTarget.val.A_Const.sval.sval, "");
+      assert.equal(selectedDatas[3].length, 2);
     });
 
     it("should support parsing multiple queries", () => {
       const res = query.parseSync("select 1; select null;");
-      expect(res.stmts.map(removeLocationProperties)).to.deep.eq([
+      assert.deepEqual(res.stmts.map(removeLocationProperties), [
         ...query.parseSync("select 1;").stmts.map(removeLocationProperties),
         ...query.parseSync("select null;").stmts.map(removeLocationProperties),
       ]);
     });
 
     it("should not parse a bogus query", () => {
-      expect(() => query.parseSync("NOT A QUERY")).to.throw(Error);
+      assert.throws(() => query.parseSync("NOT A QUERY"), Error);
     });
   });
 
@@ -64,8 +65,8 @@ describe("Query Parsing", () => {
       const resPromise = query.parse(testQuery);
       const res = await resPromise;
 
-      expect(resPromise).to.be.instanceof(Promise);
-      expect(res).to.deep.eq(query.parseSync(testQuery));
+      assert.ok(resPromise instanceof Promise);
+      assert.deepEqual(res, query.parseSync(testQuery));
     });
 
     it("should reject on bogus queries", async () => {
@@ -74,8 +75,8 @@ describe("Query Parsing", () => {
           throw new Error("should have rejected");
         },
         (e) => {
-          expect(e).instanceof(Error);
-          expect(e.message).to.match(/NOT/);
+          assert.ok(e instanceof Error);
+          assert.match(e.message, /NOT/);
         }
       );
     });

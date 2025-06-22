@@ -2,17 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// First, copy the simplified index to index.ts
-const srcDir = path.join(__dirname, '../src');
-fs.copyFileSync(
-  path.join(srcDir, 'index-simplified.ts'),
-  path.join(srcDir, 'index.ts')
-);
-
 // Run TypeScript compilation
 console.log('Compiling TypeScript...');
-execSync('tsc', { stdio: 'inherit' });
-execSync('tsc -p tsconfig.esm.json', { stdio: 'inherit' });
+const tscPath = path.join(__dirname, '../../../node_modules/.bin/tsc');
+execSync(`${tscPath}`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+execSync(`${tscPath} -p tsconfig.esm.json`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
 
 // Rename files to have correct extensions
 const wasmDir = path.join(__dirname, '../wasm');
