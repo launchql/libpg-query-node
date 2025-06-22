@@ -6,7 +6,14 @@
   "scripts": {
     "build": "pnpm --filter libpg-query build",
     "test": "pnpm --filter libpg-query test",
-    "clean": "pnpm --filter libpg-query clean"
+    "clean": "pnpm --filter libpg-query clean",
+    "build:v17": "pnpm --filter @libpg-query/v17 build",
+    "test:v17": "pnpm --filter @libpg-query/v17 test",
+    "clean:v17": "pnpm --filter @libpg-query/v17 clean",
+    "build:all": "pnpm -r build",
+    "test:all": "pnpm -r test",
+    "clean:all": "pnpm -r clean",
+    "analyze:sizes": "node scripts/analyze-sizes.js"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"

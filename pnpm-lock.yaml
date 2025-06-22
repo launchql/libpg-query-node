@@ -40,6 +40,25 @@ importers:
         specifier: ^5.3.3
         version: 5.8.3
 
+  versions/17:
+    dependencies:
+      '@pgsql/types':
+        specifier: ^17.0.0
+        version: 17.4.2
+    devDependencies:
+      chai:
+        specifier: ^3.5.0
+        version: 3.5.0
+      mocha:
+        specifier: ^11.7.0
+        version: 11.7.0
+      rimraf:
+        specifier: 5.0.0
+        version: 5.0.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.8.3
+
 packages:
 
   /@babel/code-frame@7.27.1:
@@ -129,7 +148,7 @@ packages:
       '@babel/helper-hoist-variables': 7.24.7
       '@babel/helper-split-export-declaration': 7.24.7
       '@babel/parser': 7.27.5
-      '@babel/types': 7.24.0
+      '@babel/types': 7.27.6
       debug: 4.4.1(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
@@ -744,7 +763,7 @@ packages:
   /inquirerer@1.9.1:
     resolution: {integrity: sha512-c7N3Yd9warVEpWdyX04dJUtYSad1qZFnNQYsKdqk0Av4qRg83lmxSnhWLn8Ok+UNzj87xXxo/ww0ReIL3ZO92g==}
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       deepmerge: 4.3.1
       js-yaml: 4.1.0
       minimist: 1.2.8
