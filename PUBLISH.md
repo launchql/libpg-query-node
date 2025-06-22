@@ -2,6 +2,19 @@
 
 ## Automated Publishing (Recommended)
 
+### Version Packages (libpg-query)
+```bash
+pnpm run publish:versions
+```
+
+This interactive script will:
+- Check for uncommitted changes (will error if any exist)
+- Let you select which versions to publish (or all)
+- Also includes the full package (@libpg-query/parser)
+- Ask for version bump type (patch or minor only)
+- Build, test, and publish each selected version
+- Optionally promote pg17 to latest
+
 ### Types Packages
 ```bash
 pnpm run publish:types
@@ -113,4 +126,32 @@ pnpm run publish:pkg
 npm install libpg-query@pg17   # PostgreSQL 17 specific
 npm install libpg-query@pg16   # PostgreSQL 16 specific
 npm install libpg-query        # Latest/default version
+```
+
+## Full Package (@libpg-query/parser)
+
+### Quick Publish
+```bash
+cd full
+pnpm version patch
+git add . && git commit -m "release: bump @libpg-query/parser version"
+pnpm build
+pnpm test
+pnpm publish --tag pg17
+```
+
+### Promote to latest (optional)
+```bash
+npm dist-tag add @libpg-query/parser@pg17 latest
+```
+
+### What it does
+- Publishes `@libpg-query/parser` with tag `pg17`
+- Currently based on PostgreSQL 17
+- Includes full parser with all features
+
+### Install published package
+```bash
+npm install @libpg-query/parser@pg17   # PostgreSQL 17 specific
+npm install @libpg-query/parser        # Latest version
 ```
