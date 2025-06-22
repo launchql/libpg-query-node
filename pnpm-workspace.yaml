@@ -1,5 +1,5 @@
 packages:
-  - 'libpg-query'
+  - 'full'
   - 'versions/17' 
   - 'versions/16' 
   - 'versions/15' 
