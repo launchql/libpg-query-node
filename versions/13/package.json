@@ -1,7 +1,7 @@
 {
-  "name": "@libpg-query/v16",
-  "version": "16.0.0",
-  "description": "PostgreSQL 16 query parser (parse only) - Simplified API with smaller bundle size",
+  "name": "@libpg-query/v13",
+  "version": "13.0.0",
+  "description": "PostgreSQL 13 query parser (parse only) - Simplified API with smaller bundle size",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "./wasm/index.cjs",
   "module": "./wasm/index.js",
