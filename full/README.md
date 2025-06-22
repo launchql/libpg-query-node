@@ -1,4 +1,4 @@
-# libpg-query
+# @libpg-query/parser
 
 <p align="center" width="100%">
     <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
@@ -8,7 +8,7 @@
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dt/libpg-query"></a>
    <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/npm/dw/libpg-query"/></a>
    <a href="https://github.com/launchql/libpg-query/blob/main/LICENSE-MIT"><img height="20" src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
-   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node?filename=libpg-query%2Fpackage.json"/></a><br />
+   <a href="https://www.npmjs.com/package/libpg-query"><img height="20" src="https://img.shields.io/github/package-json/v/launchql/libpg-query-node?filename=full%2Fpackage.json"/></a><br />
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml"><img height="20" src="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml/badge.svg" /></a>
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml"><img height="20" src="https://img.shields.io/badge/macOS-available-333333?logo=apple&logoColor=white" /></a>
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml"><img height="20" src="https://img.shields.io/badge/Windows-available-333333?logo=windows&logoColor=white" /></a>
@@ -35,7 +35,7 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 ## Installation
 
 ```sh
-npm install libpg-query
+npm install @libpg-query/parser
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ npm install libpg-query
 Parses the SQL and returns a Promise for the parse tree. May reject with a parse error.
 
 ```typescript
-import { parse } from 'libpg-query';
+import { parse } from '@libpg-query/parser';
 
 const result = await parse('SELECT * FROM users WHERE active = true');
 // Returns: ParseResult - parsed query object
@@ -56,7 +56,7 @@ const result = await parse('SELECT * FROM users WHERE active = true');
 Synchronous version that returns the parse tree directly. May throw a parse error.
 
 ```typescript
-import { parseSync } from 'libpg-query';
+import { parseSync } from '@libpg-query/parser';
 
 const result = parseSync('SELECT * FROM users WHERE active = true');
 // Returns: ParseResult - parsed query object
@@ -67,7 +67,7 @@ const result = parseSync('SELECT * FROM users WHERE active = true');
 Parses the contents of a PL/pgSQL function from a `CREATE FUNCTION` declaration. Returns a Promise for the parse tree.
 
 ```typescript
-import { parsePlPgSQL } from 'libpg-query';
+import { parsePlPgSQL } from '@libpg-query/parser';
 
 const functionSql = `
 CREATE FUNCTION get_user_count() RETURNS integer AS $$
@@ -85,7 +85,7 @@ const result = await parsePlPgSQL(functionSql);
 Synchronous version of PL/pgSQL parsing.
 
 ```typescript
-import { parsePlPgSQLSync } from 'libpg-query';
+import { parsePlPgSQLSync } from '@libpg-query/parser';
 
 const result = parsePlPgSQLSync(functionSql);
 ```
@@ -95,7 +95,7 @@ const result = parsePlPgSQLSync(functionSql);
 Converts a parse tree back to SQL string. Returns a Promise for the SQL string.
 
 ```typescript
-import { parse, deparse } from 'libpg-query';
+import { parse, deparse } from '@libpg-query/parser';
 
 const parseTree = await parse('SELECT * FROM users WHERE active = true');
 const sql = await deparse(parseTree);
@@ -107,7 +107,7 @@ const sql = await deparse(parseTree);
 Synchronous version that converts a parse tree back to SQL string directly.
 
 ```typescript
-import { parseSync, deparseSync } from 'libpg-query';
+import { parseSync, deparseSync } from '@libpg-query/parser';
 
 const parseTree = parseSync('SELECT * FROM users WHERE active = true');
 const sql = deparseSync(parseTree);
@@ -119,7 +119,7 @@ const sql = deparseSync(parseTree);
 Generates a unique fingerprint for a SQL query that can be used for query identification and caching. Returns a Promise for a 16-character fingerprint string.
 
 ```typescript
-import { fingerprint } from 'libpg-query';
+import { fingerprint } from '@libpg-query/parser';
 
 const fp = await fingerprint('SELECT * FROM users WHERE active = $1');
 // Returns: string - unique 16-character fingerprint (e.g., "50fde20626009aba")
@@ -130,7 +130,7 @@ const fp = await fingerprint('SELECT * FROM users WHERE active = $1');
 Synchronous version that generates a unique fingerprint for a SQL query directly.
 
 ```typescript
-import { fingerprintSync } from 'libpg-query';
+import { fingerprintSync } from '@libpg-query/parser';
 
 const fp = fingerprintSync('SELECT * FROM users WHERE active = $1');
 // Returns: string - unique 16-character fingerprint
@@ -141,7 +141,7 @@ const fp = fingerprintSync('SELECT * FROM users WHERE active = $1');
 Normalizes a SQL query by removing comments, standardizing whitespace, and converting to a canonical form. Returns a Promise for the normalized SQL string.
 
 ```typescript
-import { normalize } from 'libpg-query';
+import { normalize } from '@libpg-query/parser';
 
 const normalized = await normalize('SELECT * FROM users WHERE active = true');
 // Returns: string - normalized SQL query
@@ -152,7 +152,7 @@ const normalized = await normalize('SELECT * FROM users WHERE active = true');
 Synchronous version that normalizes a SQL query directly.
 
 ```typescript
-import { normalizeSync } from 'libpg-query';
+import { normalizeSync } from '@libpg-query/parser';
 
 const normalized = normalizeSync('SELECT * FROM users WHERE active = true');
 // Returns: string - normalized SQL query
@@ -163,7 +163,7 @@ const normalized = normalizeSync('SELECT * FROM users WHERE active = true');
 Scans (tokenizes) a SQL query and returns detailed information about each token. Returns a Promise for a ScanResult containing all tokens with their positions, types, and classifications.
 
 ```typescript
-import { scan } from 'libpg-query';
+import { scan } from '@libpg-query/parser';
 
 const result = await scan('SELECT * FROM users WHERE id = $1');
 // Returns: ScanResult - detailed tokenization information
@@ -175,7 +175,7 @@ console.log(result.tokens[0]); // { start: 0, end: 6, text: "SELECT", tokenType:
 Synchronous version that scans (tokenizes) a SQL query directly.
 
 ```typescript
-import { scanSync } from 'libpg-query';
+import { scanSync } from '@libpg-query/parser';
 
 const result = scanSync('SELECT * FROM users WHERE id = $1');
 // Returns: ScanResult - detailed tokenization information
@@ -190,7 +190,7 @@ The library provides both async and sync methods. Async methods handle initializ
 Async methods handle initialization automatically and are always safe to use:
 
 ```typescript
-import { parse, deparse, scan } from 'libpg-query';
+import { parse, deparse, scan } from '@libpg-query/parser';
 
 // These handle initialization automatically
 const result = await parse('SELECT * FROM users');
@@ -203,7 +203,7 @@ const tokens = await scan('SELECT * FROM users');
 Sync methods require explicit initialization using `loadModule()`:
 
 ```typescript
-import { loadModule, parseSync, scanSync } from 'libpg-query';
+import { loadModule, parseSync, scanSync } from '@libpg-query/parser';
 
 // Initialize first
 await loadModule();
@@ -218,7 +218,7 @@ const tokens = scanSync('SELECT * FROM users');
 Explicitly initializes the WASM module. Required before using any sync methods.
 
 ```typescript
-import { loadModule, parseSync, scanSync } from 'libpg-query';
+import { loadModule, parseSync, scanSync } from '@libpg-query/parser';
 
 // Initialize before using sync methods
 await loadModule();
