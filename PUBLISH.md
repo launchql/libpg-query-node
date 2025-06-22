@@ -39,12 +39,8 @@ VERSION=17
 # Build and publish a specific version
 cd versions/${VERSION}
 pnpm build
+pnpm test
 pnpm run publish:pkg
-
-# Or manually with custom tag
-cd versions/${VERSION}
-pnpm build
-TAG=beta node ../../scripts/publish-versions.js
 ```
 
 ### What it does

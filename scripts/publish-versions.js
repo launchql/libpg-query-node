@@ -27,7 +27,7 @@ const modified = { ...original, name: publishName };
 try {
   console.log(`📦 Publishing ${publishName}@${original.version} with tag '${distTag}'...`);
   fs.writeFileSync(pkgPath, JSON.stringify(modified, null, 2));
-  execSync(`pnpm publish --tag ${distTag}`, { stdio: 'inherit' });
+  execSync(`npm publish --tag ${distTag}`, { stdio: 'inherit' });
   console.log('✅ Publish complete.');
 } catch (err) {
   console.error('❌ Publish failed:', err.message);
