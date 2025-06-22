@@ -221,3 +221,73 @@ node scripts/publish-versions.js --versions "16" --set-version "1.9.0"
 ```
 
 This allows different PostgreSQL versions to have different semantic versions while maintaining the dist-tag system.
+
+## Main Package Publishing (@pgsql/parser)
+
+The main libpg-query package can be published as @pgsql/parser with comprehensive functionality including parse, deparse, parsePlPgSQL, scan, fingerprint, and normalize capabilities.
+
+### Publishing Main Package Examples
+
+#### Example 1: Publishing Main Package (Dry Run)
+```bash
+# Test publishing main package as @pgsql/parser
+node scripts/publish-versions.js --dry-run --main
+```
+
+**What happens:**
+1. Script backs up `libpg-query/package.json`
+2. Temporarily changes name from `libpg-query` to `@pgsql/parser`
+3. Keeps existing version (currently 17.3.3)
+4. Runs `pnpm build` in `libpg-query/`
+5. Would publish with `pnpm publish`
+6. Restores original `package.json`
+
+**Result:** Users can install with `npm install @pgsql/parser`
+
+#### Example 2: Publishing with Custom Version
+```bash
+# Publish main package with version 1.0.0
+node scripts/publish-versions.js --main --set-version "1.0.0"
+```
+
+#### Example 3: Publishing with Custom Name
+```bash
+# Publish under different organization
+node scripts/publish-versions.js --main --publish-as "@myorg/pg-parser"
+```
+
+### Dual Publishing Strategy
+
+This setup enables a dual publishing strategy:
+
+1. **Version-specific packages** (parse-only functionality):
+   - `libpg-query@pg13`, `libpg-query@pg14`, etc.
+   - Limited to parsing capabilities
+   - PostgreSQL version-specific
+
+2. **Comprehensive package** (full functionality):
+   - `@pgsql/parser` 
+   - Complete feature set: parse, deparse, parsePlPgSQL, scan, fingerprint, normalize
+   - Latest PostgreSQL version support
+
+### Installation After Publishing
+
+```bash
+# Install comprehensive parser
+npm install @pgsql/parser
+
+# Install version-specific parser
+npm install libpg-query@pg17
+```
+
+### NPM Scripts for Main Package
+
+The following convenience scripts are available for main package publishing:
+
+```bash
+# Test main package publishing (dry-run)
+pnpm publish:main:dry-run
+
+# Publish main package
+pnpm publish:main
+```

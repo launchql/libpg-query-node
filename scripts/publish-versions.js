@@ -103,6 +103,71 @@ function publishPackage(packageInfo, options = {}) {
   }
 }
 
+function publishMainPackage(options = {}) {
+  const { dryRun = false, customVersion = null, skipBuild = false, publishAs = '@pgsql/parser' } = options;
+  
+  console.log(`🚀 libpg-query Main Package Publisher (${publishAs})`);
+  console.log('='.repeat(50));
+  
+  if (dryRun) {
+    console.log('🔍 DRY RUN MODE - No actual publishing will occur\n');
+  }
+  
+  const mainPackagePath = './libpg-query';
+  const packageJsonPath = path.join(mainPackagePath, 'package.json');
+  
+  if (!fs.existsSync(packageJsonPath)) {
+    console.log('❌ Main package not found at ./libpg-query');
+    return;
+  }
+  
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const publishVersion = customVersion || packageJson.version;
+  
+  console.log(`Publishing main package as: ${publishAs}`);
+  console.log(`Version: ${publishVersion}`);
+  console.log(`Original name: ${packageJson.name}`);
+  
+  if (dryRun) {
+    console.log(`[DRY RUN] Would modify package.json: name -> "${publishAs}", version -> "${publishVersion}"`);
+    if (!skipBuild) {
+      console.log(`[DRY RUN] Would run: cd ${mainPackagePath} && pnpm build`);
+    }
+    console.log(`[DRY RUN] Would run: cd ${mainPackagePath} && pnpm publish`);
+    return;
+  }
+  
+  let backupPath;
+  try {
+    backupPath = backupPackageJson(packageJsonPath);
+    
+    const modifiedPackageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    modifiedPackageJson.name = publishAs;
+    if (customVersion) {
+      modifiedPackageJson.version = customVersion;
+    }
+    fs.writeFileSync(packageJsonPath, JSON.stringify(modifiedPackageJson, null, 2) + '\n');
+    
+    if (!skipBuild) {
+      console.log(`Building main package...`);
+      execSync('pnpm build', { cwd: mainPackagePath, stdio: 'inherit' });
+    }
+    
+    console.log(`Publishing as ${publishAs}...`);
+    execSync('pnpm publish', { cwd: mainPackagePath, stdio: 'inherit' });
+    
+    console.log(`✅ Successfully published ${publishAs} (${publishVersion})`);
+    
+  } catch (error) {
+    console.error(`❌ Failed to publish main package:`, error.message);
+    throw error;
+  } finally {
+    if (backupPath) {
+      restorePackageJson(packageJsonPath);
+    }
+  }
+}
+
 function publishAllVersions(options = {}) {
   const { dryRun = false, versions = [], customVersion = null, skipBuild = false } = options;
   
@@ -171,7 +236,9 @@ function main() {
     dryRun: args.includes('--dry-run') || args.includes('-d'),
     versions: [],
     customVersion: null,
-    skipBuild: args.includes('--skip-build')
+    skipBuild: args.includes('--skip-build'),
+    publishMain: args.includes('--main'),
+    publishAs: '@pgsql/parser'
   };
   
   const versionIndex = args.findIndex(arg => arg === '--versions' || arg === '-v');
@@ -184,14 +251,19 @@ function main() {
     options.customVersion = args[customVersionIndex + 1];
   }
   
+  const publishAsIndex = args.findIndex(arg => arg === '--publish-as');
+  if (publishAsIndex !== -1 && args[publishAsIndex + 1]) {
+    options.publishAs = args[publishAsIndex + 1];
+  }
+  
   if (args.includes('--help') || args.includes('-h')) {
     console.log(`
 libpg-query Multi-Version Publisher
 
 DESCRIPTION:
   Publishes multiple PostgreSQL version packages under the unified "libpg-query" 
-  name using dist-tags. Handles workspace naming conflicts by temporarily 
-  modifying package.json files during publishing.
+  name using dist-tags, and supports publishing the main package as @pgsql/parser.
+  Handles workspace naming conflicts by temporarily modifying package.json files.
 
 USAGE:
   node scripts/publish-versions.js [options]
@@ -201,6 +273,8 @@ OPTIONS:
   --versions, -v <list>      Comma-separated list of versions to publish (e.g., "13,16,17")
   --set-version <version>    Set custom version for all packages (e.g., "1.2.3")
   --skip-build               Skip the build step (assumes packages are already built)
+  --main                     Publish the main libpg-query package as @pgsql/parser
+  --publish-as <name>        Custom package name for main package (default: @pgsql/parser)
   --help, -h                 Show this help message
 
 EXAMPLES:
@@ -218,6 +292,15 @@ EXAMPLES:
   
   # Skip build step (if already built)
   node scripts/publish-versions.js --versions "17" --skip-build
+  
+  # Publish main package as @pgsql/parser (dry-run)
+  node scripts/publish-versions.js --dry-run --main
+  
+  # Publish main package with custom version
+  node scripts/publish-versions.js --main --set-version "1.0.0"
+  
+  # Publish main package with custom name
+  node scripts/publish-versions.js --main --publish-as "@myorg/pg-parser"
 
 PUBLISHING WORKFLOW:
   1. Script discovers all version packages in versions/ directory
@@ -245,11 +328,15 @@ SAFETY FEATURES:
     return;
   }
   
-  publishAllVersions(options);
+  if (options.publishMain) {
+    publishMainPackage(options);
+  } else {
+    publishAllVersions(options);
+  }
 }
 
 if (require.main === module) {
   main();
 }
 
-module.exports = { publishAllVersions, getVersionPackages };
+module.exports = { publishAllVersions, publishMainPackage, getVersionPackages };

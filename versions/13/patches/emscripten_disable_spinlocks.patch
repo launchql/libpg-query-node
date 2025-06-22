@@ -5,9 +5,9 @@
  
  override PG_CONFIGURE_FLAGS += -q --without-readline --without-zlib
 +
-+# Disable spinlocks when building with Emscripten
++# Disable spinlocks and thread safety when building with Emscripten
 +ifdef EMSCRIPTEN
-+override PG_CONFIGURE_FLAGS += --disable-spinlocks
++override PG_CONFIGURE_FLAGS += --disable-spinlocks --disable-thread-safety
 +endif
  
  override TEST_CFLAGS += -I. -I./vendor -g

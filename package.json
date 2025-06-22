@@ -16,9 +16,11 @@
     "analyze:sizes": "node scripts/analyze-sizes.js",
     "publish:dry-run": "node scripts/publish-versions.js --dry-run",
     "publish:versions": "node scripts/publish-versions.js",
-    "publish:help": "node scripts/publish-versions.js --help"
+    "publish:help": "node scripts/publish-versions.js --help",
+    "publish:main": "node scripts/publish-versions.js --main",
+    "publish:main:dry-run": "node scripts/publish-versions.js --dry-run --main"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"
   }
-}    
+}      
