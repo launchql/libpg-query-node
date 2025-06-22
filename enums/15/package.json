@@ -1,8 +1,8 @@
 {
-  "name": "@libpg-query/types16",
-  "version": "16.0.2",
+  "name": "@libpg-query/enums15",
+  "version": "15.6.0",
   "author": "Dan Lynch <pyramation@gmail.com>",
-  "description": "PostgreSQL AST types from the real Postgres parser",
+  "description": "PostgreSQL AST enums from the real Postgres parser",
   "main": "index.js",
   "module": "esm/index.js",
   "types": "index.d.ts",
@@ -20,8 +20,8 @@
     "url": "https://github.com/launchql/libpg-query-node/issues"
   },
   "x-publish": {
-    "publishName": "@pgsql/types",
-    "distTag": "pg16"
+    "publishName": "@pgsql/enums",
+    "distTag": "pg15"
   },
   "scripts": {
     "copy": "copyfiles -f ../../LICENSE README.md package.json dist",
@@ -29,7 +29,7 @@
     "build": "pnpm run clean && tsc && tsc -p tsconfig.esm.json && pnpm run copy",
     "build:dev": "pnpm run clean && tsc --declarationMap && tsc -p tsconfig.esm.json && pnpm run copy",
     "build:proto": "ts-node scripts/pg-proto-parser",
-    "prepare:types": "node -e \"require('../../scripts/prepare-types.js').preparePackageForPublish('.')\"",
+    "prepare:enums": "node -e \"require('../../scripts/prepare-enums.js').preparePackageForPublish('.')\"",
     "lint": "eslint . --fix"
   },
   "keywords": [],
