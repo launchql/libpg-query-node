@@ -29,6 +29,7 @@
     "build": "pnpm run clean && tsc && tsc -p tsconfig.esm.json && pnpm run copy",
     "build:dev": "pnpm run clean && tsc --declarationMap && tsc -p tsconfig.esm.json && pnpm run copy",
     "build:proto": "ts-node scripts/pg-proto-parser",
+    "prepare:types": "node -e \"require('../../scripts/prepare-types.js').preparePackageForPublish('.')\"",
     "lint": "eslint . --fix"
   },
   "keywords": [],

@@ -12,7 +12,8 @@
     "clean:all": "pnpm -r clean",
     "analyze:sizes": "node scripts/analyze-sizes.js",
     "fetch:protos": "node scripts/fetch-protos.js",
-    "build:types": "node scripts/build-types.js"
+    "build:types": "node scripts/build-types.js",
+    "prepare:types": "node scripts/prepare-types.js"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
