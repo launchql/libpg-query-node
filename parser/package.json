@@ -1,0 +1,57 @@
+{
+  "name": "@pgsql/parser",
+  "version": "1.0.0",
+  "description": "Multi-version PostgreSQL parser with dynamic version selection",
+  "main": "./wasm/index.cjs",
+  "module": "./wasm/index.js",
+  "types": "./wasm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./wasm/index.js",
+      "require": "./wasm/index.cjs",
+      "types": "./wasm/index.d.ts"
+    },
+    "./v15": {
+      "import": "./wasm/v15.js",
+      "require": "./wasm/v15.cjs",
+      "types": "./wasm/v15.d.ts"
+    },
+    "./v16": {
+      "import": "./wasm/v16.js",
+      "require": "./wasm/v16.cjs",
+      "types": "./wasm/v16.d.ts"
+    },
+    "./v17": {
+      "import": "./wasm/v17.js",
+      "require": "./wasm/v17.cjs",
+      "types": "./wasm/v17.d.ts"
+    }
+  },
+  "files": [
+    "wasm"
+  ],
+  "scripts": {
+    "clean": "rimraf wasm/*.js wasm/*.cjs wasm/*.d.ts cjs esm",
+    "build:js": "node scripts/build.js",
+    "build": "pnpm clean && pnpm build:js",
+    "test": "vitest"
+  },
+  "keywords": [
+    "postgresql",
+    "parser",
+    "sql",
+    "ast",
+    "multi-version"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@pgsql/types": "^17.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "rimraf": "^5.0.10",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}

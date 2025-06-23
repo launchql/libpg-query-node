@@ -1,7 +1,7 @@
 # libpg-query
 
 <p align="center" width="100%">
-    <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="webincubator" width="100">
+    <img src="https://github.com/launchql/libpg-query-node/assets/545047/5fd420cc-cdc6-4211-9b0f-0eca8321ba72" alt="hyperweb.io" width="100">
 </p>
 
 <p align="center" width="100%">
@@ -30,7 +30,7 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 * 🌐 **Node.js & Browser Support** – Consistent behavior in any JS environment
 * 📦 **No Native Builds Required** – No compilation, no system-specific dependencies
 * 🧠 **Spec-Accurate Parsing** – Produces faithful, standards-compliant ASTs
-* 🚀 **Production-Grade** – Millions of downloads powering 1000s of projects
+* 🚀 **Production-Grade** – Millions of downloads and trusted by countless projects and top teams
 
 ## 🚀 For Round-trip Codegen
 

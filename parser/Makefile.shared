@@ -1,0 +1,42 @@
+# Shared Makefile for building PostgreSQL parser WASM
+VERSION ?= 17
+TAG_15 = 15-4.2.4
+TAG_16 = 16-5.2.0
+TAG_17 = 17-6.1.0
+TAG = $(TAG_$(VERSION))
+
+# Emscripten flags
+EMCC_CFLAGS = -O3 -flto -s WASM=1 -s TOTAL_MEMORY=16777216 \
+              -s EXPORTED_FUNCTIONS="['_parse_sql']" \
+              -s EXPORTED_RUNTIME_METHODS="['ccall','cwrap']" \
+              -s MODULARIZE=1 \
+              -s EXPORT_NAME="LibPGQuery$(VERSION)"
+
+.PHONY: all
+all: clean download build-wasm
+
+.PHONY: download
+download:
+	@echo "Downloading libpg_query $(TAG)..."
+	curl -L "https://github.com/pganalyze/libpg_query/archive/refs/tags/$(TAG).tar.gz" | tar -xz
+	mv libpg_query-$(TAG) libpg_query
+
+.PHONY: build-wasm
+build-wasm:
+	@echo "Building WASM for PostgreSQL $(VERSION)..."
+	cd libpg_query && make build_shared
+	emcc $(EMCC_CFLAGS) \
+		-I./libpg_query \
+		./wasm_wrapper.c \
+		./libpg_query/libpg_query.a \
+		-o libpg-query.js
+
+.PHONY: clean
+clean:
+	rm -rf libpg_query libpg-query.js libpg-query.wasm
+
+.PHONY: info
+info:
+	@echo "Building PostgreSQL $(VERSION) parser"
+	@echo "Tag: $(TAG)"
+	@echo "Export name: LibPGQuery$(VERSION)"

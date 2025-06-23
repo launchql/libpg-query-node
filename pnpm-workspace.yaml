@@ -1,4 +1,5 @@
 packages:
+  - 'parser'
   - 'full'
   - 'versions/17' 
   - 'versions/16' 
