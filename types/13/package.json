@@ -7,7 +7,7 @@
   "module": "esm/index.js",
   "types": "index.d.ts",
   "homepage": "https://github.com/launchql/libpg-query-node",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "publishConfig": {
     "access": "public",
     "directory": "dist"
