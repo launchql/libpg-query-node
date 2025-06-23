@@ -364,19 +364,28 @@ The build process generates these files:
 - `wasm/index.js` - ES module exports
 - `wasm/index.cjs` - CommonJS exports with sync wrappers
 
-## Related Projects
+## Credits
 
-* [libpg_query](https://github.com/pganalyze/libpg_query)
-* [pgsql-parser](https://github.com/pyramation/pgsql-parser)
-* [pg_query](https://github.com/lfittl/pg_query)
-* [pg_query.go](https://github.com/lfittl/pg_query.go)
+Built on the excellent work of several contributors:
 
-## Credit
+* **[Dan Lynch](https://github.com/pyramation)** — official maintainer since 2018 and architect of the current implementation
+* **[Lukas Fittl](https://github.com/lfittl)** for [libpg_query](https://github.com/pganalyze/libpg_query) — the core PostgreSQL parser that powers this project
+* **[Greg Richardson](https://github.com/gregnr)** for AST guidance and pushing the transition to WASM for better interoperability
+* **[Ethan Resnick](https://github.com/ethanresnick)** for the original Node.js N-API bindings
+* **[Zac McCormick](https://github.com/zhm)** for the foundational [node-pg-query-native](https://github.com/zhm/node-pg-query-native) parser
 
-This is based on the output of [libpg_query](https://github.com/pganalyze/libpg_query). This wraps the static library output and links it into a node module for use in js.
+## Related
 
-All credit for the hard problems goes to [Lukas Fittl](https://github.com/lfittl).
+* [pgsql-parser](https://www.npmjs.com/package/pgsql-parser): The real PostgreSQL parser for Node.js, providing symmetric parsing and deparsing of SQL statements with actual PostgreSQL parser integration.
+* [pgsql-deparser](https://www.npmjs.com/package/pgsql-deparser): A streamlined tool designed for converting PostgreSQL ASTs back into SQL queries, focusing solely on deparser functionality to complement `pgsql-parser`.
+* [@pgsql/types](https://www.npmjs.com/package/@pgsql/types): Offers TypeScript type definitions for PostgreSQL AST nodes, facilitating type-safe construction, analysis, and manipulation of ASTs.
+* [@pgsql/enums](https://www.npmjs.com/package/@pgsql/enums): Provides TypeScript enum definitions for PostgreSQL constants, enabling type-safe usage of PostgreSQL enums and constants in your applications.
+* [@pgsql/utils](https://www.npmjs.com/package/@pgsql/utils): A comprehensive utility library for PostgreSQL, offering type-safe AST node creation and enum value conversions, simplifying the construction and manipulation of PostgreSQL ASTs.
+* [pg-proto-parser](https://www.npmjs.com/package/pg-proto-parser): A TypeScript tool that parses PostgreSQL Protocol Buffers definitions to generate TypeScript interfaces, utility functions, and JSON mappings for enums.
+* [libpg-query](https://github.com/launchql/libpg-query-node): The real PostgreSQL parser exposed for Node.js, used primarily in `pgsql-parser` for parsing and deparsing SQL queries.
 
-Additional thanks for the original Node.js integration work by [Ethan Resnick](https://github.com/ethanresnick).
+## Disclaimer
 
-Original [Code](https://github.com/zhm/node-pg-query-native) and [License](https://github.com/zhm/node-pg-query-native/blob/master/LICENSE.md)
+AS DESCRIBED IN THE LICENSES, THE SOFTWARE IS PROVIDED "AS IS", AT YOUR OWN RISK, AND WITHOUT WARRANTIES OF ANY KIND.
+
+No developer or entity involved in creating Software will be liable for any claims or damages whatsoever associated with your use, inability to use, or your interaction with other users of the Software code or Software CLI, including any direct, indirect, incidental, special, exemplary, punitive or consequential damages, or loss of profits, cryptocurrencies, tokens, or anything else of value.
