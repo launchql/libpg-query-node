@@ -1,6 +1,7 @@
 {
   "name": "@pgsql/parser",
   "version": "1.0.0",
+  "author": "Dan Lynch <pyramation@gmail.com>",
   "description": "Multi-version PostgreSQL parser with dynamic version selection",
   "main": "./wasm/index.cjs",
   "module": "./wasm/index.js",
@@ -43,15 +44,8 @@
     "ast",
     "multi-version"
   ],
-  "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@pgsql/types": "^17.6.0"
-  },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "rimraf": "^5.0.10",
-    "typescript": "^5.0.0",
     "vitest": "^1.0.0"
   }
 }
