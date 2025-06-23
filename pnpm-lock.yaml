@@ -79,20 +79,7 @@ importers:
         version: 0.8.0
 
   parser:
-    dependencies:
-      '@pgsql/types':
-        specifier: ^17.6.0
-        version: 17.6.0
     devDependencies:
-      '@types/node':
-        specifier: ^20.0.0
-        version: 20.19.1
-      rimraf:
-        specifier: ^5.0.10
-        version: 5.0.10
-      typescript:
-        specifier: ^5.0.0
-        version: 5.8.3
       vitest:
         specifier: ^1.0.0
         version: 1.6.1(@types/node@20.19.1)
