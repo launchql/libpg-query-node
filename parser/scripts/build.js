@@ -4,9 +4,22 @@ const { execSync } = require('child_process');
 
 // Run TypeScript compilation
 console.log('Compiling TypeScript...');
-const tscPath = path.join(__dirname, '../node_modules/.bin/tsc');
-execSync(`${tscPath}`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
-execSync(`${tscPath} -p tsconfig.esm.json`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+
+// Try to find tsc in different locations
+let tscPath = path.join(__dirname, '../node_modules/.bin/tsc');
+if (!fs.existsSync(tscPath)) {
+  // Try workspace root
+  tscPath = path.join(__dirname, '../../../node_modules/.bin/tsc');
+}
+if (!fs.existsSync(tscPath)) {
+  // Try using npx as fallback
+  console.log('Using npx to run TypeScript compiler...');
+  execSync('npx tsc', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+  execSync('npx tsc -p tsconfig.esm.json', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+} else {
+  execSync(`${tscPath}`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+  execSync(`${tscPath} -p tsconfig.esm.json`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+}
 
 // Rename files to have correct extensions
 const wasmDir = path.join(__dirname, '../wasm');

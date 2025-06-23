@@ -159,6 +159,10 @@ jobs:
       - name: Install Dependencies 🧶
         run: pnpm install
 
+      - name: Install Parser Dependencies 📦
+        run: pnpm install
+        working-directory: parser
+
       - name: Download v15 WASM Artifacts 📥
         uses: actions/download-artifact@v4
         with:
@@ -225,6 +229,10 @@ jobs:
 
       - name: Install Dependencies 🧶
         run: pnpm install
+
+      - name: Install Parser Dependencies 📦
+        run: pnpm install
+        working-directory: parser
 
       - name: Download v15 WASM Artifacts 📥
         uses: actions/download-artifact@v4
