@@ -44,6 +44,24 @@ A brief inspection of the diffs highlights:
 | 16 | JsonConstructorType, JsonEncoding, JsonFormatType, JsonValueType, PartitionStrategy |
 | 17 | JsonBehaviorType, JsonExprOp, JsonQuotes, JsonTableColumnType, JsonWrapper, MergeMatchKind, TableFuncType |
 
+### Enum value shifts
+
+The numeric assignments within several enums changed between releases. The table
+below lists notable examples.
+
+| Enum | Changed in | Notes |
+|------|------------|-------|
+| `A_Expr_Kind` | PG14 | Removed `AEXPR_OF` and `AEXPR_PAREN`, causing indices to shift |
+| `RoleSpecType` | PG14 | Added `ROLESPEC_CURRENT_ROLE` at position 1 |
+| `TableLikeOption` | PG14 | Added `CREATE_TABLE_LIKE_COMPRESSION` at position 1 |
+| `WCOKind` | PG15 | Added `WCO_RLS_MERGE_UPDATE_CHECK` and `WCO_RLS_MERGE_DELETE_CHECK` |
+| `ObjectType` | PG15 | Inserted `OBJECT_PUBLICATION_NAMESPACE` and `OBJECT_PUBLICATION_REL` before existing entries |
+| `JoinType` | PG16 | Added `JOIN_RIGHT_ANTI`, shifting subsequent values |
+| `AlterTableType` | PG16–17 | Many values renumbered; PG17 introduces `AT_SetExpression` |
+| `Token` | multiple | Token list grows each release, with new codes inserted |
+
+Counting all enums, roughly **11** changed between PG13 and PG14, **8** changed from PG14 to PG15, **8** changed from PG15 to PG16, and **10** changed from PG16 to PG17.
+
 
 ### Scalar node changes
 
