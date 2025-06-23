@@ -82,6 +82,14 @@ async function main() {
     console.log(`   - Full package (${bump} bump)`);
   }
 
+  // Ask about building
+  const skipBuild = await question('\nSkip build step? (y/N): ');
+  const shouldBuild = skipBuild.toLowerCase() !== 'y';
+
+  if (!shouldBuild) {
+    console.log('⚠️  Build step will be skipped. Make sure packages are already built!');
+  }
+
   const confirm = await question('\nProceed? (y/N): ');
   if (confirm.toLowerCase() !== 'y') {
     console.log('❌ Publishing cancelled.');
@@ -106,11 +114,15 @@ async function main() {
       execSync(`git add package.json`, { cwd: versionPath });
       execSync(`git commit -m "release: bump libpg-query v${version} version"`, { stdio: 'inherit' });
       
-      // Build
-      console.log(`   🔨 Building...`);
-      execSync('pnpm build', { cwd: versionPath, stdio: 'inherit' });
+      // Build (if not skipped)
+      if (shouldBuild) {
+        console.log(`   🔨 Building...`);
+        execSync('pnpm build', { cwd: versionPath, stdio: 'inherit' });
+      } else {
+        console.log(`   ⏭️  Skipping build step`);
+      }
       
-      // Test
+      // Test (always run)
       console.log(`   🧪 Running tests...`);
       execSync('pnpm test', { cwd: versionPath, stdio: 'inherit' });
       
@@ -144,17 +156,22 @@ async function main() {
       execSync(`git add package.json`, { cwd: fullPath });
       execSync(`git commit -m "release: bump @libpg-query/parser version"`, { stdio: 'inherit' });
       
-      // Build
-      console.log(`   🔨 Building...`);
-      execSync('pnpm build', { cwd: fullPath, stdio: 'inherit' });
+      // Build (if not skipped)
+      if (shouldBuild) {
+        console.log(`   🔨 Building...`);
+        execSync('pnpm build', { cwd: fullPath, stdio: 'inherit' });
+      } else {
+        console.log(`   ⏭️  Skipping build step`);
+      }
       
-      // Test
+      // Test (always run)
       console.log(`   🧪 Running tests...`);
       execSync('pnpm test', { cwd: fullPath, stdio: 'inherit' });
       
       // Publish with pg17 tag
       console.log(`   📤 Publishing to npm with pg17 tag...`);
-      execSync('pnpm publish --tag pg17', { cwd: fullPath, stdio: 'inherit' });
+      // use npm so staged changes are OK
+      execSync('npm publish --tag pg17', { cwd: fullPath, stdio: 'inherit' });
       
       console.log(`   ✅ Full package published successfully with pg17 tag!`);
     } catch (error) {

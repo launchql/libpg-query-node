@@ -12,7 +12,9 @@ This interactive script will:
 - Let you select which versions to publish (or all)
 - Also includes the full package (@libpg-query/parser)
 - Ask for version bump type (patch or minor only)
-- Build, test, and publish each selected version
+- Ask if you want to skip the build step (useful if already built)
+- Always run tests (even if build is skipped)
+- Publish each selected version
 - Optionally promote pg17 to latest
 
 ### Types Packages

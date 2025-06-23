@@ -27,6 +27,7 @@ const modified = { ...original, name: publishName };
 try {
   console.log(`📦 Publishing ${publishName}@${original.version} with tag '${distTag}'...`);
   fs.writeFileSync(pkgPath, JSON.stringify(modified, null, 2));
+  // npm OK here since it's version, not dist/ package...
   execSync(`npm publish --tag ${distTag}`, { stdio: 'inherit' });
   console.log('✅ Publish complete.');
 } catch (err) {
