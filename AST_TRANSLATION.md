@@ -38,6 +38,14 @@ Trade-offs:
 - Performance hit due to serializing and parsing again
 - Potential loss of fidelity if certain node properties are not round-trippable
 
+### Handling enums
+
+Older versions of `libpg_query` (PG13 and PG14) emitted numeric codes for enum
+fields. From PG15 onward the JSON output uses the enum **name** as a string.
+Translation code must therefore convert numeric enums to their string
+equivalents when upgrading from PG13/14. When moving between PG15–17 the
+representations already match.
+
 ## Translation step ordering
 
 ### Sequential upgrades

@@ -72,6 +72,18 @@ These changes indicate incremental evolution in the ASTs, with PG16 introducing 
 | `varnosyn` & `varattnosyn` | `varnullingrels` | Var | PG16 |
 | `aggtranstype` | `aggtransno` | Aggref | PG16 |
 
+### Enum representation changes
+
+Historically libpg_query exposed enum fields in the JSON output as **numeric**
+codes. Starting with the PG15 bindings this switched to returning the **string**
+name of each enum value. The TypeScript type definitions reflect string literal
+unions across all versions, but the underlying JSON changed in PG15.
+
+| Version | Enum format |
+|---------|-------------|
+| 13–14   | integers    |
+| 15–17   | strings     |
+
 
 ## Version similarity
 
