@@ -37,6 +37,19 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 > 🎯 **Want to parse + deparse (full round trip)?**  
 > We highly recommend using [`pgsql-parser`](https://github.com/launchql/pgsql-parser) which leverages a pure TypeScript deparser that has been battle-tested against 23,000+ SQL statements and is built on top of libpg-query.
 
+### 🔀 Multi-Version Support with @pgsql/parser
+
+> **Need to support multiple PostgreSQL versions at runtime?**  
+> Use [`@pgsql/parser`](https://github.com/launchql/libpg-query-node/tree/main/parser) for dynamic version selection — parse SQL with PostgreSQL 15, 16, or 17 in a single package!
+> 
+> ```typescript
+> import { parse } from '@pgsql/parser';
+> 
+> // Parse with specific PostgreSQL version
+> const result15 = await parse('SELECT * FROM users', 15);
+> const result17 = await parse('SELECT * FROM users', 17);
+> ```
+
 ## Installation
 
 ```sh
@@ -61,6 +74,7 @@ This repository contains multiple packages to support different PostgreSQL versi
 | Package | Description | PostgreSQL Versions | npm Package |
 |---------|-------------|---------------------|-------------|
 | **[libpg-query](https://github.com/launchql/libpg-query-node/tree/main/versions)** | Lightweight parser (parse only) | 13, 14, 15, 16, 17 | [`libpg-query`](https://www.npmjs.com/package/libpg-query) |
+| **[@pgsql/parser](https://github.com/launchql/libpg-query-node/tree/main/parser)** | Multi-version parser (runtime selection) | 15, 16, 17 | [`@pgsql/parser`](https://www.npmjs.com/package/@pgsql/parser) |
 | **[@pgsql/types](https://github.com/launchql/libpg-query-node/tree/main/types)** | TypeScript type definitions | 13, 14, 15, 16, 17 | [`@pgsql/types`](https://www.npmjs.com/package/@pgsql/types) |
 | **[@pgsql/enums](https://github.com/launchql/libpg-query-node/tree/main/enums)** | TypeScript enum definitions | 13, 14, 15, 16, 17 | [`@pgsql/enums`](https://www.npmjs.com/package/@pgsql/enums) |
 | **[@libpg-query/parser](https://github.com/launchql/libpg-query-node/tree/main/full)** | Full parser with all features | 17 only | [`@libpg-query/parser`](https://www.npmjs.com/package/@libpg-query/parser) |
@@ -85,6 +99,7 @@ npm install @pgsql/enums
 ### Which Package Should I Use?
 
 - **Just need to parse SQL?** → Use `libpg-query` (lightweight, all PG versions)
+- **Need multiple versions at runtime?** → Use `@pgsql/parser` (dynamic version selection)
 - **Need TypeScript types?** → Add `@pgsql/types` and/or `@pgsql/enums`
 - **Need fingerprint, normalize, or deparse?** → Use `@libpg-query/parser` (PG 17 only)
 
@@ -94,6 +109,7 @@ npm install @pgsql/enums
 For detailed API documentation and usage examples, see the package-specific READMEs:
 
 - **libpg-query** - [Parser API Documentation](https://github.com/launchql/libpg-query-node/tree/main/versions/17)
+- **@pgsql/parser** - [Multi-Version Parser Documentation](https://github.com/launchql/libpg-query-node/tree/main/parser)
 - **@pgsql/types** - [Types Documentation](https://github.com/launchql/libpg-query-node/tree/main/types/17)
 - **@pgsql/enums** - [Enums Documentation](https://github.com/launchql/libpg-query-node/tree/main/enums/17)
 - **@libpg-query/parser** - [Full Parser Documentation](https://github.com/launchql/libpg-query-node/tree/main/full)
@@ -183,7 +199,7 @@ Built on the excellent work of several contributors:
 
 * **[Dan Lynch](https://github.com/pyramation)** — official maintainer since 2018 and architect of the current implementation
 * **[Lukas Fittl](https://github.com/lfittl)** for [libpg_query](https://github.com/pganalyze/libpg_query) — the core PostgreSQL parser that powers this project
-* **[Greg Richardson](https://github.com/gregnr)** for AST guidance and pushing the transition to WASM for better interoperability
+* **[Greg Richardson](https://github.com/gregnr)** for AST guidance and pushing the transition to WASM and multiple PG runtimes for better interoperability
 * **[Ethan Resnick](https://github.com/ethanresnick)** for the original Node.js N-API bindings
 * **[Zac McCormick](https://github.com/zhm)** for the foundational [node-pg-query-native](https://github.com/zhm/node-pg-query-native) parser
 
@@ -191,6 +207,7 @@ Built on the excellent work of several contributors:
 
 * [pgsql-parser](https://www.npmjs.com/package/pgsql-parser): The real PostgreSQL parser for Node.js, providing symmetric parsing and deparsing of SQL statements with actual PostgreSQL parser integration.
 * [pgsql-deparser](https://www.npmjs.com/package/pgsql-deparser): A streamlined tool designed for converting PostgreSQL ASTs back into SQL queries, focusing solely on deparser functionality to complement `pgsql-parser`.
+* [@pgsql/parser](https://www.npmjs.com/package/@pgsql/parser): Multi-version PostgreSQL parser with dynamic version selection at runtime, supporting PostgreSQL 15, 16, and 17 in a single package.
 * [@pgsql/types](https://www.npmjs.com/package/@pgsql/types): Offers TypeScript type definitions for PostgreSQL AST nodes, facilitating type-safe construction, analysis, and manipulation of ASTs.
 * [@pgsql/enums](https://www.npmjs.com/package/@pgsql/enums): Provides TypeScript enum definitions for PostgreSQL constants, enabling type-safe usage of PostgreSQL enums and constants in your applications.
 * [@pgsql/utils](https://www.npmjs.com/package/@pgsql/utils): A comprehensive utility library for PostgreSQL, offering type-safe AST node creation and enum value conversions, simplifying the construction and manipulation of PostgreSQL ASTs.
