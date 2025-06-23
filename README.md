@@ -35,7 +35,7 @@ Built to power [pgsql-parser](https://github.com/pyramation/pgsql-parser), this 
 ## 🚀 For Round-trip Codegen
 
 > 🎯 **Want to parse + deparse (full round trip)?**  
-> We highly recommend using [`pgsql-parser`](https://github.com/launchql/pgsql-parser) which leverages a pure TypeScript deparser that has been battle-tested against 21,000+ SQL statements and is built on top of libpg-query.
+> We highly recommend using [`pgsql-parser`](https://github.com/launchql/pgsql-parser) which leverages a pure TypeScript deparser that has been battle-tested against 23,000+ SQL statements and is built on top of libpg-query.
 
 ## Installation
 

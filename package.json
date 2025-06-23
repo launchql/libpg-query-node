@@ -18,6 +18,7 @@
     "prepare:enums": "node scripts/prepare-enums.js",
     "publish:types": "node scripts/publish-types.js",
     "publish:enums": "node scripts/publish-enums.js",
+    "publish:versions": "node scripts/publish-versions.js",
     "update:versions-types": "node scripts/update-versions-types.js"
   },
   "devDependencies": {
