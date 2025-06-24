@@ -1,10 +1,4 @@
 node_modules/
-dist/
-dist-esm/
+wasm/
 *.log
 .DS_Store
-src/wasm/*.wasm
-src/wasm/*.js
-src/types/15/
-src/types/16/
-src/types/17/

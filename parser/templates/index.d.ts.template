@@ -1,0 +1,30 @@
+// TypeScript definitions for @pgsql/parser
+
+export interface ParseResult {
+  parse_tree?: any;
+  stderr_buffer?: string;
+  error?: {
+    message: string;
+    funcname: string;
+    filename: string;
+    lineno: number;
+    cursorpos: number;
+    context?: string;
+  };
+}
+
+export declare class Parser {
+  constructor(version?: ${VERSION_UNION});
+  parse(query: string): Promise<ParseResult>;
+  parseSync(query: string): ParseResult;
+  fingerprint(query: string): Promise<string>;
+  normalize(query: string): Promise<string>;
+}
+
+export default Parser;
+
+// Version-specific exports
+${VERSION_TYPE_EXPORTS}
+
+// Re-export types from the default version
+export * from './v${DEFAULT_VERSION}/types';

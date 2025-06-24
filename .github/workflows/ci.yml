@@ -163,6 +163,18 @@ jobs:
         run: pnpm install
         working-directory: parser
 
+      - name: Download v13 WASM Artifacts 📥
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-artifacts-v13
+          path: versions/13/wasm/
+
+      - name: Download v14 WASM Artifacts 📥
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-artifacts-v14
+          path: versions/14/wasm/
+
       - name: Download v15 WASM Artifacts 📥
         uses: actions/download-artifact@v4
         with:
@@ -180,6 +192,15 @@ jobs:
         with:
           name: wasm-artifacts-v17
           path: versions/17/wasm/
+
+      - name: Build Types Packages 🏗
+        run: |
+          for version in 13 14 15 16 17; do
+            echo "Building types for v${version}..."
+            cd types/${version}
+            pnpm run build
+            cd ../..
+          done
 
       - name: Build Parser 🏗
         run: pnpm run build
@@ -233,6 +254,18 @@ jobs:
       - name: Install Parser Dependencies 📦
         run: pnpm install
         working-directory: parser
+
+      - name: Download v13 WASM Artifacts 📥
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-artifacts-v13
+          path: versions/13/wasm/
+
+      - name: Download v14 WASM Artifacts 📥
+        uses: actions/download-artifact@v4
+        with:
+          name: wasm-artifacts-v14
+          path: versions/14/wasm/
 
       - name: Download v15 WASM Artifacts 📥
         uses: actions/download-artifact@v4

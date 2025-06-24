@@ -25,3 +25,4 @@ libpg_query/**/*.proto
 npm-debug.log
 .claude
 .openhands/
+.DS_Store
