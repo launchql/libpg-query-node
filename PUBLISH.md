@@ -41,6 +41,39 @@ This interactive script will:
 - Build, prepare, and publish each selected version
 - Optionally promote pg17 to latest
 
+### Parser Package
+
+The parser package supports multiple build configurations:
+
+#### Full Build (all versions 13-17)
+```bash
+pnpm run publish:parser
+# or with specific build type
+PARSER_BUILD_TYPE=full pnpm run publish:parser
+```
+
+#### LTS Build (versions 16-17)
+```bash
+PARSER_BUILD_TYPE=lts pnpm run publish:parser
+```
+
+#### Latest Only (version 17)
+```bash
+PARSER_BUILD_TYPE=latest pnpm run publish:parser
+```
+
+#### Legacy Build (versions 13-15)
+```bash
+PARSER_BUILD_TYPE=legacy pnpm run publish:parser
+```
+
+This command will:
+- Navigate to the parser directory
+- Build the parser with the specified configuration
+- Publish the @pgsql/parser package to npm with appropriate dist-tag
+- Note: You should manually bump the version and commit changes before running this
+- **Prerequisite**: The version packages must be built first as the parser copies their WASM files during build
+
 ## Manual Publishing
 
 ### Types Packages
@@ -156,4 +189,108 @@ npm dist-tag add @libpg-query/parser@pg17 latest
 ```bash
 npm install @libpg-query/parser@pg17   # PostgreSQL 17 specific
 npm install @libpg-query/parser        # Latest version
+```
+
+## Parser Package (@pgsql/parser)
+
+### Quick Publish
+```bash
+cd parser
+pnpm version patch
+git add . && git commit -m "release: bump @pgsql/parser version"
+pnpm build
+pnpm test
+pnpm publish
+```
+
+### Build Configurations
+
+The parser package is now a simple distribution package that copies pre-built WASM files. No TypeScript compilation needed!
+
+#### Available Build Types:
+- **full**: All versions (13, 14, 15, 16, 17) - Default
+- **lts**: LTS versions only (16, 17)
+- **latest**: Latest version only (17)
+- **legacy**: Legacy versions (13, 14, 15)
+
+```bash
+# Full build (default)
+npm run build
+
+# Specific builds
+npm run build:lts
+npm run build:latest
+npm run build:legacy
+
+# Or using environment variable
+PARSER_BUILD_TYPE=lts npm run build
+```
+
+### Build Process
+The simplified parser package:
+1. Copies WASM files from the `versions/*/wasm/` directories
+2. Generates index files from templates based on the build configuration
+3. Creates version-specific export files
+4. Creates a `build-info.json` file documenting what was included
+
+The templates automatically adjust to include only the versions specified in the build configuration, ensuring proper TypeScript types and runtime validation.
+
+**Note**: Build scripts use `cross-env` for Windows compatibility.
+
+**Important**: Before building the parser package, ensure that the version packages are built first:
+```bash
+# Build all version packages first
+pnpm build  # builds libpg-query versions
+
+# Then build the parser with desired configuration
+cd parser
+npm run build:lts  # or build:full, build:latest, etc.
+```
+
+### Publishing with Different Tags
+
+```bash
+# Publish full version as latest
+npm run build:full
+npm publish
+
+# Publish LTS version with lts tag
+npm run build:lts
+npm publish --tag lts
+
+# Publish legacy version with legacy tag
+npm run build:legacy
+npm publish --tag legacy
+```
+
+### What it does
+- Publishes `@pgsql/parser` - a multi-version PostgreSQL parser with dynamic version selection
+- Provides a unified interface to work with multiple PostgreSQL versions
+- Supports different build configurations for different use cases
+- Includes both CommonJS and ESM builds
+- Exports version-specific parsers via subpaths (e.g., `@pgsql/parser/v17`)
+
+### Install published package
+```bash
+# Install latest (full build)
+npm install @pgsql/parser
+
+# Install LTS version
+npm install @pgsql/parser@lts
+
+# Install legacy version
+npm install @pgsql/parser@legacy
+
+# Use version-specific imports:
+# import { parse } from '@pgsql/parser/v17'
+# import { parse } from '@pgsql/parser/v16'
+# import { parse } from '@pgsql/parser/v13'
+```
+
+### Alternative: Using npm scripts from root
+```bash
+# From the repository root:
+pnpm build:parser    # Build the parser package (full build)
+PARSER_BUILD_TYPE=lts pnpm build:parser  # Build LTS version
+pnpm publish:parser  # Publish the parser package
 ```

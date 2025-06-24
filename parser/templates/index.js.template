@@ -1,0 +1,68 @@
+// Main entry point for @pgsql/parser
+// Provides dynamic version loading for PostgreSQL parsers
+
+export class Parser {
+  constructor(version = ${DEFAULT_VERSION}) {
+    if (![${VERSIONS}].includes(version)) {
+      throw new Error(`Unsupported PostgreSQL version: ${version}. Supported versions are ${VERSIONS}.`);
+    }
+    this.version = version;
+    this.parser = null;
+  }
+
+  async loadParser() {
+    if (this.parser) return;
+    
+    const module = await import(`./v${this.version}/index.js`);
+    this.parser = module;
+    
+    if (this.parser.loadModule) {
+      await this.parser.loadModule();
+    }
+  }
+
+  async parse(query) {
+    await this.loadParser();
+    try {
+      return this.parser.parse(query);
+    } catch (error) {
+      throw new Error(`Parse error in PostgreSQL ${this.version}: ${error.message}`);
+    }
+  }
+
+  parseSync(query) {
+    if (!this.parser) {
+      throw new Error('Parser not loaded. Call parse() first or use parseSync after loading.');
+    }
+    if (!this.parser.parseSync) {
+      throw new Error(`parseSync not supported in PostgreSQL ${this.version}`);
+    }
+    try {
+      return this.parser.parseSync(query);
+    } catch (error) {
+      throw new Error(`Parse error in PostgreSQL ${this.version}: ${error.message}`);
+    }
+  }
+
+  async fingerprint(query) {
+    await this.loadParser();
+    if (this.parser.fingerprint) {
+      return this.parser.fingerprint(query);
+    }
+    throw new Error(`Fingerprint not supported in PostgreSQL ${this.version}`);
+  }
+
+  async normalize(query) {
+    await this.loadParser();
+    if (this.parser.normalize) {
+      return this.parser.normalize(query);
+    }
+    throw new Error(`Normalize not supported in PostgreSQL ${this.version}`);
+  }
+}
+
+// Re-export all versions for direct access
+${VERSION_EXPORTS}
+
+// Default export
+export default Parser;
