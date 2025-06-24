@@ -108,10 +108,10 @@ config.versions.forEach(version => {
       console.log(`Copying ${file} for v${version}...`);
       fs.copyFileSync(sourcePath, destPath);
       
-      // Update index.d.ts to use local types
-      if (file === 'index.d.ts') {
+      // Update any references to @pgsql/types to use local types
+      if (file.endsWith('.js') || file.endsWith('.cjs') || file.endsWith('.d.ts')) {
         let content = fs.readFileSync(destPath, 'utf8');
-        content = content.replace('export * from "@pgsql/types";', 'export * from "./types";');
+        content = content.replace(/@pgsql\/types/g, './types');
         fs.writeFileSync(destPath, content);
       }
     }
