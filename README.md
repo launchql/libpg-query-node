@@ -104,6 +104,14 @@ npm install @pgsql/enums
 - **Need fingerprint, normalize, or deparse?** → Use `@libpg-query/parser` (PG 17 only)
 
 
+### Enum Output Format
+
+Earlier releases of `libpg_query` (PostgreSQL 13 and 14) emit **numeric** codes
+for enum fields in the parsed AST JSON. Starting with PG15 the JSON instead uses
+the **string name** of each enum value. When translating ASTs from older
+versions you must convert these integers to their corresponding strings.
+
+
 ## API Documentation
 
 For detailed API documentation and usage examples, see the package-specific READMEs:

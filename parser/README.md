@@ -103,6 +103,13 @@ Each version export provides:
 - `parse(query)`: Parse a query (async)
 - `parseSync(query)`: Parse a query (sync, requires loadModule first)
 
+### Enum Output Format
+
+Parsing with PostgreSQL 13 and 14 returns enum fields as **integers** in the
+resulting AST JSON. From PG15 onward those fields contain the **string names** of
+the enum values. When upgrading ASTs across versions you may need to convert
+numeric enums from older parsers into strings.
+
 ## Credits
 
 Built on the excellent work of several contributors:

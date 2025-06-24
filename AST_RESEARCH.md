@@ -125,6 +125,20 @@ Because PG16 introduced large changes, direct translation from PG13 to PG17 may 
 | 16 | JsonAggConstructor, JsonArrayAgg, JsonArrayConstructor, JsonArrayQueryConstructor, JsonConstructorExpr, JsonFormat, JsonIsPredicate, JsonKeyValue, JsonObjectAgg, JsonObjectConstructor, JsonOutput, JsonReturning, JsonValueExpr, RTEPermissionInfo |
 | 17 | JsonArgument, JsonBehavior, JsonExpr, JsonFuncExpr, JsonParseExpr, JsonScalarExpr, JsonSerializeExpr, JsonTable, JsonTableColumn, JsonTablePath, JsonTablePathScan, JsonTablePathSpec, JsonTableSiblingJoin, MergeSupportFunc, SinglePartitionSpec, WindowFuncRunCondition |
 
+## Generating AST Samples
+
+To fully understand structural differences we will compile **libpg-query** for
+each supported PostgreSQL version and capture JSON output for a library of
+representative queries. This multi-runtime parser setup lets us record actual
+ASTs from PG13 through PG17. These samples are essential for training upgrade
+logic and verifying enum representations:
+
+- PG13 and PG14 output enum values as integers
+- PG15+ output enums as their string names
+
+The generated samples will live under a dedicated directory and can be compared
+programmatically to spot changes beyond what the protobuf types reveal.
+
 
 ## Conclusion
 
