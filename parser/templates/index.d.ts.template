@@ -13,14 +13,6 @@ export interface ParseResult {
   };
 }
 
-export interface Parser {
-  parse(query: string): ParseResult;
-  parseSync?(query: string): ParseResult;
-  fingerprint?(query: string): string;
-  normalize?(query: string): string;
-  loadModule?(): Promise<void>;
-}
-
 export declare class Parser {
   constructor(version?: ${VERSION_UNION});
   parse(query: string): Promise<ParseResult>;
@@ -33,3 +25,6 @@ export default Parser;
 
 // Version-specific exports
 ${VERSION_TYPE_EXPORTS}
+
+// Re-export types from the default version
+export * from './v${DEFAULT_VERSION}/types';

@@ -107,8 +107,40 @@ config.versions.forEach(version => {
     if (fs.statSync(sourcePath).isFile()) {
       console.log(`Copying ${file} for v${version}...`);
       fs.copyFileSync(sourcePath, destPath);
+      
+      // Update index.d.ts to use local types
+      if (file === 'index.d.ts') {
+        let content = fs.readFileSync(destPath, 'utf8');
+        content = content.replace('export * from "@pgsql/types";', 'export * from "./types";');
+        fs.writeFileSync(destPath, content);
+      }
     }
   });
+  
+  // Copy types files
+  const typesSourceDir = path.join(__dirname, `../../types/${version}/dist`);
+  const typesTargetDir = path.join(versionWasmDir, 'types');
+  
+  if (fs.existsSync(typesSourceDir)) {
+    // Create types directory
+    if (!fs.existsSync(typesTargetDir)) {
+      fs.mkdirSync(typesTargetDir, { recursive: true });
+    }
+    
+    // Copy essential type files
+    const typeFiles = ['index.d.ts', 'index.js', 'types.d.ts', 'types.js', 'enums.d.ts', 'enums.js'];
+    typeFiles.forEach(file => {
+      const sourcePath = path.join(typesSourceDir, file);
+      const destPath = path.join(typesTargetDir, file);
+      
+      if (fs.existsSync(sourcePath)) {
+        console.log(`Copying types/${file} for v${version}...`);
+        fs.copyFileSync(sourcePath, destPath);
+      }
+    });
+  } else {
+    console.warn(`Warning: Types for version ${version} not found at ${typesSourceDir}`);
+  }
 });
 
 // Generate files from templates

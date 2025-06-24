@@ -229,11 +229,13 @@ PARSER_BUILD_TYPE=lts npm run build
 ### Build Process
 The simplified parser package:
 1. Copies WASM files from the `versions/*/wasm/` directories
-2. Generates index files from templates based on the build configuration
-3. Creates version-specific export files
-4. Creates a `build-info.json` file documenting what was included
+2. Copies TypeScript type definitions from the `types/*/dist/` directories
+3. Updates import paths to use local types instead of `@pgsql/types`
+4. Generates index files from templates based on the build configuration
+5. Creates version-specific export files
+6. Creates a `build-info.json` file documenting what was included
 
-The templates automatically adjust to include only the versions specified in the build configuration, ensuring proper TypeScript types and runtime validation.
+The templates automatically adjust to include only the versions specified in the build configuration, ensuring proper TypeScript types and runtime validation. The package is completely self-contained with all necessary types bundled.
 
 **Note**: Build scripts use `cross-env` for Windows compatibility.
 
