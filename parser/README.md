@@ -13,12 +13,19 @@
    <a href="https://github.com/launchql/libpg-query-node/actions/workflows/ci.yml"><img height="20" src="https://img.shields.io/badge/Linux-available-333333?logo=linux&logoColor=white" /></a>
 </p>
 
-Multi-version PostgreSQL parser with dynamic version selection. This package provides a unified interface to parse PostgreSQL queries using different parser versions (15, 16, 17).
+Multi-version PostgreSQL parser with dynamic version selection. This package provides a unified interface to parse PostgreSQL queries using different parser versions (13, 14, 15, 16, 17).
 
 ## Installation
 
 ```bash
+# Install latest (full build with all versions)
 npm install @pgsql/parser
+
+# Install LTS version (PostgreSQL 16-17 only)
+npm install @pgsql/parser@lts
+
+# Install legacy version (PostgreSQL 13-15 only)
+npm install @pgsql/parser@legacy
 ```
 
 ## Usage
@@ -71,12 +78,12 @@ if (result.error) {
 
 ## API
 
-### `parse(query: string, version?: 15 | 16 | 17): Promise<ParseResult>`
+### `parse(query: string, version?: 13 | 14 | 15 | 16 | 17): Promise<ParseResult>`
 
 Parse a SQL query with the specified PostgreSQL version.
 
 - `query`: The SQL query string to parse
-- `version`: PostgreSQL version (15, 16, or 17). Defaults to 17.
+- `version`: PostgreSQL version (13, 14, 15, 16, or 17). Defaults to 17.
 
 Returns a promise that resolves to:
 - On success: `{ version: number, result: AST }`
@@ -88,12 +95,14 @@ Class for creating a parser instance with a specific version.
 
 ```javascript
 const parser = new PgParser(version);
-await parser.parse(query);
-parser.parseSync(query); // Only available after first parse()
+const result = await parser.parse(query);
+const syncResult = parser.parseSync(query); // Only available after first parse()
 ```
 
 ## Version Exports
 
+- `@pgsql/parser/v13` - PostgreSQL 13 parser
+- `@pgsql/parser/v14` - PostgreSQL 14 parser
 - `@pgsql/parser/v15` - PostgreSQL 15 parser
 - `@pgsql/parser/v16` - PostgreSQL 16 parser  
 - `@pgsql/parser/v17` - PostgreSQL 17 parser
@@ -102,6 +111,20 @@ Each version export provides:
 - `loadModule()`: Initialize the WASM module
 - `parse(query)`: Parse a query (async)
 - `parseSync(query)`: Parse a query (sync, requires loadModule first)
+
+## Build Configurations
+
+This package supports different build configurations for different use cases:
+
+- **full** (default): All versions (13, 14, 15, 16, 17)
+- **lts**: LTS versions only (16, 17)
+- **latest**: Latest version only (17)
+- **legacy**: Legacy versions (13, 14, 15)
+
+When installing from npm, you can choose the appropriate build using tags:
+- `npm install @pgsql/parser` - Full build
+- `npm install @pgsql/parser@lts` - LTS build
+- `npm install @pgsql/parser@legacy` - Legacy build
 
 ## Credits
 

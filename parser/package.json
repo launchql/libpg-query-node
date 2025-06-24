@@ -12,6 +12,16 @@
       "require": "./wasm/index.cjs",
       "types": "./wasm/index.d.ts"
     },
+    "./v13": {
+      "import": "./wasm/v13.js",
+      "require": "./wasm/v13.cjs",
+      "types": "./wasm/v13.d.ts"
+    },
+    "./v14": {
+      "import": "./wasm/v14.js",
+      "require": "./wasm/v14.cjs",
+      "types": "./wasm/v14.d.ts"
+    },
     "./v15": {
       "import": "./wasm/v15.js",
       "require": "./wasm/v15.cjs",
@@ -29,13 +39,17 @@
     }
   },
   "files": [
-    "wasm"
+    "wasm/**/*"
   ],
   "scripts": {
-    "clean": "rimraf wasm/*.js wasm/*.cjs wasm/*.d.ts cjs esm",
-    "build:js": "node scripts/build.js",
-    "build": "pnpm clean && pnpm build:js",
-    "test": "vitest"
+    "clean": "rimraf wasm",
+    "prepare": "node scripts/prepare.js",
+    "build": "npm run clean && npm run prepare",
+    "build:full": "npm run clean && cross-env PARSER_BUILD_TYPE=full npm run prepare",
+    "build:lts": "npm run clean && cross-env PARSER_BUILD_TYPE=lts npm run prepare",
+    "build:latest": "npm run clean && cross-env PARSER_BUILD_TYPE=latest npm run prepare",
+    "build:legacy": "npm run clean && cross-env PARSER_BUILD_TYPE=legacy npm run prepare",
+    "test": "node --test test/*.test.js"
   },
   "keywords": [
     "postgresql",
@@ -46,6 +60,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "vitest": "^1.0.0"
+    "cross-env": "^7.0.3",
+    "rimraf": "^5.0.0"
   }
 }
