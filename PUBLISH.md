@@ -249,6 +249,13 @@ cd parser
 npm run build:lts  # or build:full, build:latest, etc.
 ```
 
+### Types Bundling
+The parser build process automatically:
+1. Copies TypeScript type definitions from `types/*/dist/` directories
+2. Places them in `wasm/v*/types/` for each version
+3. Updates all import references from `@pgsql/types` to `./types`
+4. Makes the package self-contained without external type dependencies
+
 ### Publishing with Different Tags
 
 ```bash
@@ -271,6 +278,7 @@ npm publish --tag legacy
 - Supports different build configurations for different use cases
 - Includes both CommonJS and ESM builds
 - Exports version-specific parsers via subpaths (e.g., `@pgsql/parser/v17`)
+- **Self-contained**: Bundles TypeScript types locally (no external @pgsql/types dependency)
 
 ### Install published package
 ```bash
