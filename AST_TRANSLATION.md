@@ -68,3 +68,7 @@ Sequential upgrades favor simplicity and reuse. The majority of changes between 
 4. Optionally develop a proof-of-concept reparse approach for comparison, but keep the functional pipeline as the core strategy.
 
 By building translation functions per version we keep the code maintainable and make it easy to add support for future releases.
+
+## Should we implement a deparser?
+
+The nested deparser approach would walk the old AST, generate SQL, and parse it with the newer parser. This mirrors the visitor pattern and can adapt automatically to certain changes, but it adds overhead and may drop information that doesn't round-trip cleanly. Maintaining explicit transform functions keeps upgrades deterministic and easy to test. A deparser prototype might help with tricky cases, yet the primary strategy should be these per-version transform functions.
