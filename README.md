@@ -185,6 +185,18 @@ pnpm run test
 - Ensure Emscripten SDK is properly installed and configured
 - Check that all required build dependencies are available
 
+### Template System
+
+To avoid duplication across PostgreSQL versions, common files are maintained in the `templates/` directory:
+- `LICENSE`, `Makefile`, `src/index.ts`, `src/libpg-query.d.ts`, `src/wasm_wrapper.c`
+
+To update version-specific files from templates:
+```bash
+npm run copy:templates
+```
+
+This ensures consistency while allowing version-specific customizations (e.g., patches for version 13).
+
 ### Build Artifacts
 
 The build process generates these files:

@@ -1,3 +1,8 @@
+# DO NOT MODIFY MANUALLY — this is generated from the templates dir
+# 
+# To make changes, edit the files in the templates/ directory and run:
+# npm run copy:templates
+
 WASM_OUT_DIR := wasm
 WASM_OUT_NAME := libpg-query
 WASM_MODULE_NAME := PgQueryModule
@@ -40,6 +45,7 @@ endif
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
 	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
+
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 

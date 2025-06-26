@@ -1,13 +1,8 @@
-# DO NOT MODIFY MANUALLY — this is generated from the templates dir
-# 
-# To make changes, edit the files in the templates/ directory and run:
-# npm run copy:templates
-
 WASM_OUT_DIR := wasm
 WASM_OUT_NAME := libpg-query
 WASM_MODULE_NAME := PgQueryModule
 LIBPG_QUERY_REPO := https://github.com/pganalyze/libpg_query.git
-LIBPG_QUERY_TAG := 13-2.2.0
+LIBPG_QUERY_TAG := {{LIBPG_QUERY_TAG}}
 
 CACHE_DIR := .cache
 
@@ -45,11 +40,11 @@ endif
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
 	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
-
+{{#USE_EMSCRIPTEN_PATCH}}
 ifdef EMSCRIPTEN
 	cd $(LIBPG_QUERY_DIR); patch -p1 < $(shell pwd)/patches/emscripten_disable_spinlocks.patch
 endif
-
+{{/USE_EMSCRIPTEN_PATCH}}
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 
