@@ -89,3 +89,25 @@ describe('Parser', () => {
     }
   });
 });
+
+describe('Issue Test - INSERT with multiple VALUES', () => {
+  const testSQL = "INSERT INTO logtable (message) VALUES ('Init'), ('Reboot'), ('ERROR'), ('Warning'), ('info');";
+  const versions = [13, 14, 15, 16, 17];
+
+  for (const version of versions) {
+    it(`should parse with PostgreSQL v${version} without throwing`, async () => {
+      try {
+        const versionModule = require(`../wasm/v${version}.cjs`);
+        await versionModule.loadModule();
+        const result = await versionModule.parse(testSQL);
+        assert.ok(result); // Just verify we got a result
+      } catch (e) {
+        if (e.code === 'MODULE_NOT_FOUND') {
+          console.log(`Version ${version} not available in this build`);
+        } else {
+          throw e;
+        }
+      }
+    });
+  }
+});
