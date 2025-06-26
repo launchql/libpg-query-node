@@ -47,3 +47,27 @@ EMSCRIPTEN_KEEPALIVE
 void wasm_free_string(char* str) {
     free(str);
 }
+
+// Raw struct access functions for parse
+EMSCRIPTEN_KEEPALIVE
+PgQueryParseResult* wasm_parse_query_raw(const char* input) {
+    if (!input) {
+        return NULL;
+    }
+    
+    PgQueryParseResult* result = (PgQueryParseResult*)safe_malloc(sizeof(PgQueryParseResult));
+    if (!result) {
+        return NULL;
+    }
+    
+    *result = pg_query_parse(input);
+    return result;
+}
+
+EMSCRIPTEN_KEEPALIVE
+void wasm_free_parse_result(PgQueryParseResult* result) {
+    if (result) {
+        pg_query_free_parse_result(*result);
+        free(result);
+    }
+}
