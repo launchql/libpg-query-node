@@ -1,3 +1,4 @@
+// run "pnpm build:parser:full" in root 
 const fs = require('fs');
 const path = require('path');
 
