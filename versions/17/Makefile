@@ -57,8 +57,8 @@ ifdef EMSCRIPTEN
 		-I$(LIBPG_QUERY_DIR) \
 		-I$(LIBPG_QUERY_DIR)/vendor \
 		-L$(LIBPG_QUERY_DIR) \
-		-sEXPORTED_FUNCTIONS="['_malloc','_free','_wasm_parse_query','_wasm_free_string']" \
-		-sEXPORTED_RUNTIME_METHODS="['lengthBytesUTF8','stringToUTF8','UTF8ToString','HEAPU8','HEAPU32']" \
+		-sEXPORTED_FUNCTIONS="['_malloc','_free','_wasm_parse_query','_wasm_free_string','_wasm_parse_query_raw','_wasm_free_parse_result']" \
+		-sEXPORTED_RUNTIME_METHODS="['lengthBytesUTF8','stringToUTF8','UTF8ToString','getValue','HEAPU8','HEAPU32']" \
 		-sEXPORT_NAME="$(WASM_MODULE_NAME)" \
 		-sENVIRONMENT="web,node" \
 		-sMODULARIZE=1 \
