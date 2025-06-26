@@ -92,7 +92,7 @@ export const parse = awaitInit(async (query: string): Promise<ParseResult> => {
     resultPtr = wasmModule._wasm_parse_query(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -121,7 +121,7 @@ export const deparse = awaitInit(async (parseTree: ParseResult): Promise<string>
     resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -142,7 +142,7 @@ export const parsePlPgSQL = awaitInit(async (query: string): Promise<ParseResult
     resultPtr = wasmModule._wasm_parse_plpgsql(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -163,7 +163,7 @@ export const fingerprint = awaitInit(async (query: string): Promise<string> => {
     resultPtr = wasmModule._wasm_fingerprint(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -184,7 +184,7 @@ export const normalize = awaitInit(async (query: string): Promise<string> => {
     resultPtr = wasmModule._wasm_normalize_query(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -209,7 +209,7 @@ export function parseSync(query: string): ParseResult {
     resultPtr = wasmModule._wasm_parse_query(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -241,7 +241,7 @@ export function deparseSync(parseTree: ParseResult): string {
     resultPtr = wasmModule._wasm_deparse_protobuf(dataPtr, data.length);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -265,7 +265,7 @@ export function parsePlPgSQLSync(query: string): ParseResult {
     resultPtr = wasmModule._wasm_parse_plpgsql(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -289,7 +289,7 @@ export function fingerprintSync(query: string): string {
     resultPtr = wasmModule._wasm_fingerprint(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -313,7 +313,7 @@ export function normalizeSync(query: string): string {
     resultPtr = wasmModule._wasm_normalize_query(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -334,7 +334,7 @@ export const scan = awaitInit(async (query: string): Promise<ScanResult> => {
     resultPtr = wasmModule._wasm_scan(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     
@@ -358,7 +358,7 @@ export function scanSync(query: string): ScanResult {
     resultPtr = wasmModule._wasm_scan(queryPtr);
     const resultStr = ptrToString(resultPtr);
     
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     

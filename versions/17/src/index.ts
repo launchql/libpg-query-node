@@ -56,7 +56,7 @@ export const parse = awaitInit(async (query: string) => {
   try {
     resultPtr = wasmModule._wasm_parse_query(queryPtr);
     const resultStr = ptrToString(resultPtr);
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     return JSON.parse(resultStr);
@@ -74,7 +74,7 @@ export function parseSync(query: string) {
   try {
     resultPtr = wasmModule._wasm_parse_query(queryPtr);
     const resultStr = ptrToString(resultPtr);
-    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.includes('ERROR')) {
+    if (resultStr.startsWith('syntax error') || resultStr.startsWith('deparse error') || resultStr.startsWith('ERROR')) {
       throw new Error(resultStr);
     }
     return JSON.parse(resultStr);
