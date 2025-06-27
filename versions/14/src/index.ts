@@ -41,6 +41,7 @@ export class SqlError extends Error {
 }
 
 
+
 // Helper function to classify error source
 function getErrorSource(filename: string | null): string {
   if (!filename) return 'unknown';

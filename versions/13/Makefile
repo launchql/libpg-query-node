@@ -45,11 +45,9 @@ endif
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
 	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
-
 ifdef EMSCRIPTEN
 	cd $(LIBPG_QUERY_DIR); patch -p1 < $(shell pwd)/patches/emscripten_disable_spinlocks.patch
 endif
-
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 

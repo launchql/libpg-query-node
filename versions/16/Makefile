@@ -45,7 +45,6 @@ endif
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
 	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
-
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 
