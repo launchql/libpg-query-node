@@ -26,6 +26,10 @@ class Parser {
     try {
       return this.parser.parse(query);
     } catch (error) {
+      // Preserve the original error if it's a SqlError
+      if (error.name === 'SqlError') {
+        throw error;
+      }
       throw new Error(`Parse error in PostgreSQL ${this.version}: ${error.message}`);
     }
   }
@@ -37,6 +41,10 @@ class Parser {
     try {
       return this.parser.parseSync(query);
     } catch (error) {
+      // Preserve the original error if it's a SqlError
+      if (error.name === 'SqlError') {
+        throw error;
+      }
       throw new Error(`Parse error in PostgreSQL ${this.version}: ${error.message}`);
     }
   }
