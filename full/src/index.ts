@@ -39,46 +39,78 @@ export function hasSqlDetails(error: unknown): error is SqlError {
   return error instanceof SqlError && error.sqlDetails !== undefined;
 }
 
-export function formatSqlError(error: SqlError, query?: string, options?: {
-  showPosition?: boolean;
-  showSource?: boolean;
-  useColors?: boolean;
-}): string {
-  const opts = { showPosition: true, showSource: true, useColors: false, ...options };
-  let output = `Error: ${error.message}`;
-  
+export function formatSqlError(
+  error: SqlError,
+  query: string,
+  options: {
+    showPosition?: boolean;
+    showQuery?: boolean;
+    color?: boolean;
+    maxQueryLength?: number;
+  } = {}
+): string {
+  const {
+    showPosition = true,
+    showQuery = true,
+    color = false,
+    maxQueryLength
+  } = options;
+
+  const lines: string[] = [];
+
+  // ANSI color codes
+  const red = color ? '\x1b[31m' : '';
+  const yellow = color ? '\x1b[33m' : '';
+  const reset = color ? '\x1b[0m' : '';
+
+  // Add error message
+  lines.push(`${red}Error: ${error.message}${reset}`);
+
+  // Add SQL details if available
   if (error.sqlDetails) {
-    const details = error.sqlDetails;
-    
-    if (opts.showPosition && details.cursorPosition !== undefined) {
-      output += `\nPosition: ${details.cursorPosition}`;
+    const { cursorPosition, fileName, functionName, lineNumber } = error.sqlDetails;
+
+    if (cursorPosition !== undefined && cursorPosition >= 0) {
+      lines.push(`Position: ${cursorPosition}`);
     }
-    
-    if (opts.showSource && (details.fileName || details.functionName || details.lineNumber)) {
-      output += '\nSource:';
-      if (details.fileName) output += ` file: ${details.fileName},`;
-      if (details.functionName) output += ` function: ${details.functionName},`;
-      if (details.lineNumber) output += ` line: ${details.lineNumber}`;
+
+    if (fileName || functionName || lineNumber) {
+      const details = [];
+      if (fileName) details.push(`file: ${fileName}`);
+      if (functionName) details.push(`function: ${functionName}`);
+      if (lineNumber) details.push(`line: ${lineNumber}`);
+      lines.push(`Source: ${details.join(', ')}`);
     }
-    
-    if (opts.showPosition && query && details.cursorPosition !== undefined && details.cursorPosition >= 0) {
-      const lines = query.split('\n');
-      let currentPos = 0;
-      
-      for (let i = 0; i < lines.length; i++) {
-        const lineLength = lines[i].length + 1; // +1 for newline
-        if (currentPos + lineLength > details.cursorPosition) {
-          const posInLine = details.cursorPosition - currentPos;
-          output += `\n${lines[i]}`;
-          output += '\n' + ' '.repeat(posInLine) + '^';
-          break;
-        }
-        currentPos += lineLength;
+
+    // Show query with position marker
+    if (showQuery && showPosition && cursorPosition !== undefined && cursorPosition >= 0) {
+      let displayQuery = query;
+      let adjustedPosition = cursorPosition;
+
+      // Truncate if needed
+      if (maxQueryLength && query.length > maxQueryLength) {
+        const start = Math.max(0, cursorPosition - Math.floor(maxQueryLength / 2));
+        const end = Math.min(query.length, start + maxQueryLength);
+        displayQuery = (start > 0 ? '...' : '') +
+                      query.substring(start, end) +
+                      (end < query.length ? '...' : '');
+        // Adjust cursor position for truncation
+        adjustedPosition = cursorPosition - start + (start > 0 ? 3 : 0);
       }
+
+      lines.push(displayQuery);
+      lines.push(' '.repeat(adjustedPosition) + `${yellow}^${reset}`);
     }
+  } else if (showQuery) {
+    // No SQL details, just show the query if requested
+    let displayQuery = query;
+    if (maxQueryLength && query.length > maxQueryLength) {
+      displayQuery = query.substring(0, maxQueryLength) + '...';
+    }
+    lines.push(`Query: ${displayQuery}`);
   }
-  
-  return output;
+
+  return lines.join('\n');
 }
 
 // @ts-ignore
@@ -190,7 +222,7 @@ export const parse = awaitInit(async (query: string): Promise<ParseResult> => {
       
       throw new SqlError(message, {
         message,
-        cursorPosition: cursorpos,
+        cursorPosition: cursorpos > 0 ? cursorpos - 1 : 0, // Convert to 0-based
         fileName: filename,
         functionName: funcname,
         lineNumber: lineno > 0 ? lineno : undefined
@@ -346,7 +378,7 @@ export function parseSync(query: string): ParseResult {
       
       throw new SqlError(message, {
         message,
-        cursorPosition: cursorpos,
+        cursorPosition: cursorpos > 0 ? cursorpos - 1 : 0, // Convert to 0-based
         fileName: filename,
         functionName: funcname,
         lineNumber: lineno > 0 ? lineno : undefined

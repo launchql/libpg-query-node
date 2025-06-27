@@ -49,7 +49,7 @@
     "build:lts": "npm run clean && cross-env PARSER_BUILD_TYPE=lts npm run prepare",
     "build:latest": "npm run clean && cross-env PARSER_BUILD_TYPE=latest npm run prepare",
     "build:legacy": "npm run clean && cross-env PARSER_BUILD_TYPE=legacy npm run prepare",
-    "test": "node --test test/parser.test.js"
+    "test": "node --test test/parsing.test.js test/errors.test.js"
   },
   "keywords": [
     "postgresql",
