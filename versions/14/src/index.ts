@@ -30,17 +30,16 @@ export interface SqlErrorFormatOptions {
   maxQueryLength?: number; // Max query length to display (default: no limit)
 }
 
-// Helper function to create enhanced error with SQL details
-function createSqlError(message: string, details: SqlErrorDetails): Error {
-  const error = new Error(message);
-  // Attach error details as properties
-  Object.defineProperty(error, 'sqlDetails', {
-    value: details,
-    enumerable: true,
-    configurable: true
-  });
-  return error;
+export class SqlError extends Error {
+  sqlDetails?: SqlErrorDetails;
+
+  constructor(message: string, details?: SqlErrorDetails) {
+    super(message);
+    this.name = 'SqlError';
+    this.sqlDetails = details;
+  }
 }
+
 
 // Helper function to classify error source
 function getErrorSource(filename: string | null): string {
@@ -227,7 +226,7 @@ export const parse = awaitInit(async (query: string) => {
         context: contextPtr ? wasmModule.UTF8ToString(contextPtr) : undefined
       };
       
-      throw createSqlError(message, errorDetails);
+      throw new SqlError(message, errorDetails);
     }
     
     if (!parseTreePtr) {
@@ -296,7 +295,7 @@ export function parseSync(query: string) {
         context: contextPtr ? wasmModule.UTF8ToString(contextPtr) : undefined
       };
       
-      throw createSqlError(message, errorDetails);
+      throw new SqlError(message, errorDetails);
     }
     
     if (!parseTreePtr) {

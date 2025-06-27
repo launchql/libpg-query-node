@@ -187,11 +187,11 @@ function ptrToString(ptr: number): string {
 export const parse = awaitInit(async (query: string): Promise<ParseResult> => {
   // Input validation
   if (query === null || query === undefined) {
-    throw new SqlError('Query cannot be null or undefined');
+    throw new Error('Query cannot be null or undefined');
   }
   
   if (query === '') {
-    throw new SqlError('Query cannot be empty');
+    throw new Error('Query cannot be empty');
   }
 
   const queryPtr = stringToPtr(query);
@@ -200,7 +200,7 @@ export const parse = awaitInit(async (query: string): Promise<ParseResult> => {
   try {
     resultPtr = wasmModule._wasm_parse_query_raw(queryPtr);
     if (!resultPtr) {
-      throw new SqlError('Failed to parse query: memory allocation failed');
+      throw new Error('Failed to parse query: memory allocation failed');
     }
     
     // Read the PgQueryParseResult struct
@@ -230,7 +230,7 @@ export const parse = awaitInit(async (query: string): Promise<ParseResult> => {
     }
     
     if (!parseTreePtr) {
-      throw new SqlError('No parse tree generated');
+      throw new Error('No parse tree generated');
     }
     
     const parseTreeStr = wasmModule.UTF8ToString(parseTreePtr);
@@ -343,11 +343,11 @@ export function parseSync(query: string): ParseResult {
   
   // Input validation
   if (query === null || query === undefined) {
-    throw new SqlError('Query cannot be null or undefined');
+    throw new Error('Query cannot be null or undefined');
   }
   
   if (query === '') {
-    throw new SqlError('Query cannot be empty');
+    throw new Error('Query cannot be empty');
   }
 
   const queryPtr = stringToPtr(query);
@@ -356,7 +356,7 @@ export function parseSync(query: string): ParseResult {
   try {
     resultPtr = wasmModule._wasm_parse_query_raw(queryPtr);
     if (!resultPtr) {
-      throw new SqlError('Failed to parse query: memory allocation failed');
+      throw new Error('Failed to parse query: memory allocation failed');
     }
     
     // Read the PgQueryParseResult struct
@@ -386,7 +386,7 @@ export function parseSync(query: string): ParseResult {
     }
     
     if (!parseTreePtr) {
-      throw new SqlError('No parse tree generated');
+      throw new Error('No parse tree generated');
     }
     
     const parseTreeStr = wasmModule.UTF8ToString(parseTreePtr);
