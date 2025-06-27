@@ -47,6 +47,25 @@ char* wasm_parse_query(const char* input) {
 }
 
 EMSCRIPTEN_KEEPALIVE
+PgQueryParseResult* wasm_parse_query_raw(const char* input) {
+    PgQueryParseResult* result = (PgQueryParseResult*)malloc(sizeof(PgQueryParseResult));
+    if (!result) {
+        return NULL;
+    }
+    
+    *result = pg_query_parse(input);
+    return result;
+}
+
+EMSCRIPTEN_KEEPALIVE
+void wasm_free_parse_result(PgQueryParseResult* result) {
+    if (result) {
+        pg_query_free_parse_result(*result);
+        free(result);
+    }
+}
+
+EMSCRIPTEN_KEEPALIVE
 char* wasm_deparse_protobuf(const char* protobuf_data, size_t data_len) {
     if (!protobuf_data || data_len == 0) {
         return safe_strdup("Invalid input: protobuf data cannot be null or empty");

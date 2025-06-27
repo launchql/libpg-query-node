@@ -1,6 +1,6 @@
 {
   "name": "@libpg-query/v14",
-  "version": "14.2.3",
+  "version": "14.2.5",
   "description": "The real PostgreSQL query parser",
   "homepage": "https://github.com/launchql/libpg-query-node",
   "main": "./wasm/index.cjs",
@@ -28,7 +28,7 @@
     "wasm:rebuild": "pnpm wasm:make rebuild",
     "wasm:clean": "pnpm wasm:make clean",
     "wasm:clean-cache": "pnpm wasm:make clean-cache",
-    "test": "node --test test/parsing.test.js"
+    "test": "node --test test/parsing.test.js test/errors.test.js"
   },
   "author": "Dan Lynch <pyramation@gmail.com> (http://github.com/pyramation)",
   "license": "LICENSE IN LICENSE",

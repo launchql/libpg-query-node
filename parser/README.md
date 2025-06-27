@@ -21,11 +21,8 @@ Multi-version PostgreSQL parser with dynamic version selection. This package pro
 # Install latest (full build with all versions)
 npm install @pgsql/parser
 
-# Install LTS version (PostgreSQL 16-17 only)
+# Install LTS version (PostgreSQL 15-17 only)
 npm install @pgsql/parser@lts
-
-# Install legacy version (PostgreSQL 13-15 only)
-npm install @pgsql/parser@legacy
 ```
 
 ## Usage
@@ -116,15 +113,12 @@ Each version export provides:
 
 This package supports different build configurations for different use cases:
 
-- **full** (default): All versions (13, 14, 15, 16, 17)
-- **lts**: LTS versions only (16, 17)
-- **latest**: Latest version only (17)
-- **legacy**: Legacy versions (13, 14, 15)
+- **full** (default): All versions (13, 14, 15, 16, 17) - Provides maximum compatibility
+- **lts**: LTS (Long Term Support) versions only (15, 16, 17) - Recommended for production use with stable PostgreSQL versions
 
 When installing from npm, you can choose the appropriate build using tags:
-- `npm install @pgsql/parser` - Full build
-- `npm install @pgsql/parser@lts` - LTS build
-- `npm install @pgsql/parser@legacy` - Legacy build
+- `npm install @pgsql/parser` - Full build with all versions
+- `npm install @pgsql/parser@lts` - LTS build 
 
 ## Credits
 

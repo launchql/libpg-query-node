@@ -15,10 +15,9 @@ export interface ParseResult {
 
 export declare class Parser {
   constructor(version?: ${VERSION_UNION});
+  loadParser(): Promise<void>;
   parse(query: string): Promise<ParseResult>;
   parseSync(query: string): ParseResult;
-  fingerprint(query: string): Promise<string>;
-  normalize(query: string): Promise<string>;
 }
 
 export default Parser;

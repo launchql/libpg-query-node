@@ -1,3 +1,4 @@
+// run "pnpm build:parser:full" in root 
 const fs = require('fs');
 const path = require('path');
 
@@ -8,12 +9,8 @@ const BUILD_CONFIGS = {
     description: 'Full build with all PostgreSQL versions (13-17)'
   },
   'lts': {
-    versions: ['15', '16', '17'],  // Current LTS versions
-    description: 'LTS build with PostgreSQL 16 and 17'
-  },
-  'legacy': {
-    versions: ['13', '14', '15'],
-    description: 'Legacy versions (13-15)'
+    versions: ['15', '16', '17'],  
+    description: 'LTS (Long Term Support)'
   }
 };
 

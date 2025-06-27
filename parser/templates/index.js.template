@@ -26,39 +26,29 @@ export class Parser {
     try {
       return this.parser.parse(query);
     } catch (error) {
+      // Preserve the original error if it's a SqlError
+      if (error.name === 'SqlError') {
+        throw error;
+      }
       throw new Error(`Parse error in PostgreSQL ${this.version}: ${error.message}`);
     }
   }
 
   parseSync(query) {
     if (!this.parser) {
-      throw new Error('Parser not loaded. Call parse() first or use parseSync after loading.');
-    }
-    if (!this.parser.parseSync) {
-      throw new Error(`parseSync not supported in PostgreSQL ${this.version}`);
+      throw new Error('Parser not loaded. Call loadParser() first or use parseSync after loading.');
     }
     try {
       return this.parser.parseSync(query);
     } catch (error) {
+      // Preserve the original error if it's a SqlError
+      if (error.name === 'SqlError') {
+        throw error;
+      }
       throw new Error(`Parse error in PostgreSQL ${this.version}: ${error.message}`);
     }
   }
 
-  async fingerprint(query) {
-    await this.loadParser();
-    if (this.parser.fingerprint) {
-      return this.parser.fingerprint(query);
-    }
-    throw new Error(`Fingerprint not supported in PostgreSQL ${this.version}`);
-  }
-
-  async normalize(query) {
-    await this.loadParser();
-    if (this.parser.normalize) {
-      return this.parser.normalize(query);
-    }
-    throw new Error(`Normalize not supported in PostgreSQL ${this.version}`);
-  }
 }
 
 // Re-export all versions for direct access

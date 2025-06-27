@@ -1,10 +1,3 @@
-/**
- * DO NOT MODIFY MANUALLY — this is generated from the templates dir
- * 
- * To make changes, edit the files in the templates/ directory and run:
- * npm run copy:templates
- */
-
 #include <emscripten.h>
 #include <pg_query.h>
 #include <stdlib.h>
