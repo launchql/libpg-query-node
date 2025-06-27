@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 
 const HEADER = `/**
  * DO NOT MODIFY MANUALLY — this is generated from the templates dir
@@ -19,29 +20,39 @@ const MAKEFILE_HEADER = `# DO NOT MODIFY MANUALLY — this is generated from the
 
 `;
 
-// Version-specific configurations
-const VERSION_CONFIGS = {
-  '13': {
-    tag: '13-2.2.0',
-    hasEmscriptenPatch: true
-  },
-  '14': {
-    tag: '14-3.0.0',
-    hasEmscriptenPatch: false
-  },
-  '15': {
-    tag: '15-4.2.4',
-    hasEmscriptenPatch: false
-  },
-  '16': {
-    tag: '16-5.2.0',
-    hasEmscriptenPatch: false
-  },
-  '17': {
-    tag: '17-6.1.0',
-    hasEmscriptenPatch: false
-  }
-};
+// Load version configurations from package.json files
+function loadVersionConfigs() {
+  const configs = {};
+  const packageFiles = glob.sync('versions/*/package.json');
+  
+  console.log(`Found ${packageFiles.length} package.json files\n`);
+  
+  packageFiles.forEach(packageFile => {
+    try {
+      const packageData = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
+      const version = packageData['x-publish']?.pgVersion;
+      const libpgQueryTag = packageData['x-publish']?.libpgQueryTag;
+      
+      if (version && libpgQueryTag) {
+        configs[version] = {
+          tag: libpgQueryTag,
+          hasEmscriptenPatch: version === '13' // Only version 13 needs the patch
+        };
+        console.log(`  Version ${version}: tag ${libpgQueryTag}`);
+      } else {
+        console.warn(`  Warning: Missing x-publish data in ${packageFile}`);
+      }
+    } catch (error) {
+      console.error(`  Error reading ${packageFile}: ${error.message}`);
+    }
+  });
+  
+  console.log(''); // Empty line for readability
+  return configs;
+}
+
+// Load configurations
+const VERSION_CONFIGS = loadVersionConfigs();
 
 // Files to copy from templates
 const TEMPLATE_FILES = [

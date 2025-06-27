@@ -33,13 +33,21 @@ The following placeholders are used in template files:
 
 ## Version-Specific Configurations
 
-The `scripts/copy-templates.js` script contains version-specific configurations:
+The `scripts/copy-templates.js` script automatically reads version-specific configurations from each version's `package.json` file. It looks for the `x-publish` section:
 
-- **Version 13**: Uses tag `13-2.2.0` and requires emscripten patch
-- **Version 14**: Uses tag `14-3.0.0`
-- **Version 15**: Uses tag `15-4.2.4`
-- **Version 16**: Uses tag `16-5.2.0`
-- **Version 17**: Uses tag `17-6.1.0`
+```json
+"x-publish": {
+  "publishName": "libpg-query",
+  "pgVersion": "15",
+  "distTag": "pg15",
+  "libpgQueryTag": "15-4.2.4"
+}
+```
+
+The script uses:
+- `pgVersion` to identify the PostgreSQL version
+- `libpgQueryTag` for the {{VERSION_TAG}} placeholder replacement
+- Version 13 automatically gets the emscripten patch applied
 
 ## Important Notes
 
