@@ -45,7 +45,9 @@ class Parser {
   }
 
   async parse(query) {
-    await this.loadParser();
+    if (!this.parser) {
+      await this.loadParser();
+    }
     try {
       return await this.parser.parse(query);
     } catch (error) {

@@ -30,21 +30,37 @@ npm install @pgsql/parser@lts
 ### Dynamic Version Selection
 
 ```javascript
-import { parse, PgParser } from '@pgsql/parser';
+import Parser from '@pgsql/parser';
+// or: import { Parser } from '@pgsql/parser';
 
-// Parse with default version (17)
-const result = await parse('SELECT 1+1 as sum');
+// Create parser with default version (17)
+const parser = new Parser();
+const result = await parser.parse('SELECT 1+1 as sum');
 console.log(result);
-// { version: 17, result: { version: 170004, stmts: [...] } }
+// { version: 170004, stmts: [...] }
 
-// Parse with specific version
-const result15 = await parse('SELECT 1+1 as sum', 15);
+// Create parser with specific version
+const parser15 = new Parser({ version: 15 });
+const result15 = await parser15.parse('SELECT 1+1 as sum');
 console.log(result15);
-// { version: 15, result: { version: 150007, stmts: [...] } }
+// { version: 150007, stmts: [...] }
 
-// Using PgParser class
-const parser = new PgParser(16);
-const result16 = await parser.parse('SELECT * FROM users');
+// Check supported versions
+import { isSupportedVersion, getSupportedVersions } from '@pgsql/parser';
+console.log(getSupportedVersions()); // [13, 14, 15, 16, 17]
+console.log(isSupportedVersion(15)); // true
+```
+
+### CommonJS Usage
+
+```javascript
+const { Parser, isSupportedVersion, getSupportedVersions } = require('@pgsql/parser');
+
+async function parseSQL() {
+  const parser = new Parser({ version: 16 });
+  const result = await parser.parse('SELECT * FROM users');
+  console.log(result);
+}
 ```
 
 ### Static Version Imports
@@ -53,50 +69,99 @@ For better tree-shaking and when you know which version you need:
 
 ```javascript
 // Import specific version
-import * as pg17 from '@pgsql/parser/v17';
+import { parse } from '@pgsql/parser/v17';
 
-await pg17.loadModule();
-const result = await pg17.parse('SELECT 1');
+const result = await parse('SELECT 1');
 console.log(result);
 // { version: 170004, stmts: [...] }
+
+// Or access via the main module
+import { v17 } from '@pgsql/parser';
+const result2 = await v17.parse('SELECT 1');
 ```
 
 ### Error Handling
 
-The parser returns errors in a consistent format:
+The parser throws errors directly (not wrapped in result objects):
 
 ```javascript
-const result = await parse('INVALID SQL');
-if (result.error) {
-  console.error(result.error);
-  // { type: 'syntax', message: 'syntax error at or near "INVALID"', position: 0 }
+import Parser from '@pgsql/parser';
+
+const parser = new Parser();
+try {
+  const result = await parser.parse('INVALID SQL');
+} catch (error) {
+  console.error(error.name); // 'SqlError'
+  console.error(error.message); // 'syntax error at or near "INVALID"'
+  console.error(error.sqlDetails); // { cursorPosition: 0, ... }
 }
 ```
 
 ## API
 
-### `parse(query: string, version?: 13 | 14 | 15 | 16 | 17): Promise<ParseResult>`
+### `Parser`
 
-Parse a SQL query with the specified PostgreSQL version.
+The main parser class for parsing SQL with a specific PostgreSQL version.
 
-- `query`: The SQL query string to parse
-- `version`: PostgreSQL version (13, 14, 15, 16, or 17). Defaults to 17.
+```typescript
+import Parser from '@pgsql/parser';
 
-Returns a promise that resolves to:
-- On success: `{ version: number, result: AST }`
-- On error: `{ version: number, error: { type: string, message: string, position: number } }`
+const parser = new Parser(options?: { version?: 13 | 14 | 15 | 16 | 17 });
+```
 
-### `PgParser`
+#### Properties
+- `version`: The PostgreSQL version used by this parser instance
+- `ready`: A promise that resolves when the parser is fully loaded
 
-Class for creating a parser instance with a specific version.
+#### Methods
+
+##### `parse(query: string): Promise<ParseResult>`
+Parse a SQL query asynchronously. Automatically loads the parser if needed.
 
 ```javascript
-const parser = new PgParser(version);
-const result = await parser.parse(query);
-const syncResult = parser.parseSync(query); // Only available after first parse()
+const result = await parser.parse('SELECT 1');
+// Returns: { version: 170004, stmts: [...] }
+```
+
+##### `parseSync(query: string): ParseResult`
+Parse a SQL query synchronously. Requires the parser to be loaded first.
+
+```javascript
+await parser.loadParser(); // or await parser.ready
+const result = parser.parseSync('SELECT 1');
+```
+
+##### `loadParser(): Promise<void>`
+Explicitly load the parser. Usually not needed as `parse()` loads automatically.
+
+### Utility Functions
+
+##### `isSupportedVersion(version: number): boolean`
+Check if a PostgreSQL version is supported.
+
+##### `getSupportedVersions(): number[]`
+Get an array of all supported PostgreSQL versions.
+
+### Error Handling
+
+All parsing errors throw `SqlError` with the following structure:
+
+```typescript
+class SqlError extends Error {
+  name: 'SqlError';
+  message: string;
+  sqlDetails?: {
+    cursorPosition?: number;
+    fileName?: string;
+    functionName?: string;
+    lineNumber?: number;
+  };
+}
 ```
 
 ## Version Exports
+
+Each PostgreSQL version can be imported directly for better tree-shaking:
 
 - `@pgsql/parser/v13` - PostgreSQL 13 parser
 - `@pgsql/parser/v14` - PostgreSQL 14 parser
@@ -105,9 +170,21 @@ const syncResult = parser.parseSync(query); // Only available after first parse(
 - `@pgsql/parser/v17` - PostgreSQL 17 parser
 
 Each version export provides:
-- `loadModule()`: Initialize the WASM module
-- `parse(query)`: Parse a query (async)
-- `parseSync(query)`: Parse a query (sync, requires loadModule first)
+- `parse(query: string): Promise<ParseResult>` - Parse a query asynchronously
+- `parseSync(query: string): ParseResult` - Parse a query synchronously (auto-loads if needed)
+- `SqlError` - The error class for parsing errors
+- All TypeScript types for that PostgreSQL version
+
+Example:
+```javascript
+import { parse, parseSync } from '@pgsql/parser/v17';
+
+// Async parsing
+const result = await parse('SELECT 1');
+
+// Sync parsing (auto-loads on first use)
+const result2 = parseSync('SELECT 2');
+```
 
 ## Build Configurations
 
