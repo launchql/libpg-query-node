@@ -20,7 +20,7 @@ describe('Parser', () => {
       // Test with a different version if available
       const testVersion = defaultVersion === 17 ? 16 : 15;
       try {
-        const versionParser = new Parser(testVersion);
+        const versionParser = new Parser({ version: testVersion });
         const result = await versionParser.parse('SELECT 1+1 as sum');
         assert.equal(versionParser.version, testVersion);
         assert.ok(result);
@@ -51,7 +51,7 @@ describe('Parser', () => {
     it('should validate version in constructor', () => {
       // Test invalid version
       assert.throws(() => {
-        new Parser(99);
+        new Parser({ version: 99 });
       }, /Unsupported PostgreSQL version/);
     });
 

@@ -9,7 +9,7 @@ describe('Parser Error Handling', () => {
 
     for (const version of versions) {
       it(`should handle parse errors in PostgreSQL v${version}`, async () => {
-        const parser = new Parser(version);
+        const parser = new Parser({version});
         
         // Test async parse
         await assert.rejects(
@@ -45,7 +45,7 @@ describe('Parser Error Handling', () => {
 
   describe('Error details preservation', () => {
     it('should preserve error details from underlying parser', async () => {
-      const parser = new Parser(17);
+      const parser = new Parser({ version: 17 });
       await parser.loadParser();
       
       try {
@@ -65,7 +65,7 @@ describe('Parser Error Handling', () => {
   describe('Invalid version handling', () => {
     it('should throw error for unsupported version', () => {
       assert.throws(
-        () => new Parser(12),
+        () => new Parser({ version: 12 }),
         {
           message: 'Unsupported PostgreSQL version: 12. Supported versions are 13, 14, 15, 16, 17.'
         }
@@ -75,12 +75,12 @@ describe('Parser Error Handling', () => {
 
   describe('Parser not loaded error', () => {
     it('should throw error when using parseSync without loading', () => {
-      const parser = new Parser(17);
+      const parser = new Parser({ version: 17 });
       
       assert.throws(
         () => parser.parseSync('SELECT 1'),
         {
-          message: 'Parser not loaded. Call loadParser() first or use parseSync after loading.'
+          message: 'Parser not loaded. Call loadParser() first or use parse() for automatic loading.'
         }
       );
     });

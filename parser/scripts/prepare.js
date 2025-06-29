@@ -54,13 +54,27 @@ function generateTemplateVars(versions) {
   // For TypeScript exports: export * as v13 from './v13/index';
   const versionTypeExports = versions.map(v => `export * as v${v} from './v${v}/index';`).join('\n');
   
+  // For TypeScript type imports
+  const versionTypeImports = versions.map(v => 
+    `import type { ParseResult as ParseResult${v}, Node as Node${v} } from './v${v}/types';`
+  ).join('\n');
+  
+  // For ParseResult version map
+  const versionParseResultMap = versions.map(v => `  ${v}: ParseResult${v};`).join('\n');
+  
+  // For Node version map
+  const versionNodeMap = versions.map(v => `  ${v}: Node${v};`).join('\n');
+  
   return {
     DEFAULT_VERSION: defaultVersion,
     VERSIONS: versionsArray,
     VERSION_UNION: versionUnion,
     VERSION_EXPORTS: versionExports,
     VERSION_REQUIRES: versionRequires,
-    VERSION_TYPE_EXPORTS: versionTypeExports
+    VERSION_TYPE_EXPORTS: versionTypeExports,
+    VERSION_TYPE_IMPORTS: versionTypeImports,
+    VERSION_PARSE_RESULT_MAP: versionParseResultMap,
+    VERSION_NODE_MAP: versionNodeMap
   };
 }
 
