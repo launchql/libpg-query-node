@@ -1,6 +1,6 @@
 {
   "name": "@pgsql/parser",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "Dan Lynch <pyramation@gmail.com>",
   "description": "Multi-version PostgreSQL parser with dynamic version selection",
   "main": "./wasm/index.cjs",
