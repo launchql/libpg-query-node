@@ -63,9 +63,23 @@ PgQueryScanResult pg_query_scan(const char* input);
 - `stderr_buffer`: Any stderr output during scanning
 - `error`: Error information if scanning failed
 
-**Usage**: Use this when you need to tokenize SQL without full parsing.
+**Usage**: Use this when you need the protobuf-encoded scan result (e.g. to decode in another language).
+
+#### pg_query_scan_tokens
+```c
+PgQueryScanTokensResult pg_query_scan_tokens(const char* input);
+void pg_query_free_scan_tokens_result(PgQueryScanTokensResult result);
+```
+**Description**: Scans SQL input and returns tokens as a plain C array, no protobuf decoding needed. This is what `wasm_scan` uses.
+
+**Returns**: `PgQueryScanTokensResult` containing:
+- `tokens` / `n_tokens`: array of `PgQueryScanToken` (`start`, `end`, `token`, `keyword_kind`)
+- `stderr_buffer`: Any stderr output during scanning
+- `error`: Error information if scanning failed
 
 ## Scanning and Token Processing
+
+> **Note:** libpg_query no longer ships the protobuf-c header `protobuf/pg_query.pb-c.h` (it switched to upb), so the C unpack examples below are historical. In C, use `pg_query_scan_tokens` instead.
 
 ### Working with Scan Results
 
