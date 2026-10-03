@@ -49,7 +49,7 @@ npm install libpg-query
 import { parse } from 'libpg-query';
 
 const result = await parse('SELECT * FROM users WHERE active = true');
-// {"version":180004,"stmts":[{"stmt":{"SelectStmt":{"targetList":[{"ResTarget" ... "op":"SETOP_NONE"}}}]}
+// {"version":180006,"stmts":[{"stmt":{"SelectStmt":{"targetList":[{"ResTarget" ... "op":"SETOP_NONE"}}}]}
 ```
 
 ## Versions
@@ -116,7 +116,7 @@ Tokenizes the SQL, returning token positions, text, types, and keyword kinds. Se
 import { scan } from 'libpg-query';
 
 const result = await scan('SELECT id FROM users');
-// { version: 180004, tokens: [{ start, end, text, tokenType, tokenName, keywordKind, keywordName }, ...] }
+// { version: 180006, tokens: [{ start, end, text, tokenType, tokenName, keywordKind, keywordName }, ...] }
 ```
 
 ### `fingerprint(sql: string): Promise<string>` / `fingerprintSync`
