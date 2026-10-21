@@ -13,7 +13,9 @@
     "publishName": "libpg-query",
     "pgVersion": "18",
     "distTag": "pg18",
+    "libpgQueryRepo": "https://github.com/constructive-io/libpg_query.git",
     "libpgQueryTag": "18-constructive",
+    "libpgQueryCommit": "b0f5f331dc50d69597ec610de7b21afa47a66808",
     "fullApi": true
   },
   "files": [
@@ -24,7 +26,7 @@
     "build:js": "node scripts/build.js",
     "build": "pnpm clean && pnpm wasm:build && pnpm build:js",
     "publish:pkg": "node ../../scripts/publish-single-version.js",
-    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk:6.0.3 emmake make",
     "wasm:build": "pnpm wasm:make build",
     "wasm:rebuild": "pnpm wasm:make rebuild",
     "wasm:clean": "pnpm wasm:make clean",

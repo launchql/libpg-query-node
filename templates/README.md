@@ -28,7 +28,9 @@ This script will:
 
 The following placeholders are used in template files:
 
-- `{{VERSION_TAG}}` - The libpg_query version tag (e.g., "14-3.0.0")
+- `{{LIBPG_QUERY_REPO}}` - The libpg_query git repository to clone
+- `{{VERSION_TAG}}` - The libpg_query branch or tag to clone (e.g., "14-3.0.0")
+- `{{LIBPG_QUERY_COMMIT}}` - The exact commit checked out after cloning
 - `{{#USE_EMSCRIPTEN_PATCH}}...{{/USE_EMSCRIPTEN_PATCH}}` - Conditional block for version-specific patches (currently only used in version 13)
 
 ## Version-Specific Configurations
@@ -40,13 +42,18 @@ The `scripts/copy-templates.js` script automatically reads version-specific conf
   "publishName": "libpg-query",
   "pgVersion": "15",
   "distTag": "pg15",
-  "libpgQueryTag": "15-4.2.4"
+  "libpgQueryRepo": "https://github.com/constructive-io/libpg_query.git",
+  "libpgQueryTag": "fix/negative-int-pg15",
+  "libpgQueryCommit": "ae10504217b703340b5632f6345fe1e83d61485c"
 }
 ```
 
 The script uses:
 - `pgVersion` to identify the PostgreSQL version
-- `libpgQueryTag` for the {{VERSION_TAG}} placeholder replacement
+- `libpgQueryRepo`, `libpgQueryTag` and `libpgQueryCommit` for the source placeholders. The commit
+  is required (a full 40-character SHA): the build checks it out after cloning, so a branch moving
+  upstream cannot change what a rebuild produces. To pick up new libpg_query changes, bump the commit
+  and re-run `npm run copy:templates`.
 - Version 13 automatically gets the emscripten patch applied
 
 ## Important Notes
