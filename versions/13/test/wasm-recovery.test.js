@@ -19,6 +19,17 @@ describe('Recovery after the WASM parser throws', () => {
     assert.equal(parseSync('SELECT 1').stmts.length, 1);
   });
 
+  it('lets a call queued behind a failing one wait for the fresh instance', async () => {
+    await loadModule();
+    const [failed, queued] = await Promise.allSettled([
+      parse('SELECT 1' + '+1'.repeat(100000)),
+      parse('SELECT 1'),
+    ]);
+    assert.equal(failed.status, 'rejected');
+    assert.equal(queued.status, 'fulfilled', queued.reason?.message);
+    assert.equal(queued.value.stmts.length, 1);
+  });
+
   it('throws an Error and keeps process.exitCode when the memory limit is hit', async () => {
     const exitCode = process.exitCode;
     await assert.rejects(parse('SELECT 1;\n'.repeat(5000000)), (error) => {

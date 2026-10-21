@@ -124,13 +124,21 @@ export function hasSqlDetails(error: any): error is Error & { sqlDetails: SqlErr
          'cursorPosition' in (error as any).sqlDetails;
 }
 
+let initPromise: Promise<void> | undefined;
+
+// A failed load rejects only for the callers awaiting it; the next call retries.
 function instantiate(): Promise<void> {
-  return PgQueryModule().then((module: any) => {
+  const promise = PgQueryModule().then((module: any) => {
     wasmModule = module;
   });
+  initPromise = promise;
+  promise.catch(() => {
+    if (initPromise === promise) initPromise = undefined;
+  });
+  return promise;
 }
 
-let initPromise = instantiate();
+instantiate();
 
 // An exception out of a WASM call (V8 stack overflow on deeply nested SQL, a
 // trap, or exit() once the heap limit is hit) skips libpg_query's cleanup and
@@ -142,7 +150,7 @@ function callWasm(fn: () => number): number {
     return fn();
   } catch (error) {
     wasmModule = undefined;
-    initPromise = instantiate();
+    instantiate();
     if (proc) proc.exitCode = exitCode;
     if (error instanceof Error) throw error;
     throw new Error(
@@ -157,14 +165,13 @@ function ensureLoaded() {
 }
 
 export async function loadModule() {
-  if (!wasmModule) {
-    await initPromise;
-  }
+  while (!wasmModule) await (initPromise ?? instantiate());
 }
 
 function awaitInit<T extends (...args: any[]) => any>(fn: T): T {
   return (async (...args: Parameters<T>) => {
-    await initPromise;
+    // Re-checked after every await: a call that fails in between drops the instance.
+    while (!wasmModule) await (initPromise ?? instantiate());
     return fn(...args);
   }) as T;
 }
