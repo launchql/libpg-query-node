@@ -53,11 +53,13 @@ jobs:
       - name: Build WASM 🏗
         run: |
           if [ "${{ matrix.package.name }}" = "v13" ]; then
-            # Download prebuilt WASM for v13 since it can't build in CI
+            # v13 can't build its WASM in CI: reuse the prebuilt binary, but
+            # compile the wrapper from this checkout so its tests cover src/.
             mkdir -p wasm
             curl -o v13.tgz "https://registry.npmjs.org/@libpg-query/v13/-/v13-13.5.7.tgz"
-            tar -xzf v13.tgz --strip-components=1 package/wasm
+            tar -xzf v13.tgz --strip-components=1 package/wasm/libpg-query.js package/wasm/libpg-query.wasm
             rm v13.tgz
+            pnpm run build:js
           else
             pnpm run build
           fi
