@@ -138,6 +138,7 @@ interface WasmModule {
   stringToUTF8: (str: string, ptr: number, len: number) => void;
   UTF8ToString: (ptr: number) => string;
   getValue: (ptr: number, type: string) => number;
+  HEAPU8: Uint8Array;
 }
 
 let wasmModule: WasmModule;
@@ -163,20 +164,28 @@ function awaitInit<T extends (...args: any[]) => Promise<any>>(fn: T): T {
   }) as T;
 }
 
+const utf8Encoder = new TextEncoder();
+
 function stringToPtr(str: string): number {
   ensureLoaded();
   if (typeof str !== 'string') {
     throw new TypeError(`Expected a string, got ${typeof str}`);
   }
-  const len = wasmModule.lengthBytesUTF8(str) + 1;
-  const ptr = wasmModule._malloc(len);
-  try {
-    wasmModule.stringToUTF8(str, ptr, len);
-    return ptr;
-  } catch (error) {
-    wasmModule._free(ptr);
-    throw error;
+  // libpg_query takes a NUL-terminated C string: an embedded NUL would end the
+  // parse early and silently drop everything after it.
+  if (str.includes('\0')) {
+    throw new Error('Query must not contain a NUL (U+0000) character');
   }
+  // Size the buffer from the exact bytes written. TextEncoder writes each
+  // unpaired surrogate as U+FFFD — the same bytes a Postgres driver sends.
+  const bytes = utf8Encoder.encode(str);
+  const ptr = wasmModule._malloc(bytes.length + 1);
+  if (!ptr) {
+    throw new Error('Failed to allocate memory for query');
+  }
+  wasmModule.HEAPU8.set(bytes, ptr);
+  wasmModule.HEAPU8[ptr + bytes.length] = 0;
+  return ptr;
 }
 
 function ptrToString(ptr: number): string {

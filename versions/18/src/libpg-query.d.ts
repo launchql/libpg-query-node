@@ -17,6 +17,7 @@ declare module './libpg-query.js' {
     lengthBytesUTF8: (str: string) => number;
     stringToUTF8: (str: string, ptr: number, len: number) => void;
     UTF8ToString: (ptr: number) => string;
+    HEAPU8: Uint8Array;
   }
 
   const PgQueryModule: () => Promise<WasmModule>;
