@@ -131,9 +131,33 @@ export function hasSqlDetails(error: any): error is Error & { sqlDetails: SqlErr
          'cursorPosition' in (error as any).sqlDetails;
 }
 
-const initPromise = PgQueryModule().then((module: any) => {
-  wasmModule = module;
-});
+function instantiate(): Promise<void> {
+  return PgQueryModule().then((module: any) => {
+    wasmModule = module;
+  });
+}
+
+let initPromise = instantiate();
+
+// An exception out of a WASM call (V8 stack overflow on deeply nested SQL, a
+// trap, or exit() once the heap limit is hit) skips libpg_query's cleanup and
+// leaves the instance corrupt, so replace it with a fresh one.
+function callWasm(fn: () => number): number {
+  const proc = (globalThis as any).process;
+  const exitCode = proc?.exitCode;
+  try {
+    return fn();
+  } catch (error) {
+    wasmModule = undefined;
+    initPromise = instantiate();
+    if (proc) proc.exitCode = exitCode;
+    if (error instanceof Error) throw error;
+    throw new Error(
+      `libpg_query terminated (${(error as any)?.message ?? error}), most likely out of WASM memory; parse large inputs in smaller pieces`,
+      { cause: error }
+    );
+  }
+}
 
 function ensureLoaded() {
   if (!wasmModule) throw new Error("WASM module not initialized. Call `loadModule()` first.");
@@ -193,7 +217,7 @@ export const parse = awaitInit(async (query: string) => {
   
   try {
     // Call the raw function that returns a struct pointer
-    resultPtr = wasmModule._wasm_parse_query_raw(queryPtr);
+    resultPtr = callWasm(() => wasmModule._wasm_parse_query_raw(queryPtr));
     if (!resultPtr) {
       throw new Error('Failed to allocate memory for parse result');
     }
@@ -238,9 +262,11 @@ export const parse = awaitInit(async (query: string) => {
     return JSON.parse(parseTree);
   }
   finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_parse_result(resultPtr);
+    if (wasmModule) {
+      wasmModule._free(queryPtr);
+      if (resultPtr) {
+        wasmModule._wasm_free_parse_result(resultPtr);
+      }
     }
   }
 });
@@ -262,7 +288,7 @@ export function parseSync(query: string) {
   
   try {
     // Call the raw function that returns a struct pointer
-    resultPtr = wasmModule._wasm_parse_query_raw(queryPtr);
+    resultPtr = callWasm(() => wasmModule._wasm_parse_query_raw(queryPtr));
     if (!resultPtr) {
       throw new Error('Failed to allocate memory for parse result');
     }
@@ -307,9 +333,11 @@ export function parseSync(query: string) {
     return JSON.parse(parseTree);
   }
   finally {
-    wasmModule._free(queryPtr);
-    if (resultPtr) {
-      wasmModule._wasm_free_parse_result(resultPtr);
+    if (wasmModule) {
+      wasmModule._free(queryPtr);
+      if (resultPtr) {
+        wasmModule._wasm_free_parse_result(resultPtr);
+      }
     }
   }
 }
