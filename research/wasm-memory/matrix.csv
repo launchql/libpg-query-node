@@ -1,0 +1,1431 @@
+build,op,input,n,bytes,outcome,error,ms,peak_rss_mb,external_mb,arraybuffer_mb,hwm_rss_mb,load_external_mb,source
+v17.5.5,parse,nest_paren,100,208,OK,"",11,63,21,2,64,21,screen
+v17.5.5,parse,nest_paren,300,608,OK,"",12,67,21,2,68,21,screen
+v17.5.5,parse,nest_paren,1000,2008,OK,"",12,64,21,2,65,21,screen
+v17.5.5,parse,nest_paren,3000,6008,OK,"",9,66,21,2,67,21,screen
+v17.5.5,parse,nest_paren,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",11,69,21,2,69,21,screen
+v17.5.5,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",13,69,21,2,70,21,screen
+v17.5.5,parse,nest_func,100,308,OK,"",12,66,21,2,67,21,screen
+v17.5.5,parse,nest_func,300,908,OK,"",14,74,21,2,74,21,screen
+v17.5.5,parse,nest_func,1000,3008,WASM_TRAP,"memory access out of bounds",15,70,21,2,71,21,screen
+v17.5.5,parse,nest_func,3000,9008,WASM_TRAP,"memory access out of bounds",16,84,21,2,85,21,screen
+v17.5.5,parse,nest_func,10000,30008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",12,71,21,2,71,21,screen
+v17.5.5,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",14,71,21,2,72,21,screen
+v17.5.5,parse,nest_subq,100,908,OK,"",12,68,21,2,69,21,screen
+v17.5.5,parse,nest_subq,300,2708,WASM_TRAP,"memory access out of bounds",12,71,21,2,71,21,screen
+v17.5.5,parse,nest_subq,1000,9008,WASM_TRAP,"table index is out of bounds",15,76,21,2,77,21,screen
+v17.5.5,parse,nest_subq,3000,27008,WASM_TRAP,"memory access out of bounds",20,84,21,2,84,21,screen
+v17.5.5,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",12,69,21,2,69,21,screen
+v17.5.5,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",17,69,21,2,70,21,screen
+v17.5.5,parse,nest_case,100,2811,OK,"",13,70,21,2,71,21,screen
+v17.5.5,parse,nest_case,300,8411,WASM_TRAP,"memory access out of bounds",11,64,21,2,64,21,screen
+v17.5.5,parse,nest_case,1000,28011,WASM_TRAP,"memory access out of bounds",15,79,21,2,79,21,screen
+v17.5.5,parse,nest_case,3000,84011,WASM_TRAP,"memory access out of bounds",18,81,21,2,82,21,screen
+v17.5.5,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",15,70,21,2,70,21,screen
+v17.5.5,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",30,78,21,2,79,21,screen
+v17.5.5,parse,nest_bool_r,100,808,OK,"",13,66,21,2,67,21,screen
+v17.5.5,parse,nest_bool_r,300,2408,OK,"",15,83,21,2,84,21,screen
+v17.5.5,parse,nest_bool_r,1000,8008,WASM_TRAP,"null function or function signature mismatch",13,71,21,2,72,21,screen
+v17.5.5,parse,nest_bool_r,3000,24008,WASM_TRAP,"null function or function signature mismatch",16,77,21,2,78,21,screen
+v17.5.5,parse,nest_bool_r,10000,80008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",14,70,21,2,71,21,screen
+v17.5.5,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",17,73,21,2,74,21,screen
+v17.5.5,parse,nest_not,100,411,OK,"",11,68,21,2,68,21,screen
+v17.5.5,parse,nest_not,300,1211,OK,"",12,65,21,2,66,21,screen
+v17.5.5,parse,nest_not,1000,4011,WASM_TRAP,"table index is out of bounds",12,72,21,2,73,21,screen
+v17.5.5,parse,nest_not,3000,12011,WASM_TRAP,"memory access out of bounds",14,77,21,2,78,21,screen
+v17.5.5,parse,nest_not,10000,40011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",12,70,21,2,71,21,screen
+v17.5.5,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",16,70,21,2,70,21,screen
+v17.5.5,parse,nest_uminus,100,208,OK,"",12,63,21,2,63,21,screen
+v17.5.5,parse,nest_uminus,300,608,OK,"",11,64,21,2,64,21,screen
+v17.5.5,parse,nest_uminus,1000,2008,OK,"",12,66,21,2,67,21,screen
+v17.5.5,parse,nest_uminus,3000,6008,OK,"",12,71,21,2,72,21,screen
+v17.5.5,parse,nest_uminus,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",11,69,21,2,69,21,screen
+v17.5.5,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",13,69,21,2,70,21,screen
+v17.5.5,parse,nest_array,100,708,OK,"",8,60,21,2,61,21,screen
+v17.5.5,parse,nest_array,300,2108,OK,"",10,59,21,2,60,21,screen
+v17.5.5,parse,nest_array,1000,7008,WASM_TRAP,"table index is out of bounds",13,66,21,2,67,21,screen
+v17.5.5,parse,nest_array,3000,21008,WASM_TRAP,"memory access out of bounds",13,73,21,2,73,21,screen
+v17.5.5,parse,nest_array,10000,70008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",9,66,21,2,66,21,screen
+v17.5.5,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",17,69,21,2,70,21,screen
+v17.5.5,parse,nest_row,100,508,OK,"",11,64,21,2,65,21,screen
+v17.5.5,parse,nest_row,300,1508,OK,"",12,64,21,2,65,21,screen
+v17.5.5,parse,nest_row,1000,5008,WASM_TRAP,"memory access out of bounds",14,68,21,2,69,21,screen
+v17.5.5,parse,nest_row,3000,15008,UNKNOWN_THROW,"Program terminated with exit(2)",19,88,21,2,88,21,screen
+v17.5.5,parse,nest_row,10000,50008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",12,67,21,2,68,21,screen
+v17.5.5,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",12,67,21,2,67,21,screen
+v17.5.5,parse,nest_exists,100,2411,OK,"",9,66,21,2,67,21,screen
+v17.5.5,parse,nest_exists,300,7211,WASM_TRAP,"table index is out of bounds",13,75,21,2,75,21,screen
+v17.5.5,parse,nest_exists,1000,24011,WASM_TRAP,"memory access out of bounds",15,78,21,2,79,21,screen
+v17.5.5,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",12,70,21,2,71,21,screen
+v17.5.5,parse,nest_exists,10000,240011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",14,70,21,2,71,21,screen
+v17.5.5,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",29,73,21,2,74,21,screen
+v17.5.5,parse,nest_coalesce,100,1308,OK,"",12,65,21,2,66,21,screen
+v17.5.5,parse,nest_coalesce,300,3908,OK,"",13,76,21,2,77,21,screen
+v17.5.5,parse,nest_coalesce,1000,13008,WASM_TRAP,"memory access out of bounds",14,76,21,2,77,21,screen
+v17.5.5,parse,nest_coalesce,3000,39008,WASM_TRAP,"memory access out of bounds",12,69,21,2,70,21,screen
+v17.5.5,parse,nest_coalesce,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",14,69,21,2,70,21,screen
+v17.5.5,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",21,75,21,2,75,21,screen
+v17.5.5,parse,nest_cast,100,1308,OK,"",14,66,21,2,67,21,screen
+v17.5.5,parse,nest_cast,300,3908,OK,"",15,77,21,2,78,21,screen
+v17.5.5,parse,nest_cast,1000,13008,WASM_TRAP,"memory access out of bounds",13,73,21,2,74,21,screen
+v17.5.5,parse,nest_cast,3000,39008,WASM_TRAP,"memory access out of bounds",11,65,21,2,66,21,screen
+v17.5.5,parse,nest_cast,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",10,64,21,2,65,21,screen
+v17.5.5,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",21,70,21,2,71,21,screen
+v17.5.5,parse,chain_arith,1000,4008,WASM_TRAP,"null function or function signature mismatch",14,77,21,2,78,21,screen
+v17.5.5,parse,chain_arith,10000,40008,WASM_TRAP,"memory access out of bounds",16,81,21,2,82,21,screen
+v17.5.5,parse,chain_arith,100000,400008,WASM_TRAP,"memory access out of bounds",36,121,24,2,122,21,screen
+v17.5.5,parse,chain_arith,1000000,4000008,WASM_TRAP,"memory access out of bounds",235,576,147,0,577,21,screen
+v17.5.5,parse,chain_concat,1000,7010,WASM_TRAP,"null function or function signature mismatch",10,69,21,2,69,21,screen
+v17.5.5,parse,chain_concat,10000,70010,WASM_TRAP,"memory access out of bounds",27,79,21,2,79,21,screen
+v17.5.5,parse,chain_concat,100000,700010,WASM_TRAP,"memory access out of bounds",56,142,30,2,143,21,screen
+v17.5.5,parse,chain_concat,1000000,7000010,WASM_TRAP,"memory access out of bounds",354,737,201,0,739,21,screen
+v17.5.5,parse,chain_and,1000,9011,OK,"",21,79,21,2,80,21,screen
+v17.5.5,parse,chain_and,10000,90011,OK,"",24,95,21,0,96,21,screen
+v17.5.5,parse,chain_and,100000,900011,OK,"",104,302,30,0,302,21,screen
+v17.5.5,parse,chain_and,1000000,9000011,OK,"",921,514,294,0,773,21,screen
+v17.5.5,parse,chain_and_or,1000,17011,OK,"",18,83,21,0,85,21,screen
+v17.5.5,parse,chain_and_or,10000,170011,OK,"",44,156,20,0,157,21,screen
+v17.5.5,parse,chain_and_or,100000,1700011,OK,"",299,711,102,0,712,21,screen
+v17.5.5,parse,chain_and_or,1000000,17000011,OK,"",2854,1329,842,0,1330,21,screen
+v17.5.5,parse,chain_union,1000,15008,OK,"",26,101,21,0,102,21,screen
+v17.5.5,parse,chain_union,10000,150008,WASM_TRAP,"memory access out of bounds",22,86,21,2,87,21,screen
+v17.5.5,parse,chain_union,100000,1500008,WASM_TRAP,"memory access out of bounds",90,236,48,2,237,21,screen
+v17.5.5,parse,chain_union,1000000,15000008,WASM_TRAP,"memory access out of bounds",727,520,459,0,832,21,screen
+v17.5.5,parse,chain_union_all,1000,19008,OK,"",21,95,21,0,95,21,screen
+v17.5.5,parse,chain_union_all,10000,190008,WASM_TRAP,"memory access out of bounds",22,90,21,2,91,21,screen
+v17.5.5,parse,chain_union_all,100000,1900008,WASM_TRAP,"memory access out of bounds",97,248,48,2,249,21,screen
+v17.5.5,parse,chain_union_all,1000000,19000008,WASM_TRAP,"null function or function signature mismatch",877,531,480,0,826,21,screen
+v17.5.5,parse,chain_join,1000,30692,WASM_TRAP,"null function or function signature mismatch",16,70,21,2,71,21,screen
+v17.5.5,parse,chain_join,10000,336694,WASM_TRAP,"null function or function signature mismatch",27,92,20,1,93,20,screen
+v17.5.5,parse,chain_join,100000,3666696,WASM_TRAP,"null function or function signature mismatch",151,362,61,2,363,21,screen
+v17.5.5,parse,chain_join,1000000,39666698,WASM_TRAP,"null function or function signature mismatch",1593,983,572,0,1148,21,screen
+v17.5.5,parse,chain_cast,1000,5008,WASM_TRAP,"memory access out of bounds",24,70,21,2,71,21,screen
+v17.5.5,parse,chain_cast,10000,50008,WASM_TRAP,"memory access out of bounds",17,72,21,2,73,21,screen
+v17.5.5,parse,chain_cast,100000,500008,WASM_TRAP,"memory access out of bounds",52,120,24,2,121,21,screen
+v17.5.5,parse,chain_cast,1000000,5000008,WASM_TRAP,"memory access out of bounds",332,641,154,0,642,21,screen
+v17.5.5,parse,chain_dot,1000,2008,OK,"",28,88,21,2,88,21,screen
+v17.5.5,parse,chain_dot,10000,20008,OK,"",57,147,18,0,148,21,screen
+v17.5.5,parse,chain_dot,100000,200008,OK,"",131,230,21,0,230,21,screen
+v17.5.5,parse,chain_dot,1000000,2000008,OK,"",841,333,129,0,729,21,screen
+v17.5.5,parse,chain_subscript,1000,3008,OK,"",31,88,21,2,89,21,screen
+v17.5.5,parse,chain_subscript,10000,30008,OK,"",36,126,18,0,127,21,screen
+v17.5.5,parse,chain_subscript,100000,300008,OK,"",214,430,34,0,431,21,screen
+v17.5.5,parse,chain_subscript,1000000,3000008,OK,"",1561,740,402,0,800,21,screen
+v17.5.5,parse,wide_in,10000,48911,OK,"",80,215,20,0,215,20,screen
+v17.5.5,parse,wide_in,100000,588911,OK,"",236,442,29,0,443,21,screen
+v17.5.5,parse,wide_in,1000000,6888911,OK,"",1189,549,237,0,807,21,screen
+v17.5.5,parse,wide_values,10000,236699,OK,"",93,228,20,0,229,20,screen
+v17.5.5,parse,wide_values,100000,2666699,OK,"",451,645,111,0,645,21,screen
+v17.5.5,parse,wide_values,1000000,29666699,OK,"",4281,1695,937,0,1696,21,screen
+v17.5.5,parse,wide_select_list,10000,88902,OK,"",65,150,20,0,151,21,screen
+v17.5.5,parse,wide_select_list,100000,988902,OK,"",243,431,66,0,435,21,screen
+v17.5.5,parse,wide_select_list,1000000,10888902,OK,"",2159,1169,642,0,1170,21,screen
+v17.5.5,parse,wide_cte,10000,237792,OK,"",69,194,21,0,195,21,screen
+v17.5.5,parse,wide_cte,100000,2577792,OK,"",514,356,165,0,821,20,screen
+v17.5.5,parse,wide_cte,1000000,27777792,OK,"",4401,2192,1685,0,2193,21,screen
+v17.5.5,parse,wide_array,10000,48903,OK,"",28,105,20,0,106,20,screen
+v17.5.5,parse,wide_array,100000,588903,OK,"",116,312,29,0,313,21,screen
+v17.5.5,parse,wide_array,1000000,6888903,OK,"",876,547,237,0,801,21,screen
+v17.5.5,parse,long_string,10000,10009,OK,"",9,61,21,2,62,21,screen
+v17.5.5,parse,long_string,100000,100009,OK,"",11,62,21,2,63,21,screen
+v17.5.5,parse,long_string,1000000,1000009,OK,"",30,71,21,0,71,21,screen
+v17.5.5,parse,long_ident,10000,10007,OK,"",12,61,21,2,62,21,screen
+v17.5.5,parse,long_ident,100000,100007,OK,"",10,61,21,2,62,21,screen
+v17.5.5,parse,long_ident,1000000,1000007,OK,"",25,68,21,2,69,21,screen
+v17.5.5,parse,long_comment,10000,10015,OK,"",8,61,21,2,62,21,screen
+v17.5.5,parse,long_comment,100000,100015,OK,"",9,61,21,2,62,21,screen
+v17.5.5,parse,long_comment,1000000,1000015,OK,"",17,66,21,2,67,21,screen
+v17.5.5,parse,many_simple,100000,1000000,OK,"",352,263,121,0,773,21,screen
+v17.5.5,parse,many_simple,1000000,10000000,OK,"",3348,1579,1028,0,1580,21,screen
+v17.5.5,parse,many_mixed,2000,1044680,OK,"",248,544,63,0,545,21,screen
+v17.5.5,parse,many_mixed,20000,10686680,OK,"",2650,1092,639,0,1093,21,screen
+v17.6.0,parse,nest_paren,100,208,OK,"",20,60,132,1,61,132,screen
+v17.6.0,parse,nest_paren,300,608,OK,"",16,58,132,0,59,132,screen
+v17.6.0,parse,nest_paren,1000,2008,OK,"",21,61,132,0,62,132,screen
+v17.6.0,parse,nest_paren,3000,6008,OK,"",15,69,132,0,70,132,screen
+v17.6.0,parse,nest_paren,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",20,67,132,0,68,132,screen
+v17.6.0,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",19,64,132,0,65,132,screen
+v17.6.0,parse,nest_func,100,308,OK,"",12,65,132,0,67,132,screen
+v17.6.0,parse,nest_func,300,908,OK,"",14,68,132,0,69,132,screen
+v17.6.0,parse,nest_func,1000,3008,OK,"",20,79,132,2,80,132,screen
+v17.6.0,parse,nest_func,3000,9008,OK,"",28,108,132,0,110,132,screen
+v17.6.0,parse,nest_func,10000,30008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",19,69,132,0,70,132,screen
+v17.6.0,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",15,66,132,0,66,132,screen
+v17.6.0,parse,nest_subq,100,908,OK,"",15,67,132,1,68,132,screen
+v17.6.0,parse,nest_subq,300,2708,OK,"",17,68,132,0,69,132,screen
+v17.6.0,parse,nest_subq,1000,9008,OK,"",17,88,132,0,88,132,screen
+v17.6.0,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",13,74,132,2,75,132,screen
+v17.6.0,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",11,64,132,0,65,132,screen
+v17.6.0,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",20,66,132,0,67,132,screen
+v17.6.0,parse,nest_case,100,2811,OK,"",16,68,132,0,69,132,screen
+v17.6.0,parse,nest_case,300,8411,OK,"",17,74,132,0,75,132,screen
+v17.6.0,parse,nest_case,1000,28011,OK,"",24,84,132,0,85,132,screen
+v17.6.0,parse,nest_case,3000,84011,OK,"",32,104,130,0,104,132,screen
+v17.6.0,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",15,66,132,0,66,132,screen
+v17.6.0,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",35,77,132,2,77,132,screen
+v17.6.0,parse,nest_bool_r,100,808,OK,"",10,63,131,1,63,132,screen
+v17.6.0,parse,nest_bool_r,300,2408,OK,"",12,68,132,0,69,132,screen
+v17.6.0,parse,nest_bool_r,1000,8008,OK,"",16,83,132,1,84,132,screen
+v17.6.0,parse,nest_bool_r,3000,24008,OK,"",25,99,130,0,100,132,screen
+v17.6.0,parse,nest_bool_r,10000,80008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",19,67,132,0,67,132,screen
+v17.6.0,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",17,67,132,0,68,132,screen
+v17.6.0,parse,nest_not,100,411,OK,"",22,60,132,2,61,132,screen
+v17.6.0,parse,nest_not,300,1211,OK,"",17,66,132,1,67,132,screen
+v17.6.0,parse,nest_not,1000,4011,OK,"",13,70,132,0,71,132,screen
+v17.6.0,parse,nest_not,3000,12011,OK,"",18,87,132,0,88,132,screen
+v17.6.0,parse,nest_not,10000,40011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",16,66,132,0,66,132,screen
+v17.6.0,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",21,65,132,0,66,132,screen
+v17.6.0,parse,nest_uminus,100,208,OK,"",8,60,132,2,60,132,screen
+v17.6.0,parse,nest_uminus,300,608,OK,"",14,63,132,1,64,132,screen
+v17.6.0,parse,nest_uminus,1000,2008,OK,"",20,62,132,0,63,132,screen
+v17.6.0,parse,nest_uminus,3000,6008,OK,"",13,59,132,1,60,132,screen
+v17.6.0,parse,nest_uminus,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",11,64,132,1,65,132,screen
+v17.6.0,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",12,66,132,2,66,132,screen
+v17.6.0,parse,nest_array,100,708,OK,"",12,59,132,2,60,132,screen
+v17.6.0,parse,nest_array,300,2108,OK,"",14,63,132,0,71,132,screen
+v17.6.0,parse,nest_array,1000,7008,OK,"",14,72,132,0,73,132,screen
+v17.6.0,parse,nest_array,3000,21008,OK,"",16,81,132,0,82,132,screen
+v17.6.0,parse,nest_array,10000,70008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",15,67,132,0,68,132,screen
+v17.6.0,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",17,70,132,0,71,132,screen
+v17.6.0,parse,nest_row,100,508,OK,"",13,64,132,0,64,132,screen
+v17.6.0,parse,nest_row,300,1508,OK,"",12,64,132,0,65,132,screen
+v17.6.0,parse,nest_row,1000,5008,OK,"",13,73,132,0,73,132,screen
+v17.6.0,parse,nest_row,3000,15008,OK,"",24,92,132,0,93,132,screen
+v17.6.0,parse,nest_row,10000,50008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",13,65,132,1,66,132,screen
+v17.6.0,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",15,66,132,0,66,132,screen
+v17.6.0,parse,nest_exists,100,2411,OK,"",17,75,131,1,76,132,screen
+v17.6.0,parse,nest_exists,300,7211,OK,"",18,76,131,1,76,132,screen
+v17.6.0,parse,nest_exists,1000,24011,OK,"",38,93,132,0,93,132,screen
+v17.6.0,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",66,69,131,1,69,132,screen
+v17.6.0,parse,nest_exists,10000,240011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",46,65,132,0,71,132,screen
+v17.6.0,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",136,77,131,1,78,132,screen
+v17.6.0,parse,nest_coalesce,100,1308,OK,"",129,69,131,1,69,132,screen
+v17.6.0,parse,nest_coalesce,300,3908,OK,"",134,70,132,0,71,132,screen
+v17.6.0,parse,nest_coalesce,1000,13008,OK,"",57,76,132,0,76,132,screen
+v17.6.0,parse,nest_coalesce,3000,39008,OK,"",218,95,131,1,100,132,screen
+v17.6.0,parse,nest_coalesce,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",48,67,132,1,67,132,screen
+v17.6.0,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",56,72,132,1,75,132,screen
+v17.6.0,parse,nest_cast,100,1308,OK,"",128,72,132,1,72,132,screen
+v17.6.0,parse,nest_cast,300,3908,OK,"",48,83,132,1,83,132,screen
+v17.6.0,parse,nest_cast,1000,13008,OK,"",28,84,132,0,84,132,screen
+v17.6.0,parse,nest_cast,3000,39008,OK,"",32,124,131,1,124,132,screen
+v17.6.0,parse,nest_cast,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",102,61,132,0,62,132,screen
+v17.6.0,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",113,76,131,1,76,132,screen
+v17.6.0,parse,chain_arith,1000,4008,OK,"",119,77,132,0,77,132,screen
+v17.6.0,parse,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",99,104,132,0,104,132,screen
+v17.6.0,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",110,141,131,1,141,132,screen
+v17.6.0,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",497,486,187,0,487,132,screen
+v17.6.0,parse,chain_concat,1000,7010,OK,"",68,87,132,1,88,132,screen
+v17.6.0,parse,chain_concat,10000,70010,JS_RANGE_ERROR,"Maximum call stack size exceeded",241,95,132,0,96,132,screen
+v17.6.0,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",145,175,131,1,176,132,screen
+v17.6.0,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",792,651,223,0,652,132,screen
+v17.6.0,parse,chain_and,1000,9011,OK,"",32,85,131,1,86,132,screen
+v17.6.0,parse,chain_and,10000,90011,OK,"",105,100,130,0,100,132,screen
+v17.6.0,parse,chain_and,100000,900011,OK,"",511,263,135,0,263,132,screen
+v17.6.0,parse,chain_and,1000000,9000011,OK,"",3139,561,326,0,751,132,screen
+v17.6.0,parse,chain_and_or,1000,17011,OK,"",42,76,132,0,76,132,screen
+v17.6.0,parse,chain_and_or,10000,170011,OK,"",277,240,131,0,241,132,screen
+v17.6.0,parse,chain_and_or,100000,1700011,OK,"",1070,755,147,0,755,132,screen
+v17.6.0,parse,chain_and_or,1000000,17000011,OK,"",5598,1331,874,0,1332,132,screen
+v17.6.0,parse,chain_union,1000,15008,OK,"",30,105,131,1,106,132,screen
+v17.6.0,parse,chain_union,10000,150008,OK,"",221,180,132,0,187,132,screen
+v17.6.0,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",267,188,132,2,188,132,screen
+v17.6.0,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",934,525,460,0,793,132,screen
+v17.6.0,parse,chain_union_all,1000,19008,OK,"",40,91,132,0,94,132,screen
+v17.6.0,parse,chain_union_all,10000,190008,OK,"",98,195,133,1,196,132,screen
+v17.6.0,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",132,278,132,2,279,132,screen
+v17.6.0,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1113,533,552,0,823,132,screen
+v17.6.0,parse,chain_join,1000,30692,OK,"",163,96,132,0,99,132,screen
+v17.6.0,parse,chain_join,10000,336694,JS_RANGE_ERROR,"Maximum call stack size exceeded",210,108,131,0,108,131,screen
+v17.6.0,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",411,333,132,0,336,132,screen
+v17.6.0,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",2909,987,654,0,1162,132,screen
+v17.6.0,parse,chain_cast,1000,5008,OK,"",62,100,132,2,100,132,screen
+v17.6.0,parse,chain_cast,10000,50008,JS_RANGE_ERROR,"Maximum call stack size exceeded",46,82,132,0,82,132,screen
+v17.6.0,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",49,127,132,2,127,132,screen
+v17.6.0,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",487,541,187,0,541,132,screen
+v17.6.0,parse,chain_dot,1000,2008,OK,"",36,69,132,0,69,132,screen
+v17.6.0,parse,chain_dot,10000,20008,OK,"",100,98,131,1,98,132,screen
+v17.6.0,parse,chain_dot,100000,200008,OK,"",343,222,133,1,222,132,screen
+v17.6.0,parse,chain_dot,1000000,2000008,OK,"",1974,317,178,0,747,132,screen
+v17.6.0,parse,chain_subscript,1000,3008,OK,"",58,84,131,1,85,132,screen
+v17.6.0,parse,chain_subscript,10000,30008,OK,"",206,108,131,1,116,132,screen
+v17.6.0,parse,chain_subscript,100000,300008,OK,"",725,352,138,1,353,132,screen
+v17.6.0,parse,chain_subscript,1000000,3000008,OK,"",5355,759,434,0,818,132,screen
+v17.6.0,parse,wide_in,10000,48911,OK,"",111,102,131,1,103,131,screen
+v17.6.0,parse,wide_in,100000,588911,OK,"",521,290,135,0,290,132,screen
+v17.6.0,parse,wide_in,1000000,6888911,OK,"",2538,544,269,0,762,132,screen
+v17.6.0,parse,wide_values,10000,236699,OK,"",246,177,131,0,177,131,screen
+v17.6.0,parse,wide_values,100000,2666699,OK,"",1445,622,149,0,622,132,screen
+v17.6.0,parse,wide_values,1000000,29666699,OK,"",9888,1617,969,0,1619,132,screen
+v17.6.0,parse,wide_select_list,10000,88902,OK,"",137,151,132,1,152,132,screen
+v17.6.0,parse,wide_select_list,100000,988902,OK,"",1102,271,142,1,718,132,screen
+v17.6.0,parse,wide_select_list,1000000,10888902,OK,"",5592,1136,674,0,1137,132,screen
+v17.6.0,parse,wide_cte,10000,237792,OK,"",93,213,132,0,214,132,screen
+v17.6.0,parse,wide_cte,100000,2577792,OK,"",1248,815,214,0,816,132,screen
+v17.6.0,parse,wide_cte,1000000,27777792,UNKNOWN_THROW,"Program terminated with exit(1)",5431,1277,920,0,1278,132,screen
+v17.6.0,parse,wide_array,10000,48903,OK,"",144,94,131,1,94,131,screen
+v17.6.0,parse,wide_array,100000,588903,OK,"",364,235,136,1,235,132,screen
+v17.6.0,parse,wide_array,1000000,6888903,OK,"",3322,515,269,0,815,132,screen
+v17.6.0,parse,long_string,10000,10009,OK,"",21,54,132,0,57,132,screen
+v17.6.0,parse,long_string,100000,100009,OK,"",23,61,132,0,63,132,screen
+v17.6.0,parse,long_string,1000000,1000009,OK,"",53,71,132,0,71,132,screen
+v17.6.0,parse,long_ident,10000,10007,OK,"",11,55,132,1,56,132,screen
+v17.6.0,parse,long_ident,100000,100007,OK,"",12,62,131,1,62,132,screen
+v17.6.0,parse,long_ident,1000000,1000007,OK,"",45,67,132,0,67,132,screen
+v17.6.0,parse,long_comment,10000,10015,OK,"",11,60,131,1,62,132,screen
+v17.6.0,parse,long_comment,100000,100015,OK,"",23,59,132,0,63,132,screen
+v17.6.0,parse,long_comment,1000000,1000015,OK,"",48,68,131,1,68,132,screen
+v17.6.0,parse,many_simple,100000,1000000,OK,"",869,244,176,0,758,132,screen
+v17.6.0,parse,many_simple,1000000,10000000,OK,"",9148,1573,1060,0,1574,132,screen
+v17.6.0,parse,many_mixed,2000,1044680,OK,"",1013,608,141,0,609,132,screen
+v17.6.0,parse,many_mixed,20000,10686680,OK,"",6449,1086,671,0,1086,132,screen
+v18.1.5,parse,nest_paren,100,208,OK,"",15,65,131,2,66,133,screen
+v18.1.5,parse,nest_paren,300,608,OK,"",22,63,131,2,64,133,screen
+v18.1.5,parse,nest_paren,1000,2008,OK,"",25,62,133,0,62,133,screen
+v18.1.5,parse,nest_paren,3000,6008,OK,"",25,71,133,2,71,133,screen
+v18.1.5,parse,nest_paren,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",70,66,133,0,67,133,screen
+v18.1.5,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",50,68,133,2,68,133,screen
+v18.1.5,parse,nest_func,100,308,OK,"",124,90,133,2,90,133,screen
+v18.1.5,parse,nest_func,300,908,OK,"",68,65,133,0,66,133,screen
+v18.1.5,parse,nest_func,1000,3008,OK,"",102,84,131,2,84,133,screen
+v18.1.5,parse,nest_func,3000,9008,OK,"",107,97,133,0,97,133,screen
+v18.1.5,parse,nest_func,10000,30008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",30,69,133,3,70,133,screen
+v18.1.5,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",99,69,133,0,69,133,screen
+v18.1.5,parse,nest_subq,100,908,OK,"",32,69,133,0,69,133,screen
+v18.1.5,parse,nest_subq,300,2708,OK,"",189,68,133,0,68,133,screen
+v18.1.5,parse,nest_subq,1000,9008,OK,"",75,100,131,2,100,133,screen
+v18.1.5,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",52,81,133,2,81,133,screen
+v18.1.5,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",50,69,131,2,73,133,screen
+v18.1.5,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",27,74,133,0,75,133,screen
+v18.1.5,parse,nest_case,100,2811,OK,"",96,78,133,3,78,133,screen
+v18.1.5,parse,nest_case,300,8411,OK,"",93,108,133,2,109,133,screen
+v18.1.5,parse,nest_case,1000,28011,OK,"",52,89,131,2,89,133,screen
+v18.1.5,parse,nest_case,3000,84011,OK,"",70,102,131,2,103,133,screen
+v18.1.5,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",25,68,133,0,68,133,screen
+v18.1.5,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",34,77,131,2,77,133,screen
+v18.1.5,parse,nest_bool_r,100,808,OK,"",15,76,133,2,76,133,screen
+v18.1.5,parse,nest_bool_r,300,2408,OK,"",24,81,133,0,81,133,screen
+v18.1.5,parse,nest_bool_r,1000,8008,OK,"",25,79,133,2,79,133,screen
+v18.1.5,parse,nest_bool_r,3000,24008,OK,"",65,110,130,0,111,133,screen
+v18.1.5,parse,nest_bool_r,10000,80008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",42,77,131,2,78,133,screen
+v18.1.5,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",21,75,133,3,75,133,screen
+v18.1.5,parse,nest_not,100,411,OK,"",16,74,133,0,77,133,screen
+v18.1.5,parse,nest_not,300,1211,OK,"",16,71,133,3,72,133,screen
+v18.1.5,parse,nest_not,1000,4011,OK,"",13,69,133,0,70,133,screen
+v18.1.5,parse,nest_not,3000,12011,OK,"",29,108,133,0,111,133,screen
+v18.1.5,parse,nest_not,10000,40011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",18,76,133,0,76,133,screen
+v18.1.5,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",19,67,133,0,68,133,screen
+v18.1.5,parse,nest_uminus,100,208,OK,"",15,66,133,3,67,133,screen
+v18.1.5,parse,nest_uminus,300,608,OK,"",17,64,133,3,64,133,screen
+v18.1.5,parse,nest_uminus,1000,2008,OK,"",13,67,133,3,68,133,screen
+v18.1.5,parse,nest_uminus,3000,6008,OK,"",11,63,133,3,64,133,screen
+v18.1.5,parse,nest_uminus,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",25,72,133,0,73,133,screen
+v18.1.5,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",18,70,131,2,70,133,screen
+v18.1.5,parse,nest_array,100,708,OK,"",13,63,133,3,63,133,screen
+v18.1.5,parse,nest_array,300,2108,OK,"",22,88,133,3,89,133,screen
+v18.1.5,parse,nest_array,1000,7008,OK,"",27,81,133,0,81,133,screen
+v18.1.5,parse,nest_array,3000,21008,OK,"",65,95,133,0,96,133,screen
+v18.1.5,parse,nest_array,10000,70008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",32,70,131,2,70,133,screen
+v18.1.5,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",30,65,131,2,69,133,screen
+v18.1.5,parse,nest_row,100,508,OK,"",20,66,133,3,66,133,screen
+v18.1.5,parse,nest_row,300,1508,OK,"",66,80,133,3,80,133,screen
+v18.1.5,parse,nest_row,1000,5008,OK,"",40,79,133,2,87,133,screen
+v18.1.5,parse,nest_row,3000,15008,OK,"",26,93,133,0,94,133,screen
+v18.1.5,parse,nest_row,10000,50008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",16,66,133,0,67,133,screen
+v18.1.5,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",34,77,133,3,78,133,screen
+v18.1.5,parse,nest_exists,100,2411,OK,"",31,72,131,2,73,133,screen
+v18.1.5,parse,nest_exists,300,7211,OK,"",37,78,133,0,85,133,screen
+v18.1.5,parse,nest_exists,1000,24011,OK,"",81,92,131,2,93,133,screen
+v18.1.5,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",150,70,133,2,70,133,screen
+v18.1.5,parse,nest_exists,10000,240011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",29,69,133,3,70,133,screen
+v18.1.5,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",123,84,133,3,85,133,screen
+v18.1.5,parse,nest_coalesce,100,1308,OK,"",26,70,133,0,70,133,screen
+v18.1.5,parse,nest_coalesce,300,3908,OK,"",24,63,133,0,74,133,screen
+v18.1.5,parse,nest_coalesce,1000,13008,OK,"",59,86,133,2,86,133,screen
+v18.1.5,parse,nest_coalesce,3000,39008,OK,"",55,90,133,0,91,133,screen
+v18.1.5,parse,nest_coalesce,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",24,70,133,3,71,133,screen
+v18.1.5,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",45,74,131,2,74,133,screen
+v18.1.5,parse,nest_cast,100,1308,OK,"",21,74,133,3,74,133,screen
+v18.1.5,parse,nest_cast,300,3908,OK,"",30,81,131,2,81,133,screen
+v18.1.5,parse,nest_cast,1000,13008,OK,"",46,84,133,2,85,133,screen
+v18.1.5,parse,nest_cast,3000,39008,OK,"",76,136,133,3,137,133,screen
+v18.1.5,parse,nest_cast,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",22,78,133,0,78,133,screen
+v18.1.5,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",19,64,133,0,66,133,screen
+v18.1.5,parse,chain_arith,1000,4008,OK,"",23,91,133,0,94,133,screen
+v18.1.5,parse,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",54,105,133,0,106,133,screen
+v18.1.5,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",44,141,133,0,142,133,screen
+v18.1.5,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",264,592,186,0,593,133,screen
+v18.1.5,parse,chain_concat,1000,7010,OK,"",37,87,133,0,88,133,screen
+v18.1.5,parse,chain_concat,10000,70010,JS_RANGE_ERROR,"Maximum call stack size exceeded",32,115,133,0,116,133,screen
+v18.1.5,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",87,190,133,2,191,133,screen
+v18.1.5,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",740,284,223,0,728,133,screen
+v18.1.5,parse,chain_and,1000,9011,OK,"",17,74,133,0,74,133,screen
+v18.1.5,parse,chain_and,10000,90011,OK,"",23,96,130,0,97,133,screen
+v18.1.5,parse,chain_and,100000,900011,OK,"",122,308,135,0,308,133,screen
+v18.1.5,parse,chain_and,1000000,9000011,OK,"",1124,546,326,0,738,133,screen
+v18.1.5,parse,chain_and_or,1000,17011,OK,"",17,81,133,0,82,133,screen
+v18.1.5,parse,chain_and_or,10000,170011,OK,"",46,162,133,2,164,133,screen
+v18.1.5,parse,chain_and_or,100000,1700011,OK,"",310,718,147,0,719,133,screen
+v18.1.5,parse,chain_and_or,1000000,17000011,OK,"",2677,1392,874,0,1393,133,screen
+v18.1.5,parse,chain_union,1000,15008,OK,"",21,92,133,0,92,133,screen
+v18.1.5,parse,chain_union,10000,150008,OK,"",54,183,132,0,184,133,screen
+v18.1.5,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",110,257,133,3,258,133,screen
+v18.1.5,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",854,521,460,0,819,133,screen
+v18.1.5,parse,chain_union_all,1000,19008,OK,"",31,92,133,0,92,133,screen
+v18.1.5,parse,chain_union_all,10000,190008,OK,"",74,185,132,0,186,133,screen
+v18.1.5,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",107,227,133,0,227,133,screen
+v18.1.5,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",815,534,552,0,885,133,screen
+v18.1.5,parse,chain_join,1000,30692,OK,"",23,99,133,0,100,133,screen
+v18.1.5,parse,chain_join,10000,336694,JS_RANGE_ERROR,"Maximum call stack size exceeded",31,103,131,0,103,131,screen
+v18.1.5,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",146,357,133,0,358,133,screen
+v18.1.5,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",1630,985,654,0,1164,133,screen
+v18.1.5,parse,chain_cast,1000,5008,OK,"",19,85,133,0,85,133,screen
+v18.1.5,parse,chain_cast,10000,50008,JS_RANGE_ERROR,"Maximum call stack size exceeded",21,87,133,3,88,133,screen
+v18.1.5,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",44,110,133,0,111,133,screen
+v18.1.5,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",293,621,186,0,622,133,screen
+v18.1.5,parse,chain_dot,1000,2008,OK,"",15,71,133,0,72,133,screen
+v18.1.5,parse,chain_dot,10000,20008,OK,"",26,95,133,0,95,133,screen
+v18.1.5,parse,chain_dot,100000,200008,OK,"",76,221,132,0,222,133,screen
+v18.1.5,parse,chain_dot,1000000,2000008,OK,"",589,334,178,0,757,133,screen
+v18.1.5,parse,chain_subscript,1000,3008,OK,"",18,77,133,0,77,133,screen
+v18.1.5,parse,chain_subscript,10000,30008,OK,"",30,109,130,0,110,133,screen
+v18.1.5,parse,chain_subscript,100000,300008,OK,"",163,351,136,0,352,133,screen
+v18.1.5,parse,chain_subscript,1000000,3000008,OK,"",1520,741,434,0,742,133,screen
+v18.1.5,parse,wide_in,10000,48911,OK,"",26,103,131,0,104,131,screen
+v18.1.5,parse,wide_in,100000,588911,OK,"",102,291,135,0,292,133,screen
+v18.1.5,parse,wide_in,1000000,6888911,OK,"",867,544,269,0,846,133,screen
+v18.1.5,parse,wide_values,10000,236699,OK,"",51,164,131,0,165,131,screen
+v18.1.5,parse,wide_values,100000,2666699,OK,"",370,292,148,0,810,133,screen
+v18.1.5,parse,wide_values,1000000,29666699,OK,"",3621,1645,969,0,1646,133,screen
+v18.1.5,parse,wide_select_list,10000,88902,OK,"",35,135,131,0,135,131,screen
+v18.1.5,parse,wide_select_list,100000,988902,OK,"",235,590,141,0,591,133,screen
+v18.1.5,parse,wide_select_list,1000000,10888902,OK,"",2154,1167,674,0,1168,133,screen
+v18.1.5,parse,wide_cte,10000,237792,OK,"",66,201,132,0,202,133,screen
+v18.1.5,parse,wide_cte,100000,2577792,OK,"",561,356,214,0,822,131,screen
+v18.1.5,parse,wide_cte,1000000,27777792,UNKNOWN_THROW,"Program terminated with exit(1)",1877,1271,920,0,1271,133,screen
+v18.1.5,parse,wide_array,10000,48903,OK,"",23,96,131,0,97,131,screen
+v18.1.5,parse,wide_array,100000,588903,OK,"",98,272,135,0,273,133,screen
+v18.1.5,parse,wide_array,1000000,6888903,OK,"",880,545,269,0,845,133,screen
+v18.1.5,parse,long_string,10000,10009,OK,"",10,60,133,0,64,133,screen
+v18.1.5,parse,long_string,100000,100009,OK,"",12,62,133,0,64,133,screen
+v18.1.5,parse,long_string,1000000,1000009,OK,"",28,71,133,0,72,133,screen
+v18.1.5,parse,long_ident,10000,10007,OK,"",13,60,133,0,64,133,screen
+v18.1.5,parse,long_ident,100000,100007,OK,"",13,61,133,0,65,133,screen
+v18.1.5,parse,long_ident,1000000,1000007,OK,"",22,70,133,3,70,133,screen
+v18.1.5,parse,long_comment,10000,10015,OK,"",9,63,133,3,64,133,screen
+v18.1.5,parse,long_comment,100000,100015,OK,"",12,60,133,0,64,133,screen
+v18.1.5,parse,long_comment,1000000,1000015,OK,"",19,66,133,0,67,133,screen
+v18.1.5,parse,many_simple,100000,1000000,OK,"",421,238,176,0,742,133,screen
+v18.1.5,parse,many_simple,1000000,10000000,OK,"",3193,1582,1060,0,1582,133,screen
+v18.1.5,parse,many_mixed,2000,1044680,OK,"",240,555,141,0,556,133,screen
+v18.1.5,parse,many_mixed,20000,10686680,OK,"",1974,1096,673,0,1097,133,screen
+v18.1.5-lowmem-16.0,parse,nest_paren,100,208,OK,"",15,67,21,3,68,21,screen
+v18.1.5-lowmem-16.0,parse,nest_paren,300,608,OK,"",10,64,21,3,65,21,screen
+v18.1.5-lowmem-16.0,parse,nest_paren,1000,2008,OK,"",12,67,21,3,68,21,screen
+v18.1.5-lowmem-16.0,parse,nest_paren,3000,6008,OK,"",9,61,21,3,62,21,screen
+v18.1.5-lowmem-16.0,parse,nest_paren,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",12,71,21,3,71,21,screen
+v18.1.5-lowmem-16.0,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",13,71,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_func,100,308,OK,"",12,65,21,3,65,21,screen
+v18.1.5-lowmem-16.0,parse,nest_func,300,908,OK,"",14,76,21,3,77,21,screen
+v18.1.5-lowmem-16.0,parse,nest_func,1000,3008,OK,"",18,88,21,3,89,21,screen
+v18.1.5-lowmem-16.0,parse,nest_func,3000,9008,OK,"",22,95,21,0,95,21,screen
+v18.1.5-lowmem-16.0,parse,nest_func,10000,30008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",12,72,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",14,70,21,3,71,21,screen
+v18.1.5-lowmem-16.0,parse,nest_subq,100,908,OK,"",13,70,21,3,71,21,screen
+v18.1.5-lowmem-16.0,parse,nest_subq,300,2708,OK,"",17,80,21,3,81,21,screen
+v18.1.5-lowmem-16.0,parse,nest_subq,1000,9008,OK,"",22,93,21,0,96,21,screen
+v18.1.5-lowmem-16.0,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",21,83,21,3,84,21,screen
+v18.1.5-lowmem-16.0,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",12,71,21,3,71,21,screen
+v18.1.5-lowmem-16.0,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",18,73,21,3,74,21,screen
+v18.1.5-lowmem-16.0,parse,nest_case,100,2811,OK,"",14,75,21,3,76,21,screen
+v18.1.5-lowmem-16.0,parse,nest_case,300,8411,OK,"",15,81,21,3,82,21,screen
+v18.1.5-lowmem-16.0,parse,nest_case,1000,28011,OK,"",19,86,21,0,89,21,screen
+v18.1.5-lowmem-16.0,parse,nest_case,3000,84011,OK,"",25,108,21,0,108,21,screen
+v18.1.5-lowmem-16.0,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",14,72,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",28,76,21,3,77,21,screen
+v18.1.5-lowmem-16.0,parse,nest_bool_r,100,808,OK,"",12,67,21,3,68,21,screen
+v18.1.5-lowmem-16.0,parse,nest_bool_r,300,2408,OK,"",14,72,21,3,73,21,screen
+v18.1.5-lowmem-16.0,parse,nest_bool_r,1000,8008,OK,"",18,88,21,0,91,21,screen
+v18.1.5-lowmem-16.0,parse,nest_bool_r,3000,24008,OK,"",26,109,21,0,110,21,screen
+v18.1.5-lowmem-16.0,parse,nest_bool_r,10000,80008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",14,72,21,3,73,21,screen
+v18.1.5-lowmem-16.0,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",21,69,21,3,69,21,screen
+v18.1.5-lowmem-16.0,parse,nest_not,100,411,OK,"",11,67,21,3,67,21,screen
+v18.1.5-lowmem-16.0,parse,nest_not,300,1211,OK,"",13,71,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_not,1000,4011,OK,"",12,72,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_not,3000,12011,OK,"",25,88,21,0,90,21,screen
+v18.1.5-lowmem-16.0,parse,nest_not,10000,40011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",12,71,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",37,79,21,3,80,21,screen
+v18.1.5-lowmem-16.0,parse,nest_uminus,100,208,OK,"",12,65,21,3,66,21,screen
+v18.1.5-lowmem-16.0,parse,nest_uminus,300,608,OK,"",12,65,21,3,66,21,screen
+v18.1.5-lowmem-16.0,parse,nest_uminus,1000,2008,OK,"",12,68,21,3,69,21,screen
+v18.1.5-lowmem-16.0,parse,nest_uminus,3000,6008,OK,"",12,68,21,3,69,21,screen
+v18.1.5-lowmem-16.0,parse,nest_uminus,10000,20008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",10,70,21,3,71,21,screen
+v18.1.5-lowmem-16.0,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",12,68,21,3,69,21,screen
+v18.1.5-lowmem-16.0,parse,nest_array,100,708,OK,"",13,64,21,3,65,21,screen
+v18.1.5-lowmem-16.0,parse,nest_array,300,2108,OK,"",13,74,21,3,74,21,screen
+v18.1.5-lowmem-16.0,parse,nest_array,1000,7008,OK,"",16,82,21,3,82,21,screen
+v18.1.5-lowmem-16.0,parse,nest_array,3000,21008,OK,"",21,100,21,0,101,21,screen
+v18.1.5-lowmem-16.0,parse,nest_array,10000,70008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",12,71,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",17,73,21,3,74,21,screen
+v18.1.5-lowmem-16.0,parse,nest_row,100,508,OK,"",12,66,21,3,66,21,screen
+v18.1.5-lowmem-16.0,parse,nest_row,300,1508,OK,"",13,71,21,3,71,21,screen
+v18.1.5-lowmem-16.0,parse,nest_row,1000,5008,OK,"",18,76,21,3,77,21,screen
+v18.1.5-lowmem-16.0,parse,nest_row,3000,15008,OK,"",18,90,21,0,91,21,screen
+v18.1.5-lowmem-16.0,parse,nest_row,10000,50008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",12,71,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",15,71,21,3,72,21,screen
+v18.1.5-lowmem-16.0,parse,nest_exists,100,2411,OK,"",14,73,21,3,74,21,screen
+v18.1.5-lowmem-16.0,parse,nest_exists,300,7211,OK,"",19,79,21,3,80,21,screen
+v18.1.5-lowmem-16.0,parse,nest_exists,1000,24011,OK,"",27,90,18,0,91,21,screen
+v18.1.5-lowmem-16.0,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",13,69,21,3,69,21,screen
+v18.1.5-lowmem-16.0,parse,nest_exists,10000,240011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",16,77,21,3,78,21,screen
+v18.1.5-lowmem-16.0,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",28,79,21,3,80,21,screen
+v18.1.5-lowmem-16.0,parse,nest_coalesce,100,1308,OK,"",13,68,21,3,68,21,screen
+v18.1.5-lowmem-16.0,parse,nest_coalesce,300,3908,OK,"",14,73,21,3,74,21,screen
+v18.1.5-lowmem-16.0,parse,nest_coalesce,1000,13008,OK,"",22,84,21,3,85,21,screen
+v18.1.5-lowmem-16.0,parse,nest_coalesce,3000,39008,OK,"",25,98,18,0,99,21,screen
+v18.1.5-lowmem-16.0,parse,nest_coalesce,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",13,69,21,3,70,21,screen
+v18.1.5-lowmem-16.0,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",21,76,21,3,76,21,screen
+v18.1.5-lowmem-16.0,parse,nest_cast,100,1308,OK,"",10,62,21,3,63,21,screen
+v18.1.5-lowmem-16.0,parse,nest_cast,300,3908,OK,"",13,76,21,3,77,21,screen
+v18.1.5-lowmem-16.0,parse,nest_cast,1000,13008,OK,"",21,85,21,0,88,21,screen
+v18.1.5-lowmem-16.0,parse,nest_cast,3000,39008,OK,"",31,109,21,0,110,21,screen
+v18.1.5-lowmem-16.0,parse,nest_cast,10000,130008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",14,68,21,3,68,21,screen
+v18.1.5-lowmem-16.0,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",21,74,21,3,75,21,screen
+v18.1.5-lowmem-16.0,parse,chain_arith,1000,4008,OK,"",17,87,21,3,88,21,screen
+v18.1.5-lowmem-16.0,parse,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",21,99,21,3,99,21,screen
+v18.1.5-lowmem-16.0,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",43,141,31,3,142,21,screen
+v18.1.5-lowmem-16.0,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",244,589,162,0,590,21,screen
+v18.1.5-lowmem-16.0,parse,chain_concat,1000,7010,OK,"",18,86,21,3,87,21,screen
+v18.1.5-lowmem-16.0,parse,chain_concat,10000,70010,JS_RANGE_ERROR,"Maximum call stack size exceeded",22,98,21,3,98,21,screen
+v18.1.5-lowmem-16.0,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",51,165,41,3,166,21,screen
+v18.1.5-lowmem-16.0,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",358,770,221,0,771,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and,1000,9011,OK,"",12,77,21,3,78,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and,10000,90011,OK,"",24,100,21,0,100,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and,100000,900011,OK,"",116,236,34,0,237,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and,1000000,9000011,OK,"",978,542,298,0,802,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and_or,1000,17011,OK,"",19,89,21,0,92,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and_or,10000,170011,OK,"",43,123,19,0,124,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and_or,100000,1700011,OK,"",303,760,106,0,760,21,screen
+v18.1.5-lowmem-16.0,parse,chain_and_or,1000000,17000011,OK,"",2683,1329,846,0,1330,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union,1000,15008,OK,"",20,90,21,0,92,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union,10000,150008,OK,"",60,185,23,0,186,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",99,238,53,3,239,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",731,523,434,0,851,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union_all,1000,19008,OK,"",21,90,21,0,93,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union_all,10000,190008,OK,"",53,183,23,0,184,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",93,237,53,3,237,21,screen
+v18.1.5-lowmem-16.0,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",809,533,443,0,852,21,screen
+v18.1.5-lowmem-16.0,parse,chain_join,1000,30692,OK,"",25,106,18,0,107,21,screen
+v18.1.5-lowmem-16.0,parse,chain_join,10000,336694,JS_RANGE_ERROR,"Maximum call stack size exceeded",30,110,19,2,111,19,screen
+v18.1.5-lowmem-16.0,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",153,377,68,3,377,21,screen
+v18.1.5-lowmem-16.0,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",1568,985,601,0,1126,21,screen
+v18.1.5-lowmem-16.0,parse,chain_cast,1000,5008,OK,"",19,87,21,2,88,21,screen
+v18.1.5-lowmem-16.0,parse,chain_cast,10000,50008,JS_RANGE_ERROR,"Maximum call stack size exceeded",18,85,21,3,85,21,screen
+v18.1.5-lowmem-16.0,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",41,140,27,3,140,21,screen
+v18.1.5-lowmem-16.0,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",278,621,168,0,622,21,screen
+v18.1.5-lowmem-16.0,parse,chain_dot,1000,2008,OK,"",25,72,21,3,73,21,screen
+v18.1.5-lowmem-16.0,parse,chain_dot,10000,20008,OK,"",21,87,18,0,87,21,screen
+v18.1.5-lowmem-16.0,parse,chain_dot,100000,200008,OK,"",66,213,23,0,214,21,screen
+v18.1.5-lowmem-16.0,parse,chain_dot,1000000,2000008,OK,"",583,339,133,0,769,21,screen
+v18.1.5-lowmem-16.0,parse,chain_subscript,1000,3008,OK,"",21,81,21,3,82,21,screen
+v18.1.5-lowmem-16.0,parse,chain_subscript,10000,30008,OK,"",29,120,18,0,121,21,screen
+v18.1.5-lowmem-16.0,parse,chain_subscript,100000,300008,OK,"",160,374,38,0,375,21,screen
+v18.1.5-lowmem-16.0,parse,chain_subscript,1000000,3000008,OK,"",1265,737,406,0,738,21,screen
+v18.1.5-lowmem-16.0,parse,wide_in,10000,48911,OK,"",25,106,19,0,107,19,screen
+v18.1.5-lowmem-16.0,parse,wide_in,100000,588911,OK,"",102,311,33,0,312,21,screen
+v18.1.5-lowmem-16.0,parse,wide_in,1000000,6888911,OK,"",956,517,241,0,826,21,screen
+v18.1.5-lowmem-16.0,parse,wide_values,10000,236699,OK,"",50,177,19,0,178,19,screen
+v18.1.5-lowmem-16.0,parse,wide_values,100000,2666699,OK,"",367,286,115,0,797,21,screen
+v18.1.5-lowmem-16.0,parse,wide_values,1000000,29666699,OK,"",3689,1692,941,0,1693,21,screen
+v18.1.5-lowmem-16.0,parse,wide_select_list,10000,88902,OK,"",36,142,19,0,143,19,screen
+v18.1.5-lowmem-16.0,parse,wide_select_list,100000,988902,OK,"",230,536,71,0,541,21,screen
+v18.1.5-lowmem-16.0,parse,wide_select_list,1000000,10888902,OK,"",2057,1169,646,0,1170,21,screen
+v18.1.5-lowmem-16.0,parse,wide_cte,10000,237792,OK,"",56,198,24,0,199,21,screen
+v18.1.5-lowmem-16.0,parse,wide_cte,100000,2577792,OK,"",502,356,169,0,828,19,screen
+v18.1.5-lowmem-16.0,parse,wide_cte,1000000,27777792,UNKNOWN_THROW,"Program terminated with exit(1)",2061,1293,892,0,1294,21,screen
+v18.1.5-lowmem-16.0,parse,wide_array,10000,48903,OK,"",47,129,19,0,130,19,screen
+v18.1.5-lowmem-16.0,parse,wide_array,100000,588903,OK,"",123,327,33,0,328,21,screen
+v18.1.5-lowmem-16.0,parse,wide_array,1000000,6888903,OK,"",963,547,241,0,841,21,screen
+v18.1.5-lowmem-16.0,parse,long_string,10000,10009,OK,"",11,63,21,3,64,21,screen
+v18.1.5-lowmem-16.0,parse,long_string,100000,100009,OK,"",14,62,21,0,65,21,screen
+v18.1.5-lowmem-16.0,parse,long_string,1000000,1000009,OK,"",27,71,21,0,73,21,screen
+v18.1.5-lowmem-16.0,parse,long_ident,10000,10007,OK,"",12,63,21,3,64,21,screen
+v18.1.5-lowmem-16.0,parse,long_ident,100000,100007,OK,"",11,63,21,3,64,21,screen
+v18.1.5-lowmem-16.0,parse,long_ident,1000000,1000007,OK,"",26,70,21,3,70,21,screen
+v18.1.5-lowmem-16.0,parse,long_comment,10000,10015,OK,"",10,62,21,3,64,21,screen
+v18.1.5-lowmem-16.0,parse,long_comment,100000,100015,OK,"",11,63,21,3,64,21,screen
+v18.1.5-lowmem-16.0,parse,long_comment,1000000,1000015,OK,"",21,69,21,3,69,21,screen
+v18.1.5-lowmem-16.0,parse,many_simple,100000,1000000,OK,"",472,241,126,0,747,21,screen
+v18.1.5-lowmem-16.0,parse,many_simple,1000000,10000000,OK,"",3340,1567,1032,0,1568,21,screen
+v18.1.5-lowmem-16.0,parse,many_mixed,2000,1044680,OK,"",247,555,70,0,558,21,screen
+v18.1.5-lowmem-16.0,parse,many_mixed,20000,10686680,OK,"",2064,1095,645,0,1096,21,screen
+v18.1.5,parsePlPgSQL,nest_plpgsql_if,300,6378,OK,"",17,65,133,0,86,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_if,100,2178,OK,"",20,73,133,0,73,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",52,125,133,0,126,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_if,1000,21078,OK,"",20,66,133,0,67,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",34,90,133,0,91,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_begin,300,3368,OK,"",33,83,133,0,84,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_begin,1000,11068,OK,"",28,78,133,2,78,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",29,65,133,0,65,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_begin,100,1168,OK,"",18,62,133,0,63,133,screen18
+v18.1.5,parsePlPgSQL,many_plpgsql,1000,294890,OK,"",379,128,132,0,643,133,screen18
+v18.1.5,parsePlPgSQL,nest_plpgsql_begin,3000,33068,OK,"",32,87,133,0,87,133,screen18
+v18.1.5,fingerprint,nest_func,10000,30008,OK,"",17,61,133,0,64,133,screen18
+v18.1.5,fingerprint,nest_func,1000,3008,OK,"",37,116,133,0,116,133,screen18
+v18.1.5,fingerprint,nest_subq,1000,9008,OK,"",28,102,131,2,103,133,screen18
+v18.1.5,fingerprint,nest_func,100000,300008,OK,"",11,69,133,3,70,133,screen18
+v18.1.5,fingerprint,nest_subq,100000,900008,OK,"",18,74,133,3,74,133,screen18
+v18.1.5,fingerprint,nest_subq,10000,90008,OK,"",15,71,133,0,71,133,screen18
+v18.1.5,fingerprint,chain_union,1000,15008,OK,"",42,107,133,0,108,133,screen18
+v18.1.5,fingerprint,chain_union,10000,150008,OK,"",58,132,133,2,132,133,screen18
+v18.1.5,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",122,259,133,0,259,133,screen18
+v18.1.5,fingerprint,chain_arith,1000,4008,OK,"",29,110,131,2,111,133,screen18
+v18.1.5,fingerprint,chain_arith,10000,40008,OK,"",28,101,133,0,101,133,screen18
+v18.1.5,fingerprint,chain_arith,100000,400008,OK,"",55,150,133,0,151,133,screen18
+v18.1.5,fingerprint,many_mixed,2000,1044680,OK,"",157,390,133,0,391,133,screen18
+v18.1.5,normalize,nest_func,1000,3008,JS_RANGE_ERROR,"Maximum call stack size exceeded",17,69,133,2,69,133,screen18
+v18.1.5,fingerprint,many_mixed,20000,10686680,OK,"",1152,381,223,0,796,133,screen18
+v18.1.5,normalize,nest_func,10000,30008,OK,"",18,70,133,0,70,133,screen18
+v18.1.5,normalize,nest_func,100000,300008,OK,"",18,71,133,0,71,133,screen18
+v18.1.5,normalize,nest_subq,1000,9008,JS_RANGE_ERROR,"Maximum call stack size exceeded",22,74,133,0,74,133,screen18
+v18.1.5,normalize,nest_subq,10000,90008,OK,"",14,74,133,3,75,133,screen18
+v18.1.5,normalize,nest_subq,100000,900008,OK,"",21,78,133,0,78,133,screen18
+v18.1.5,normalize,chain_union,1000,15008,OK,"",37,108,133,0,108,133,screen18
+v18.1.5,normalize,chain_union,10000,150008,JS_RANGE_ERROR,"Maximum call stack size exceeded",37,105,133,0,106,133,screen18
+v18.1.5,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",93,228,133,0,228,133,screen18
+v18.1.5,normalize,chain_arith,1000,4008,JS_RANGE_ERROR,"Maximum call stack size exceeded",15,67,133,0,67,133,screen18
+v18.1.5,normalize,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",19,71,133,0,72,133,screen18
+v18.1.5,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",41,116,133,0,119,133,screen18
+v18.1.5,normalize,many_mixed,2000,1044680,OK,"",147,397,134,0,397,133,screen18
+v18.1.5,scan,nest_func,1000,3008,OK,"",20,66,133,0,66,133,screen18
+v18.1.5,scan,nest_func,10000,30008,OK,"",84,78,133,0,79,133,screen18
+v18.1.5,scan,nest_func,100000,300008,OK,"",521,212,164,0,214,133,screen18
+v18.1.5,scan,nest_subq,1000,9008,OK,"",15,67,131,2,68,133,screen18
+v18.1.5,normalize,many_mixed,20000,10686680,OK,"",1088,655,659,0,776,133,screen18
+v18.1.5,scan,nest_subq,10000,90008,OK,"",64,80,133,0,81,133,screen18
+v18.1.5,scan,chain_union,1000,15008,OK,"",19,65,133,0,66,133,screen18
+v18.1.5,scan,chain_union,10000,150008,OK,"",70,80,133,0,80,133,screen18
+v18.1.5,scan,nest_subq,100000,900008,OK,"",500,216,165,0,218,133,screen18
+v18.1.5,scan,chain_arith,1000,4008,OK,"",19,63,133,0,63,133,screen18
+v18.1.5,scan,chain_arith,10000,40008,OK,"",51,75,132,0,75,133,screen18
+v18.1.5,scan,chain_union,100000,1500008,OK,"",534,221,166,0,223,133,screen18
+v18.1.5,scan,chain_arith,100000,400008,OK,"",319,156,153,0,157,133,screen18
+v18.1.5,scan,many_mixed,2000,1044680,OK,"",509,218,165,0,221,133,screen18
+v18.1.5,parseSync,nest_func,1000,3008,OK,"",34,91,133,0,92,133,screen18
+v18.1.5,parseSync,nest_func,10000,30008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",14,67,133,0,67,133,screen18
+v18.1.5,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",18,69,133,0,70,133,screen18
+v18.1.5,parseSync,nest_subq,1000,9008,OK,"",22,85,133,0,86,133,screen18
+v18.1.5,parseSync,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",16,72,133,3,72,133,screen18
+v18.1.5,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",18,75,133,3,76,133,screen18
+v18.1.5,parseSync,chain_union,1000,15008,OK,"",20,86,133,0,87,133,screen18
+v18.1.5,parseSync,chain_union,10000,150008,OK,"",61,196,132,0,197,133,screen18
+v18.1.5,parseSync,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",101,240,133,3,241,133,screen18
+v18.1.5,parseSync,chain_arith,1000,4008,OK,"",34,81,133,2,82,133,screen18
+v18.1.5,parseSync,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",48,91,133,0,92,133,screen18
+v18.1.5,scan,many_mixed,20000,10686680,OK,"",5858,1521,1210,0,1543,133,screen18
+v18.1.5,parseSync,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",92,139,131,2,139,133,screen18
+v18.1.5,parseSync,many_mixed,2000,1044680,OK,"",378,550,141,0,551,133,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_if,100,2178,OK,"",20,70,21,3,70,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_if,300,6378,OK,"",25,70,21,3,71,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_if,1000,21078,OK,"",43,91,21,3,92,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",71,119,21,0,123,21,screen18
+v18.1.5,parseSync,many_mixed,20000,10686680,OK,"",2829,1093,673,0,1094,133,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",53,104,21,3,104,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_begin,100,1168,OK,"",17,68,21,3,69,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_begin,300,3368,OK,"",29,67,21,3,67,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_begin,1000,11068,OK,"",38,80,21,3,80,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",33,71,21,3,71,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,nest_plpgsql_begin,3000,33068,OK,"",66,88,21,0,92,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,many_plpgsql,1000,294890,OK,"",574,131,44,0,638,21,screen18
+v18.1.5,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",29417,507,404,0,653,133,screen18
+v18.1.5-lowmem-16.0,fingerprint,nest_func,1000,3008,OK,"",45,111,21,3,111,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,nest_func,10000,30008,OK,"",24,66,21,3,66,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,nest_func,100000,300008,OK,"",28,69,21,3,70,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,nest_subq,1000,9008,OK,"",50,97,21,3,98,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,nest_subq,10000,90008,OK,"",22,69,21,3,69,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,nest_subq,100000,900008,OK,"",37,72,21,3,72,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,chain_union,1000,15008,OK,"",61,144,21,3,144,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,chain_union,10000,150008,OK,"",123,163,21,3,164,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",173,245,62,3,246,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,chain_arith,1000,4008,OK,"",45,92,21,3,93,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,chain_arith,10000,40008,OK,"",57,108,21,3,109,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,chain_arith,100000,400008,OK,"",91,233,27,3,249,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,many_mixed,2000,1044680,OK,"",278,505,32,3,506,21,screen18
+v18.1.5-lowmem-16.0,fingerprint,many_mixed,20000,10686680,OK,"",1362,327,229,0,837,21,screen18
+v18.1.5-lowmem-16.0,normalize,nest_func,1000,3008,JS_RANGE_ERROR,"Maximum call stack size exceeded",20,66,21,3,69,21,screen18
+v18.1.5-lowmem-16.0,normalize,nest_func,10000,30008,OK,"",17,63,21,3,64,21,screen18
+v18.1.5-lowmem-16.0,normalize,nest_func,100000,300008,OK,"",26,71,21,3,72,21,screen18
+v18.1.5-lowmem-16.0,normalize,nest_subq,1000,9008,JS_RANGE_ERROR,"Maximum call stack size exceeded",30,68,21,3,68,21,screen18
+v18.1.5-lowmem-16.0,normalize,nest_subq,10000,90008,OK,"",22,69,21,3,70,21,screen18
+v18.1.5-lowmem-16.0,normalize,nest_subq,100000,900008,OK,"",33,72,21,3,73,21,screen18
+v18.1.5-lowmem-16.0,normalize,chain_union,1000,15008,OK,"",55,111,21,3,112,21,screen18
+v18.1.5-lowmem-16.0,normalize,chain_union,10000,150008,JS_RANGE_ERROR,"Maximum call stack size exceeded",74,88,21,3,92,21,screen18
+v18.1.5-lowmem-16.0,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",191,369,53,3,370,21,screen18
+v18.1.5-lowmem-16.0,normalize,chain_arith,1000,4008,JS_RANGE_ERROR,"Maximum call stack size exceeded",18,70,21,3,71,21,screen18
+v18.1.5-lowmem-16.0,normalize,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",35,80,21,3,80,21,screen18
+v18.1.5-lowmem-16.0,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",62,165,27,3,166,21,screen18
+v18.1.5-lowmem-16.0,normalize,many_mixed,2000,1044680,OK,"",317,436,70,0,436,21,screen18
+v18.1.5-lowmem-16.0,normalize,many_mixed,20000,10686680,OK,"",1777,710,578,0,763,21,screen18
+v18.1.5-lowmem-16.0,scan,nest_func,1000,3008,OK,"",32,62,21,3,65,21,screen18
+v18.1.5-lowmem-16.0,scan,nest_func,10000,30008,OK,"",130,74,21,0,74,21,screen18
+v18.1.5-lowmem-16.0,scan,nest_func,100000,300008,OK,"",808,209,122,0,211,21,screen18
+v18.1.5-lowmem-16.0,scan,nest_subq,1000,9008,OK,"",39,63,21,0,68,21,screen18
+v18.1.5-lowmem-16.0,scan,nest_subq,10000,90008,OK,"",146,74,21,0,75,21,screen18
+v18.1.5-lowmem-16.0,scan,nest_subq,100000,900008,OK,"",884,228,124,0,230,21,screen18
+v18.1.5-lowmem-16.0,scan,chain_union,1000,15008,OK,"",40,63,21,0,67,21,screen18
+v18.1.5-lowmem-16.0,scan,chain_union,10000,150008,OK,"",127,77,21,0,77,21,screen18
+v18.1.5-lowmem-16.0,scan,chain_union,100000,1500008,OK,"",794,232,126,0,234,21,screen18
+v18.1.5-lowmem-16.0,scan,chain_arith,1000,4008,OK,"",33,63,21,3,65,21,screen18
+v18.1.5-lowmem-16.0,scan,chain_arith,10000,40008,OK,"",99,70,20,0,71,21,screen18
+v18.1.5-lowmem-16.0,scan,chain_arith,100000,400008,OK,"",552,149,86,0,153,21,screen18
+v18.1.5-lowmem-16.0,scan,many_mixed,2000,1044680,OK,"",751,215,123,0,216,21,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",34609,503,434,0,656,21,screen18
+v18.1.5-lowmem-16.0,parseSync,nest_func,1000,3008,OK,"",37,94,21,3,95,21,screen18
+v18.1.5-lowmem-16.0,parseSync,nest_func,10000,30008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",23,70,21,3,71,21,screen18
+v18.1.5-lowmem-16.0,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",32,70,21,3,71,21,screen18
+v18.1.5-lowmem-16.0,parseSync,nest_subq,1000,9008,OK,"",44,99,21,3,100,21,screen18
+v18.1.5-lowmem-16.0,parseSync,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",25,70,21,3,71,21,screen18
+v18.1.5-lowmem-16.0,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",32,72,21,3,72,21,screen18
+v18.1.5-lowmem-16.0,parseSync,chain_union,1000,15008,OK,"",42,91,21,0,93,21,screen18
+v18.1.5-lowmem-16.0,parseSync,chain_union,10000,150008,OK,"",110,172,23,0,173,21,screen18
+v18.1.5-lowmem-16.0,parseSync,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",192,242,53,3,245,21,screen18
+v18.1.5-lowmem-16.0,scan,many_mixed,20000,10686680,OK,"",6134,1521,1165,0,1542,21,screen18
+v18.1.5-lowmem-16.0,parseSync,chain_arith,1000,4008,OK,"",32,87,21,3,87,21,screen18
+v18.1.5-lowmem-16.0,parseSync,chain_arith,10000,40008,JS_RANGE_ERROR,"Maximum call stack size exceeded",52,106,21,3,107,21,screen18
+v18.1.5-lowmem-16.0,parseSync,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",78,140,31,3,145,21,screen18
+v18.1.5-lowmem-16.0,parseSync,many_mixed,2000,1044680,OK,"",405,502,70,3,503,21,screen18
+v18.1.5-lowmem-16.0,parseSync,many_mixed,20000,10686680,OK,"",2441,1094,645,0,1095,21,screen18
+v18.1.5,parsePlPgSQL,many_plpgsql,50000,,TIMEOUT,"",,,,,,,screen18
+v18.1.5-lowmem-16.0,parsePlPgSQL,many_plpgsql,50000,,TIMEOUT,"",,,,,,,screen18
+v18-nostack,parse,nest_paren,3000,6008,OK,"",10,63,21,3,67,21,full
+v18-nostack,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",52,71,21,3,71,21,full
+v18-nostack,parse,nest_func,3000,9008,WASM_TRAP,"null function or function signature mismatch",45,75,21,3,75,21,full
+v18-nostack,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",37,73,21,3,74,21,full
+v18-nostack,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",27,74,21,3,74,21,full
+v18-nostack,parse,nest_case,3000,84011,WASM_TRAP,"null function or function signature mismatch",41,87,21,3,87,21,full
+v18-nostack,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",74,75,21,3,82,21,full
+v18-nostack,parse,nest_bool_r,3000,24008,WASM_TRAP,"memory access out of bounds",23,81,21,3,81,21,full
+v18-nostack,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",39,72,21,3,73,21,full
+v18-nostack,parse,nest_not,3000,12011,WASM_TRAP,"memory access out of bounds",25,70,21,3,71,21,full
+v18-nostack,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",28,71,21,3,71,21,full
+v18-nostack,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",12,63,21,3,64,21,full
+v18-nostack,parse,nest_uminus,3000,6008,OK,"",28,74,21,3,74,21,full
+v18-nostack,parse,nest_array,3000,21008,WASM_TRAP,"memory access out of bounds",36,79,21,3,79,21,full
+v18-nostack,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",22,73,21,3,73,21,full
+v18-nostack,parse,nest_row,3000,15008,WASM_TRAP,"memory access out of bounds",28,74,21,3,74,21,full
+v18-nostack,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",27,77,21,3,77,21,full
+v18-nostack,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",17,68,21,3,68,21,full
+v18-nostack,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",66,86,21,3,86,21,full
+v18-nostack,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",28,82,21,3,83,21,full
+v18-nostack,parse,nest_coalesce,3000,39008,WASM_TRAP,"memory access out of bounds",27,79,21,3,80,21,full
+v18-nostack,parse,nest_cast,3000,39008,WASM_TRAP,"memory access out of bounds",28,86,21,3,87,21,full
+v18-nostack,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",50,72,21,3,73,21,full
+v18-nostack,parse,chain_arith,100000,400008,WASM_TRAP,"memory access out of bounds",83,115,24,3,116,21,full
+v18-nostack,parse,chain_arith,1000000,4000008,WASM_TRAP,"memory access out of bounds",423,572,147,0,573,21,full
+v18-nostack,parse,chain_concat,100000,700010,WASM_TRAP,"memory access out of bounds",124,228,31,3,228,21,full
+v18-nostack,parse,chain_concat,1000000,7000010,WASM_TRAP,"memory access out of bounds",586,680,201,0,680,21,full
+v18-nostack,parse,chain_and,100000,900011,OK,"",209,297,30,0,297,21,full
+v18-nostack,parse,chain_and_or,100000,1700011,OK,"",668,269,102,0,724,21,full
+v18-nostack,parse,chain_and,1000000,9000011,OK,"",1437,542,294,0,737,21,full
+v18-nostack,parse,chain_union,100000,1500008,WASM_TRAP,"null function or function signature mismatch",146,222,49,3,223,21,full
+v18-nostack,parse,chain_union_all,100000,1900008,WASM_TRAP,"null function or function signature mismatch",188,226,49,3,226,21,full
+v18-nostack,parse,chain_union,1000000,15000008,WASM_TRAP,"null function or function signature mismatch",1442,519,459,0,812,21,full
+v18-nostack,parse,chain_union_all,1000000,19000008,WASM_TRAP,"null function or function signature mismatch",1143,531,482,0,850,21,full
+v18-nostack,parse,chain_join,100000,3666696,WASM_TRAP,"null function or function signature mismatch",261,342,62,3,342,21,full
+v18-nostack,parse,chain_and_or,1000000,17000011,OK,"",3728,1328,842,0,1329,21,full
+v18-nostack,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",117,133,24,3,134,21,full
+v18-nostack,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",369,539,154,0,540,21,full
+v18-nostack,parse,chain_dot,100000,200008,OK,"",139,205,20,0,206,21,full
+v18-nostack,parse,chain_subscript,100000,300008,OK,"",265,341,35,0,342,21,full
+v18-nostack,parse,chain_dot,1000000,2000008,OK,"",990,360,129,0,738,21,full
+v18-nostack,parse,chain_join,1000000,39666698,WASM_TRAP,"null function or function signature mismatch",1780,983,572,0,1149,21,full
+v18-nostack,parse,wide_in,1000000,6888911,OK,"",1365,512,237,0,820,21,full
+v18-nostack,parse,chain_subscript,1000000,3000008,OK,"",1876,747,402,0,797,21,full
+v18-nostack,parse,wide_select_list,1000000,10888902,OK,"",2923,1165,642,0,1166,21,full
+v18-nostack,parse,wide_cte,1000000,27777792,UNKNOWN_THROW,"Program terminated with exit(1)",2466,1291,888,0,1291,21,full
+v18-nostack,parse,long_string,1000000,1000009,OK,"",56,71,21,0,72,21,full
+v18-nostack,parse,long_ident,1000000,1000007,OK,"",50,70,21,3,70,21,full
+v18-nostack,parse,long_comment,1000000,1000015,OK,"",56,69,21,3,69,21,full
+v18-nostack,parse,wide_values,1000000,29666699,OK,"",5094,1639,937,0,1640,19,full
+v18-nostack,parse,wide_array,1000000,6888903,OK,"",1123,581,237,0,856,21,full
+v18-nostack,parse,long_string,100000000,100000009,OK,"",2224,826,607,0,827,21,full
+v18-nostack,parse,many_simple,5000000,50000000,UNKNOWN_THROW,"Program terminated with exit(1)",2647,1156,1026,0,1157,21,full
+v18-nostack,parse,many_mixed,20000,10686680,OK,"",2917,1092,642,0,1093,21,full
+v18-nostack,parse,many_mixed,100000,53966680,UNKNOWN_THROW,"Program terminated with exit(1)",3519,1341,1026,0,1342,21,full
+v18-nostack,parsePlPgSQL,nest_plpgsql_if,1000,21078,WASM_TRAP,"memory access out of bounds",43,86,21,3,87,21,full
+v18-nostack,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",45,88,21,3,88,21,full
+v18-nostack,parse,many_mixed,200000,109266680,UNKNOWN_THROW,"Program terminated with exit(1)",3568,1497,1026,0,1498,21,full
+v18-nostack,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",20,68,21,3,71,21,full
+v18-nostack,parsePlPgSQL,nest_plpgsql_begin,1000,11068,WASM_TRAP,"memory access out of bounds",18,70,21,3,70,21,full
+v18-nostack,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",31221,508,373,0,664,21,full
+v18-nostack,fingerprint,nest_func,100000,300008,OK,"",20,74,21,3,75,21,full
+v18-nostack,fingerprint,nest_subq,100000,900008,OK,"",20,74,21,3,74,21,full
+v18-nostack,loop,many_mixed,2000,1044680,OK,"",36134,461,63,0,695,21,full
+v18-nostack,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",105,242,57,3,243,21,full
+v18-nostack,fingerprint,chain_arith,100000,400008,OK,"",73,177,24,3,180,21,full
+v18-nostack,fingerprint,many_mixed,20000,10686680,OK,"",1223,377,195,0,775,21,full
+v18-nostack,normalize,nest_func,100000,300008,OK,"",20,72,21,3,73,21,full
+v18-nostack,normalize,nest_subq,100000,900008,OK,"",24,76,21,3,76,21,full
+v18-nostack,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",109,249,49,3,249,21,full
+v18-nostack,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",56,100,24,3,100,21,full
+v18-nostack,fingerprint,many_mixed,200000,109266680,UNKNOWN_THROW,"Program terminated with exit(1)",3155,1496,1026,0,1498,21,full
+v18-nostack,normalize,many_mixed,20000,10686680,OK,"",1281,661,590,0,783,21,full
+v18-nostack,scan,nest_func,100000,300008,OK,"",815,209,119,0,211,21,full
+v18-nostack,scan,nest_subq,100000,900008,OK,"",558,232,122,0,234,21,full
+v18-nostack,scan,chain_union,100000,1500008,OK,"",665,233,125,0,235,21,full
+v18-nostack,scan,chain_arith,100000,400008,OK,"",366,148,82,0,152,21,full
+v18-nostack,normalize,many_mixed,200000,109266680,UNKNOWN_THROW,"Program terminated with exit(1)",2959,1497,1026,0,1498,21,full
+v18-nostack,scan,many_mixed,200000,109266680,UNKNOWN_THROW,"Program terminated with exit(1)",4461,1440,1026,0,1441,21,full
+v18-nostack,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",35,71,21,3,72,21,full
+v18-nostack,scan,many_mixed,20000,10686680,OK,"",5903,1520,1178,0,1542,21,full
+v18-nostack,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",32,71,21,3,71,21,full
+v18-nostack,parseSync,chain_union,100000,1500008,WASM_TRAP,"null function or function signature mismatch",197,244,49,3,244,21,full
+v18-nostack,parseSync,chain_arith,100000,400008,WASM_TRAP,"memory access out of bounds",94,152,24,3,153,21,full
+v18-nostack,parseSync,many_mixed,20000,10686680,OK,"",3209,1094,642,0,1095,21,full
+v18-16-4,parse,nest_paren,3000,6008,OK,"",22,66,21,3,66,21,full
+v18-16-4,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",33,65,21,3,65,21,full
+v18-nostack,parseSync,many_mixed,200000,109266680,UNKNOWN_THROW,"Program terminated with exit(1)",3692,1497,1026,0,1498,21,full
+v18-16-4,parse,nest_func,3000,9008,OK,"",46,97,21,3,97,21,full
+v18-16-4,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",26,71,21,3,71,21,full
+v18-16-4,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",38,89,21,3,90,21,full
+v18-16-4,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",32,72,21,3,72,21,full
+v18-16-4,parse,nest_case,3000,84011,OK,"",68,127,21,0,136,21,full
+v18-16-4,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",41,77,21,3,77,21,full
+v18-16-4,parse,nest_bool_r,3000,24008,OK,"",76,117,21,0,118,21,full
+v18-16-4,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",37,81,21,3,82,21,full
+v18-16-4,parse,nest_not,3000,12011,OK,"",40,99,21,0,100,21,full
+v18-16-4,parse,nest_uminus,3000,6008,OK,"",15,70,21,3,71,21,full
+v18-16-4,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",26,70,21,3,70,21,full
+v18-16-4,parse,nest_array,3000,21008,OK,"",44,91,21,0,94,21,full
+v18-16-4,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",22,68,21,3,69,21,full
+v18-16-4,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",37,72,21,3,73,21,full
+v18-16-4,parse,nest_row,3000,15008,OK,"",83,108,21,0,109,21,full
+v18-16-4,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",23,72,21,3,73,21,full
+v18-16-4,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",28,73,21,3,73,21,full
+v18-16-4,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",52,80,21,3,81,21,full
+v18-16-4,parse,nest_coalesce,3000,39008,OK,"",73,151,18,0,151,21,full
+v18-16-4,parse,nest_cast,3000,39008,OK,"",55,105,21,0,108,21,full
+v18-16-4,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",28,74,21,3,75,21,full
+v18-16-4,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",75,138,31,3,146,21,full
+v18-16-4,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",44,71,21,3,72,21,full
+v18-16-4,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",566,245,162,0,729,21,full
+v18-16-4,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",168,168,41,3,168,21,full
+v18-16-4,parse,chain_and,100000,900011,OK,"",282,347,34,0,348,21,full
+v18-16-4,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",704,736,221,0,736,21,full
+v18-16-4,parse,chain_and_or,100000,1700011,OK,"",647,756,106,0,768,21,full
+v18-16-4,parse,chain_and,1000000,9000011,OK,"",1474,541,298,0,801,21,full
+v18-16-4,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",112,185,53,3,185,21,full
+v18-16-4,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1073,523,434,0,758,21,full
+v18-16-4,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",194,218,53,3,219,21,full
+v18-16-4,parse,chain_and_or,1000000,17000011,OK,"",3506,1329,846,0,1330,21,full
+v18-16-4,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",205,303,68,3,304,21,full
+v18-16-4,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1436,534,443,0,755,21,full
+v18-16-4,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",98,135,27,3,136,21,full
+v18-16-4,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",457,228,168,0,748,21,full
+v18-16-4,parse,chain_dot,100000,200008,OK,"",166,281,23,0,282,21,full
+v18-16-4,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",1872,987,601,0,1214,21,full
+v18-16-4,parse,chain_dot,1000000,2000008,OK,"",986,358,133,0,773,21,full
+v18-16-4,parse,chain_subscript,100000,300008,OK,"",304,572,38,0,579,21,full
+v18-16-4,parse,wide_in,1000000,6888911,OK,"",1356,527,241,0,825,21,full
+v18-16-4,parse,chain_subscript,1000000,3000008,OK,"",2156,767,406,0,768,21,full
+v18-16-4,parse,wide_select_list,1000000,10888902,OK,"",2997,1168,646,0,1169,21,full
+v18-16-4,parse,wide_values,1000000,29666699,OK,"",5301,1638,941,0,1639,21,full
+v18-16-4,parse,wide_cte,1000000,27777792,UNKNOWN_THROW,"Program terminated with exit(1)",2688,1297,892,0,1298,21,full
+v18-16-4,parse,wide_array,1000000,6888903,OK,"",1220,534,241,0,840,21,full
+v18-16-4,parse,long_ident,1000000,1000007,OK,"",46,70,21,3,70,21,full
+v18-16-4,parse,long_string,1000000,1000009,OK,"",59,71,21,0,72,21,full
+v18-16-4,parse,long_comment,1000000,1000015,OK,"",37,68,21,3,69,21,full
+v18-16-4,parse,long_string,100000000,100000009,OK,"",2448,826,611,0,827,21,full
+v18-16-4,parse,many_simple,5000000,50000000,UNKNOWN_THROW,"Program terminated with exit(1)",2437,1152,1026,0,1153,21,full
+v18-16-4,parse,many_mixed,20000,10686680,OK,"",3243,1075,645,0,1076,21,full
+v18-16-4,parse,many_mixed,100000,53966680,UNKNOWN_THROW,"Program terminated with exit(1)",4160,1346,1026,0,1347,19,full
+v18-16-4,parse,many_mixed,200000,109266680,UNKNOWN_THROW,"Program terminated with exit(1)",3521,1492,1026,0,1493,21,full
+v18-16-4,parsePlPgSQL,nest_plpgsql_if,1000,21078,OK,"",37,92,21,3,93,21,full
+v18-16-4,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",51,90,21,3,94,21,full
+v18-16-4,parsePlPgSQL,nest_plpgsql_begin,1000,11068,OK,"",41,78,21,3,79,21,full
+v18-16-4,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",25,64,21,3,64,21,full
+v18-nostack,parse,nest_subq,3000,,TIMEOUT,"",,,,,,,full
+v18-16-4,fingerprint,nest_subq,100000,900008,OK,"",79,72,21,3,73,21,full
+v18-16-4,fingerprint,nest_func,100000,300008,OK,"",58,70,21,3,70,21,full
+v18-16-4,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",409,305,62,3,305,21,full
+v18-16-4,fingerprint,chain_arith,100000,400008,OK,"",119,147,27,3,148,21,full
+v18-16-4,fingerprint,many_mixed,20000,10686680,OK,"",4412,376,229,0,780,21,full
+v18-16-4,normalize,nest_func,100000,300008,OK,"",40,80,21,3,80,21,full
+v18-16-4,normalize,nest_subq,100000,900008,OK,"",38,74,21,3,74,21,full
+v18-16-4,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",213,238,53,3,238,21,full
+v18-16-4,fingerprint,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",6693,1493,1026,0,1494,21,full
+v18-16-4,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",114,102,27,3,102,21,full
+v18-16-4,normalize,many_mixed,20000,10686680,OK,"",2369,657,578,0,732,21,full
+v18-16-4,scan,nest_func,100000,300008,OK,"",1309,209,123,0,211,21,full
+v18-16-4,scan,nest_subq,100000,900008,OK,"",1199,229,126,0,231,21,full
+v18-16-4,scan,chain_union,100000,1500008,OK,"",1070,233,129,0,235,21,full
+v18-16-4,scan,chain_arith,100000,400008,OK,"",666,152,86,3,153,21,full
+v18-16-4,normalize,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",6995,1493,1026,0,1494,21,full
+v18-16-4,scan,many_mixed,20000,10686680,OK,"",8535,1521,1182,0,1542,21,full
+v18-16-4,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",30,67,21,3,68,21,full
+v18-16-4,scan,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",6397,1426,1026,0,1426,21,full
+v18-16-4,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",70,78,21,3,78,21,full
+v18-16-4,parseSync,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",252,230,53,3,231,21,full
+v18-16-4,parseSync,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",182,150,31,3,150,21,full
+v18-16-4,parseSync,many_mixed,20000,10686680,OK,"",5067,1095,645,0,1096,21,full
+v18-24-16,parse,nest_paren,3000,6008,OK,"",19,74,29,3,74,29,full
+v18-16-4,parseSync,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",5225,1493,1026,0,1494,21,full
+v18-24-16,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",52,71,29,3,72,29,full
+v18-24-16,parse,nest_func,3000,9008,OK,"",77,105,29,0,107,29,full
+v18-24-16,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",46,74,29,3,75,29,full
+v18-24-16,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",29,75,29,3,75,29,full
+v18-24-16,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",31,82,29,3,83,29,full
+v18-24-16,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",108,75,29,3,75,29,full
+v18-24-16,parse,nest_case,3000,84011,OK,"",148,117,29,0,118,29,full
+v18-24-16,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",64,79,29,3,79,29,full
+v18-24-16,parse,nest_bool_r,3000,24008,OK,"",86,104,29,0,104,29,full
+v18-24-16,parse,nest_not,3000,12011,OK,"",58,92,29,0,92,29,full
+v18-24-16,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",118,71,29,3,72,29,full
+v18-24-16,parse,nest_uminus,3000,6008,OK,"",31,66,29,3,70,29,full
+v18-24-16,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",33,67,29,3,68,29,full
+v18-24-16,parse,nest_array,3000,21008,OK,"",86,132,29,3,133,29,full
+v18-24-16,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",71,74,29,3,75,29,full
+v18-24-16,parse,nest_row,3000,15008,OK,"",69,96,29,0,96,29,full
+v18-24-16,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",44,74,29,3,75,29,full
+v18-24-16,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",33,68,29,3,68,29,full
+v18-24-16,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",73,70,29,3,71,29,full
+v18-24-16,parse,nest_coalesce,3000,39008,OK,"",83,108,26,0,109,29,full
+v18-24-16,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",47,71,29,3,72,29,full
+v18-24-16,parse,nest_cast,3000,39008,OK,"",87,112,29,0,112,29,full
+v18-24-16,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",55,77,29,3,78,29,full
+v18-24-16,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",115,145,46,3,145,29,full
+v18-24-16,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",824,586,181,0,596,29,full
+v18-24-16,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",144,151,56,3,151,29,full
+v18-24-16,parse,chain_and,100000,900011,OK,"",327,268,49,0,275,29,full
+v18-24-16,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",951,701,227,0,701,29,full
+v18-24-16,parse,chain_and_or,100000,1700011,OK,"",879,758,118,0,759,29,full
+v18-24-16,parse,chain_and,1000000,9000011,OK,"",2486,561,310,0,776,29,full
+v18-24-16,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",218,191,68,3,192,29,full
+v18-24-16,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1751,522,490,0,781,29,full
+v18-24-16,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",300,231,69,3,232,29,full
+v18-24-16,parse,chain_and_or,1000000,17000011,OK,"",5702,1331,858,0,1332,29,full
+v18-24-16,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",304,415,91,0,415,29,full
+v18-24-16,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",2192,534,477,0,820,29,full
+v18-24-16,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",156,144,39,3,144,29,full
+v18-24-16,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",652,483,185,0,483,29,full
+v18-24-16,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",3230,985,576,0,1173,29,full
+v18-24-16,parse,chain_dot,100000,200008,OK,"",186,171,38,0,171,29,full
+v18-24-16,parse,chain_dot,1000000,2000008,OK,"",1606,342,149,0,770,29,full
+v18-24-16,parse,chain_subscript,100000,300008,OK,"",505,467,50,0,468,29,full
+v18-24-16,parse,wide_in,1000000,6888911,OK,"",2025,544,253,0,845,29,full
+v18-24-16,parse,chain_subscript,1000000,3000008,OK,"",3163,745,418,0,809,29,full
+v18-24-16,parse,wide_select_list,1000000,10888902,OK,"",4950,1167,658,0,1168,29,full
+v18-24-16,parse,wide_values,1000000,29666699,OK,"",7820,1638,953,0,1639,29,full
+v18-16-4,loop,many_mixed,2000,1044680,OK,"",64815,477,79,0,713,21,full
+v18-24-16,parse,long_string,1000000,1000009,OK,"",57,75,29,3,75,29,full
+v18-24-16,parse,long_ident,1000000,1000007,OK,"",40,70,29,3,70,29,full
+v18-24-16,parse,long_comment,1000000,1000015,OK,"",38,69,29,3,69,29,full
+v18-24-16,parse,wide_cte,1000000,27777792,WASM_EXIT_FATAL,"Program terminated with exit(1)",3661,1276,904,0,1277,29,full
+v18-24-16,parse,wide_array,1000000,6888903,OK,"",2065,528,253,0,819,29,full
+v18-24-16,parse,long_string,100000000,100000009,OK,"",3220,827,623,0,827,29,full
+v18-16-4,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",70151,503,434,0,661,21,full
+v18-24-16,parse,many_simple,5000000,50000000,WASM_EXIT_FATAL,"Program terminated with exit(1)",4585,1139,1026,0,1140,29,full
+v18-24-16,parse,many_mixed,20000,10686680,OK,"",5003,1094,657,0,1095,29,full
+v18-24-16,parsePlPgSQL,nest_plpgsql_if,1000,21078,OK,"",61,90,29,3,91,29,full
+v18-24-16,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",55,86,34,3,87,29,full
+v18-24-16,parsePlPgSQL,nest_plpgsql_begin,1000,11068,OK,"",36,80,29,3,80,29,full
+v18-24-16,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",35,69,29,3,69,29,full
+v18-24-16,parse,many_mixed,100000,53966680,WASM_EXIT_FATAL,"Program terminated with exit(1)",5487,1213,926,0,1214,29,full
+v18-24-16,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",5481,1484,1026,0,1485,29,full
+v18-24-16,fingerprint,nest_func,100000,300008,OK,"",39,74,29,3,74,29,full
+v18-24-16,fingerprint,nest_subq,100000,900008,OK,"",43,74,29,3,75,29,full
+v18-24-16,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",270,275,77,0,275,29,full
+v18-24-16,fingerprint,chain_arith,100000,400008,OK,"",119,139,39,3,144,29,full
+v18-24-16,fingerprint,many_mixed,20000,10686680,OK,"",2402,359,234,0,752,29,full
+v18-24-16,fingerprint,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4640,1489,1026,0,1490,29,full
+v18-24-16,normalize,nest_func,100000,300008,OK,"",26,74,29,3,74,29,full
+v18-24-16,normalize,nest_subq,100000,900008,OK,"",58,70,29,3,70,29,full
+v18-24-16,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",172,223,68,0,224,29,full
+v18-24-16,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",90,116,39,3,117,29,full
+v18-24-16,normalize,many_mixed,20000,10686680,OK,"",2218,713,589,0,824,29,full
+v18-24-16,normalize,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",5074,1480,1026,0,1481,29,full
+v18-24-16,scan,nest_func,100000,300008,OK,"",1287,211,135,0,213,29,full
+v18-24-16,scan,nest_subq,100000,900008,OK,"",730,232,138,0,234,29,full
+v18-24-16,scan,chain_union,100000,1500008,OK,"",748,233,141,0,235,29,full
+v18-24-16,scan,chain_arith,100000,400008,OK,"",506,155,95,0,156,29,full
+v18-24-16,scan,many_mixed,20000,10686680,OK,"",8370,1521,1194,0,1542,29,full
+v18-24-16,scan,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4702,1409,1026,0,1410,29,full
+v18-24-16,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",34,74,29,3,74,29,full
+v18-24-16,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",44,71,29,3,72,29,full
+v18-24-16,parseSync,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",197,219,68,3,220,29,full
+v18-24-16,loop,many_mixed,2000,1044680,OK,"",51765,436,79,0,704,29,full
+v18-24-16,parseSync,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",103,141,46,3,141,29,full
+v18-24-16,parseSync,many_mixed,20000,10686680,OK,"",3898,1094,657,0,1095,29,full
+v18-24-16,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",52463,512,393,0,664,29,full
+v18-32-16,parse,nest_paren,3000,6008,OK,"",31,72,37,3,72,37,full
+v18-32-16,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",28,69,37,3,70,37,full
+v18-24-16,parseSync,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4380,1480,1026,0,1481,29,full
+v18-32-16,parse,nest_func,3000,9008,OK,"",84,99,37,0,100,37,full
+v18-32-16,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",24,70,37,3,70,37,full
+v18-32-16,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",52,82,37,3,83,37,full
+v18-32-16,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",29,75,37,3,75,37,full
+v18-32-16,parse,nest_case,3000,84011,OK,"",92,127,37,0,128,37,full
+v18-32-16,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",85,77,37,3,77,37,full
+v18-32-16,parse,nest_bool_r,3000,24008,OK,"",82,96,37,0,98,37,full
+v18-32-16,parse,nest_not,3000,12011,OK,"",98,120,37,3,121,37,full
+v18-32-16,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",44,75,37,3,77,37,full
+v18-32-16,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",35,74,37,3,74,37,full
+v18-32-16,parse,nest_uminus,3000,6008,OK,"",19,69,37,3,70,37,full
+v18-32-16,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",19,64,37,3,64,37,full
+v18-32-16,parse,nest_array,3000,21008,OK,"",56,87,37,0,90,37,full
+v18-32-16,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",26,73,37,3,73,37,full
+v18-32-16,parse,nest_row,3000,15008,OK,"",68,98,37,0,100,37,full
+v18-32-16,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",22,71,37,3,72,37,full
+v18-32-16,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",18,72,37,3,72,37,full
+v18-32-16,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",38,77,37,3,77,37,full
+v18-32-16,parse,nest_coalesce,3000,39008,OK,"",56,97,34,0,98,37,full
+v18-32-16,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",36,73,37,3,73,37,full
+v18-32-16,parse,nest_cast,3000,39008,OK,"",54,101,37,0,101,37,full
+v18-32-16,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",28,74,37,3,75,37,full
+v18-32-16,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",63,125,43,3,126,37,full
+v18-32-16,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",461,583,167,0,584,37,full
+v18-32-16,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",614,713,201,0,713,37,full
+v18-32-16,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",121,161,51,3,162,37,full
+v18-32-16,parse,chain_and,100000,900011,OK,"",260,280,46,0,281,37,full
+v18-32-16,parse,chain_and_or,100000,1700011,OK,"",617,222,118,0,725,37,full
+v18-32-16,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",300,295,71,3,296,37,full
+v18-32-16,parse,chain_and,1000000,9000011,OK,"",1908,520,310,0,789,37,full
+v18-32-16,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",251,246,71,3,246,37,full
+v18-32-16,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1111,523,490,0,824,37,full
+v18-32-16,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",405,367,88,0,367,37,full
+v18-32-16,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1280,533,477,0,883,37,full
+v18-32-16,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",166,199,43,3,200,37,full
+v18-32-16,parse,chain_and_or,1000000,17000011,OK,"",4520,1307,858,0,1308,37,full
+v18-32-16,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",860,232,167,0,730,37,full
+v18-32-16,parse,chain_dot,100000,200008,OK,"",256,204,36,0,205,37,full
+v18-32-16,parse,chain_subscript,100000,300008,OK,"",296,380,55,0,381,37,full
+v18-32-16,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",2268,987,576,0,1231,37,full
+v18-32-16,parse,chain_dot,1000000,2000008,OK,"",1382,342,145,0,747,37,full
+v18-32-16,parse,wide_in,1000000,6888911,OK,"",2064,514,253,0,765,37,full
+v18-32-16,parse,chain_subscript,1000000,3000008,OK,"",3175,735,418,0,752,37,full
+v18-32-16,parse,wide_cte,1000000,27777792,WASM_EXIT_FATAL,"Program terminated with exit(1)",2657,1294,904,0,1295,37,full
+v18-32-16,parse,wide_select_list,1000000,10888902,OK,"",3486,1167,658,0,1168,37,full
+v18-32-16,parse,long_string,1000000,1000009,OK,"",79,71,37,0,72,37,full
+v18-32-16,parse,long_ident,1000000,1000007,OK,"",49,70,37,3,70,37,full
+v18-32-16,parse,long_comment,1000000,1000015,OK,"",60,69,37,3,69,37,full
+v18-32-16,parse,wide_values,1000000,29666699,OK,"",6280,1697,953,0,1698,37,full
+v18-32-16,parse,wide_array,1000000,6888903,OK,"",1319,546,253,0,782,37,full
+v18-32-16,parse,long_string,100000000,100000009,OK,"",2605,826,623,0,827,37,full
+v18-32-16,parse,many_simple,5000000,50000000,WASM_EXIT_FATAL,"Program terminated with exit(1)",3332,1140,1026,0,1140,37,full
+v18-32-16,parse,many_mixed,20000,10686680,OK,"",3118,1096,657,0,1097,37,full
+v18-32-16,parse,many_mixed,100000,53966680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3638,1215,926,0,1216,35,full
+v18-32-16,parsePlPgSQL,nest_plpgsql_if,1000,21078,OK,"",53,91,37,3,92,37,full
+v18-32-16,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",61,93,37,3,94,37,full
+v18-32-16,parsePlPgSQL,nest_plpgsql_begin,1000,11068,OK,"",38,75,37,3,76,37,full
+v18-32-16,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",16,69,37,3,69,37,full
+v18-32-16,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4519,1481,1026,0,1482,37,full
+v18-32-16,loop,many_mixed,2000,1044680,OK,"",43892,451,80,0,731,37,full
+v18-32-16,fingerprint,nest_func,100000,300008,OK,"",37,77,37,3,78,37,full
+v18-32-16,fingerprint,nest_subq,100000,900008,OK,"",27,73,37,3,74,37,full
+v18-32-16,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",158,212,71,0,213,37,full
+v18-32-16,fingerprint,chain_arith,100000,400008,OK,"",82,119,43,3,120,37,full
+v18-32-16,fingerprint,many_mixed,20000,10686680,OK,"",2908,375,240,0,718,37,full
+v18-32-16,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",48607,509,436,0,654,37,full
+v18-32-16,normalize,nest_func,100000,300008,OK,"",21,68,37,3,69,37,full
+v18-32-16,fingerprint,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3830,1489,1026,0,1489,37,full
+v18-32-16,normalize,nest_subq,100000,900008,OK,"",30,76,37,3,77,37,full
+v18-32-16,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",91,135,43,3,135,37,full
+v18-32-16,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",220,259,71,0,260,37,full
+v18-32-16,normalize,many_mixed,20000,10686680,OK,"",1846,654,605,0,757,37,full
+v18-32-16,scan,nest_func,100000,300008,OK,"",975,210,135,0,211,37,full
+v18-32-16,scan,nest_subq,100000,900008,OK,"",902,229,138,0,231,37,full
+v18-32-16,normalize,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3919,1481,1026,0,1482,37,full
+v18-32-16,scan,chain_union,100000,1500008,OK,"",835,233,141,0,235,37,full
+v18-32-16,scan,chain_arith,100000,400008,OK,"",379,155,95,0,156,37,full
+v18-32-16,scan,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3886,1409,1026,0,1410,37,full
+v18-32-16,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",40,68,37,3,69,37,full
+v18-32-16,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",41,79,37,3,79,37,full
+v18-32-16,parseSync,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",147,222,71,3,226,37,full
+v18-32-16,parseSync,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",83,135,43,3,136,37,full
+v18-32-16,scan,many_mixed,20000,10686680,OK,"",7682,1521,1194,0,1542,37,full
+v18-32-16,parseSync,many_mixed,20000,10686680,OK,"",4323,1095,657,0,1096,37,full
+v18-128-32,parse,nest_paren,3000,6008,OK,"",25,66,133,3,67,133,full
+v18-32-16,parseSync,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3982,1481,1026,0,1482,37,full
+v18-128-32,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",25,69,133,2,69,133,full
+v18-128-32,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",45,71,133,3,71,133,full
+v18-128-32,parse,nest_func,3000,9008,OK,"",59,92,133,0,93,133,full
+v18-128-32,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",42,78,133,2,79,133,full
+v18-128-32,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",42,71,133,3,72,133,full
+v18-128-32,parse,nest_case,3000,84011,OK,"",55,99,131,2,100,133,full
+v18-128-32,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",81,81,133,3,82,133,full
+v18-128-32,parse,nest_bool_r,3000,24008,OK,"",56,99,130,0,100,133,full
+v18-128-32,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",42,78,133,3,78,133,full
+v18-128-32,parse,nest_not,3000,12011,OK,"",52,89,133,0,92,133,full
+v18-128-32,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",36,69,133,0,69,133,full
+v18-128-32,parse,nest_uminus,3000,6008,OK,"",39,77,131,2,77,133,full
+v18-128-32,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",38,68,133,0,68,133,full
+v18-128-32,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",21,66,133,0,66,133,full
+v18-128-32,parse,nest_array,3000,21008,OK,"",71,114,133,0,117,133,full
+v18-128-32,parse,nest_row,3000,15008,OK,"",56,87,133,0,88,133,full
+v18-128-32,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",46,74,133,3,75,133,full
+v18-128-32,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",44,68,133,0,69,133,full
+v18-128-32,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",61,80,133,3,81,133,full
+v18-128-32,parse,nest_coalesce,3000,39008,OK,"",71,133,133,0,134,133,full
+v18-128-32,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",49,65,133,0,67,133,full
+v18-128-32,parse,nest_cast,3000,39008,OK,"",67,98,130,0,99,133,full
+v18-128-32,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",73,73,133,2,74,133,full
+v18-128-32,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",104,182,133,2,184,133,full
+v18-128-32,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",503,579,188,0,580,133,full
+v18-128-32,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",147,168,133,2,169,133,full
+v18-128-32,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",696,753,223,0,754,133,full
+v18-128-32,parse,chain_and,100000,900011,OK,"",279,281,135,0,282,133,full
+v18-128-32,parse,chain_and_or,100000,1700011,OK,"",580,499,147,0,740,133,full
+v18-128-32,parse,chain_and,1000000,9000011,OK,"",1704,550,326,0,833,133,full
+v18-128-32,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",165,212,131,2,213,133,full
+v18-128-32,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1038,521,460,0,888,133,full
+v18-128-32,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",169,201,133,3,201,133,full
+v18-128-32,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1279,532,552,0,870,133,full
+v18-128-32,parse,chain_and_or,1000000,17000011,OK,"",4594,1328,874,0,1329,133,full
+v18-128-32,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",506,521,133,0,521,133,full
+v18-128-32,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",117,122,133,0,122,133,full
+v18-128-32,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",596,660,188,0,672,133,full
+v18-128-32,parse,chain_dot,100000,200008,OK,"",156,322,133,2,322,133,full
+v18-128-32,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",2019,988,654,0,1180,133,full
+v18-128-32,parse,chain_subscript,100000,300008,OK,"",328,404,138,0,405,133,full
+v18-128-32,parse,chain_dot,1000000,2000008,OK,"",1014,313,178,0,700,133,full
+v18-128-32,parse,wide_in,1000000,6888911,OK,"",1459,512,269,0,872,133,full
+v18-128-32,parse,chain_subscript,1000000,3000008,OK,"",1840,750,434,0,756,133,full
+v18-128-32,parse,wide_select_list,1000000,10888902,OK,"",3686,1171,674,0,1172,131,full
+v18-128-32,parse,wide_values,1000000,29666699,OK,"",6108,1677,969,0,1678,133,full
+v18-128-32,parse,wide_cte,1000000,27777792,WASM_EXIT_FATAL,"Program terminated with exit(1)",2599,1293,920,0,1294,133,full
+v18-128-32,parse,long_string,1000000,1000009,OK,"",92,74,133,3,75,133,full
+v18-128-32,parse,long_ident,1000000,1000007,OK,"",64,70,133,3,70,133,full
+v18-128-32,parse,long_comment,1000000,1000015,OK,"",44,68,131,2,69,133,full
+v18-128-32,parse,wide_array,1000000,6888903,OK,"",1620,544,269,0,782,133,full
+v18-128-32,parse,long_string,100000000,100000009,OK,"",2147,828,639,0,829,133,full
+v18-128-32,parse,many_simple,5000000,50000000,WASM_EXIT_FATAL,"Program terminated with exit(1)",3181,1123,1026,0,1124,133,full
+v18-128-32,parse,many_mixed,20000,10686680,OK,"",4023,1095,673,0,1096,133,full
+v18-128-32,parse,many_mixed,100000,53966680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4271,1213,958,0,1214,131,full
+v18-128-32,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4353,1469,1026,0,1470,133,full
+v18-128-32,parsePlPgSQL,nest_plpgsql_if,1000,21078,OK,"",65,89,133,0,89,133,full
+v18-128-32,parsePlPgSQL,nest_plpgsql_if,10000,210078,CLEAN_ERROR,"memory exhausted at or near \"THEN\"",53,90,133,0,91,133,full
+v18-128-32,parsePlPgSQL,nest_plpgsql_begin,1000,11068,OK,"",50,81,133,0,81,133,full
+v18-128-32,parsePlPgSQL,nest_plpgsql_begin,10000,110068,CLEAN_ERROR,"memory exhausted at or near \"BEGIN\"",30,70,131,2,71,133,full
+v18-128-32,parsePlPgSQL,many_plpgsql,10000,2958890,OK,"",32263,509,404,0,648,133,full
+v18-128-32,loop,many_mixed,2000,1044680,OK,"",37628,448,141,0,697,133,full
+v18-128-32,fingerprint,nest_func,100000,300008,OK,"",47,66,133,0,67,133,full
+v18-128-32,fingerprint,nest_subq,100000,900008,OK,"",34,67,133,0,67,133,full
+v18-128-32,fingerprint,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",236,263,133,0,263,133,full
+v18-128-32,fingerprint,chain_arith,100000,400008,OK,"",129,176,133,0,176,133,full
+v18-128-32,fingerprint,many_mixed,20000,10686680,OK,"",2316,375,223,0,764,133,full
+v18-128-32,fingerprint,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4078,1465,1026,0,1466,133,full
+v18-128-32,normalize,nest_func,100000,300008,OK,"",45,67,133,0,68,133,full
+v18-128-32,normalize,nest_subq,100000,900008,OK,"",31,77,133,3,78,133,full
+v18-128-32,normalize,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",244,294,133,0,295,133,full
+v18-128-32,normalize,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",74,166,133,0,167,133,full
+v18-128-32,normalize,many_mixed,20000,10686680,OK,"",1561,656,659,0,790,133,full
+v18-128-32,normalize,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3058,1465,1026,0,1466,133,full
+v18-128-32,scan,nest_func,100000,300008,OK,"",580,213,164,0,215,133,full
+v18-128-32,scan,nest_subq,100000,900008,OK,"",522,217,165,0,219,133,full
+v18-128-32,scan,chain_union,100000,1500008,OK,"",541,223,166,0,225,133,full
+v18-128-32,scan,chain_arith,100000,400008,OK,"",368,156,154,0,158,133,full
+v18-128-32,scan,many_mixed,20000,10686680,OK,"",5572,1522,1210,0,1544,133,full
+v18-128-32,scan,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",3053,1394,1026,0,1395,133,full
+v18-128-32,parseSync,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",20,73,133,2,73,133,full
+v18-128-32,parseSync,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",31,73,133,3,73,133,full
+v18-128-32,parseSync,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",115,226,133,3,226,133,full
+v18-128-32,parseSync,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",42,127,133,3,127,133,full
+v18-128-32,parseSync,many_mixed,20000,10686680,OK,"",3460,1067,673,0,1068,133,full
+v18-128-32,parseSync,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4283,1466,1026,0,1466,133,full
+v17-24-16,parse,nest_paren,3000,6008,OK,"",9,60,28,2,60,28,full
+v17-24-16,parse,nest_paren,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",15,67,28,2,67,28,full
+v17-24-16,parse,nest_func,3000,9008,OK,"",35,106,28,2,107,28,full
+v17-24-16,parse,nest_func,100000,300008,CLEAN_SQLERROR,"memory exhausted at or near \"f\"",17,75,28,2,76,28,full
+v17-24-16,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",21,77,28,2,77,28,full
+v17-24-16,parse,nest_subq,100000,900008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",19,71,28,2,71,28,full
+v17-24-16,parse,nest_case,3000,84011,OK,"",50,134,28,0,134,28,full
+v17-24-16,parse,nest_case,100000,2800011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",34,74,28,2,74,28,full
+v17-24-16,parse,nest_bool_r,3000,24008,OK,"",42,107,28,0,108,28,full
+v17-24-16,parse,nest_bool_r,100000,800008,CLEAN_SQLERROR,"memory exhausted at or near \"a\"",21,76,28,2,77,28,full
+v17-24-16,parse,nest_not,3000,12011,OK,"",32,97,28,0,99,28,full
+v17-24-16,parse,nest_not,100000,400011,CLEAN_SQLERROR,"memory exhausted at or near \"NOT\"",17,73,28,2,73,28,full
+v17-24-16,parse,nest_uminus,3000,6008,OK,"",20,76,28,2,76,28,full
+v17-24-16,parse,nest_uminus,100000,200008,CLEAN_SQLERROR,"memory exhausted at or near \"-\"",18,70,28,2,70,28,full
+v17-24-16,parse,nest_array,3000,21008,OK,"",31,82,28,0,84,28,full
+v17-24-16,parse,nest_array,100000,700008,CLEAN_SQLERROR,"memory exhausted at or near \"ARRAY\"",27,69,28,2,70,28,full
+v17-24-16,parse,nest_row,3000,15008,OK,"",40,109,28,0,111,28,full
+v17-24-16,parse,nest_row,100000,500008,CLEAN_SQLERROR,"memory exhausted at or near \"ROW\"",21,74,28,2,74,28,full
+v17-24-16,parse,nest_exists,3000,72011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",18,67,28,2,68,28,full
+v17-24-16,parse,nest_exists,100000,2400011,CLEAN_SQLERROR,"memory exhausted at or near \"1\"",30,75,28,2,75,28,full
+v17-24-16,parse,nest_coalesce,3000,39008,OK,"",42,135,26,0,135,28,full
+v17-24-16,parse,nest_coalesce,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"COALESCE\"",24,81,28,2,81,28,full
+v17-24-16,parse,nest_cast,3000,39008,OK,"",43,111,28,0,112,28,full
+v17-24-16,parse,nest_cast,100000,1300008,CLEAN_SQLERROR,"memory exhausted at or near \"CAST\"",23,71,28,2,72,28,full
+v17-24-16,parse,chain_arith,100000,400008,JS_RANGE_ERROR,"Maximum call stack size exceeded",63,154,45,2,154,28,full
+v17-24-16,parse,chain_arith,1000000,4000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",337,565,181,0,565,28,full
+v17-24-16,parse,chain_concat,100000,700010,JS_RANGE_ERROR,"Maximum call stack size exceeded",81,178,54,2,178,28,full
+v17-24-16,parse,chain_concat,1000000,7000010,JS_RANGE_ERROR,"Maximum call stack size exceeded",398,714,227,0,714,28,full
+v17-24-16,parse,chain_and,100000,900011,OK,"",133,256,49,0,256,28,full
+v17-24-16,parse,chain_and,1000000,9000011,OK,"",1104,528,310,0,742,28,full
+v17-24-16,parse,chain_and_or,100000,1700011,OK,"",428,213,118,0,720,28,full
+v17-24-16,parse,chain_and_or,1000000,17000011,OK,"",3052,1331,858,0,1331,28,full
+v17-24-16,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",108,231,67,2,231,28,full
+v17-24-16,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",826,523,490,0,821,28,full
+v17-24-16,parse,chain_union_all,100000,1900008,JS_RANGE_ERROR,"Maximum call stack size exceeded",102,216,68,2,216,28,full
+v17-24-16,parse,chain_union_all,1000000,19000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",811,533,476,0,854,28,full
+v17-24-16,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",171,352,76,2,352,28,full
+v17-24-16,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",1482,987,575,0,1181,28,full
+v17-24-16,parse,chain_cast,100000,500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",51,134,38,2,134,28,full
+v17-24-16,parse,chain_cast,1000000,5000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",314,560,184,0,560,28,full
+v17-24-16,parse,chain_dot,100000,200008,OK,"",82,184,38,0,185,28,full
+v17-24-16,parse,chain_dot,1000000,2000008,OK,"",685,358,149,0,775,28,full
+v17-24-16,parse,chain_subscript,100000,300008,OK,"",234,451,50,0,451,28,full
+v17-24-16,parse,chain_subscript,1000000,3000008,OK,"",1458,767,418,0,767,28,full
+v17-24-16,parse,wide_in,1000000,6888911,OK,"",1108,529,253,0,801,28,full
+v17-24-16,parse,wide_values,1000000,29666699,OK,"",4204,1640,953,0,1641,28,full
+v17-24-16,parse,wide_select_list,1000000,10888902,OK,"",2419,1169,658,0,1170,28,full
+v17-24-16,parse,wide_cte,1000000,27777792,WASM_EXIT_FATAL,"Program terminated with exit(1)",2125,1295,904,0,1296,28,full
+v17-24-16,parse,wide_array,1000000,6888903,OK,"",1233,544,253,0,832,28,full
+v17-24-16,parse,long_string,1000000,1000009,OK,"",65,71,28,0,71,28,full
+v17-24-16,parse,long_ident,1000000,1000007,OK,"",36,68,28,2,69,28,full
+v17-24-16,parse,long_comment,1000000,1000015,OK,"",41,66,28,2,66,28,full
+v17-24-16,parse,long_string,100000000,100000009,OK,"",1757,826,623,0,826,28,full
+v17-24-16,parse,many_simple,5000000,50000000,WASM_EXIT_FATAL,"Program terminated with exit(1)",2304,1140,1026,0,1141,28,full
+v18-nostack@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",15,67,21,3,68,21,bigstack
+v18-nostack@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",43,79,21,3,79,21,bigstack
+v18-nostack@ss984,parse,nest_func,4000,12008,WASM_TRAP,"null function or function signature mismatch",39,76,21,3,77,21,bigstack
+v18-nostack@ss984,parse,chain_arith,30000,120008,WASM_TRAP,"memory access out of bounds",52,101,21,3,101,21,bigstack
+v18-nostack@ss984,parse,chain_union,100000,1500008,WASM_TRAP,"null function or function signature mismatch",198,241,49,3,241,21,bigstack
+v18-nostack@ss984,parse,chain_join,100000,3666696,WASM_TRAP,"null function or function signature mismatch",179,253,62,3,254,21,bigstack
+v18-nostack@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,WASM_TRAP,"memory access out of bounds",54,94,21,3,94,21,bigstack
+v18-16-4@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",36,69,21,3,69,21,bigstack
+v18-16-4@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",82,83,21,3,84,21,bigstack
+v18-16-4@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",35,74,21,3,74,21,bigstack
+v18-16-4@ss984,parse,nest_func,4000,12008,OK,"",107,115,21,0,121,21,bigstack
+v18-16-4@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",71,111,21,3,111,21,bigstack
+v18-16-4@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",253,215,53,3,216,21,bigstack
+v18-16-4@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",386,363,68,3,363,21,bigstack
+v18-16-4@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",114,142,21,3,143,21,bigstack
+v18-16-4@ss8000,parse,nest_subq,3000,27008,OK,"",67,108,21,0,109,21,bigstack
+v18-16-4@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",24,71,21,3,71,21,bigstack
+v18-16-4@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",51,68,21,3,69,21,bigstack
+v18-16-4@ss8000,parse,nest_func,4000,12008,OK,"",71,114,21,0,115,21,bigstack
+v18-16-4@ss8000,parse,chain_arith,30000,120008,WASM_TRAP,"memory access out of bounds",137,146,24,3,148,21,bigstack
+v18-16-4@ss8000,parse,chain_union,100000,1500008,WASM_TRAP,"memory access out of bounds",284,378,74,3,379,21,bigstack
+v18-16-4@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",112,123,21,0,125,21,bigstack
+v18-16-4@ss8000,parse,chain_join,100000,3666696,WASM_TRAP,"memory access out of bounds",532,417,68,3,417,21,bigstack
+v18-16-4@ss64000,parse,nest_subq,3000,27008,OK,"",143,111,21,0,112,21,bigstack
+v18-16-4@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",30,72,21,3,73,21,bigstack
+v18-16-4@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",49,74,21,3,74,21,bigstack
+v18-16-4@ss64000,parse,nest_func,4000,12008,OK,"",62,113,21,0,113,21,bigstack
+v18-16-4@ss64000,parse,chain_arith,30000,120008,WASM_TRAP,"memory access out of bounds",148,151,24,3,151,21,bigstack
+v18-16-4@ss64000,parse,chain_union,100000,1500008,WASM_TRAP,"memory access out of bounds",315,312,74,3,313,21,bigstack
+v18-16-4@ss64000,parse,chain_join,100000,3666696,WASM_TRAP,"memory access out of bounds",424,372,68,3,373,21,bigstack
+v18-16-4@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",124,113,21,0,113,21,bigstack
+v18-24-8@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",39,83,29,3,84,29,bigstack
+v18-24-8@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",35,71,29,3,72,29,bigstack
+v18-24-8@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",40,73,29,3,74,29,bigstack
+v18-24-8@ss984,parse,nest_func,4000,12008,OK,"",116,115,29,0,115,29,bigstack
+v18-24-8@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",215,225,57,3,226,29,bigstack
+v18-24-8@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",84,132,29,3,133,29,bigstack
+v18-24-8@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",110,125,29,3,125,29,bigstack
+v18-24-8@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",297,261,74,3,261,29,bigstack
+v18-24-8@ss8000,parse,nest_subq,3000,27008,OK,"",77,103,29,0,105,29,bigstack
+v18-24-8@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",25,71,29,3,72,29,bigstack
+v18-24-8@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",31,71,29,3,72,29,bigstack
+v18-24-8@ss8000,parse,nest_func,4000,12008,OK,"",76,100,29,0,101,29,bigstack
+v18-24-8@ss8000,parse,chain_arith,30000,120008,OK,"",281,336,35,0,337,29,bigstack
+v18-24-8@ss8000,parse,chain_union,100000,1500008,OK,"",1158,312,138,0,777,29,bigstack
+v18-24-8@ss8000,parse,chain_join,100000,3666696,WASM_TRAP,"memory access out of bounds",424,397,74,3,398,29,bigstack
+v18-24-8@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",129,126,29,0,127,29,bigstack
+v18-24-8@ss64000,parse,nest_subq,3000,27008,OK,"",126,122,29,0,122,29,bigstack
+v18-24-8@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",48,79,29,3,80,29,bigstack
+v18-24-8@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",40,69,29,3,69,29,bigstack
+v18-24-8@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-24-8@ss64000,parse,nest_func,4000,12008,OK,"",61,100,29,0,103,29,bigstack
+v18-24-8@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-24-8@ss64000,parse,chain_join,100000,3666696,WASM_TRAP,"memory access out of bounds",446,439,74,3,440,29,bigstack
+v18-24-8@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",98,105,29,0,108,29,bigstack
+v18-32-8@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",50,83,37,3,84,37,bigstack
+v18-32-8@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",27,70,37,3,70,37,bigstack
+v18-32-8@ss984,parse,nest_func,4000,12008,OK,"",66,121,37,0,122,37,bigstack
+v18-32-8@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",55,74,37,3,75,37,bigstack
+v18-32-8@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",230,332,60,3,333,37,bigstack
+v18-32-8@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",93,112,37,3,113,37,bigstack
+v18-32-8@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",408,301,74,3,301,37,bigstack
+v18-32-8@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",96,101,37,0,101,37,bigstack
+v18-32-8@ss8000,parse,nest_subq,3000,27008,OK,"",75,105,37,0,106,37,bigstack
+v18-32-8@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",60,67,37,3,68,37,bigstack
+v18-32-8@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",47,68,37,3,69,37,bigstack
+v18-32-8@ss8000,parse,nest_func,4000,12008,OK,"",84,102,37,2,103,37,bigstack
+v18-32-8@ss8000,parse,chain_arith,30000,120008,OK,"",291,302,38,0,303,37,bigstack
+v18-32-8@ss8000,parse,chain_union,100000,1500008,OK,"",1407,307,138,0,763,37,bigstack
+v18-32-8@ss8000,parse,chain_join,100000,3666696,WASM_TRAP,"memory access out of bounds",583,399,74,3,400,37,bigstack
+v18-32-8@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",105,110,37,0,112,37,bigstack
+v18-32-8@ss64000,parse,nest_subq,3000,27008,OK,"",88,126,37,0,128,37,bigstack
+v18-32-8@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",16,68,37,3,69,37,bigstack
+v18-32-8@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",27,69,37,3,69,37,bigstack
+v18-32-8@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-8@ss64000,parse,nest_func,4000,12008,OK,"",89,136,37,0,144,37,bigstack
+v18-32-8@ss64000,parse,chain_join,100000,3666696,WASM_TRAP,"memory access out of bounds",602,197,74,3,704,37,bigstack
+v18-32-8@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-24-16@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",51,84,29,3,84,29,bigstack
+v18-32-8@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",89,104,37,3,105,37,bigstack
+v18-24-16@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",28,67,29,3,68,29,bigstack
+v18-24-16@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",38,67,29,3,68,29,bigstack
+v18-24-16@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",99,103,29,3,104,29,bigstack
+v18-24-16@ss984,parse,nest_func,4000,12008,OK,"",118,107,29,0,107,29,bigstack
+v18-24-16@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",351,249,68,3,249,29,bigstack
+v18-24-16@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",446,356,91,0,357,29,bigstack
+v18-24-16@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",153,145,34,0,148,29,bigstack
+v18-24-16@ss8000,parse,nest_subq,3000,27008,OK,"",74,120,29,0,121,29,bigstack
+v18-24-16@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",28,67,29,3,67,29,bigstack
+v18-24-16@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",28,71,29,3,72,29,bigstack
+v18-24-16@ss8000,parse,nest_func,4000,12008,OK,"",71,122,29,2,122,29,bigstack
+v18-24-16@ss8000,parse,chain_arith,30000,120008,OK,"",271,305,47,0,306,29,bigstack
+v18-24-16@ss8000,parse,chain_union,100000,1500008,OK,"",1227,333,146,0,809,29,bigstack
+v18-24-16@ss8000,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",437,404,91,0,405,29,bigstack
+v18-24-16@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",103,116,34,3,117,29,bigstack
+v18-24-16@ss64000,parse,nest_subq,3000,27008,OK,"",127,143,29,3,144,29,bigstack
+v18-24-16@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",33,70,29,3,71,29,bigstack
+v18-24-16@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",47,69,29,3,70,29,bigstack
+v18-24-16@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-24-16@ss64000,parse,nest_func,4000,12008,OK,"",89,118,29,3,118,29,bigstack
+v18-24-16@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-24-16@ss64000,parse,chain_join,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-24-16@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",138,111,34,0,114,29,bigstack
+v18-32-16@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",75,83,37,3,84,37,bigstack
+v18-32-16@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",42,77,37,3,77,37,bigstack
+v18-32-16@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",37,67,37,3,67,37,bigstack
+v18-32-16@ss984,parse,nest_func,4000,12008,OK,"",63,101,37,0,102,37,bigstack
+v18-32-16@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",81,123,37,3,123,37,bigstack
+v18-32-16@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",211,241,71,3,242,37,bigstack
+v18-32-16@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",417,395,88,0,395,37,bigstack
+v18-32-16@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",117,114,37,0,114,37,bigstack
+v18-32-16@ss8000,parse,nest_subq,3000,27008,OK,"",95,121,37,0,121,37,bigstack
+v18-32-16@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",28,70,37,3,71,37,bigstack
+v18-32-16@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",25,67,37,3,68,37,bigstack
+v18-32-16@ss8000,parse,nest_func,4000,12008,OK,"",66,111,37,0,112,37,bigstack
+v18-32-16@ss8000,parse,chain_arith,30000,120008,OK,"",292,301,44,0,301,37,bigstack
+v18-32-16@ss8000,parse,chain_union,100000,1500008,OK,"",933,311,146,0,796,37,bigstack
+v18-32-16@ss8000,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",361,422,88,0,423,37,bigstack
+v18-32-16@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",98,114,37,3,115,37,bigstack
+v18-32-16@ss64000,parse,nest_subq,3000,27008,OK,"",164,110,37,0,111,37,bigstack
+v18-32-16@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",34,70,37,3,77,37,bigstack
+v18-32-16@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",64,72,37,3,72,37,bigstack
+v18-32-16@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-16@ss64000,parse,nest_func,4000,12008,OK,"",73,112,37,0,113,37,bigstack
+v18-32-16@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-16@ss64000,parse,chain_join,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-16@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",116,117,37,0,118,37,bigstack
+v18-32-16-soc2@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",76,82,37,3,83,37,bigstack
+v18-32-16-soc2@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",23,70,37,3,70,37,bigstack
+v18-32-16-soc2@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",33,71,37,3,72,37,bigstack
+v18-32-16-soc2@ss984,parse,nest_func,4000,12008,OK,"",77,114,37,0,115,37,bigstack
+v18-32-16-soc2@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",87,114,37,3,114,37,bigstack
+v18-32-16-soc2@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",279,266,71,3,267,37,bigstack
+v18-32-16-soc2@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",401,284,88,0,285,37,bigstack
+v18-32-16-soc2@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",159,123,37,3,124,37,bigstack
+v18-32-16-soc2@ss8000,parse,nest_subq,3000,27008,OK,"",87,114,37,0,114,37,bigstack
+v18-32-16-soc2@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",29,71,37,3,72,37,bigstack
+v18-32-16-soc2@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",64,83,37,3,84,37,bigstack
+v18-32-16-soc2@ss8000,parse,nest_func,4000,12008,OK,"",108,113,37,0,113,37,bigstack
+v18-32-16-soc2@ss8000,parse,chain_arith,30000,120008,OK,"",233,279,44,0,279,37,bigstack
+v18-32-16-soc2@ss8000,parse,chain_union,100000,1500008,OK,"",1216,328,146,0,795,37,bigstack
+v18-32-16-soc2@ss8000,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",570,437,88,0,438,37,bigstack
+v18-32-16-soc2@ss64000,parse,nest_subq,3000,27008,OK,"",101,131,37,0,134,37,bigstack
+v18-32-16-soc2@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",130,116,37,0,117,37,bigstack
+v18-32-16-soc2@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",30,67,37,3,67,37,bigstack
+v18-32-16-soc2@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",33,69,37,3,69,37,bigstack
+v18-32-16-soc2@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-16-soc2@ss64000,parse,nest_func,4000,12008,OK,"",80,111,37,3,111,37,bigstack
+v18-32-16-soc2@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-16-soc2@ss64000,parse,chain_join,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-32-16-soc2@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",125,109,37,3,110,37,bigstack
+v18-64-32@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",40,78,69,0,79,69,bigstack
+v18-64-32@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",37,68,69,3,69,69,bigstack
+v18-64-32@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",49,71,69,0,72,69,bigstack
+v18-64-32@ss984,parse,nest_func,4000,12008,OK,"",113,109,67,2,110,69,bigstack
+v18-64-32@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",69,105,67,2,109,69,bigstack
+v18-64-32@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",204,242,80,0,242,69,bigstack
+v18-64-32@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",278,287,94,0,288,69,bigstack
+v18-64-32@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",114,95,69,2,96,69,bigstack
+v18-64-32@ss8000,parse,nest_subq,3000,27008,OK,"",86,91,66,0,97,69,bigstack
+v18-64-32@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",26,68,69,3,69,69,bigstack
+v18-64-32@ss8000,parse,nest_func,4000,12008,OK,"",86,108,67,2,108,69,bigstack
+v18-64-32@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",58,71,69,0,71,69,bigstack
+v18-64-32@ss8000,parse,chain_arith,30000,120008,OK,"",358,377,71,2,377,69,bigstack
+v18-64-32@ss8000,parse,chain_union,100000,1500008,OK,"",1046,312,162,0,790,69,bigstack
+v18-64-32@ss8000,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",496,421,94,0,421,69,bigstack
+v18-64-32@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",102,112,67,2,112,69,bigstack
+v18-64-32@ss64000,parse,nest_subq,3000,27008,OK,"",74,102,66,0,103,69,bigstack
+v18-64-32@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",58,77,69,3,77,69,bigstack
+v18-64-32@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",44,70,69,3,71,69,bigstack
+v18-64-32@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-64-32@ss64000,parse,nest_func,4000,12008,OK,"",76,126,67,2,126,69,bigstack
+v18-64-32@ss64000,parse,chain_join,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-64-32@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-64-32@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",70,110,69,0,114,69,bigstack
+v18-128-32@ss984,parse,nest_subq,3000,27008,JS_RANGE_ERROR,"Maximum call stack size exceeded",60,75,133,0,76,133,bigstack
+v18-128-32@ss984,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",40,79,131,2,79,133,bigstack
+v18-128-32@ss984,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",43,77,133,3,77,133,bigstack
+v18-128-32@ss984,parse,nest_func,4000,12008,OK,"",75,118,133,3,118,133,bigstack
+v18-128-32@ss984,parse,chain_arith,30000,120008,JS_RANGE_ERROR,"Maximum call stack size exceeded",59,104,133,3,104,133,bigstack
+v18-128-32@ss984,parse,chain_union,100000,1500008,JS_RANGE_ERROR,"Maximum call stack size exceeded",236,266,133,0,266,133,bigstack
+v18-128-32@ss984,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",351,338,133,3,338,133,bigstack
+v18-128-32@ss984,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",94,106,131,2,107,133,bigstack
+v18-128-32@ss8000,parse,nest_subq,3000,27008,OK,"",94,125,131,2,132,133,bigstack
+v18-128-32@ss8000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",24,70,133,3,70,133,bigstack
+v18-128-32@ss8000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",29,66,133,0,66,133,bigstack
+v18-128-32@ss8000,parse,nest_func,4000,12008,OK,"",91,153,133,3,153,133,bigstack
+v18-128-32@ss8000,parse,chain_arith,30000,120008,OK,"",236,303,134,0,303,133,bigstack
+v18-128-32@ss8000,parse,chain_union,100000,1500008,OK,"",849,277,178,0,777,133,bigstack
+v18-128-32@ss8000,parse,chain_join,100000,3666696,JS_RANGE_ERROR,"Maximum call stack size exceeded",371,398,133,0,398,133,bigstack
+v18-128-32@ss8000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",118,153,133,2,156,133,bigstack
+v18-128-32@ss64000,parse,nest_subq,3000,27008,OK,"",88,122,133,0,125,133,bigstack
+v18-128-32@ss64000,parse,nest_subq,10000,90008,CLEAN_SQLERROR,"memory exhausted at or near \"(\"",41,68,133,0,69,133,bigstack
+v18-128-32@ss64000,parse,nest_case,10000,280011,CLEAN_SQLERROR,"memory exhausted at or near \"CASE\"",26,66,131,2,67,133,bigstack
+v18-128-32@ss64000,parse,chain_arith,30000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-128-32@ss64000,parse,nest_func,4000,12008,OK,"",95,134,131,2,135,133,bigstack
+v18-128-32@ss64000,parse,chain_union,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-128-32@ss64000,parse,chain_join,100000,,KILLED_SIGSEGV,"",,,,,,,bigstack
+v18-128-32@ss64000,parsePlPgSQL,nest_plpgsql_if,3000,63078,OK,"",123,138,133,0,139,133,bigstack
+v18-128-32,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",5043,985,654,0,1201,133,maxmem
+v18-128-32,parse,chain_join,3000000,125666698,WASM_EXIT_FATAL,"Program terminated with exit(1)",6799,2049,1026,0,2050,133,maxmem
+v18-128-32,parse,chain_join,6000000,254666698,WASM_EXIT_FATAL,"Program terminated with exit(1)",5190,2888,1026,0,3032,133,maxmem
+v18-128-32,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1412,523,460,0,842,133,maxmem
+v18-128-32,parse,chain_union,3000000,45000008,WASM_EXIT_FATAL,"Program terminated with exit(1)",2793,1123,1026,0,1124,133,maxmem
+v18-128-32,parse,chain_union,6000000,90000008,WASM_EXIT_FATAL,"Program terminated with exit(1)",4472,1168,1026,0,1168,133,maxmem
+v18-128-32,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",6610,1465,1026,0,1466,133,maxmem
+v18-128-32,parse,many_mixed,400000,219866680,WASM_EXIT_FATAL,"Program terminated with exit(1)",5033,1727,1026,0,1785,133,maxmem
+v18-128-32,parse,many_mixed,800000,441066680,WASM_EXIT_FATAL,"Program terminated with exit(1)",4834,2311,1026,0,2768,133,maxmem
+v18-128-32,parse,long_string,300000000,300000009,CLEAN_SQLERROR,"out of memory",4629,925,607,0,925,133,maxmem
+v18-128-32,parse,long_string,600000000,,HARNESS_ERROR,"RangeError: Invalid string length\n    at String.repeat (<anonymous>)\n    at rep (/home/ubuntu/wasmbench/gen.js:2:25)\n   ",,,,,,,maxmem
+v18-128-32-nam,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",2098,985,654,0,1231,133,maxmem
+v18-128-32-nam,parse,chain_join,3000000,125666698,WASM_EXIT_FATAL,"Program terminated with exit(1)",4115,2045,1026,0,2046,133,maxmem
+v18-128-32-nam,parse,chain_join,6000000,254666698,WASM_EXIT_FATAL,"Program terminated with exit(1)",7608,2888,1026,0,2959,133,maxmem
+v18-128-32-nam,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1699,525,460,0,834,133,maxmem
+v18-128-32-nam,parse,chain_union,3000000,45000008,WASM_EXIT_FATAL,"Program terminated with exit(1)",2851,1123,1026,0,1124,133,maxmem
+v18-128-32-nam,parse,chain_union,6000000,90000008,WASM_EXIT_FATAL,"Program terminated with exit(1)",5042,1168,1026,0,1168,133,maxmem
+v18-128-32-nam,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",6939,1465,1026,0,1465,133,maxmem
+v18-128-32-nam,parse,many_mixed,400000,219866680,WASM_EXIT_FATAL,"Program terminated with exit(1)",7251,1726,1026,0,1790,133,maxmem
+v18-128-32-nam,parse,many_mixed,800000,441066680,WASM_EXIT_FATAL,"Program terminated with exit(1)",7047,2310,1026,0,2800,133,maxmem
+v18-128-32-nam,parse,long_string,300000000,300000009,CLEAN_SQLERROR,"out of memory",6860,924,609,0,925,133,maxmem
+v18-128-32-nam,parse,long_string,600000000,,HARNESS_ERROR,"RangeError: Invalid string length\n    at String.repeat (<anonymous>)\n    at rep (/home/ubuntu/wasmbench/gen.js:2:25)\n   ",,,,,,,maxmem
+v18-128-32-max2g,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",2607,986,654,0,1150,133,maxmem
+v18-128-32-max2g,parse,chain_join,3000000,125666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",9180,2716,1706,0,2716,133,maxmem
+v18-128-32-max2g,parse,chain_join,6000000,254666698,WASM_EXIT_FATAL,"Program terminated with exit(1)",9414,3912,2050,0,3913,133,maxmem
+v18-128-32-max2g,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1279,523,460,0,903,133,maxmem
+v18-128-32-max2g,parse,chain_union,3000000,45000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",4020,1388,1376,0,1389,133,maxmem
+v18-128-32-max2g,parse,chain_union,6000000,90000008,WASM_EXIT_FATAL,"Program terminated with exit(1)",7584,2190,2050,0,2191,133,maxmem
+v18-128-32-max2g,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",6964,2270,1915,0,2271,133,maxmem
+v18-128-32-max2g,parse,many_mixed,400000,219866680,WASM_EXIT_FATAL,"Program terminated with exit(1)",9537,2750,2050,0,2751,133,maxmem
+v18-128-32-max2g,parse,many_mixed,800000,441066680,WASM_EXIT_FATAL,"Program terminated with exit(1)",8892,3332,2050,0,3333,133,maxmem
+v18-128-32-max2g,parse,long_string,300000000,300000009,OK,"",8230,2352,1977,0,2353,133,maxmem
+v18-128-32-max2g,parse,long_string,600000000,,HARNESS_ERROR,"RangeError: Invalid string length\n    at String.repeat (<anonymous>)\n    at rep (/home/ubuntu/wasmbench/gen.js:2:25)\n   ",,,,,,,maxmem
+v18-128-32-max4g,parse,chain_join,1000000,39666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",2375,984,654,0,1156,133,maxmem
+v18-128-32-max4g,parse,chain_join,3000000,125666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",6149,2719,1706,0,2720,133,maxmem
+v18-128-32-max4g,parse,chain_join,6000000,254666698,JS_RANGE_ERROR,"Maximum call stack size exceeded",13644,5246,3424,0,5247,133,maxmem
+v18-128-32-max4g,parse,chain_union,1000000,15000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",1126,523,460,0,815,133,maxmem
+v18-128-32-max4g,parse,chain_union,3000000,45000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",3444,1387,1376,0,1387,133,maxmem
+v18-128-32-max4g,parse,chain_union,6000000,90000008,JS_RANGE_ERROR,"Maximum call stack size exceeded",5937,2684,2582,0,2684,133,maxmem
+v18-128-32-max4g,parse,many_mixed,200000,109266680,WASM_EXIT_FATAL,"Program terminated with exit(1)",12912,4083,3611,0,4084,133,maxmem
+v18-128-32-max4g,parse,many_mixed,400000,219866680,WASM_EXIT_FATAL,"Program terminated with exit(1)",14022,4335,3702,0,4335,133,maxmem
+v18-128-32-max4g,parse,many_mixed,800000,441066680,WASM_EXIT_FATAL,"Program terminated with exit(1)",15144,5379,4098,0,5380,133,maxmem
+v18-128-32-max4g,parse,long_string,300000000,300000009,OK,"",7098,2354,1977,0,2354,133,maxmem
+v18-128-32-max4g,parse,long_string,600000000,,HARNESS_ERROR,"RangeError: Invalid string length\n    at String.repeat (<anonymous>)\n    at rep (/home/ubuntu/wasmbench/gen.js:2:25)\n   ",,,,,,,maxmem
