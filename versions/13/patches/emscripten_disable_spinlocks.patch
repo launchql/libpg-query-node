@@ -1,24 +1,59 @@
---- a/Makefile
-+++ b/Makefile
-@@ -36,6 +36,11 @@ OBJ_FILES := $(filter-out $(NOT_OBJ_FILES), $(SRC_FILES:.c=.o))
- override CFLAGS += -g -I. -I./vendor -I./src/postgres/include -Wall -Wno-unused-function -Wno-unused-value -Wno-unused-variable -fno-strict-aliasing -fwrapv -fPIC
+Backport of the PostgreSQL 14 s_lock.h fallback that uses __sync_lock_test_and_set()
+when there is no platform-specific TAS. PG13 has none for wasm32, so without this
+Emscripten hits "#error PostgreSQL does not have native spinlock support".
+
+diff --git a/src/postgres/include/storage/s_lock.h b/src/postgres/include/storage/s_lock.h
+index 6b368a5..d8d0bff 100644
+--- a/src/postgres/include/storage/s_lock.h
++++ b/src/postgres/include/storage/s_lock.h
+@@ -748,6 +748,50 @@ tas(volatile slock_t *lock)
+ typedef unsigned char slock_t;
+ #endif
  
- override PG_CONFIGURE_FLAGS += -q --without-readline --without-zlib
 +
-+# Disable spinlocks when building with Emscripten
-+ifdef EMSCRIPTEN
-+override PG_CONFIGURE_FLAGS += --disable-spinlocks
-+endif
- 
- override TEST_CFLAGS += -I. -I./vendor -g
- override TEST_LDFLAGS += -pthread
-@@ -149,6 +154,9 @@ extract_source: $(PGDIR)
- 	echo "#undef LOCALE_T_IN_XLOCALE" >> ./src/postgres/include/pg_config.h
- 	echo "#undef WCSTOMBS_L_IN_XLOCALE" >> ./src/postgres/include/pg_config.h
- 	# Support 32-bit systems without reconfiguring
-+ifdef EMSCRIPTEN
-+	echo "#undef HAVE_SPINLOCKS" >> ./src/postgres/include/pg_config.h
-+endif
- 	echo "#undef PG_INT128_TYPE" >> ./src/postgres/include/pg_config.h
- 	# Support gcc earlier than 4.6.0 without reconfiguring
- 	echo "#undef HAVE__STATIC_ASSERT" >> ./src/postgres/include/pg_config.h
++/*
++ * If we have no platform-specific knowledge, but we found that the compiler
++ * provides __sync_lock_test_and_set(), use that.  Prefer the int-width
++ * version over the char-width version if we have both, on the rather dubious
++ * grounds that that's known to be more likely to work in the ARM ecosystem.
++ * (But we dealt with ARM above.)
++ */
++#if !defined(HAS_TEST_AND_SET)
++
++#if defined(HAVE_GCC__SYNC_INT32_TAS)
++#define HAS_TEST_AND_SET
++
++#define TAS(lock) tas(lock)
++
++typedef int slock_t;
++
++static __inline__ int
++tas(volatile slock_t *lock)
++{
++	return __sync_lock_test_and_set(lock, 1);
++}
++
++#define S_UNLOCK(lock) __sync_lock_release(lock)
++
++#elif defined(HAVE_GCC__SYNC_CHAR_TAS)
++#define HAS_TEST_AND_SET
++
++#define TAS(lock) tas(lock)
++
++typedef char slock_t;
++
++static __inline__ int
++tas(volatile slock_t *lock)
++{
++	return __sync_lock_test_and_set(lock, 1);
++}
++
++#define S_UNLOCK(lock) __sync_lock_release(lock)
++
++#endif	 /* HAVE_GCC__SYNC_INT32_TAS */
++
++#endif	/* !defined(HAS_TEST_AND_SET) */
++
+ /*
+  * Default implementation of S_UNLOCK() for gcc/icc.
+  *
