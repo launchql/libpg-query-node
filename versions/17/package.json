@@ -15,7 +15,8 @@
     "distTag": "pg17",
     "libpgQueryRepo": "https://github.com/constructive-io/libpg_query.git",
     "libpgQueryTag": "17-constructive",
-    "libpgQueryCommit": "1ade880fd1bbc6e89c33ea2424ddc366c41c1408"
+    "libpgQueryCommit": "1ade880fd1bbc6e89c33ea2424ddc366c41c1408",
+    "fullApi": true
   },
   "files": [
     "wasm/*"
@@ -30,7 +31,7 @@
     "wasm:rebuild": "pnpm wasm:make rebuild",
     "wasm:clean": "pnpm wasm:make clean",
     "wasm:clean-cache": "pnpm wasm:make clean-cache",
-    "test": "node --test test/parsing.test.js test/errors.test.js"
+    "test": "node --test test/parsing.test.js test/fingerprint.test.js test/normalize.test.js test/plpgsql.test.js test/scan.test.js test/errors.test.js"
   },
   "author": "Constructive <developers@constructive.io>",
   "license": "MIT",

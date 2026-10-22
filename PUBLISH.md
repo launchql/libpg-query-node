@@ -162,16 +162,17 @@ npm install libpg-query@pg16   # PostgreSQL 16 specific
 npm install libpg-query        # Latest/default version
 ```
 
-## Full API on PG 18+
+## Full API on PG 17+
 
 The former `full/` package (`@libpg-query/parser`) has been retired. Starting with
-PostgreSQL 18, the regular `libpg-query` package (`versions/18`) ships the full API:
+PostgreSQL 17, the regular `libpg-query` package (`versions/17`, `versions/18`) ships the full API:
 `parse`, `parsePlPgSQL`, `scan`, `fingerprint`, `normalize` + sync variants.
-Versions 13–17 remain slim (parse only).
+Versions 13–16 remain slim (parse only).
 
 ```bash
 npm install libpg-query@pg18   # full API
-npm install libpg-query@pg17   # parse only
+npm install libpg-query@pg17   # full API
+npm install libpg-query@pg16   # parse only
 ```
 
 ## Low-Memory Variants (pg18-lowmem-*)

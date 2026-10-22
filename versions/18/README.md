@@ -56,7 +56,7 @@ const result = await parse('SELECT * FROM users WHERE active = true');
 
 Our latest is built with the `18-constructive` branch of [constructive-io/libpg_query](https://github.com/constructive-io/libpg_query)
 
-Starting with PostgreSQL 18, this package ships the **full API**: `parse`, `parsePlPgSQL`, `scan`, `fingerprint`, `normalize` and their sync variants. Versions 13–17 are parse-only.
+Starting with PostgreSQL 17, this package ships the **full API**: `parse`, `parsePlPgSQL`, `scan`, `fingerprint`, `normalize` and their sync variants. Versions 13–16 are parse-only.
 
 | PG Major Version | libpg_query | npm dist-tag 
 |--------------------------|-------------|---------|
@@ -140,7 +140,7 @@ await normalize("SELECT * FROM users WHERE name = 'alice'");
 // SELECT * FROM users WHERE name = $1
 ```
 
-⚠ **Note:** the full API (`parsePlPgSQL`, `scan`, `fingerprint`, `normalize`) is available on `pg18`+ only; `pg13`–`pg17` builds expose `parse`/`parseSync` only.
+⚠ **Note:** the full API (`parsePlPgSQL`, `scan`, `fingerprint`, `normalize`) is available on `pg17`+ only; `pg13`–`pg16` builds expose `parse`/`parseSync` only.
 
 ### Initialization
 
