@@ -18,7 +18,9 @@ function getVersionMappings() {
           pgVersion: pkg['x-publish'].pgVersion,
           packageVersion: pkg.version,
           distTag: pkg['x-publish'].distTag,
-          libpgQueryTag: pkg['x-publish'].libpgQueryTag
+          libpgQueryTag: pkg['x-publish'].libpgQueryTag,
+          libpgQueryRepo: pkg['x-publish'].libpgQueryRepo,
+          libpgQueryCommit: pkg['x-publish'].libpgQueryCommit
         });
       }
     }
@@ -27,24 +29,24 @@ function getVersionMappings() {
   return mappings;
 }
 
-// Download file from URL
+// Download file from URL; dest is only written after a complete 200 response
 function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
-    const file = fs.createWriteStream(dest);
     console.log('Downloading', url, 'to', dest);
     https.get(url, (response) => {
-      if (response.statusCode === 200) {
-        response.pipe(file);
-        file.on('finish', () => {
-          file.close();
-          resolve();
-        });
-      } else {
+      if (response.statusCode !== 200) {
+        response.resume();
         reject(new Error(`HTTP ${response.statusCode}: ${response.statusMessage}`));
+        return;
       }
-    }).on('error', (err) => {
-      reject(err);
-    });
+      const chunks = [];
+      response.on('data', (chunk) => chunks.push(chunk));
+      response.on('end', () => {
+        fs.writeFileSync(dest, Buffer.concat(chunks));
+        resolve();
+      });
+      response.on('error', reject);
+    }).on('error', reject);
   });
 }
 
@@ -61,7 +63,7 @@ async function fetchProtos() {
   console.log('Fetching protobuf files for all versions...\n');
   
   for (const mapping of mappings) {
-    const { pgVersion, libpgQueryTag } = mapping;
+    const { pgVersion, libpgQueryTag, libpgQueryRepo, libpgQueryCommit } = mapping;
     const versionDir = path.join(protosDir, pgVersion);
     
     // Create version directory
@@ -69,11 +71,12 @@ async function fetchProtos() {
       fs.mkdirSync(versionDir, { recursive: true });
     }
     
-    // Use the libpgQueryTag from the Makefile
-    const url = `https://raw.githubusercontent.com/pganalyze/libpg_query/refs/tags/${libpgQueryTag}/protobuf/pg_query.proto`;
+    // The same repo and commit the WASM is built from
+    const repoPath = new URL(libpgQueryRepo).pathname.replace(/^\/|\.git$/g, '');
+    const url = `https://raw.githubusercontent.com/${repoPath}/${libpgQueryCommit}/protobuf/pg_query.proto`;
     const destPath = path.join(versionDir, 'pg_query.proto');
     
-    console.log(`Fetching protobuf for PostgreSQL ${pgVersion} with tag ${libpgQueryTag}...`);
+    console.log(`Fetching protobuf for PostgreSQL ${pgVersion} from ${repoPath} ${libpgQueryTag} @ ${libpgQueryCommit.slice(0, 7)}...`);
     
     try {
       await downloadFile(url, destPath);
@@ -82,6 +85,7 @@ async function fetchProtos() {
       console.log(`   Saved to: ${destPath}\n`);
     } catch (error) {
       console.log(`❌ Failed to fetch protobuf for PostgreSQL ${pgVersion}: ${error.message}\n`);
+      process.exitCode = 1;
     }
   }
   
@@ -90,7 +94,10 @@ async function fetchProtos() {
 
 // Run the script
 if (require.main === module) {
-  fetchProtos().catch(console.error);
+  fetchProtos().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
 }
 
 module.exports = { fetchProtos, getVersionMappings };

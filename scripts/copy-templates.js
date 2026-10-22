@@ -28,31 +28,27 @@ function loadVersionConfigs() {
   console.log(`Found ${packageFiles.length} package.json files\n`);
   
   packageFiles.forEach(packageFile => {
-    try {
-      const packageData = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
-      const version = packageData['x-publish']?.pgVersion;
-      const libpgQueryTag = packageData['x-publish']?.libpgQueryTag;
-      const libpgQueryRepo = packageData['x-publish']?.libpgQueryRepo;
-      const libpgQueryCommit = packageData['x-publish']?.libpgQueryCommit;
-      const fullApi = packageData['x-publish']?.fullApi === true;
-      
-      if (version && libpgQueryTag) {
-        if (!libpgQueryRepo || !/^[0-9a-f]{40}$/.test(libpgQueryCommit || '')) {
-          throw new Error(`x-publish needs libpgQueryRepo and a full 40-char libpgQueryCommit`);
-        }
-        configs[version] = {
-          tag: libpgQueryTag,
-          repo: libpgQueryRepo,
-          commit: libpgQueryCommit,
-          hasEmscriptenPatch: version === '13', // Only version 13 needs the patch
-          fullApi
-        };
-        console.log(`  Version ${version}: ${libpgQueryTag} @ ${libpgQueryCommit.slice(0, 7)}${fullApi ? ' (full API)' : ''}`);
-      } else {
-        console.warn(`  Warning: Missing x-publish data in ${packageFile}`);
+    const packageData = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
+    const version = packageData['x-publish']?.pgVersion;
+    const libpgQueryTag = packageData['x-publish']?.libpgQueryTag;
+    const libpgQueryRepo = packageData['x-publish']?.libpgQueryRepo;
+    const libpgQueryCommit = packageData['x-publish']?.libpgQueryCommit;
+    const fullApi = packageData['x-publish']?.fullApi === true;
+    
+    if (version && libpgQueryTag) {
+      if (!libpgQueryRepo || !/^[0-9a-f]{40}$/.test(libpgQueryCommit || '')) {
+        throw new Error(`${packageFile}: x-publish needs libpgQueryRepo and a full 40-char libpgQueryCommit`);
       }
-    } catch (error) {
-      console.error(`  Error reading ${packageFile}: ${error.message}`);
+      configs[version] = {
+        tag: libpgQueryTag,
+        repo: libpgQueryRepo,
+        commit: libpgQueryCommit,
+        hasEmscriptenPatch: version === '13', // Only version 13 needs the patch
+        fullApi
+      };
+      console.log(`  Version ${version}: ${libpgQueryTag} @ ${libpgQueryCommit.slice(0, 7)}${fullApi ? ' (full API)' : ''}`);
+    } else {
+      console.warn(`  Warning: Missing x-publish data in ${packageFile}`);
     }
   });
   
