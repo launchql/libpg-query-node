@@ -40,4 +40,27 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
     assert.equal(process.exitCode, exitCode);
     assert.equal((await parse('SELECT 1')).stmts.length, 1);
   });
+
+  it('retries the load when loading a fresh instance fails', async () => {
+    const indexPath = require.resolve('../wasm/index.cjs');
+    const factory = require.cache[require.resolve('../wasm/libpg-query.js')];
+    const shared = require.cache[indexPath];
+    const realFactory = factory.exports;
+    let loads = 0;
+    factory.exports = (...args) =>
+      ++loads === 2 ? Promise.reject(new Error('simulated load failure')) : realFactory(...args);
+    delete require.cache[indexPath];
+    let isolated;
+    try {
+      isolated = require(indexPath);
+    } finally {
+      factory.exports = realFactory;
+      require.cache[indexPath] = shared;
+    }
+    await isolated.loadModule();
+    await assert.rejects(isolated.parse('SELECT 1' + '+1'.repeat(100000)));
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal((await isolated.parse('SELECT 1')).stmts.length, 1);
+    assert.equal(loads, 3);
+  });
 });
