@@ -1,5 +1,6 @@
 const { describe, it, before } = require('node:test');
 const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
 const query = require('../');
 
 const LONE_HIGH = '\uD800';
@@ -41,5 +42,13 @@ describe('Query input encoding', () => {
   it('rejects an embedded NUL instead of dropping the rest of the query', async () => {
     assert.throws(() => query.parseSync('SELECT 1\u0000; SELECT 2'), /NUL/);
     await assert.rejects(query.parse('SELECT 1\u0000; SELECT 2'), /NUL/);
+  });
+
+  it('loads and parses without a global TextEncoder, as under Jest jsdom', () => {
+    const script = `delete globalThis.TextEncoder; delete globalThis.TextDecoder;
+      require(${JSON.stringify(require.resolve('../'))})
+        .parse("SELECT '\\uD800'; SELECT 2")
+        .then((r) => process.stdout.write(String(r.stmts.length)));`;
+    assert.equal(execFileSync(process.execPath, ['-e', script], { encoding: 'utf8' }), '2');
   });
 });
