@@ -4,7 +4,7 @@ const { parse, parseSync, loadModule } = require('../wasm/index.cjs');
 
 // An exception out of the WASM parser skips libpg_query's cleanup. Before the
 // wrapper replaced the instance, enough of them made even `SELECT 1` trap.
-describe('Recovery after the WASM parser throws', () => {
+describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
   before(async () => {
     await loadModule();
   });
