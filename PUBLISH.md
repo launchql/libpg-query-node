@@ -21,6 +21,11 @@ If you skip the build when publishing, `versions/<n>/wasm/` must have been built
 last pin change, or the package will name one commit and ship another. After publishing,
 `npm view libpg-query@pg<n> x-publish` should show the commit you expect.
 
+`publish:pkg` also writes `x-publish.wasmSha256`, the sha256 of `wasm/libpg-query.wasm` and
+`wasm/libpg-query.js`, into the published package.json. To verify a release, check out the
+`gitHead` it was published from, run `pnpm wasm:build` in `versions/<n>`, and compare
+`sha256sum wasm/libpg-query.*` with `npm view libpg-query@<version> x-publish.wasmSha256`.
+
 ## Automated Publishing (Recommended)
 
 ### Version Packages (libpg-query)
