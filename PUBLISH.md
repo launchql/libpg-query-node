@@ -40,7 +40,7 @@ This interactive script will:
 - Ask if you want to skip the build step (useful if already built)
 - Always run tests (even if build is skipped)
 - Publish each selected version
-- Optionally promote pg17 to latest (`latest` is currently pg18; to keep it there, answer no)
+- If the highest major (pg18) was published, optionally promote it to `latest`
 
 ### Types Packages
 ```bash
