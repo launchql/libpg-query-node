@@ -1,5 +1,6 @@
 const { describe, it, before } = require('node:test');
 const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
 const { parse, parseSync, loadModule } = require('../wasm/index.cjs');
 
 // An exception out of the WASM parser skips libpg_query's cleanup. Before the
@@ -17,6 +18,25 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
     }
     await loadModule();
     assert.equal(parseSync('SELECT 1').stmts.length, 1);
+  });
+
+  it('frees each replaced instance, so WASM memory stays at one instance', () => {
+    const script = `const lib = require(${JSON.stringify(require.resolve('../wasm/index.cjs'))});
+      (async () => {
+        await lib.loadModule();
+        lib.parseSync('SELECT 1');
+        gc(); gc();
+        const base = process.memoryUsage().external;
+        const deep = 'SELECT 1' + '+1'.repeat(100000);
+        for (let i = 0; i < 30; i++) {
+          try { lib.parseSync(deep); } catch {}
+          await lib.loadModule();
+        }
+        gc(); gc();
+        process.stdout.write(String(process.memoryUsage().external - base));
+      })();`;
+    const grown = Number(execFileSync(process.execPath, ['--expose-gc', '-e', script], { encoding: 'utf8' }));
+    assert.ok(grown < 32 * 1024 * 1024, `WASM memory grew by ${grown} bytes after 30 replacements`);
   });
 
   it('lets a call queued behind a failing one wait for the fresh instance', async () => {
