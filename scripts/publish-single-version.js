@@ -12,7 +12,8 @@ if (!fs.existsSync(pkgPath)) {
   process.exit(1);
 }
 
-const original = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+const originalText = fs.readFileSync(pkgPath, 'utf8');
+const original = JSON.parse(originalText);
 const publishMeta = original['x-publish'] || {};
 
 const publishName = publishMeta.publishName || 'libpg-query';
@@ -48,7 +49,8 @@ try {
   console.log('✅ Publish complete.');
 } catch (err) {
   console.error('❌ Publish failed:', err.message);
+  process.exitCode = 1;
 } finally {
-  fs.writeFileSync(pkgPath, JSON.stringify(original, null, 2));
+  fs.writeFileSync(pkgPath, originalText);
   console.log('🔄 Restored original package.json');
 }

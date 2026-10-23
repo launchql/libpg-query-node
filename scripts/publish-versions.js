@@ -125,14 +125,15 @@ async function main() {
   }
 
   // Ask about promoting to latest
-  if (selectedVersions.includes('17')) {
+  const latestVersion = versionDirs[0];
+  if (selectedVersions.includes(latestVersion)) {
     console.log('\n🏷️  Tag Management');
     
-    const promoteVersions = await question('Promote libpg-query@pg17 to latest? (y/N): ');
+    const promoteVersions = await question(`Promote libpg-query@pg${latestVersion} to latest? (y/N): `);
     if (promoteVersions.toLowerCase() === 'y') {
       try {
-        execSync('npm dist-tag add libpg-query@pg17 latest', { stdio: 'inherit' });
-        console.log('✅ libpg-query@pg17 promoted to latest');
+        execSync(`npm dist-tag add libpg-query@pg${latestVersion} latest`, { stdio: 'inherit' });
+        console.log(`✅ libpg-query@pg${latestVersion} promoted to latest`);
       } catch (error) {
         console.error('❌ Failed to promote tag:', error.message);
       }
