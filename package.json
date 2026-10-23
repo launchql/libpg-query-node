@@ -31,7 +31,6 @@
     "build:parser": "pnpm --filter @pgsql/parser build",
     "build:parser:lts": "PARSER_BUILD_TYPE=lts pnpm --filter @pgsql/parser build",
     "build:parser:full": "PARSER_BUILD_TYPE=full pnpm --filter @pgsql/parser build",
-    "build:parser:legacy": "PARSER_BUILD_TYPE=legacy pnpm --filter @pgsql/parser build",
     "test:parser": "pnpm --filter @pgsql/parser test",
     "publish:parser": "pnpm --filter @pgsql/parser publish"
   },

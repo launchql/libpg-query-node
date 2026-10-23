@@ -28,24 +28,27 @@ function loadVersionConfigs() {
   console.log(`Found ${packageFiles.length} package.json files\n`);
   
   packageFiles.forEach(packageFile => {
-    try {
-      const packageData = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
-      const version = packageData['x-publish']?.pgVersion;
-      const libpgQueryTag = packageData['x-publish']?.libpgQueryTag;
-      const fullApi = packageData['x-publish']?.fullApi === true;
-      
-      if (version && libpgQueryTag) {
-        configs[version] = {
-          tag: libpgQueryTag,
-          hasEmscriptenPatch: version === '13', // Only version 13 needs the patch
-          fullApi
-        };
-        console.log(`  Version ${version}: tag ${libpgQueryTag}${fullApi ? ' (full API)' : ''}`);
-      } else {
-        console.warn(`  Warning: Missing x-publish data in ${packageFile}`);
+    const packageData = JSON.parse(fs.readFileSync(packageFile, 'utf8'));
+    const version = packageData['x-publish']?.pgVersion;
+    const libpgQueryTag = packageData['x-publish']?.libpgQueryTag;
+    const libpgQueryRepo = packageData['x-publish']?.libpgQueryRepo;
+    const libpgQueryCommit = packageData['x-publish']?.libpgQueryCommit;
+    const fullApi = packageData['x-publish']?.fullApi === true;
+    
+    if (version && libpgQueryTag) {
+      if (!libpgQueryRepo || !/^[0-9a-f]{40}$/.test(libpgQueryCommit || '')) {
+        throw new Error(`${packageFile}: x-publish needs libpgQueryRepo and a full 40-char libpgQueryCommit`);
       }
-    } catch (error) {
-      console.error(`  Error reading ${packageFile}: ${error.message}`);
+      configs[version] = {
+        tag: libpgQueryTag,
+        repo: libpgQueryRepo,
+        commit: libpgQueryCommit,
+        hasEmscriptenPatch: version === '13', // Only version 13 needs the patch
+        fullApi
+      };
+      console.log(`  Version ${version}: ${libpgQueryTag} @ ${libpgQueryCommit.slice(0, 7)}${fullApi ? ' (full API)' : ''}`);
+    } else {
+      console.warn(`  Warning: Missing x-publish data in ${packageFile}`);
     }
   });
   
@@ -106,6 +109,8 @@ function copyTemplates() {
     // Process Makefile template
     const makefileTemplate = fs.readFileSync(path.join(templatesDir, 'Makefile.template'), 'utf8');
     let makefileContent = makefileTemplate.replace(/{{VERSION_TAG}}/g, config.tag);
+    makefileContent = makefileContent.replace(/{{LIBPG_QUERY_REPO}}/g, config.repo);
+    makefileContent = makefileContent.replace(/{{LIBPG_QUERY_COMMIT}}/g, config.commit);
     makefileContent = makefileContent.replace(
       /{{EXPORTED_FUNCTIONS}}/g,
       config.fullApi ? FULL_EXPORTED_FUNCTIONS : SLIM_EXPORTED_FUNCTIONS
@@ -132,7 +137,7 @@ function copyTemplates() {
     
     // Write Makefile with header
     fs.writeFileSync(path.join(versionDir, 'Makefile'), MAKEFILE_HEADER + makefileContent);
-    console.log(`  ✓ Generated Makefile with tag ${config.tag}`);
+    console.log(`  ✓ Generated Makefile with ${config.tag} @ ${config.commit.slice(0, 7)}`);
   }
   
   console.log('\n✅ Template copying completed!');

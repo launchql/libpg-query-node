@@ -6,10 +6,18 @@
 WASM_OUT_DIR := wasm
 WASM_OUT_NAME := libpg-query
 WASM_MODULE_NAME := PgQueryModule
-# LIBPG_QUERY_REPO := https://github.com/pganalyze/libpg_query.git
-# LIBPG_QUERY_TAG := 15-4.2.4
+
+# WASM memory configuration (bytes). Override on the make command line for
+# low-memory variants, e.g. `make build WASM_INITIAL_MEMORY=33554432` (32MiB).
+WASM_INITIAL_MEMORY ?= 134217728
+WASM_MAXIMUM_MEMORY ?= 1073741824
+WASM_STACK_SIZE ?= 33554432
+
+# libpg_query source, pinned to an exact commit so a release can be rebuilt
+# byte-for-byte. Set in package.json `x-publish` and applied by copy:templates.
 LIBPG_QUERY_REPO := https://github.com/constructive-io/libpg_query.git
 LIBPG_QUERY_TAG := fix/negative-int-pg15
+LIBPG_QUERY_COMMIT := ae10504217b703340b5632f6345fe1e83d61485c
 
 CACHE_DIR := .cache
 
@@ -32,7 +40,7 @@ endif
 
 PLATFORM_ARCH := $(PLATFORM)-$(ARCH)
 SRC_FILES := src/wasm_wrapper.c
-LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_TAG)
+LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_COMMIT)
 LIBPG_QUERY_ARCHIVE := $(LIBPG_QUERY_DIR)/libpg_query.a
 LIBPG_QUERY_HEADER := $(LIBPG_QUERY_DIR)/pg_query.h
 CXXFLAGS := -O3 -flto
@@ -46,7 +54,9 @@ endif
 # Clone libpg_query source (lives in CACHE_DIR) 
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
-	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
+	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR) && \
+	  git -C $(LIBPG_QUERY_DIR) -c advice.detachedHead=false checkout $(LIBPG_QUERY_COMMIT) $(LIBPG_QUERY_PATCH) || \
+	  { rm -rf $(LIBPG_QUERY_DIR); exit 1; }
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 
@@ -73,9 +83,9 @@ ifdef EMSCRIPTEN
 		-sMODULARIZE=1 \
 		-sEXPORT_ES6=0 \
 		-sALLOW_MEMORY_GROWTH=1 \
-		-sINITIAL_MEMORY=134217728 \
-		-sMAXIMUM_MEMORY=1073741824 \
-        -sSTACK_SIZE=33554432 \
+		-sINITIAL_MEMORY=$(WASM_INITIAL_MEMORY) \
+		-sMAXIMUM_MEMORY=$(WASM_MAXIMUM_MEMORY) \
+        -sSTACK_SIZE=$(WASM_STACK_SIZE) \
 		-lpg_query \
 		-o $@ \
 		$(SRC_FILES)

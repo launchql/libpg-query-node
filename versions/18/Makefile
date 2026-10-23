@@ -12,10 +12,12 @@ WASM_MODULE_NAME := PgQueryModule
 WASM_INITIAL_MEMORY ?= 134217728
 WASM_MAXIMUM_MEMORY ?= 1073741824
 WASM_STACK_SIZE ?= 33554432
-# LIBPG_QUERY_REPO := https://github.com/pganalyze/libpg_query.git
-# LIBPG_QUERY_TAG := 18.0.0
+
+# libpg_query source, pinned to an exact commit so a release can be rebuilt
+# byte-for-byte. Set in package.json `x-publish` and applied by copy:templates.
 LIBPG_QUERY_REPO := https://github.com/constructive-io/libpg_query.git
 LIBPG_QUERY_TAG := 18-constructive
+LIBPG_QUERY_COMMIT := b0f5f331dc50d69597ec610de7b21afa47a66808
 
 CACHE_DIR := .cache
 
@@ -38,7 +40,7 @@ endif
 
 PLATFORM_ARCH := $(PLATFORM)-$(ARCH)
 SRC_FILES := src/wasm_wrapper.c
-LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_TAG)
+LIBPG_QUERY_DIR := $(CACHE_DIR)/$(PLATFORM_ARCH)/libpg_query/$(LIBPG_QUERY_COMMIT)
 LIBPG_QUERY_ARCHIVE := $(LIBPG_QUERY_DIR)/libpg_query.a
 LIBPG_QUERY_HEADER := $(LIBPG_QUERY_DIR)/pg_query.h
 CXXFLAGS := -O3 -flto
@@ -52,7 +54,9 @@ endif
 # Clone libpg_query source (lives in CACHE_DIR) 
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
-	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR)
+	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR) && \
+	  git -C $(LIBPG_QUERY_DIR) -c advice.detachedHead=false checkout $(LIBPG_QUERY_COMMIT) $(LIBPG_QUERY_PATCH) || \
+	  { rm -rf $(LIBPG_QUERY_DIR); exit 1; }
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 

@@ -1,5 +1,31 @@
 # Publishing Guide
 
+## Keeping the C source in sync
+
+Each `versions/<n>/package.json` pins its libpg_query source in `x-publish`
+(`libpgQueryRepo`, `libpgQueryTag`, `libpgQueryCommit`), and the Docker build uses
+`emscripten/emsdk:6.0.3`. Every generated Makefile and the protobufs come from those pins,
+and the pins ship in the published package.json.
+
+To move a version to new C code, do all of this in one commit:
+
+```bash
+# 1. edit x-publish.libpgQueryCommit (full 40-char SHA) in versions/<n>/package.json
+pnpm copy:templates   # regenerate the Makefiles
+pnpm fetch:protos     # protos/<n>/pg_query.proto at the new commit
+pnpm build:types && pnpm build:enums
+cd versions/<n> && pnpm build && pnpm test
+```
+
+If you skip the build when publishing, `versions/<n>/wasm/` must have been built after the
+last pin change, or the package will name one commit and ship another. After publishing,
+`npm view libpg-query@pg<n> x-publish` should show the commit you expect.
+
+`publish:pkg` also writes `x-publish.wasmSha256`, the sha256 of `wasm/libpg-query.wasm` and
+`wasm/libpg-query.js`, into the published package.json. To verify a release, check out the
+`gitHead` it was published from, run `pnpm wasm:build` in `versions/<n>`, and compare
+`sha256sum wasm/libpg-query.*` with `npm view libpg-query@<version> x-publish.wasmSha256`.
+
 ## Automated Publishing (Recommended)
 
 ### Version Packages (libpg-query)
@@ -14,7 +40,7 @@ This interactive script will:
 - Ask if you want to skip the build step (useful if already built)
 - Always run tests (even if build is skipped)
 - Publish each selected version
-- Optionally promote pg17 to latest
+- Optionally promote pg17 to latest (`latest` is currently pg18; to keep it there, answer no)
 
 ### Types Packages
 ```bash
@@ -54,16 +80,6 @@ PARSER_BUILD_TYPE=full pnpm run publish:parser
 #### LTS Build (versions 15-18)
 ```bash
 PARSER_BUILD_TYPE=lts pnpm run publish:parser
-```
-
-#### Latest Only (version 17)
-```bash
-PARSER_BUILD_TYPE=latest pnpm run publish:parser
-```
-
-#### Legacy Build (versions 13-15)
-```bash
-PARSER_BUILD_TYPE=legacy pnpm run publish:parser
 ```
 
 This command will:
@@ -241,19 +257,15 @@ pnpm publish
 The parser package is now a simple distribution package that copies pre-built WASM files. No TypeScript compilation needed!
 
 #### Available Build Types:
-- **full**: All versions (13, 14, 15, 16, 17) - Default
-- **lts**: LTS versions only (16, 17)
-- **latest**: Latest version only (17)
-- **legacy**: Legacy versions (13, 14, 15)
+- **full**: All versions (13, 14, 15, 16, 17, 18) - Default
+- **lts**: LTS versions only (15, 16, 17, 18)
 
 ```bash
 # Full build (default)
 npm run build
 
-# Specific builds
+# LTS build
 npm run build:lts
-npm run build:latest
-npm run build:legacy
 
 # Or using environment variable
 PARSER_BUILD_TYPE=lts npm run build
@@ -275,11 +287,11 @@ The templates automatically adjust to include only the versions specified in the
 **Important**: Before building the parser package, ensure that the version packages are built first:
 ```bash
 # Build all version packages first
-pnpm build  # builds libpg-query versions
+pnpm build:versions
 
 # Then build the parser with desired configuration
 cd parser
-npm run build:lts  # or build:full, build:latest, etc.
+npm run build:lts  # or build:full
 ```
 
 ### Types Bundling
@@ -299,10 +311,6 @@ npm publish
 # Publish LTS version with lts tag
 npm run build:lts
 npm publish --tag lts
-
-# Publish legacy version with legacy tag
-npm run build:legacy
-npm publish --tag legacy
 ```
 
 ### What it does
@@ -317,12 +325,6 @@ npm publish --tag legacy
 ```bash
 # Install latest (full build)
 npm install @pgsql/parser
-
-# Install LTS version
-npm install @pgsql/parser@lts
-
-# Install legacy version
-npm install @pgsql/parser@legacy
 
 # Use version-specific imports:
 # import { parse } from '@pgsql/parser/v17'

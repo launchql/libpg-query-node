@@ -13,7 +13,9 @@
     "publishName": "libpg-query",
     "pgVersion": "14",
     "distTag": "pg14",
-    "libpgQueryTag": "14-3.0.0"
+    "libpgQueryRepo": "https://github.com/pganalyze/libpg_query.git",
+    "libpgQueryTag": "14-3.0.0",
+    "libpgQueryCommit": "397cbb9c1b188b8a5c6e1a9633461b2d01903abc"
   },
   "files": [
     "wasm/*"
@@ -23,7 +25,7 @@
     "build:js": "node scripts/build.js",
     "build": "pnpm clean && pnpm wasm:build && pnpm build:js",
     "publish:pkg": "node ../../scripts/publish-single-version.js",
-    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk emmake make",
+    "wasm:make": "docker run --rm -v $(pwd):/src -u $(id -u):$(id -g) emscripten/emsdk:6.0.3 emmake make",
     "wasm:build": "pnpm wasm:make build",
     "wasm:rebuild": "pnpm wasm:make rebuild",
     "wasm:clean": "pnpm wasm:make clean",
