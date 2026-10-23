@@ -171,6 +171,16 @@ pnpm run test
   pnpm run clean && pnpm run build && pnpm run test
   ```
 
+### Slow recovery checks (local only)
+
+Run these after changing the WASM recovery code in `templates/`. Both use the
+built `versions/<n>/wasm/` artifacts and are too slow for CI.
+
+```bash
+pnpm test:stress [13 18 ...]      # thousands of WASM crashes and >1 GiB inputs; memory must stay flat (a few minutes)
+pnpm test:mutations [13 18 ...]   # breaks each branch of the recovery code; the tests must catch every one (about 20 min)
+```
+
 ## Troubleshooting
 
 ### Common Issues
