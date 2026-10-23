@@ -188,7 +188,7 @@ function awaitInit<T extends (...args: any[]) => Promise<any>>(fn: T): T {
   }) as T;
 }
 
-const utf8Encoder = new TextEncoder();
+const SURROGATE = /[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDFFF]/g;
 
 function stringToPtr(str: string): number {
   ensureLoaded();
@@ -200,15 +200,15 @@ function stringToPtr(str: string): number {
   if (str.includes('\0')) {
     throw new Error('Query must not contain a NUL (U+0000) character');
   }
-  // Size the buffer from the exact bytes written. TextEncoder writes each
-  // unpaired surrogate as U+FFFD — the same bytes a Postgres driver sends.
-  const bytes = utf8Encoder.encode(str);
-  const ptr = wasmModule._malloc(bytes.length + 1);
+  // lengthBytesUTF8 and stringToUTF8 disagree on unpaired surrogates, which cut
+  // the query short. Write each as U+FFFD, the same bytes a Postgres driver sends.
+  const wellFormed = str.replace(SURROGATE, (s) => (s.length === 2 ? s : '\uFFFD'));
+  const size = wasmModule.lengthBytesUTF8(wellFormed) + 1;
+  const ptr = wasmModule._malloc(size);
   if (!ptr) {
     throw new Error('Failed to allocate memory for query');
   }
-  wasmModule.HEAPU8.set(bytes, ptr);
-  wasmModule.HEAPU8[ptr + bytes.length] = 0;
+  wasmModule.stringToUTF8(wellFormed, ptr, size);
   return ptr;
 }
 
