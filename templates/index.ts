@@ -145,20 +145,28 @@ function awaitInit<T extends (...args: any[]) => any>(fn: T): T {
   }) as T;
 }
 
+const SURROGATE = /[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDFFF]/g;
+
 function stringToPtr(str: string): number {
   ensureLoaded();
   if (typeof str !== 'string') {
     throw new TypeError(`Expected a string, got ${typeof str}`);
   }
-  const len = wasmModule.lengthBytesUTF8(str) + 1;
-  const ptr = wasmModule._malloc(len);
-  try {
-    wasmModule.stringToUTF8(str, ptr, len);
-    return ptr;
-  } catch (error) {
-    wasmModule._free(ptr);
-    throw error;
+  // libpg_query takes a NUL-terminated C string: an embedded NUL would end the
+  // parse early and silently drop everything after it.
+  if (str.includes('\0')) {
+    throw new Error('Query must not contain a NUL (U+0000) character');
   }
+  // lengthBytesUTF8 and stringToUTF8 disagree on unpaired surrogates, which cut
+  // the query short. Write each as U+FFFD, the same bytes a Postgres driver sends.
+  const wellFormed = str.replace(SURROGATE, (s) => (s.length === 2 ? s : '\uFFFD'));
+  const size = wasmModule.lengthBytesUTF8(wellFormed) + 1;
+  const ptr = wasmModule._malloc(size);
+  if (!ptr) {
+    throw new Error('Failed to allocate memory for query');
+  }
+  wasmModule.stringToUTF8(wellFormed, ptr, size);
+  return ptr;
 }
 
 function ptrToString(ptr: number): string {
