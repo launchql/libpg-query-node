@@ -46,17 +46,18 @@ else
 $(error Native builds are no longer supported. Use EMSCRIPTEN=1 for WASM builds only.)
 endif
 
-# Clone libpg_query source (lives in CACHE_DIR) 
+{{#USE_EMSCRIPTEN_PATCH}}
+# Applied in the same step as the clone, so a failed patch removes the clone.
+ifdef EMSCRIPTEN
+LIBPG_QUERY_PATCH := && patch -d $(LIBPG_QUERY_DIR) -p1 < $(CURDIR)/patches/emscripten_disable_spinlocks.patch
+endif
+
+{{/USE_EMSCRIPTEN_PATCH}}# Clone libpg_query source (lives in CACHE_DIR) 
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
 	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR) && \
-	  git -C $(LIBPG_QUERY_DIR) -c advice.detachedHead=false checkout $(LIBPG_QUERY_COMMIT) || \
+	  git -C $(LIBPG_QUERY_DIR) -c advice.detachedHead=false checkout $(LIBPG_QUERY_COMMIT) $(LIBPG_QUERY_PATCH) || \
 	  { rm -rf $(LIBPG_QUERY_DIR); exit 1; }
-{{#USE_EMSCRIPTEN_PATCH}}
-ifdef EMSCRIPTEN
-	cd $(LIBPG_QUERY_DIR); patch -p1 < $(shell pwd)/patches/emscripten_disable_spinlocks.patch
-endif
-{{/USE_EMSCRIPTEN_PATCH}}
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
 
