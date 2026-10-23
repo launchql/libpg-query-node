@@ -3,6 +3,8 @@ const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 const { parse, parseSync, loadModule } = require('../wasm/index.cjs');
 
+const DEEP = 'SELECT 1' + '+1'.repeat(100000);
+
 // An exception out of the WASM parser skips libpg_query's cleanup. Before the
 // wrapper replaced the instance, enough of them made even `SELECT 1` trap.
 describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
@@ -11,10 +13,9 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
   });
 
   it('stays usable after repeated stack overflows on deeply nested SQL', async () => {
-    const deep = 'SELECT 1' + '+1'.repeat(100000);
     for (let i = 0; i < 60; i++) {
       await loadModule();
-      assert.throws(() => parseSync(deep));
+      assert.throws(() => parseSync(DEEP));
     }
     await loadModule();
     assert.equal(parseSync('SELECT 1').stmts.length, 1);
@@ -42,7 +43,7 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
   it('lets a call queued behind a failing one wait for the fresh instance', async () => {
     await loadModule();
     const [failed, queued] = await Promise.allSettled([
-      parse('SELECT 1' + '+1'.repeat(100000)),
+      parse(DEEP),
       parse('SELECT 1'),
     ]);
     assert.equal(failed.status, 'rejected');
@@ -62,25 +63,245 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
   });
 
   it('retries the load when loading a fresh instance fails', async () => {
-    const indexPath = require.resolve('../wasm/index.cjs');
-    const factory = require.cache[require.resolve('../wasm/libpg-query.js')];
-    const shared = require.cache[indexPath];
-    const realFactory = factory.exports;
     let loads = 0;
-    factory.exports = (...args) =>
-      ++loads === 2 ? Promise.reject(new Error('simulated load failure')) : realFactory(...args);
-    delete require.cache[indexPath];
-    let isolated;
-    try {
-      isolated = require(indexPath);
-    } finally {
-      factory.exports = realFactory;
-      require.cache[indexPath] = shared;
-    }
+    const isolated = loadIsolated((real, ...args) =>
+      ++loads === 2 ? Promise.reject(new Error('simulated load failure')) : real(...args));
     await isolated.loadModule();
-    await assert.rejects(isolated.parse('SELECT 1' + '+1'.repeat(100000)));
+    await assert.rejects(isolated.parse(DEEP));
     await new Promise((resolve) => setImmediate(resolve));
     assert.equal((await isolated.parse('SELECT 1')).stmts.length, 1);
     assert.equal(loads, 3);
   });
+
+  it('lets loadModule() reject on a failed reload and retry on the next call', async () => {
+    let loads = 0;
+    const isolated = loadIsolated((real, ...args) =>
+      ++loads === 2 ? Promise.reject(new Error('simulated load failure')) : real(...args));
+    await isolated.loadModule();
+    assert.throws(() => isolated.parseSync(DEEP));
+    await assert.rejects(isolated.loadModule(), /simulated load failure/);
+    await isolated.loadModule();
+    assert.equal(isolated.parseSync('SELECT 1').stmts.length, 1);
+    assert.equal(loads, 3);
+  });
+
+  it('keeps sync calls in the same synchronous loop working after a failure', () => {
+    const queries = Array.from({ length: 200 }, (_, i) => `SELECT ${i}, 'x${i}' FROM t${i} WHERE a = ${i}`);
+    const expected = queries.map((query) => JSON.stringify(parseSync(query)));
+    let failed = 0;
+    const results = [];
+    for (const [i, query] of queries.entries()) {
+      if (i === 10) {
+        try { parseSync(DEEP); } catch { failed++; }
+      }
+      results.push(JSON.stringify(parseSync(query)));
+    }
+    assert.equal(failed, 1);
+    assert.deepEqual(results, expected);
+  });
+
+  it('retries a failed fresh load on the next failure, for callers that never await', async () => {
+    let loads = 0;
+    const isolated = loadIsolated((real, ...args) =>
+      ++loads === 2 ? Promise.reject(new Error('simulated load failure')) : real(...args));
+    await isolated.loadModule();
+    assert.throws(() => isolated.parseSync(DEEP));
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(loads, 2);
+    assert.throws(() => isolated.parseSync(DEEP));
+    assert.equal(loads, 3);
+    await isolated.loadModule();
+    assert.equal(isolated.parseSync('SELECT 1').stmts.length, 1);
+  });
+
+  it('makes loadModule() wait again when a queued call breaks the fresh instance', async () => {
+    await loadModule();
+    assert.throws(() => parseSync(DEEP));
+    const failing = parse(DEEP);
+    const ready = loadModule();
+    await assert.rejects(failing);
+    await ready;
+    assert.equal(parseSync('SELECT 1').stmts.length, 1);
+  });
+
+  it('keeps every call queued behind two failures waiting for a working instance', async () => {
+    await loadModule();
+    const [first, second, queued] = await Promise.allSettled([parse(DEEP), parse(DEEP), parse('SELECT 1')]);
+    assert.equal(first.status, 'rejected');
+    assert.equal(second.status, 'rejected');
+    assert.equal(queued.status, 'fulfilled', queued.reason?.message);
+    assert.equal(queued.value.stmts.length, 1);
+  });
 });
+
+// Every entry point, with the next WASM call made to throw: a RangeError
+// stands for a stack overflow, a non-Error object for Emscripten's ExitStatus.
+describe('Recovery from a throw in each entry point', { timeout: 120000 }, () => {
+  const PLPGSQL = 'CREATE FUNCTION f() RETURNS int AS $$ BEGIN RETURN 1; END $$ LANGUAGE plpgsql';
+  const entryPoints = [
+    ['parse', 'SELECT 1'],
+    ['parseSync', 'SELECT 1'],
+    ['parsePlPgSQL', PLPGSQL],
+    ['parsePlPgSQLSync', PLPGSQL],
+    ['fingerprint', 'SELECT 1'],
+    ['fingerprintSync', 'SELECT 1'],
+    ['normalize', 'SELECT 1'],
+    ['normalizeSync', 'SELECT 1'],
+    ['scan', 'SELECT 1'],
+    ['scanSync', 'SELECT 1'],
+  ];
+
+  // Instances are numbered by load; `used` is the one the last WASM call ran on.
+  let loads = 0;
+  let used;
+  let frees = 0;
+  let throwNext;
+  const isolated = loadIsolated(async (real, ...args) => {
+    const id = ++loads;
+    const module = await real(...args);
+    const free = module._free;
+    module._free = (ptr) => {
+      frees++;
+      return free(ptr);
+    };
+    for (const name of Object.keys(module).filter((key) => key.startsWith('_wasm_'))) {
+      const call = module[name];
+      module[name] = (...callArgs) => {
+        used = id;
+        if (throwNext === undefined) return call(...callArgs);
+        const thrown = throwNext;
+        throwNext = undefined;
+        process.exitCode = 7;
+        throw thrown;
+      };
+    }
+    return module;
+  });
+
+  async function failOnce(name, query, thrown) {
+    await isolated.loadModule();
+    const loadsBefore = loads;
+    const exitCode = process.exitCode;
+    process.exitCode = 0;
+    const freesBefore = frees;
+    throwNext = thrown;
+    let caught;
+    try {
+      await isolated[name](query);
+    } catch (error) {
+      caught = error;
+    } finally {
+      var exitCodeAfter = process.exitCode;
+      process.exitCode = exitCode;
+    }
+    assert.equal(exitCodeAfter, 0, `${name} changed process.exitCode`);
+    assert.equal(frees, freesBefore, `${name} freed memory in the instance that threw`);
+    assert.equal(loads, loadsBefore + 1, `${name} did not start a fresh instance`);
+    const stale = used;
+    const syncName = name.endsWith('Sync') ? name : 'parseSync';
+    assert.ok(isolated[syncName](query), `${syncName} failed while the fresh instance loads`);
+    assert.equal(used, stale, 'a sync call did not run on the stale instance');
+    assert.ok(frees > freesBefore, 'a successful call did not free its memory');
+    // A sync caller gets the fresh instance once it awaits loadModule(); async calls wait by themselves.
+    if (name.endsWith('Sync')) await isolated.loadModule();
+    assert.ok(await isolated[name](query), `${name} failed after recovery`);
+    assert.equal(used, loads, `${name} ran on the stale instance, not the fresh one`);
+    return caught;
+  }
+
+  it('starts one fresh instance for many failures in one synchronous loop', async () => {
+    await isolated.loadModule();
+    const loadsBefore = loads;
+    for (let i = 0; i < 5; i++) {
+      throwNext = new RangeError('Maximum call stack size exceeded');
+      assert.throws(() => isolated.parseSync('SELECT 1'), RangeError);
+    }
+    assert.equal(loads, loadsBefore + 1);
+    await isolated.loadModule();
+    assert.ok(isolated.parseSync('SELECT 1'));
+    assert.equal(used, loads);
+  });
+
+  it('stops sync calls on a stale instance after 10 failures until the fresh one loads', async () => {
+    await isolated.loadModule();
+    for (let i = 0; i < 9; i++) {
+      throwNext = new RangeError('Maximum call stack size exceeded');
+      assert.throws(() => isolated.parseSync('SELECT 1'), RangeError);
+    }
+    assert.ok(isolated.parseSync('SELECT 1'));
+    throwNext = new RangeError('Maximum call stack size exceeded');
+    assert.throws(() => isolated.parseSync('SELECT 1'), RangeError);
+    assert.throws(() => isolated.parseSync('SELECT 1'), /Call `?loadModule\(\)`? first/);
+    await isolated.loadModule();
+    assert.ok(isolated.parseSync('SELECT 1'));
+    assert.equal(used, loads);
+  });
+
+  it('makes loadModule() and queued calls wait again when a queued call breaks the fresh instance', async () => {
+    await isolated.loadModule();
+    throwNext = new RangeError('Maximum call stack size exceeded');
+    assert.throws(() => isolated.parseSync('SELECT 1'), RangeError);
+    const failing = isolated.parse('SELECT 1');
+    throwNext = new RangeError('Maximum call stack size exceeded');
+    const ready = isolated.loadModule();
+    const after = isolated.parse('SELECT 1');
+    await assert.rejects(failing, RangeError);
+    assert.ok(await after);
+    assert.equal(used, loads, 'a queued call ran on the instance that just threw');
+    await ready;
+    assert.ok(isolated.parseSync('SELECT 1'));
+    assert.equal(used, loads, 'loadModule() resolved before the fresh instance loaded');
+  });
+
+  it('makes loadModule() wait again when a call queued ahead of it breaks the fresh instance', async () => {
+    await isolated.loadModule();
+    throwNext = new RangeError('Maximum call stack size exceeded');
+    assert.throws(() => isolated.parseSync('SELECT 1'), RangeError);
+    const failing = isolated.parse('SELECT 1');
+    throwNext = new RangeError('Maximum call stack size exceeded');
+    const ready = isolated.loadModule();
+    await assert.rejects(failing, RangeError);
+    await ready;
+    assert.ok(isolated.parseSync('SELECT 1'));
+    assert.equal(used, loads, 'loadModule() resolved before the fresh instance loaded');
+  });
+
+  it('names a thrown object that has no message', async () => {
+    class EmscriptenSjLj {}
+    const caught = await failOnce('parseSync', 'SELECT 1', new EmscriptenSjLj());
+    assert.match(caught.message, /libpg_query terminated \(EmscriptenSjLj\)/);
+  });
+
+  for (const [name, query] of entryPoints) {
+    const skip = typeof isolated[name] !== 'function' && 'not in this build';
+
+    it(`${name}: rethrows the original Error and recovers`, { skip }, async () => {
+      const thrown = new RangeError('Maximum call stack size exceeded');
+      assert.equal(await failOnce(name, query, thrown), thrown);
+    });
+
+    it(`${name}: wraps a non-Error throw in an Error and recovers`, { skip }, async () => {
+      const thrown = { name: 'ExitStatus', message: 'Program terminated with exit(1)', status: 1 };
+      const caught = await failOnce(name, query, thrown);
+      assert.ok(caught instanceof Error);
+      assert.match(caught.message, /out of WASM memory/);
+      assert.equal(caught.cause, thrown);
+    });
+  }
+});
+
+// A copy of the wrapper whose WASM factory is wrapped, leaving the shared copy alone.
+function loadIsolated(wrapFactory) {
+  const indexPath = require.resolve('../wasm/index.cjs');
+  const factory = require.cache[require.resolve('../wasm/libpg-query.js')];
+  const shared = require.cache[indexPath];
+  const realFactory = factory.exports;
+  factory.exports = (...args) => wrapFactory(realFactory, ...args);
+  delete require.cache[indexPath];
+  try {
+    return require(indexPath);
+  } finally {
+    factory.exports = realFactory;
+    require.cache[indexPath] = shared;
+  }
+}

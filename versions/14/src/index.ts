@@ -131,17 +131,36 @@ export function hasSqlDetails(error: any): error is Error & { sqlDetails: SqlErr
          'cursorPosition' in (error as any).sqlDetails;
 }
 
-let initPromise: Promise<void> | undefined;
+// After a WASM call throws, the instance is stale: async calls wait for its
+// replacement, while sync calls, which cannot wait, keep using it until the
+// replacement is ready. One replacement loads at a time; the next call retries
+// a failed load.
+let stale = false;
+let loading: Promise<void> | undefined;
+// Counts WASM calls that threw, so cleanup skips an instance that threw mid-call.
+let failures = 0;
+// Sync calls stop using a stale instance after this many failures on it: past
+// about 45, a stack overflow can make the next one spin forever.
+const MAX_STALE_FAILURES = 10;
+let staleFailures = 0;
 
-// A failed load rejects only for the callers awaiting it; the next call retries.
 function instantiate(): Promise<void> {
-  const promise = PgQueryModule().then((module: any) => {
-    wasmModule = module;
-  });
-  initPromise = promise;
-  promise.catch(() => {
-    if (initPromise === promise) initPromise = undefined;
-  });
+  if (loading) return loading;
+  const promise = PgQueryModule().then(
+    (module: any) => {
+      wasmModule = module;
+      stale = false;
+      staleFailures = 0;
+      loading = undefined;
+    },
+    (error: unknown) => {
+      loading = undefined;
+      throw error;
+    }
+  );
+  loading = promise;
+  // Rejects only for the callers awaiting it.
+  promise.catch(() => {});
   return promise;
 }
 
@@ -156,12 +175,17 @@ function callWasm(fn: () => number): number {
   try {
     return fn();
   } catch (error) {
-    wasmModule = undefined;
+    failures++;
+    stale = true;
+    if (++staleFailures >= MAX_STALE_FAILURES) wasmModule = undefined;
     instantiate();
     if (proc) proc.exitCode = exitCode;
     if (error instanceof Error) throw error;
+    const reason = typeof error === 'object' && error !== null
+      ? ((error as any).message ?? (error as any).constructor?.name)
+      : error;
     throw new Error(
-      `libpg_query terminated (${(error as any)?.message ?? error}), most likely out of WASM memory; parse large inputs in smaller pieces`,
+      `libpg_query terminated (${reason}), most likely out of WASM memory; parse large inputs in smaller pieces`,
       { cause: error }
     );
   }
@@ -172,13 +196,13 @@ function ensureLoaded() {
 }
 
 export async function loadModule() {
-  while (!wasmModule) await (initPromise ?? instantiate());
+  while (!wasmModule || stale) await instantiate();
 }
 
 function awaitInit<T extends (...args: any[]) => any>(fn: T): T {
   return (async (...args: Parameters<T>) => {
-    // Re-checked after every await: a call that fails in between drops the instance.
-    while (!wasmModule) await (initPromise ?? instantiate());
+    // Re-checked after every await: another call may have failed in between.
+    while (!wasmModule || stale) await instantiate();
     return fn(...args);
   }) as T;
 }
@@ -228,6 +252,7 @@ export const parse = awaitInit(async (query: string) => {
   }
   
   const queryPtr = stringToPtr(query);
+  const failuresBefore = failures;
   let resultPtr = 0;
   
   try {
@@ -277,7 +302,7 @@ export const parse = awaitInit(async (query: string) => {
     return JSON.parse(parseTree);
   }
   finally {
-    if (wasmModule) {
+    if (failures === failuresBefore) {
       wasmModule._free(queryPtr);
       if (resultPtr) {
         wasmModule._wasm_free_parse_result(resultPtr);
@@ -299,6 +324,7 @@ export function parseSync(query: string) {
   }
   
   const queryPtr = stringToPtr(query);
+  const failuresBefore = failures;
   let resultPtr = 0;
   
   try {
@@ -348,7 +374,7 @@ export function parseSync(query: string) {
     return JSON.parse(parseTree);
   }
   finally {
-    if (wasmModule) {
+    if (failures === failuresBefore) {
       wasmModule._free(queryPtr);
       if (resultPtr) {
         wasmModule._wasm_free_parse_result(resultPtr);
