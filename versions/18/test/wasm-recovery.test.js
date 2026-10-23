@@ -1,7 +1,8 @@
 const { describe, it, before } = require('node:test');
 const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
-const { parse, parseSync, loadModule } = require('../wasm/index.cjs');
+const lib = require('../wasm/index.cjs');
+const { parse, parseSync, loadModule } = lib;
 
 const DEEP = 'SELECT 1' + '+1'.repeat(100000);
 
@@ -21,6 +22,23 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
     assert.equal(parseSync('SELECT 1').stmts.length, 1);
   });
 
+  // Without the 10-failure cap, about 45 overflows on one instance made the next one spin forever.
+  it('stops sync calls on the stale instance after 10 real overflows in one synchronous loop', async () => {
+    await loadModule();
+    const errors = [];
+    for (let i = 0; i < 60; i++) {
+      try {
+        parseSync(DEEP);
+      } catch (error) {
+        errors.push(error instanceof RangeError ? 'overflow' : error.message);
+      }
+    }
+    assert.deepEqual(errors.slice(0, 10), Array(10).fill('overflow'));
+    for (const message of errors.slice(10)) assert.match(message, /Call `?loadModule\(\)`? first/);
+    await loadModule();
+    assert.equal(parseSync('SELECT 1').stmts.length, 1);
+  });
+
   it('frees each replaced instance, so WASM memory stays at one instance', () => {
     const script = `const lib = require(${JSON.stringify(require.resolve('../wasm/index.cjs'))});
       (async () => {
@@ -33,11 +51,25 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
           try { lib.parseSync(deep); } catch {}
           await lib.loadModule();
         }
+        const huge = 'SELECT 1;\\n'.repeat(5000000);
+        for (let i = 0; i < 2; i++) {
+          try { await lib.parse(huge); } catch {}
+        }
+        await lib.loadModule();
+        lib.parseSync('SELECT 1');
+        // V8 frees a dropped instance's memory on a later task, not in the same microtask run.
+        await new Promise((resolve) => setTimeout(resolve, 0));
         gc(); gc();
-        process.stdout.write(String(process.memoryUsage().external - base));
+        process.stdout.write('\\ngrown=' + (process.memoryUsage().external - base));
       })();`;
-    const grown = Number(execFileSync(process.execPath, ['--expose-gc', '-e', script], { encoding: 'utf8' }));
-    assert.ok(grown < 32 * 1024 * 1024, `WASM memory grew by ${grown} bytes after 30 replacements`);
+    // A non-zero exit code (libpg_query's exit() leaking out) makes execFileSync throw.
+    // libpg_query prints a memory dump to stdout on out-of-memory, so read the last line.
+    const output = execFileSync(process.execPath, ['--expose-gc', '-e', script], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    const grown = Number(output.match(/^grown=(-?\d+)$/m)?.[1]);
+    assert.ok(grown < 32 * 1024 * 1024, `WASM memory grew by ${grown} bytes after 32 replacements`);
   });
 
   it('lets a call queued behind a failing one wait for the fresh instance', async () => {
@@ -61,6 +93,19 @@ describe('Recovery after the WASM parser throws', { timeout: 120000 }, () => {
     assert.equal(process.exitCode, exitCode);
     assert.equal((await parse('SELECT 1')).stmts.length, 1);
   });
+
+  for (const name of ['parsePlPgSQL', 'fingerprint', 'normalize', 'scan']) {
+    const skip = typeof lib[name] !== 'function' && 'not in this build';
+    it(`${name}: rejects a 50 MB input, keeps process.exitCode and recovers`, { skip }, async () => {
+      const exitCode = process.exitCode;
+      await assert.rejects(lib[name]('SELECT 1;\n'.repeat(5000000)));
+      assert.equal(process.exitCode, exitCode);
+      assert.ok(await lib[name](name === 'parsePlPgSQL'
+        ? 'CREATE FUNCTION f() RETURNS int AS $$ BEGIN RETURN 1; END $$ LANGUAGE plpgsql'
+        : 'SELECT 1'));
+      assert.ok(lib[`${name}Sync`]('SELECT 1'));
+    });
+  }
 
   it('retries the load when loading a fresh instance fails', async () => {
     let loads = 0;
