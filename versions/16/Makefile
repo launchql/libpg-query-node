@@ -55,7 +55,7 @@ endif
 $(LIBPG_QUERY_DIR):
 	mkdir -p $(CACHE_DIR)
 	git clone -b $(LIBPG_QUERY_TAG) --single-branch $(LIBPG_QUERY_REPO) $(LIBPG_QUERY_DIR) && \
-	  git -C $(LIBPG_QUERY_DIR) -c advice.detachedHead=false checkout $(LIBPG_QUERY_COMMIT) || \
+	  git -C $(LIBPG_QUERY_DIR) -c advice.detachedHead=false checkout $(LIBPG_QUERY_COMMIT) $(LIBPG_QUERY_PATCH) || \
 	  { rm -rf $(LIBPG_QUERY_DIR); exit 1; }
 	
 $(LIBPG_QUERY_HEADER): $(LIBPG_QUERY_DIR)
